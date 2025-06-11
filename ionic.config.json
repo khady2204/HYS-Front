@@ -1,0 +1,7 @@
+{
+  "name": "HYS-Front",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
