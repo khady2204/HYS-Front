@@ -1,0 +1,60 @@
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  background: #fff;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d3d3d3;
+  margin: 0 6px;
+}
+
+.dot.active {
+  background: #20399c;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.logo-img {
+  width: 120px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.welcome-text {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #222;
+  text-align: center;
+}
+
+.welcome-text .subtitle {
+  font-size: 0.75rem;
+  font-weight: 400;
+  margin-top: 4px;
+  color: #444;
+}
+
+.start-button {
+  --background: #20399c;
+  --color: #fff;
+}
