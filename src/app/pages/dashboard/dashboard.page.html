@@ -1,0 +1,93 @@
+<ion-content class="bg-white">
+
+  <!-- Photo de couverture avec bouton back -->
+  <div class="relative w-full h-64 bg-cover bg-center" style="background-image: url('assets/img/accueil.png')">
+    <!-- Bouton retour -->
+    <ion-buttons class="absolute top-4 left-4 z-20 bg-white/20 rounded-full shadow">
+      <ion-back-button defaultHref="/" class="text-white bg-transparent"></ion-back-button>
+    </ion-buttons>
+    <!-- Bouton menu (deux points) -->
+    <ion-buttons class="absolute top-4 right-4 z-20 bg-white/20 rounded-full shadow">
+      <button class="text-white bg-transparent flex items-center justify-center w-10 h-10 focus:outline-none">
+      <span class="text-2xl font-bold">⋮</span>
+      </button>
+    </ion-buttons>
+
+    <!-- Barre de recherche -->
+    <div class="absolute mt-6 inset-0 flex items-center justify-center px-6">
+      <input type="text" placeholder="Rechercher..." class="w-3/4 mt-2 max-w-md px-4 py-2 rounded-full bg-white/80 text-sm text-gray-700 placeholder-gray-400 shadow focus:outline-none" />
+    </div>
+  </div>
+
+  <!-- Nos services -->
+  <div class="relative -mt-12 bg-white rounded-t-[2.5rem] shadow px-4 pt-6 pb-4">
+    <div class="flex justify-between items-center">
+      <h2 class="text-sm text-gray-600">Nos services</h2>
+      <a href="#" class="text-gray-600 text-sm">Voir plus</a>
+    </div>
+    <div class="grid grid-cols-3 gap-x-3 gap-y-3">
+      <ng-container *ngFor="let service of services">
+        <div class="flex items-center bg-blue-900 rounded-xl px-1 py-1 shadow w-full max-w-xs mx-auto my-2">
+          <div class="flex items-center justify-center w-8 h-8 bg-white rounded-full mr-2">
+            <img [src]="service.iconPath" [alt]="service.label" class="w-5 h-5 object-contain" />
+          </div>
+            <span class="text-xs text-white text-left" style="font-family: 'Pacifico', cursive;">{{ service.label }}</span>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Offre disponible -->
+  <div class="relative px-4 mt-6 mb-6">
+    <h2 class="text-lg text-gray-600 mb-2">Offre disponible</h2>
+
+    <div class="relative w-full h-48 md:h-60 rounded-xl overflow-hidden shadow mt-4">
+      <img src="assets/img/Rectangle21.png" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-indigo/100 flex flex-col md:flex-row items-start text-left gap-4 px-6 py-6">
+        <h6 class="text-left text-white font-semibold">Offre My love</h6>
+        <div class="text-left md:text-left text-white">
+          <p class="text-sm mb-3">
+            Dans notre offre my love, <br/> vous avez la possibilité de rencontrer l'amour de votre vie.
+          </p>
+          <button class="bg-blue-900 text-white mt-2 px-6 py-2 rounded-md text-sm hover:bg-indigo-700">
+            S'abonner
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Qui sommes-nous -->
+  <div class="px-4 pb-6">
+    <h2 class="text-center font-semibold text-blue-900 mb-2">QUI SOMMES NOUS?</h2>
+    <p class="text-center text-sm text-blue-700 mb-4">
+      Dans notre offre My love vous aurez la possibilité de rencontrer l’amour de votre vie.
+    </p>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="relative h-28 rounded-xl overflow-hidden">
+        <img src="assets/img/Rectangle29.png" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-white" style="font-family: 'Pacifico', cursive;">
+          My love
+        </div>
+      </div>
+      <div class="relative h-28 rounded-xl overflow-hidden">
+        <img src="assets/img/Rectangle30.png" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-white" style="font-family: 'Pacifico', cursive;">
+          Éducation
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="px-4 mb-10">
+    <div class="bg-blue-900 rounded-xl p-4 text-center text-white">
+      <h3 class="text-md mb-2" style="font-family: 'Pacifico', cursive;">Pour plus de service</h3>
+      <p class="text-sm mb-3">Dans notre offre my love vous aurez la possibilité de rencontrer l’amour de votre vie</p>
+      <button class="bg-white text-blue-900 text-sm px-6 py-2 rounded-md shadow-md">
+        S’abonner à nos services
+      </button>
+    </div>
+  </div>
+
+</ion-content>
