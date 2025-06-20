@@ -1,0 +1,88 @@
+.register-container {
+  --background: #5c5b8c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.register-wrapper {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  margin: auto;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.logo {
+  width: 120px;
+}
+
+.form-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #20398c;
+  margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.half-input {
+  flex: 1;
+  --background: #f1f1f1;
+  --padding-start: 12px;
+  --border-radius: 10px;
+}
+
+ion-input {
+  --background: #f1f1f1;
+  --padding-start: 12px;
+  --border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.checkbox-item {
+  background: transparent;
+  margin-bottom: 16px;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+ion-button.login-button {
+  --background: #20398c;
+  --border-radius: 12px;
+  font-weight: 600;
+  margin-top: 8px;
+  color: white;
+}
+
+
+.bottom-text {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+
+.login-link {
+  color: #20399c;
+  font-weight: 600;
+  text-decoration: none;
+}
