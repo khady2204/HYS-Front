@@ -22,4 +22,8 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () => import('./pages/home/home.page').then( m => m.HomePage)
   },
+  {
+    path: 'f-password',
+    loadComponent: () => import('./pages/f-password/f-password.page').then( m => m.FPasswordPage)
+  },
 ];
