@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DashbordPage } from './dashbord.page';
+import { DashboardPage } from './dashboard.page';
 
-describe('DashbordPage', () => {
-  let component: DashbordPage;
-  let fixture: ComponentFixture<DashbordPage>;
+describe('DashboardPage', () => {
+  let component: DashboardPage;
+  let fixture: ComponentFixture<DashboardPage>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashbordPage);
+    fixture = TestBed.createComponent(DashboardPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
