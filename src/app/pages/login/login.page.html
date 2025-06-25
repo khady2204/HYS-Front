@@ -13,13 +13,16 @@
       <ion-text color="danger" *ngIf="email.invalid && email.touched">
         <small>Email invalide</small>
       </ion-text>
-      <ion-item lines="full">
-        <ion-label position="floating">Mot de passe</ion-label>
-        <ion-input type="password" formControlName="password" required></ion-input>
-      </ion-item>
-      <ion-text color="danger" *ngIf="password.invalid && password.touched">
-        <small>Mot de passe requis (min 6 caractères)</small>
-      </ion-text>
+      <div class="password-container">
+        <ion-item lines="full" class="password-item" >
+          <ion-label position="floating">Mot de passe</ion-label>
+          <ion-input type="password" formControlName="password" required></ion-input>
+        </ion-item>
+        <a routerLink="/f-password" class="forgot-link" > oublié ?</a>
+      </div>
+        <ion-text color="danger" *ngIf="password.invalid && password.touched">
+          <small>Mot de passe requis (min 6 caractères)</small>
+        </ion-text>
       <ion-item lines="none" class="terms">
         <ion-checkbox slot="start" name="acceptTerms"></ion-checkbox>
         <ion-label>J’accepte</ion-label>

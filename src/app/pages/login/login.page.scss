@@ -57,3 +57,23 @@ ion-text small {
   text-align: center;
   margin-top: 16px;
 }
+
+.password-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.password-item {
+  flex: 1;
+  margin-right: 8px;
+}
+
+.forgot-link {
+  color: #20399c;
+  font-size: 0.85rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+

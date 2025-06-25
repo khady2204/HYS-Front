@@ -1,0 +1,89 @@
+<ion-content class="">
+  <div class="container py-3">
+    <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center px-3 py-3">
+    <img src="assets/img/myLOve/logoHYS.png" alt="Logo HYS" style="height: 60px;">
+    <div class="d-flex gap-3 align-items-center">
+      <img src="assets/img/myLOve/Frame.png" alt="Notifications" style="width: 20px; height: 20px;">
+      <img src="assets/img/myLOve/account.png" alt="Profil" class="rounded-circle" style="width: 24px; height: 24px;">
+    </div>
+  </div>
+
+  <!-- Barre de recherche -->
+  <div class="px-3 mb-3">
+    <div class="input-group">
+      <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+      <input type="text" class="form-control border-start-0 border-end-1 rounded mr-2" placeholder="Search here">
+      <span class="input-group-text bg-white border-start-1 rounded"><i class="bi bi-sliders"></i></span>
+    </div>
+  </div>
+
+    <!-- Stories -->
+  <div class="overflow-auto px mb-3">
+    <div class="d-flex gap-3 flex-nowrap">
+      <div class="text-center">
+        <div class="border border-2 border-gray rounded-4 p-1 ml-4 d-flex justify-content-center align-items-center" style="width: 56px; height: 56px;">
+          <i class="bi bi-plus text-grey fs-2"></i>
+        </div>
+        <small class="d-block mt-1">Your Story</small>
+      </div>
+      <div class="text-center" *ngFor="let story of stories">
+        <img [src]="story.img" alt="" class="rounded-4 border border-grey p-1" style="width: 56px; height: 56px; object-fit: cover;">
+        <small class="d-block mt-1 text-truncate" style="width: 56px;">{{ story.name }}</small>
+      </div>
+    </div>
+  </div>
+
+     <!-- Card profil -->
+    <div class="">
+      <div class="position-relative rounded overflow-hidden" style="height: 320px">
+      <img src="assets/img/myLOve/photo01.png" alt="Profile" class="w-90 h-90 object-fit-cover">
+      <div class="position-absolute top-0 start-0 m-2 rounded-circle p-2">
+        <img src="assets/img/myLOve/account.png" alt="" >
+      </div>
+      <div class="position-absolute bottom-0 end-0 mb-5 m-3 d-flex flex-column gap-2" style="bottom: 40px;">
+        <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center" style="width:32px; height:32px;">
+          <img src="assets/img/cardRencontre/Close.png" alt="" style="width:16px; height:16px;">
+        </button>
+        <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center" style="width:32px; height:32px;">
+          <img src="assets/img/cardRencontre/Love.png" alt="" style="width:16px; height:16px;">
+        </button>
+      </div>
+      </div>
+    </div>
+
+     <div class="position-relative rounded overflow-hidden" style="height: 280px;">
+      <img src="assets/img/myLOve/photo02.png" alt="Profile" class="w-90 h-90 object-fit-cover">
+      <div class="position-absolute top-0 start-0 m-2 rounded-circle p-2">
+        <img src="assets/img/myLOve/account.png" alt="" >
+      </div>
+      <div class="position-absolute bottom-0 end-0 mb-5 m-3 d-flex flex-column gap-2" style="bottom: 40px;">
+        <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center" style="width:32px; height:32px;">
+          <img src="assets/img/cardRencontre/Close.png" alt="" style="width:16px; height:16px;">
+        </button>
+        <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center" style="width:32px; height:32px;">
+          <img src="assets/img/cardRencontre/Love.png" alt="" style="width:16px; height:16px;">
+        </button>
+      </div>
+      </div>
+
+    </div>
+
+  <!-- Menu flottant bas -->
+  <div class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 1050;">
+    <div class="text-white d-flex justify-content-between align-items-center px-4 py-2 rounded-pill shadow" style="min-width: 260px; background-color: rgba(255, 0, 138, 0.9);">
+      <a href="/rencontre" class="text-white">
+        <img src="assets/img/menuFlottant/Home.png" alt="Home" style="width: 22px; height:22px;">
+      </a>
+      <a href="/suggestion" class="text-white">
+        <img src="assets/img/menuFlottant/Romance.png" alt="Heart" style="width: 24px; height: 24px;">
+      </a>
+      <a href="#" class="text-white">
+        <img src="assets/img/menuFlottant/Add.png" alt="Add" class="d-flex align-items-center justify-content-center" style="width: 24px; height: 24px;">
+      </a>
+      <a href="#" class="text-white">
+        <img src="assets/img/menuFlottant/Chat.png" alt="Heart" style="width: 24px; height: 24px;">
+      </a>
+    </div>
+  </div>
+</ion-content>
