@@ -1,24 +1,43 @@
-.login-container {
+ ion-toolbar {
+  --border-width: 0;
+  box-shadow: none;
+  height: 56px;
+  --min-height: 56px;
+  
+  max-width: 420px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 16px;
+}ion-back-button {
+  margin-left: -20px; 
+}
+ .login-container {
+  --background: #c2c2d6;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  background: linear-gradient(to bottom right, #f8f9fa, #e0e0e0);
 }
 
 .login-wrapper {
-  width: 100%;
-  max-width: 400px;
+  background: #fff;
+  border-radius: 20px;
   padding: 24px;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  margin: auto;
 }
+  
 
 .logo-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .logo-img {
@@ -29,10 +48,33 @@
 
 .login-title {
   text-align: center;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   color: #20399c;
+}
+
+.input-label {
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+  margin-top: 12px;
+  color: #000;
+  padding-left: 4px;
+}
+
+.input-item {
+  --padding-start: 0;
+  --padding-end: 0;
+  --min-height: 36px;
+  --inner-padding-top: 0;
+  --inner-padding-bottom: 0;
+}
+
+.custom-input::part(native) {
+  font-size: 14px;
+  height: 30px;
+  padding: 4px 0;
 }
 
 ion-item {
@@ -55,13 +97,26 @@ ion-text small {
 
 .secondary-actions {
   text-align: center;
-  margin-top: 16px;
+  margin-top: 10px;
+  font-style: italic;
 }
 
-.password-container {
+.bp-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  max-width: 400px;
+}
+
+.terms {
+  --background: transparent;
+  margin: 0;
+  padding: 0;
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
+  --padding-start: 0;
+  --min-height: 40px;
 }
 
 .password-item {
@@ -76,4 +131,30 @@ ion-text small {
   white-space: nowrap;
 }
 
+.google-login {
+  margin-top: 2px;
+  text-align: center;
+}
 
+.google-btn {
+  --color: #444;
+  --border-color: #ccc;
+  --background: #fff;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  height: 40 px;
+  width: 100%;          
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}

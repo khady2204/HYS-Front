@@ -10,52 +10,32 @@
     <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
 
       <div class="row">
-        
-        <ion-input
-          class="half-input"
-          type="text"
-          placeholder="Nom"
-          formControlName="lastName"
-          fill="solid">
-        </ion-input>
-
-        <ion-input
-          class="half-input"
-          type="text"
-          placeholder="Prénom"
-          formControlName="firstName"
-          fill="solid">
-        </ion-input>
+        <div class="input-container">
+          <label class="input-label">Nom</label>
+          <ion-input class="half-input" type="text" formControlName="lastName" fill="solid"></ion-input>
+        </div><div class="input-container">
+          <label class="input-label">Prenom</label>
+          <ion-input class="half-input" type="text" formControlName="firstName"
+            fill="solid">
+          </ion-input>
+       </div>
       </div>
-
-      <ion-input
-        type="text"
-        placeholder="Adresse"
-        formControlName="address"
-        fill="solid">
-      </ion-input>
-
-      <ion-input
-        type="text"
-        placeholder="Sexe"
-        formControlName="sex"
-        fill="solid">
-      </ion-input>
-
-      <ion-input
-        type="email"
-        placeholder="Email"
-        formControlName="email"
-        fill="solid">
-      </ion-input>
-
-      <ion-input
-        type="password"
-        placeholder="Mots de pass"
-        formControlName="password"
-        fill="solid">
-      </ion-input>
-
+      <div class="input-container">
+        <label class="input-label">Adresse</label>
+        <ion-input type="text" formControlName="address" fill="solid"> </ion-input>
+      </div>
+      <div class="input-container">
+        <label class="input-label">Sexe</label>
+        <ion-input type="text" formControlName="sex" fill="solid"> </ion-input>
+      </div>
+      <div class="input-container">
+        <label class="input-label">Email</label>
+        <ion-input type="email" formControlName="email" fill="solid"> </ion-input>
+      </div>
+      <div class="input-container">
+        <label class="input-label">Mot de passe</label>
+        <ion-input type="password" formControlName="password" fill="solid"> </ion-input>
+      </div>
       <ion-item lines="none" class="checkbox-item">
         <ion-checkbox slot="start" formControlName="acceptTerms"></ion-checkbox>
         <ion-label>J’accepte</ion-label>

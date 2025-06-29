@@ -1,60 +1,98 @@
 .home-container {
-  min-height: 100vh;
+  --background: #c2c2d6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+ion-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.home-wrapper {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px 16px;
+  width: 98%;
+  max-width: 420px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 24px;
-  text-align: center;
-  background: #fff;
+  margin: auto;
+  height: 100%;
 }
 
-.dots {
+.illustration-circle {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background-color: #eee;
   display: flex;
   justify-content: center;
-  margin: 16px 0;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #d3d3d3;
-  margin: 0 6px;
-}
-
-.dot.active {
-  background: #20399c;
+.illustration-circle img {
+  width: 100px;
+  height: auto;
 }
 
 .logo-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 .logo-img {
-  width: 120px;
+  width: 80px; /* plus petit que le haut */
   height: auto;
   margin: 0 auto;
 }
+/* Points de progression */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #bbb;
+}
+
+.dot.active {
+  background-color: #20399c;
+}
 
 .welcome-text {
-  margin-top: 10px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #222;
   text-align: center;
+  margin: 12px 0;
 }
 
-.welcome-text .subtitle {
-  font-size: 0.75rem;
-  font-weight: 400;
-  margin-top: 4px;
-  color: #444;
+.welcome-text p {
+  margin: 4px 0;
+  font-size: 1rem;
 }
 
+.subtitle {
+  font-size: 0.9rem;
+  color: #090909;
+}
 .start-button {
   --background: #20399c;
   --color: #fff;
+  font-weight: 600;
+  border-radius: 10px;
+  margin-top: 16px;
+  width: 100%;
 }
