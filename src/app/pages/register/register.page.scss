@@ -1,5 +1,5 @@
 .register-container {
-  --background: #5c5b8c;
+  --background: #c2c2d6;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +23,7 @@
 .logo-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 .logo {
@@ -35,13 +35,28 @@
   font-size: 24px;
   font-weight: bold;
   color: #20398c;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
 .row {
   display: flex;
   gap: 12px;
   margin-bottom: 12px;
+}
+.input-label {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #000;
+  display: block;
+  padding-left: 4px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1Opx;
+  width: 100%;
 }
 
 .half-input {
@@ -55,12 +70,12 @@ ion-input {
   --background: #f1f1f1;
   --padding-start: 12px;
   --border-radius: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .checkbox-item {
   background: transparent;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   --padding-start: 0;
   --inner-padding-end: 0;
 }
@@ -76,7 +91,7 @@ ion-button.login-button {
 
 .bottom-text {
   text-align: center;
-  margin-top: 16px;
+  margin-top: 12px;
   font-size: 14px;
 }
 

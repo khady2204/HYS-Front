@@ -10,6 +10,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem,
   IonImg } from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +28,7 @@ import { ToastController } from '@ionic/angular';
 export class RegisterPage {
   registerForm: FormGroup;
 
-  constructor(
+  constructor(private authService: AuthService,
     private router: Router,
     private fb: FormBuilder,
     private toastCtrl: ToastController
@@ -44,22 +45,35 @@ export class RegisterPage {
   }
 
   async onRegister() {
-    if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
+    if (this.registerForm.invalid) {
       const toast = await this.toastCtrl.create({
-        message: 'Inscription réussie !',
-        duration: 2000,
-        color: 'success'
-      });
-      await toast.present();
-    } else {
-      const toast = await this.toastCtrl.create({
-        message: 'Veuillez remplir tous les champs correctement.',
+        message: 'Veuillez remplir tous les champs.',
         duration: 2000,
         color: 'danger'
       });
-      await toast.present();
+      return await toast.present();
     }
+
+    this.authService.register(this.registerForm.value).subscribe({
+      next: async () => {
+        const toast = await this.toastCtrl.create({
+          message: 'Inscription réussie !',
+          duration: 2000,
+          color: 'success'
+        });
+        await toast.present();
+        this.router.navigate(['/login']);
+      },
+      error: async (err) => {
+        const toast = await this.toastCtrl.create({
+          message: 'Erreur lors de l’inscription.',
+          duration: 2000,
+          color: 'danger'
+        });
+        await toast.present();
+        console.error(err);
+      }
+    });
   }
   
 
