@@ -27,12 +27,12 @@
     </div>
     <div class="grid grid-cols-3 gap-x-3 gap-y-3">
       <ng-container *ngFor="let service of services">
-        <div class="flex items-center bg-blue-900 rounded-xl px-1 py-1 shadow w-full max-w-xs mx-auto my-2">
+        <a href="/construction" class="flex items-center bg-blue-900 rounded-xl px-1 py-1 shadow w-full max-w-xs mx-auto my-2 no-underline">
           <div class="flex items-center justify-center w-8 h-8 bg-white rounded-full mr-2">
             <img [src]="service.iconPath" [alt]="service.label" class="w-5 h-5 object-contain" />
           </div>
-            <span class="text-xs text-white text-left" style="font-family: 'Pacifico', cursive;">{{ service.label }}</span>
-        </div>
+          <span class="text-xs text-white text-left" style="font-family: 'Pacifico', cursive;">{{ service.label }}</span>
+        </a>
       </ng-container>
     </div>
   </div>
