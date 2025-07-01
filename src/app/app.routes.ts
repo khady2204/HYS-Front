@@ -39,9 +39,14 @@ export const routes: Routes = [
   {
     path: 'f-password',
     loadComponent: () => import('./pages/f-password/f-password.page').then( m => m.FPasswordPage)
-  },  {
+  },
+  {
     path: 'construction',
     loadComponent: () => import('./pages/construction/construction.page').then( m => m.ConstructionPage)
+  },
+  {
+    path: 'accueil',
+    loadComponent: () => import('./pages/accueil/accueil.page').then( m => m.AccueilPage)
   },
 
 ];

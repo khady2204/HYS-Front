@@ -1,0 +1,19 @@
+h2 {
+  font-size: 30px;
+  margin-top: -25px;
+  margin-bottom: 60px;
+}
+
+
+.icon-wrapper {
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+}
+
+.icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(0); // rend l'icône noire
+}
