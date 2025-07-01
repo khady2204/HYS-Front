@@ -1,5 +1,5 @@
 .home-container {
-  --background: #c2c2d6;
+  --background: rgb(251, 247, 250);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,8 +17,8 @@ ion-content {
   background: #fff;
   border-radius: 20px;
   padding: 24px 16px;
-  width: 98%;
-  max-width: 420px;
+  width: 100%;
+  max-width: 350px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -29,29 +29,29 @@ ion-content {
 }
 
 .illustration-circle {
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   background-color: #eee;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 50px;
 }
 
 .illustration-circle img {
-  width: 100px;
+  width: 200px;
   height: auto;
 }
 
 .logo-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .logo-img {
-  width: 80px; /* plus petit que le haut */
+  width: 150px; 
   height: auto;
   margin: 0 auto;
 }
@@ -64,35 +64,37 @@ ion-content {
 }
 
 .dot {
-  width: 8px;
+  width: 10px;
   height: 8px;
   border-radius: 50%;
   background-color: #bbb;
 }
 
 .dot.active {
-  background-color: #20399c;
+  background-color: #0D3873;
 }
 
 .welcome-text {
   text-align: center;
-  margin: 12px 0;
+  margin: 10px 0;
 }
 
 .welcome-text p {
   margin: 4px 0;
-  font-size: 1rem;
+  font-size: 0.7rem;
 }
 
 .subtitle {
   font-size: 0.9rem;
   color: #090909;
 }
+
 .start-button {
   --background: #20399c;
   --color: #fff;
   font-weight: 600;
   border-radius: 10px;
-  margin-top: 16px;
-  width: 100%;
+  margin-top: 10px;
+  width: 200px;
+  text-transform: none;
 }

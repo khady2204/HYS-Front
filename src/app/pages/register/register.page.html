@@ -1,56 +1,52 @@
 <ion-content class="register-container">
   <div class="register-wrapper">
-
     <div class="logo-container">
       <ion-img src="assets/logo.png" class="logo"></ion-img>
     </div>
-
     <h2 class="form-title">Inscription</h2>
-
     <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-
       <div class="row">
         <div class="input-container">
           <label class="input-label">Nom</label>
-          <ion-input class="half-input" type="text" formControlName="lastName" fill="solid"></ion-input>
-        </div><div class="input-container">
+          <ion-input class="half-input" type="text" formControlName="lastName"></ion-input>
+        </div>
+        <div class="input-container">
           <label class="input-label">Prenom</label>
-          <ion-input class="half-input" type="text" formControlName="firstName"
-            fill="solid">
+          <ion-input class="half-input" type="text" formControlName="firstName">
           </ion-input>
-       </div>
+        </div>
       </div>
       <div class="input-container">
         <label class="input-label">Adresse</label>
-        <ion-input type="text" formControlName="address" fill="solid"> </ion-input>
+        <ion-input type="text" formControlName="address"></ion-input>
       </div>
       <div class="input-container">
-        <label class="input-label">Sexe</label>
-        <ion-input type="text" formControlName="sex" fill="solid"> </ion-input>
+        <label class="input-label">Genre</label>
+        <ion-select formControlName="genre">
+        <ion-select-option value="Homme">Homme</ion-select-option>
+        <ion-select-option value="Femme">Femme</ion-select-option>
+        </ion-select>
       </div>
       <div class="input-container">
         <label class="input-label">Email</label>
-        <ion-input type="email" formControlName="email" fill="solid"> </ion-input>
+        <ion-input type="email" formControlName="email"></ion-input>
       </div>
       <div class="input-container">
         <label class="input-label">Mot de passe</label>
-        <ion-input type="password" formControlName="password" fill="solid"> </ion-input>
+        <ion-input type="password" formControlName="password"></ion-input>
       </div>
       <ion-item lines="none" class="checkbox-item">
-        <ion-checkbox slot="start" formControlName="acceptTerms"></ion-checkbox>
+        <ion-checkbox slot="start" formControlName="acceptTerms" class="term"></ion-checkbox>
         <ion-label>J’accepte</ion-label>
       </ion-item>
-
       <ion-button class="login-button" expand="block" type="submit" [disabled]="registerForm.invalid">
         S’inscrire
       </ion-button>
     </form>
-
     <div class="bottom-text">
       <p>Vous avez un compte ? 
         <a routerLink="/login" class="login-link">Se connecter</a>
       </p>
     </div>
-
   </div>
 </ion-content>

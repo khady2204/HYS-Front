@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem,
-  IonLabel,
-  IonInput,
-  IonCheckbox,
-  IonButton,
-  IonText,
-  IonImg } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem,IonLabel, IonInput, IonCheckbox, IonButton, IonText, IonImg, IonSelect, IonSelectOption} from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonContent,RouterModule,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonContent,RouterModule, IonSelect, IonSelectOption,
   IonItem,
   IonLabel,
   IonInput,

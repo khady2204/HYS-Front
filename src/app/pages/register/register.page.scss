@@ -9,25 +9,27 @@
 .register-wrapper {
   background: #fff;
   border-radius: 20px;
-  padding: 24px;
-  width: 90%;
-  max-width: 420px;
+  padding: 0px 20px;
+  width: 100%;
+  max-width: 350px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
   margin: auto;
+  height: 100%
 }
 
 .logo-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 8px;
+  margin-bottom: 3px
 }
 
 .logo {
-  width: 120px;
+  width: 100px;
+  height: auto;
 }
 
 .form-title {
@@ -35,18 +37,18 @@
   font-size: 24px;
   font-weight: bold;
   color: #20398c;
-  margin-bottom: 50px;
+  margin-bottom: 15px;
 }
 
 .row {
   display: flex;
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 2px;
 }
 .input-label {
   font-weight: 500;
   font-size: 14px;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   color: #000;
   display: block;
   padding-left: 4px;
@@ -55,27 +57,26 @@
 .input-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1Opx;
+  margin-bottom: 2px;
   width: 100%;
 }
 
 .half-input {
   flex: 1;
   --background: #f1f1f1;
-  --padding-start: 12px;
+  --padding-start: 10px;
   --border-radius: 10px;
 }
 
 ion-input {
   --background: #f1f1f1;
-  --padding-start: 12px;
+  --padding-start: 10px;
   --border-radius: 10px;
-  margin-bottom: 10px;
 }
 
 .checkbox-item {
   background: transparent;
-  margin-bottom: 12px;
+  margin-bottom: 2px;
   --padding-start: 0;
   --inner-padding-end: 0;
 }
@@ -84,14 +85,13 @@ ion-button.login-button {
   --background: #20398c;
   --border-radius: 12px;
   font-weight: 600;
-  margin-top: 8px;
   color: white;
 }
 
 
 .bottom-text {
   text-align: center;
-  margin-top: 12px;
+  margin-top: 5px;
   font-size: 14px;
 }
 
@@ -100,4 +100,18 @@ ion-button.login-button {
   color: #20399c;
   font-weight: 600;
   text-decoration: none;
+}
+ion-select {
+  --background: #f1f1f1;
+  --padding-start: 10px;
+  --border-radius: 10px;
+  margin-bottom: 2px;
+  --padding-end: 30px;
+  --icon-color: #000;
+  text-align: left;
+}
+
+ion-checkbox.term{
+  box-shadow: 0 4px 4px rgba(15, 15, 15, 0.3);
+  --background: #0D3873;
 }
