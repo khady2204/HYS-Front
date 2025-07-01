@@ -1,55 +1,53 @@
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
 <ion-content class=" login-container" fullscreen>
   <div class="login-wrapper">
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/" text=""></ion-back-button>
-      </ion-buttons>
-    </ion-toolbar>
     <div class="logo-container">
       <ion-img src="assets/logo.png" class="logo-img"></ion-img>
     </div>
-
     <h2 class="login-title">Connexion</h2>
+    <div class="google-login">
+      <ion-button expand="block" fill="outline" class="google-btn">
+      <ion-img src="assets/google-icon.png" class="google-icon" slot="start"></ion-img>
+      </ion-button>
+      <ion-button expand="block" fill="outline" class="google-btn">
+      <ion-img src="assets/google-icon.png" class="google-icon" slot="start"></ion-img>
+      </ion-button>
+    </div>
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-      <label class="input-label">Email</label>
-      <ion-item lines="none" class="input-item" >
-        <ion-input type="email" formControlName="email" required fill="solid" class="custom-input" ></ion-input>
-      </ion-item> 
+       <div class="input-container">
+        <label class="input-label">Email</label>
+        <ion-input type="email" formControlName="email"> </ion-input>
+      </div>
       <ion-text color="danger" *ngIf="email.invalid && email.touched">
         <small>Email invalide</small>
       </ion-text>
-      <label class="input-label">Mot de passe</label>
-      <ion-item lines="none" class="input-item" >
-        <ion-input type="password" formControlName="password" required fill="solid" class="custom-input"></ion-input>
-      </ion-item>
+      <div class="input-container">
+        <label class="input-label">Mot de passe</label>
+        <ion-input type="password" formControlName="password"> </ion-input>
+      </div>
         <ion-text color="danger" *ngIf="password.invalid && password.touched">
           <small>Mot de passe requis (min 6 caractères)</small>
         </ion-text>
       <div class="bp-container">
       <ion-item lines="none" class="terms">
-        <ion-checkbox slot="start" name="acceptTerms"></ion-checkbox>
+        <ion-checkbox slot="start" name="acceptTerms" class="term"></ion-checkbox>
         <ion-label>J’accepte</ion-label>
       </ion-item>
       <a routerLink="/f-password" class="forgot-link" > mot de passe oublié ?</a>
       </div>
-      <div class="ion-padding">
-        <ion-button class="login-button" expand="block" type="submit" [disabled]="loginForm.invalid">
-          Se connecter
-        </ion-button>
-      </div>
-    </form>
-    <div class="google-login">
-      <ion-button expand="block" fill="outline" class="google-btn">
-      <ion-img src="assets/google-icon.png" class="google-icon" slot="start"></ion-img>
-      Continuer avec Google
+      <ion-button class="login-button" expand="block" type="submit" [disabled]="loginForm.invalid">
+        Se connecter
       </ion-button>
-    </div>
+      
+    </form>
     <div class="secondary-actions">
       <ion-text>
-        <p>Vous n'avez pas de compte?  <a routerLink="/register" class="login-link">S'inscrire</a>
-        </p>
+        <p>Vous n'avez pas de compte?  <a routerLink="/register" class="login-link">S'inscrire</a></p>
       </ion-text>
-    </div>
-    
+    </div>  
   </div>
 </ion-content>

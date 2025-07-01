@@ -4,11 +4,14 @@
   height: 56px;
   --min-height: 56px;
   
-  max-width: 420px;
+  max-width: 350px;
   margin: 0 auto;
   width: 100%;
   padding: 0 16px;
-}ion-back-button {
+  border-top-left-radius: 20px;
+border-top-right-radius: 20px;
+}
+ion-back-button {
   margin-left: -20px; 
 }
  .login-container {
@@ -21,27 +24,31 @@
 
 .login-wrapper {
   background: #fff;
-  border-radius: 20px;
+  border-top-left-radius: 0;
+border-top-right-radius: 0;
+border-bottom-left-radius: 20px;
+border-bottom-right-radius: 20px;
   padding: 24px;
   width: 100%;
-  max-width: 420px;
+  max-width: 350px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
   margin: auto;
+  height: 100%;
 }
   
 
 .logo-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 3px;
 }
 
 .logo-img {
-  width: 120px;
+  width: 100px;
   height: auto;
   margin: 0 auto;
 }
@@ -50,35 +57,62 @@
   text-align: center;
   font-size: 1.4rem;
   font-weight: bold;
-  margin-bottom: 30px;
-  color: #20399c;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  color: #0D3873;
 }
 
+.google-login {
+  margin-top: 2px;
+  text-align: center;
+  display: flex;
+}
+
+.google-btn {
+  --border-color:#0D3873;
+  --background:#0D3873;
+  border-radius: 8px;
+  height: 20px;
+  width: 150px; 
+  margin: 15px 10px;         
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  padding: 0px;
+  
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+}
 .input-label {
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 14px;
   margin-bottom: 4px;
-  margin-top: 12px;
   color: #000;
+  display: block;
   padding-left: 4px;
 }
 
-.input-item {
-  --padding-start: 0;
-  --padding-end: 0;
-  --min-height: 36px;
-  --inner-padding-top: 0;
-  --inner-padding-bottom: 0;
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  width: 100%;
 }
 
-.custom-input::part(native) {
-  font-size: 14px;
-  height: 30px;
-  padding: 4px 0;
+.half-input {
+  flex: 1;
+  --background: #f1f1f1;
+  --padding-start: 10px;
+  --border-radius: 10px;
 }
 
-ion-item {
-  margin-bottom: 12px;
+ion-input {
+  --background: #f1f1f1;
+  --padding-start: 10px;
+  --border-radius: 10px;
 }
 
 ion-text small {
@@ -86,18 +120,21 @@ ion-text small {
   font-size: 0.85rem;
 }
 
-.login-button{
-  --background: #20399c ;
+ion-button.login-button{
+  --background: #0D3873;
   --color: white ;
+  text-transform: none;
+  margin-bottom: 15px;
 }
 
 .login-link{
-  color: #20399c;
+  color: #0D3873;
+
 }
 
 .secondary-actions {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 5px;
   font-style: italic;
 }
 
@@ -106,7 +143,8 @@ ion-text small {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 400px;
+  max-width: 300px;
+  margin-bottom: 20px;
 }
 
 .terms {
@@ -119,42 +157,20 @@ ion-text small {
   --min-height: 40px;
 }
 
+ion-checkbox.term{
+  box-shadow: 0 4px 4px rgba(15, 15, 15, 0.3);
+  color: #0D3873;
+}
+
 .password-item {
   flex: 1;
   margin-right: 8px;
 }
 
 .forgot-link {
-  color: #20399c;
+  color: #0D3873;
   font-size: 0.85rem;
   text-decoration: none;
   white-space: nowrap;
 }
 
-.google-login {
-  margin-top: 2px;
-  text-align: center;
-}
-
-.google-btn {
-  --color: #444;
-  --border-color: #ccc;
-  --background: #fff;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 0.95rem;
-  height: 40 px;
-  width: 100%;          
-  padding: 0 16px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-}
-
-.google-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
-}

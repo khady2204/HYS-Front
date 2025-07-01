@@ -5,6 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
 import { Router, RouterModule } from '@angular/router';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,13 +17,17 @@ import { CommonModule } from '@angular/common';
 export class LoginPage {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router,
+    private authService: AuthService, 
+    private toastController: ToastController // Pour afficher des messages toast
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
+  // Getters pour accéder facilement aux champs du formulaire dans le HTML
   get email() {
     return this.loginForm.get('email')!;
   }
@@ -31,13 +36,39 @@ export class LoginPage {
     return this.loginForm.get('password')!;
   }
 
-  onLogin() {
-    if (this.loginForm.valid) {
-      console.log('Connexion réussie', this.loginForm.value);
-      this.router.navigate(['/home']);
-    } else {
-      console.log('Formulaire invalide ');
-    }
+  // Fonction pour afficher un toast (message temporaire à l'écran)
+  async showToast(message: string, color: 'success' | 'danger' = 'success') {
+    const toast = await this.toastController.create({
+      message, // Message à afficher
+      duration: 3000, // Durée en millisecondes
+      color, // Couleur (success ou danger)
+    });
+    toast.present(); // Affiche le toast
   }
 
+  // Méthode exécutée quand l'utilisateur clique sur "Se connecter"
+  onLogin() {
+    // Si le formulaire est invalide, afficher un message d'erreur
+    if (this.loginForm.invalid) {
+      this.showToast('Veuillez corriger les erreurs', 'danger');
+      return;
+    }
+
+    // Appel au service d'authentification
+    this.authService.login(this.loginForm.value).subscribe({
+      // Si la connexion réussit
+      next: (res) => {
+        console.log('Connexion réussie :', res);
+        this.showToast('Connexion réussie !');
+        // Tu peux stocker le token ici si besoin : localStorage.setItem('token', res.token)
+        this.router.navigate(['/home']); // Redirection vers la page d’accueil
+      },
+      // Si la connexion échoue (email ou mot de passe incorrect par exemple)
+      error: (err) => {
+        console.error('Erreur de connexion :', err);
+        this.showToast('Email ou mot de passe incorrect', 'danger');
+      }
+    });
+  }
 }
+
