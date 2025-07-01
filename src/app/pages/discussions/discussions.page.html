@@ -1,0 +1,96 @@
+<ion-content class="bg-pink">
+
+  <!-- HEADER + STORIES regroupés -->
+  <div
+    class="header px-3 pt-5 pb-3"
+  >
+
+    <!-- Ligne du haut -->
+    <div class="d-flex align-items-center justify-content-between pb-3">
+      <!-- Icône recherche -->
+      <i class="bi bi-search fs-4 text-white rounded-circle d-flex align-items-center justify-content-center"></i>
+
+      <!-- Menu déroulant centré -->
+      <div class="dropdown">
+        <button
+          class="btn bg-white text-dark py-1 px-3 rounded-3 d-flex align-items-center gap-5"
+          type="button"
+          data-bs-toggle="dropdown"
+          style="font-size: 0.9rem; font-family: Arial;"
+        >
+          My lover
+          <i class="bi bi-sliders pl-3"></i>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">My love</a></li>
+          <li><a class="dropdown-item" href="#">My friend</a></li>
+        </ul>
+      </div>
+
+      <!-- Avatar profile -->
+      <a href="/profile">
+        <img
+          src="assets/img/myLOve/suggestion/tabProfile.png"
+          alt="Profile"
+          class="rounded-circle border border-white"
+          width="40"
+          height="40"
+        />
+      </a>
+    </div>
+
+    <div class="d-flex overflow-auto gap-3 pt-2 pb-1 px-3">
+
+  <!-- Mon statut -->
+  <div class="d-flex flex-column pb-3 align-items-center text-white text-center" style="font-size: 0.7rem;">
+    <div class="position-relative">
+      <img src="assets/img/myLOve/suggestion/tabProfile.png" class="rounded-circle border border-white" width="55" height="55" />
+      <div class="position-absolute bottom-0 end-0 bg-white text-pink rounded-circle"
+           style="width: 18px; height: 18px; font-size: 1rem; display: flex; align-items: center; justify-content: center;">
+        <i class="bi bi-plus text-black"></i>
+      </div>
+    </div>
+    <span class="mt-1">mon statut</span>
+  </div>
+
+  <!-- Autres statuts -->
+  <div class="d-flex flex-column pb-3 align-items-center text-white text-center" style="font-size: 0.7rem;" *ngFor="let s of [1,2,3,4]">
+    <div class="">
+      <img src="assets/img/myLOve/suggestion/user2.png" class="rounded-circle bg-grey" style="object-fit: cover; display: block; height: 55px;" />
+    </div>
+    <span class="mt-1">statut</span>
+  </div>
+
+</div>
+  </div>
+
+  <!-- ONGLET -->
+  <div class="d-flex w-100 position-relative" style="margin-top: -27px;">
+    <a class="tab-button active disabled" tabindex="-1" aria-disabled="true">Discussions</a>
+    <a routerLink="/suggestions" class="tab-button inactive">Suggestions</a>
+  </div>
+
+  <!-- DISCUSSIONS -->
+  <div class="px-3 mt-3">
+    <div *ngFor="let user of discussions" class="d-flex justify-content-between align-items-center border-bottom py-3">
+      <div class="d-flex align-items-center gap-3 position-relative">
+        <img [src]="user.photo" class="rounded-circle" width="50" height="50" />
+        <!-- Online/Offline indicator -->
+        <span 
+          class="position-absolute"
+          style="bottom: 0; left: 40px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #fff;"
+          [ngStyle]="{'background-color': user.online ? '#4CAF50' : '#BDBDBD'}">
+        </span>
+        <div>
+          <div class="fw-bold" style="font-family: Arial">{{ user.name }}</div>
+          <div class="text-muted small">Lorem ipsum is a</div>
+        </div>
+      </div>
+      <div class="text-end">
+        <div class="text-muted small">2 min</div>
+        <div *ngIf="user.unread > 0" class="badge text-white rounded-circle px-2 py-1" style="background-color: #FF4A4A;">{{ user.unread }}</div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>
