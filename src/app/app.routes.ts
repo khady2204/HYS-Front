@@ -51,6 +51,10 @@ export const routes: Routes = [
     path: 'discussions',
     loadComponent: () => import('./pages/discussions/discussions.page').then( m => m.DiscussionsPage)
   },
+  {
+    path: 'profile',
+    loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage)
+  },
 
 
 ];
