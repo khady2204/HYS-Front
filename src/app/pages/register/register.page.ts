@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
-  styleUrls: ['./register.page.scss'],
+  styleUrls: ['./register.page.css'],
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, IonContent,RouterModule, IonSelect, IonSelectOption,
   IonItem,

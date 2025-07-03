@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  styleUrls: ['./login.page.css'],
   standalone: true,
   imports: [IonicModule, FormsModule, ReactiveFormsModule, RouterModule, CommonModule]
 })
