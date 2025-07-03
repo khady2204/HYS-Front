@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 @Component({
   selector: 'app-f-password',
   templateUrl: './f-password.page.html',
-  styleUrls: ['./f-password.page.scss'],
+  styleUrls: ['./f-password.page.css'],
   standalone: true,
   imports: [CommonModule, FormsModule, IonicModule]
 })

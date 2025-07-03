@@ -6,7 +6,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
 @Component({
   selector: 'app-dashbord',
   templateUrl: './dashbord.page.html',
-  styleUrls: ['./dashbord.page.scss'],
+  styleUrls: ['./dashbord.page.css'],
   standalone: true,
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
