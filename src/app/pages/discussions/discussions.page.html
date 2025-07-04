@@ -10,22 +10,8 @@
       <!-- Icône recherche -->
       <i class="bi bi-search fs-4 text-white rounded-circle d-flex align-items-center justify-content-center"></i>
 
-      <!-- Menu déroulant centré -->
-      <div class="dropdown">
-        <button
-          class="btn bg-white text-dark py-1 px-3 rounded-3 d-flex align-items-center gap-5"
-          type="button"
-          data-bs-toggle="dropdown"
-          style="font-size: 0.9rem; font-family: Arial;"
-        >
-          My lover
-          <i class="bi bi-sliders pl-3"></i>
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">My love</a></li>
-          <li><a class="dropdown-item" href="#">My friend</a></li>
-        </ul>
-      </div>
+      <!-- Menu filtre -->
+      <app-dropdown-drawer></app-dropdown-drawer>
 
       <!-- Avatar profile -->
       <a href="/profile">
@@ -67,15 +53,14 @@
   <!-- ONGLET -->
   <div class="d-flex w-100 position-relative" style="margin-top: -27px;">
     <a class="tab-button active disabled" tabindex="-1" aria-disabled="true">Discussions</a>
-    <a routerLink="/suggestions" class="tab-button inactive">Suggestions</a>
+    <a href="suggestion" class="tab-button inactive">Suggestions</a>
   </div>
 
   <!-- DISCUSSIONS -->
   <div class="px-3 mt-3">
-    <div *ngFor="let user of discussions" class="d-flex justify-content-between align-items-center border-bottom py-3">
+    <a *ngFor="let user of discussions" [routerLink]="['/chat']" class="d-flex justify-content-between align-items-center border-bottom py-3 text-decoration-none text-dark">
       <div class="d-flex align-items-center gap-3 position-relative">
         <img [src]="user.photo" class="rounded-circle" width="50" height="50" />
-        <!-- Online/Offline indicator -->
         <span 
           class="position-absolute"
           style="bottom: 0; left: 40px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #fff;"
@@ -90,7 +75,10 @@
         <div class="text-muted small">2 min</div>
         <div *ngIf="user.unread > 0" class="badge text-white rounded-circle px-2 py-1" style="background-color: #FF4A4A;">{{ user.unread }}</div>
       </div>
-    </div>
+    </a>
   </div>
+
+  <!-- MENU FLOTTANT -->
+  <app-floating-menu></app-floating-menu>
 
 </ion-content>

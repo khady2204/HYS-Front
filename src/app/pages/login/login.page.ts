@@ -34,7 +34,7 @@ export class LoginPage {
   onLogin() {
     if (this.loginForm.valid) {
       console.log('Connexion réussie', this.loginForm.value);
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/accueil']);
     } else {
       console.log('Formulaire invalide ');
     }

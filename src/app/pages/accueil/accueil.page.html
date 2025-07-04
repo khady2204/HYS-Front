@@ -1,8 +1,8 @@
 <div class="image-wrapper position-relative">
 
    <!-- Bouton "options" -->
-  <div class="d-flex justify-content-end px-3 pt-3 position-absolute w-100" style="z-index: 20;">
-    <button class="btn p-1 rounded-circle shadow-sm" style="background-color: rgba(230, 227, 227, 0.74);">
+  <div class="options-btn-wrapper">
+    <button class="options-btn">
       <i class="bi bi-three-dots-vertical text-secondary"></i>
     </button>
   </div>
@@ -20,17 +20,17 @@
     <div class="row gx-3 gy-3 text-center justify-content-center px-2">
       <div class="col-6 d-flex justify-content-center" *ngFor="let service of services">
         <a
-      [routerLink]="service.link"
-      class="btn text-white px-4 py-3 mb-3 d-flex align-items-center gap-2 rounded-3 fs-5 text-decoration-none"
-      style="min-width: 90%;"
-      [ngStyle]="{ 'background-color': service.color }">
+          [routerLink]="service.link"
+          class="btn text-white px-4 py-3 mb-3 d-flex align-items-center gap-2 rounded-3 fs-5 text-decoration-none"
+          style="min-width: 90%;"
+          [ngStyle]="{ 'background-color': service.color }">
 
-      <div class="icon-wrapper d-flex align-items-center justify-content-center bg-white rounded-circle">
-        <img [src]="service.icon" class="icon-img" alt="icon" />
-      </div>
+          <div class="icon-wrapper d-flex align-items-center justify-content-center bg-white rounded-circle">
+            <img [src]="service.icon" class="icon-img" alt="icon" />
+          </div>
 
-      {{ service.label }}
-    </a>
+          {{ service.label }}
+        </a>
       </div>
     </div>
 

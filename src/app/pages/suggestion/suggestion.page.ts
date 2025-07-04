@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar} from '@ionic/angular/standalone';
-import { HeaderSearchComponent } from '../../shared/header-search/header-search.component';
+import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
+import { DropdownDrawerComponent } from 'src/app/components/dropdown-drawer/dropdown-drawer.component';
 
 @Component({
   selector: 'app-suggestion',
   templateUrl: './suggestion.page.html',
   styleUrls: ['./suggestion.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule]
+  imports: [IonContent, CommonModule, FormsModule, FloatingMenuComponent, DropdownDrawerComponent]
 })
 export class SuggestionPage implements OnInit {
 

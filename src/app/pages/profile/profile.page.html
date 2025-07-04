@@ -1,6 +1,6 @@
 <ion-content class="bg-white">
 
-  <ion-button fill="clear" color="light" class="position-absolute top-0 start-0 m-2" routerLink="/home" style="z-index: 10;">
+  <ion-button fill="clear" color="light" class="position-absolute top-0 start-0 m-2" routerLink="/discussions" style="z-index: 10;">
     <i class="bi bi-arrow-left text-dark m-2 pt-3 fs-5"></i>
   </ion-button>
 
@@ -47,5 +47,8 @@
       <img *ngFor="let photo of photos" [src]="photo" alt="Photo" class="border photos">
     </div>
   </div>
+
+  <!-- Menu flottant -->
+  <app-floating-menu></app-floating-menu>
 
 </ion-content>
