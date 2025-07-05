@@ -31,12 +31,12 @@
 
 <!-- Cartes Suggestions -->
   <div class="px-3 mt-5">
-    <div class="card mb-5 p-3 border-0 rounded-4 shadow-sm bg-white" *ngFor="let person of suggestions">
+    <div class="card mb-5 p-3 border-0 rounded-4 shadow-sm" *ngFor="let person of suggestions">
       <div class="d-flex align-items-center">
         <img [src]="person.photo" class="rounded-circle me-3" width="60" height="60" />
         <div>
-          <h6 class="fw-bold mb-1">{{ person.name }}</h6>
-            <div class="text-muted small" style="font-family: 'Inter'">
+          <h6 class="person-name fw-bold mb-1">{{ person.name }}</h6>
+            <div class="infos-person text-muted small" style="font-family: 'Inter'">
             Compatibilité de {{ person.compatibility }} % <br />
             {{ person.distance }} - Intérêts communs
             </div>

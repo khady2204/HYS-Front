@@ -44,7 +44,7 @@
     <div class="">
       <img src="assets/img/myLOve/suggestion/user2.png" class="rounded-circle bg-grey" style="object-fit: cover; display: block; height: 55px;" />
     </div>
-    <span class="mt-1">statut</span>
+    <span class="mt-1 user-status">statut</span>
   </div>
 
 </div>
@@ -67,8 +67,8 @@
           [ngStyle]="{'background-color': user.online ? '#4CAF50' : '#BDBDBD'}">
         </span>
         <div>
-          <div class="fw-bold" style="font-family: Arial">{{ user.name }}</div>
-          <div class="text-muted small">Lorem ipsum is a</div>
+          <div class="fw-bold user-name">{{ user.name }}</div>
+          <div class="text-muted small message">Lorem ipsum is a</div>
         </div>
       </div>
       <div class="text-end">
