@@ -1,0 +1,91 @@
+<ion-content class="bg-white">
+
+  <!-- Header -->
+  <div class="d-flex align-items-center justify-content-between px-3 pt-4">
+    <i class="bi bi-chevron-left fs-4"></i>
+    <h5 class="flex-grow-1 text-center mb-0 fw-bold">Edit Profile</h5>
+    <div style="width: 24px;"></div>
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center mt-4 mb-3 position-relative">
+    <!-- Photo de profil -->
+    <div class="profile-wrapper">
+      <img
+        src="assets/img/myLOve/profile/profile1.png"
+        alt="Profil"
+        class="profile-picture"
+        id="profilePreview"
+      />
+    </div>
+
+
+    <!-- Champ file invisible -->
+    <input
+      type="file"
+      id="profileImageInput"
+      accept="image/*"
+      style="display: none;"
+    />
+
+    <!-- Bouton caméra lié à l'input -->
+    <label
+      for="profileImageInput"
+      class="btn btn-pink p-1 rounded-circle position-absolute"
+      style="bottom: 0; right: calc(50% - 60px); transform: translateX(50%); cursor: pointer;"
+    >
+      <img src="assets/icon/vector-camera.png" class="mr-7" style="width: 20px; height: 20px;" />
+    </label>
+  </div>
+
+
+
+  <!-- Formulaire -->
+  <form class="px-3">
+    <div class="mb-3">
+      <label for="name" class="form-label fw-semibold">Name</label>
+      <input type="text" class="form-control" placeholder="Melissa Peters" />
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label fw-semibold">Email</label>
+      <input type="email" class="form-control" placeholder="melpetters@gmail.com" />
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label fw-semibold">Password</label>
+      <input type="password" class="form-control" placeholder="••••••••" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Date of Birth</label>
+      <div class="input-group">
+        <input type="date" class="form-control" />
+        <span class="input-group-text bg-white border-start-0">
+          <i class="bi bi-chevron-down"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="location" class="form-label fw-semibold">Country/Region</label>
+      <div class="input-group">
+        <select class="form-select">
+          <option selected disabled>Choose country</option>
+          <option value="Senegal">Senegal</option>
+          <option value="Nigeria">Nigeria</option>
+          <option value="canada">Canada</option>
+          <option value="uk">United Kingdom</option>
+        </select>
+        <span class="input-group-text bg-white border-start-0">
+        </span>
+      </div>
+    </div>
+
+    <div class="mb-3 text-center">
+      <button class="btn btn-sm btnSave px-4">Save Changes</button>
+    </div>
+
+
+  </form>
+
+</ion-content>
