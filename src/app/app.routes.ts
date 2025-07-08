@@ -25,5 +25,9 @@ export const routes: Routes = [
   {
     path: 'f-password',
     loadComponent: () => import('./pages/f-password/f-password.page').then( m => m.FPasswordPage)
+  },  {
+    path: 'validationsms',
+    loadComponent: () => import('./pages/validationsms/validationsms.page').then( m => m.ValidationsmsPage)
   },
+
 ];

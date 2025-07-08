@@ -8,24 +8,37 @@
       <div class="row">
         <div class="input-container">
           <label class="input-label">Nom</label>
-          <ion-input class="half-input" type="text" formControlName="lastName"></ion-input>
+          <ion-input class="half-input" type="text" formControlName="nom"></ion-input>
         </div>
         <div class="input-container">
           <label class="input-label">Prenom</label>
-          <ion-input class="half-input" type="text" formControlName="firstName">
+          <ion-input class="half-input" type="text" formControlName="prenom">
           </ion-input>
         </div>
+      </div>
+      <div class="row">
+      <div class="input-container">
+        <label class="input-label">Téléphone</label>
+        <ion-input class="half-input" type="tel" formControlName="phone">
+        </ion-input>
       </div>
       <div class="input-container">
         <label class="input-label">Adresse</label>
         <ion-input type="text" formControlName="address"></ion-input>
       </div>
+      </div>
+      <div class="row">
+      <div class="input-container">
+        <label class="input-label">Date de Naissance</label>
+        <ion-input type="date" formControlName="datenaissance"></ion-input>
+      </div>
       <div class="input-container">
         <label class="input-label">Genre</label>
-        <ion-select formControlName="genre">
+        <ion-select formControlName="sexe">
         <ion-select-option value="Homme">Homme</ion-select-option>
         <ion-select-option value="Femme">Femme</ion-select-option>
         </ion-select>
+      </div>
       </div>
       <div class="input-container">
         <label class="input-label">Email</label>
@@ -34,6 +47,10 @@
       <div class="input-container">
         <label class="input-label">Mot de passe</label>
         <ion-input type="password" formControlName="password"></ion-input>
+      </div>
+      <div class="input-container">
+        <label class="input-label">Confirmer Mot de passe</label>
+        <ion-input type="password" formControlName="confirmPassword"></ion-input>
       </div>
       <ion-item lines="none" class="checkbox-item">
         <ion-checkbox slot="start" formControlName="acceptTerms" class="term"></ion-checkbox>

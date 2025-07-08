@@ -22,14 +22,14 @@ export class LoginPage {
     private toastController: ToastController // Pour afficher des messages toast
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      identifier: ['', [Validators.required,Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)@(([^<>()[\]\\.,;:\s@\"]+\.)+[^<>()[\]\\.,;:\s@\"]{2,})|(\d{9,15}))$/) ]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
   // Getters pour accéder facilement aux champs du formulaire dans le HTML
-  get email() {
-    return this.loginForm.get('email')!;
+  get identifier() {
+    return this.loginForm.get('identifier')!;
   }
 
   get password() {
@@ -61,7 +61,7 @@ export class LoginPage {
         console.log('Connexion réussie :', res);
         this.showToast('Connexion réussie !');
         // Tu peux stocker le token ici si besoin : localStorage.setItem('token', res.token)
-        this.router.navigate(['/home']); // Redirection vers la page d’accueil
+        this.router.navigate(['/dashbord']); // Redirection vers la page d’accueil
       },
       // Si la connexion échoue (email ou mot de passe incorrect par exemple)
       error: (err) => {
