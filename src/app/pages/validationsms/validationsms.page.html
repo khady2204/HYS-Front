@@ -11,12 +11,13 @@
     <div class="title-container">
     <h1>Validation SMS</h1>
     </div>
-    
-    <div class="input-container">
-        <label class="input-label">Code</label>
-        <ion-input type="email"  placeholder="xxxxxxx"> </ion-input>
-    </div>
-    <ion-button expand="block" class="send-btn" type="submit">Valider</ion-button>
+    <form [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+      <div class="input-container">
+          <label class="input-label">Code</label>
+          <ion-input type="email"  placeholder="xxxxxxx" formControlName="otp"> </ion-input>
+      </div>
+      <ion-button expand="block" class="send-btn" type="submit">Valider</ion-button>
+    </form>
   </div>
 </ion-content>
  
