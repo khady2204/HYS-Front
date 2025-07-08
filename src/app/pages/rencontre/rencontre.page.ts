@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { HeaderSearchComponent } from '../../shared/header-search/header-search.component';
+import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
 
 @Component({
   selector: 'app-rencontre',
   templateUrl: './rencontre.page.html',
   styleUrls: ['./rencontre.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, HeaderSearchComponent]
+  imports: [IonContent, CommonModule, FormsModule, HeaderSearchComponent, FloatingMenuComponent]
 })
 export class RencontrePage implements OnInit {
 
