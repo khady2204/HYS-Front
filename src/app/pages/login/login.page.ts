@@ -53,20 +53,42 @@ export class LoginPage {
       this.showToast('Veuillez corriger les erreurs', 'danger');
       return;
     }
+    
+    // Récupération des valeurs du formulaire
+    const identifierValue = this.loginForm.value.identifier;
+    const password = this.loginForm.value.password;
+
+    // Vérifie si c’est un email ou un téléphone
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifierValue);
+    const isPhone = /^\d{9,15}$/.test(identifierValue);
+    
+    let loginPayload: any = { password };
+
+    if (isEmail) {
+      loginPayload.email = identifierValue;
+    } else if (isPhone) {
+      loginPayload.phone = identifierValue;
+    } else {
+      this.showToast('Identifiant invalide', 'danger');
+      return;
+    }
 
     // Appel au service d'authentification
-    this.authService.login(this.loginForm.value).subscribe({
+    this.authService.login(loginPayload).subscribe({
       // Si la connexion réussit
       next: (res) => {
         console.log('Connexion réussie :', res);
         this.showToast('Connexion réussie !');
-        // Tu peux stocker le token ici si besoin : localStorage.setItem('token', res.token)
+        // Stocker le token (si fourni)
+        if (res.token) {
+          localStorage.setItem('jwtToken', res.token);
+        }
         this.router.navigate(['/dashbord']); // Redirection vers la page d’accueil
       },
       // Si la connexion échoue (email ou mot de passe incorrect par exemple)
       error: (err) => {
         console.error('Erreur de connexion :', err);
-        this.showToast('Email ou mot de passe incorrect', 'danger');
+        this.showToast('identifiant ou mot de passe incorrect', 'danger');
       }
     });
   }
