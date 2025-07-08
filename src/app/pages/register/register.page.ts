@@ -28,40 +28,56 @@ export class RegisterPage {
     private toastCtrl: ToastController
   ) {
     this.registerForm = this.fb.group({
-      lastName: ['', Validators.required],
-      firstName: ['', Validators.required],
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern(/^\d{9,15}$/)]],
       address: ['', Validators.required],
-      sex: ['', Validators.required],
+      datenaissance: ['', Validators.required],
+      sexe: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required],
       acceptTerms: [false, Validators.requiredTrue],
-    });
+    }, { validators: this.passwordMatchValidator });
+  }
+   
+  passwordMatchValidator(form: FormGroup) {
+    const password = form.get('password')?.value;
+    const confirm = form.get('confirmPassword')?.value;
+    return password === confirm ? null : { passwordMismatch: true };
   }
 
+  // Soumission du formulaire d'inscription
   async onRegister() {
     if (this.registerForm.invalid) {
       const toast = await this.toastCtrl.create({
-        message: 'Veuillez remplir tous les champs.',
+        message: 'Veuillez remplir tous les champs correctement.',
         duration: 2000,
         color: 'danger'
       });
       return await toast.present();
     }
 
-    this.authService.register(this.registerForm.value).subscribe({
+    const formData = this.registerForm.value;
+
+    this.authService.register(formData).subscribe({
       next: async () => {
+        // Stocker le numéro de téléphone pour vérification OTP plus tard
+        localStorage.setItem('phone', formData.phone);
+
         const toast = await this.toastCtrl.create({
-          message: 'Inscription réussie !',
-          duration: 2000,
+          message: 'Inscription réussie. Code OTP envoyé au numéro !',
+          duration: 2500,
           color: 'success'
         });
         await toast.present();
-        this.router.navigate(['/login']);
+
+        this.router.navigate(['/validationsms']);
       },
       error: async (err) => {
         const toast = await this.toastCtrl.create({
-          message: 'Erreur lors de l’inscription.',
-          duration: 2000,
+          message: err.error?.message || 'Erreur lors de l’inscription.',
+          duration: 2500,
           color: 'danger'
         });
         await toast.present();
@@ -69,7 +85,4 @@ export class RegisterPage {
       }
     });
   }
-  
-
-
 }

@@ -12,18 +12,16 @@
     <div class="google-login">
       <ion-button expand="block" fill="outline" class="google-btn">
       <ion-img src="assets/google-icon.png" class="google-icon" slot="start"></ion-img>
-      </ion-button>
-      <ion-button expand="block" fill="outline" class="google-btn">
-      <ion-img src="assets/google-icon.png" class="google-icon" slot="start"></ion-img>
+      <ion-text>Se connecter</ion-text>
       </ion-button>
     </div>
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
        <div class="input-container">
-        <label class="input-label">Email</label>
-        <ion-input type="email" formControlName="email"> </ion-input>
+        <label class="input-label">Email ou Téléphone</label>
+        <ion-input type="text" formControlName="identifier"> </ion-input>
       </div>
-      <ion-text color="danger" *ngIf="email.invalid && email.touched">
-        <small>Email invalide</small>
+      <ion-text color="danger" *ngIf="identifier.invalid && identifier.touched">
+        <small>Format invalide : entrez un email ou un numéro de téléphone</small>
       </ion-text>
       <div class="input-container">
         <label class="input-label">Mot de passe</label>
