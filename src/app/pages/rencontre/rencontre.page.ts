@@ -11,7 +11,7 @@ import { FiltreServiceComponent } from 'src/app/components/filtre-service/filtre
   templateUrl: './rencontre.page.html',
   styleUrls: ['./rencontre.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, HeaderSearchComponent, FloatingMenuComponent, FiltreServiceComponent]
+  imports: [IonContent, CommonModule, FormsModule, HeaderSearchComponent, FloatingMenuComponent]
 })
 export class RencontrePage implements OnInit {
 
