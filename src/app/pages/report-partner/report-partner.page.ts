@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { DropdownDrawerComponent } from 'src/app/components/dropdown-drawer/dropdown-drawer.component';
@@ -14,9 +14,13 @@ import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating
 })
 export class ReportPartnerPage implements OnInit {
 
-  constructor() { }
+  constructor(private location: Location) { }
 
   ngOnInit() {
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar} from '@ionic/angular/standalone';
 import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
@@ -25,9 +25,13 @@ export class SuggestionPage implements OnInit {
   ]
 selectedTab: any;
 
-  constructor() { }
+  constructor(private location: Location) { }
 
   ngOnInit() {
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

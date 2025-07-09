@@ -2,6 +2,10 @@
 <div class="d-flex justify-content-between align-items-center px-3 py-3">
   <img src="assets/img/myLOve/logoHYS.png" alt="Logo HYS" style="height: 60px;">
   <div class="d-flex gap-3 align-items-center">
+
+    <!-- Filtre service -->
+    <app-filtre-service></app-filtre-service>
+
     <img src="assets/img/myLOve/Frame.png" alt="Notifications" style="width: 20px; height: 20px;">
     <a routerLink = "/profile">
       <img src="assets/img/myLOve/account.png" alt="Profil" class="rounded-circle" style="width: 24px; height: 24px;">
@@ -14,57 +18,54 @@
   <div class="input-group">
     <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
     <input type="text" class="form-control border-start-0 border-end-1 rounded mr-2" placeholder="Search here">
-    <span class="input-group-text bg-white border-start-1 rounded" data-bs-toggle="offcanvas" data-bs-target="#filterMenu" aria-controls="filterMenu">
+
+    <!-- Bouton filtres -->
+    <span class="input-group-text bg-white" style="cursor: pointer;" 
+          data-bs-toggle="offcanvas" data-bs-target="#filterMenu" aria-controls="filterMenu">
       <i class="bi bi-sliders"></i>
     </span>
+  </div>
 
-    <!-- Menu latéral -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="filterMenu" aria-labelledby="filterMenuLabel">
-      <div class="offcanvas-header border-bottom">
-        <h5 class="offcanvas-title fw-bold text-primary" id="filterMenuLabel">Choisir un service</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+  <!-- Offcanvas filtres -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="filterMenu" aria-labelledby="filterMenuLabel">
+    <div class="offcanvas-header border-bottom">
+      <h5 class="offcanvas-title fw-bold text-primary" id="filterMenuLabel">Filtres</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+    </div>
+
+    <div class="offcanvas-body px-3">
+      <!-- Filtre distance -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Distance maximale (km)</label>
+        <input type="range" class="form-range" min="1" max="100">
+        <div class="small text-muted">Déplacer pour ajuster</div>
       </div>
 
-      <div class="offcanvas-body px-3 pt-3">
-        <div class="list-group list-group-flush">
-          
-          <a href="/construction" class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
-            <div class="rounded-circle bg-primary d-flex justify-content-center align-items-center" style="width: 36px; height: 36px;">
-              <i class="bi bi-book text-white fs-5"></i>
-            </div>
-            <span class="fw-semibold text-dark">Éducation</span>
-          </a>
-
-          <a href="/construction" class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
-            <div class="rounded-circle bg-success d-flex justify-content-center align-items-center" style="width: 36px; height: 36px;">
-              <i class="bi bi-bank text-white fs-5"></i>
-            </div>
-            <span class="fw-semibold text-dark">Banque</span>
-          </a>
-
-          <a href="/construction" class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
-            <div class="rounded-circle bg-danger d-flex justify-content-center align-items-center" style="width: 36px; height: 36px;">
-              <i class="bi bi-heart-pulse text-white fs-5"></i>
-            </div>
-            <span class="fw-semibold text-dark">Santé</span>
-          </a>
-
-          <a href="/construction" class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
-            <div class="rounded-circle bg-info d-flex justify-content-center align-items-center" style="width: 36px; height: 36px;">
-              <i class="bi bi-airplane-engines text-white fs-5"></i>
-            </div>
-            <span class="fw-semibold text-dark">Voyage</span>
-          </a>
-
-          <a href="/construction" class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
-            <div class="rounded-circle bg-warning d-flex justify-content-center align-items-center" style="width: 36px; height: 36px;">
-              <i class="bi bi-moon-stars text-white fs-5"></i>
-            </div>
-            <span class="fw-semibold text-dark">Islamique</span>
-          </a>
-
+      <!-- Filtre âge -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Tranche d’âge</label>
+        <div class="d-flex gap-2">
+          <input type="number" class="form-control" placeholder="Min">
+          <input type="number" class="form-control" placeholder="Max">
         </div>
       </div>
+
+      <!-- Filtre intérêt -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Centre d’intérêt</label>
+        <select class="form-select">
+          <option selected>Tous</option>
+          <option>Sport</option>
+          <option>Lecture</option>
+          <option>Voyage</option>
+          <option>Musique</option>
+        </select>
+      </div>
+
+      <!-- Bouton Appliquer (visuel uniquement) -->
+      <button class="btn btn-pink w-100 mt-3" data-bs-dismiss="offcanvas">
+        Appliquer les filtres
+      </button>
     </div>
   </div>
 </div>

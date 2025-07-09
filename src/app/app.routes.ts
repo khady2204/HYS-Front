@@ -19,15 +19,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/home/home.page').then( m => m.HomePage)
   },
   {
-    path: 'dashboard',
-    loadComponent: () => import('./pages/dashboard/dashboard.page').then( m => m.DashboardPage)
-  },
-  {
     path: 'f-password',
     loadComponent: () => import('./pages/f-password/f-password.page').then( m => m.FPasswordPage)
   },
   {
-    path: 'rencontre',
+    path: 'dashboard',
     loadComponent: () => import('./pages/rencontre/rencontre.page').then( m => m.RencontrePage)
   },
   {
@@ -47,7 +43,8 @@ export const routes: Routes = [
   {
     path: 'accueil',
     loadComponent: () => import('./pages/accueil/accueil.page').then( m => m.AccueilPage)
-  },  {
+  },
+  {
     path: 'discussions',
     loadComponent: () => import('./pages/discussions/discussions.page').then( m => m.DiscussionsPage)
   },

@@ -3,15 +3,14 @@
    
   <!--Header-->  
   <app-header-search></app-header-search>
-
     <!-- Stories -->
-  <div class="overflow-auto px mb-3">
+  <div class="overflow-auto px mb-3 story-container">
     <div class="d-flex gap-3 flex-nowrap">
       <div class="text-center">
         <div class="border border-2 border-gray rounded-4 p-1 ml-4 d-flex justify-content-center align-items-center" style="width: 56px; height: 56px;">
           <i class="bi bi-plus text-grey fs-2"></i>
         </div>
-        <small class="d-block mt-1">Your Story</small>
+        <small class="d-block mt-1 pl-4">Your Story</small>
       </div>
       <div class="text-center" *ngFor="let story of stories">
         <img [src]="story.img" alt="" class="rounded-4 border border-grey p-1" style="width: 56px; height: 56px; object-fit: cover;">
@@ -21,7 +20,7 @@
   </div>
 
      <!-- Card profil -->
-    <div class="mb-5">
+    <div class="mb-5 card-profile">
       <div class="position-relative rounded overflow-hidden" style="height: 320px">
         <img src="assets/img/myLOve/photo01.png" alt="Profile" class="w-90 h-90 object-fit-cover">
         <div class="position-absolute top-0 start-0 m-2 rounded-circle p-2">
@@ -38,21 +37,20 @@
       </div>
     </div>
 
-     <div class="position-relative rounded overflow-hidden" style="height: 280px;">
+     <div class="position-relative rounded overflow-hidden card-profile" style="height: 280px;">
       <img src="assets/img/myLOve/photo02.png" alt="Profile" class="w-90 h-90 object-fit-cover">
       <div class="position-absolute top-0 start-0 m-2 rounded-circle p-2">
         <img src="assets/img/myLOve/account.png" alt="" >
       </div>
       <div class="position-absolute bottom-0 end-0 mb-5 m-3 d-flex flex-column gap-2" style="bottom: 40px;">
-        <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center" style="width:32px; height:32px;">
+        <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center btn-action" style="width:32px; height:32px;">
           <img src="assets/img/cardRencontre/Close.png" alt="" style="width:16px; height:16px;">
         </button>
-        <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center" style="width:32px; height:32px;">
+        <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center btn-action" style="width:32px; height:32px;">
           <img src="assets/img/cardRencontre/Love.png" alt="" style="width:16px; height:16px;">
         </button>
       </div>
       </div>
-
     </div>
 
   <!-- Menu flottant bas -->
