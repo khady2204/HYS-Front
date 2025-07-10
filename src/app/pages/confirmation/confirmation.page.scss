@@ -1,0 +1,67 @@
+ion-toolbar {
+  --border-width: 0;
+  box-shadow: none;
+  height: 56px;
+  --min-height: 56px; 
+  max-width: 350px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 16px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}ion-back-button {
+  margin-left: -20px; 
+}
+.success-container {
+  --background: #c2c2d6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.success-wrapper {
+  background: #fff;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding: 24px;
+  width: 100%;
+  max-width: 350px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  margin: auto;
+  height: 100%;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.logo-img {
+  width: 150px;
+  height: auto;
+}
+.title-container {
+  text-align: center;
+  margin-bottom: 50px; 
+  font-size: 0.5rem;
+}
+
+
+.p-container {
+  text-align: center;
+  margin-bottom: 50px; 
+  font-size: 0.8rem;
+}
+
+
+.send-btn {
+  --background-color: #0D3873;
+  --color: white;
+  border-radius: 8px;
+}
+
