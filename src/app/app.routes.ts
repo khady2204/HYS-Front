@@ -1,5 +1,5 @@
-
 import { Routes } from '@angular/router';
+import { AuthGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
   {
@@ -19,6 +19,12 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () => import('./pages/home/home.page').then( m => m.HomePage)
   },
+  {
+    path: 'dashboard',
+    loadComponent: () => import('./pages/dashboard/dashboard.page').then( m => m.DashboardPage),
+    canActivate: [AuthGuard]
+  },
+ 
   {
     path: 'f-password',
     loadComponent: () => import('./pages/reset-password/f-password.page').then( m => m.FPasswordPage)
@@ -41,11 +47,6 @@ export const routes: Routes = [
   },
 
   {
-    path: 'dashboard',
-    loadComponent: () => import('./pages/dashboard/dashboard.page').then( m => m.DashboardPage)
-  },
- 
-  {
     path: 'rencontre',
     loadComponent: () => import('./pages/rencontre/rencontre.page').then( m => m.RencontrePage)
   },
@@ -53,7 +54,6 @@ export const routes: Routes = [
     path: 'suggestion',
     loadComponent: () => import('./pages/suggestion/suggestion.page').then( m => m.SuggestionPage)
   },
-
   {
     path: 'otp-verification',
     loadComponent: () => import('./pages/otp-verification/otp-verification.page').then( m => m.OtpVerificationPage)
@@ -61,4 +61,3 @@ export const routes: Routes = [
 
 
 ];
- 
