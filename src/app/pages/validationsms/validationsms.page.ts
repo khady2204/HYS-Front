@@ -5,7 +5,8 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
 import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-validationsms',
@@ -17,10 +18,13 @@ import { Router } from '@angular/router';
 export class ValidationsmsPage implements OnInit {
   otpForm!: FormGroup; 
   phoneNumber!: string;
+ 
+
   
   constructor(private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router   
+    private router: Router,
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -58,3 +62,5 @@ export class ValidationsmsPage implements OnInit {
   }
 
 }
+
+  

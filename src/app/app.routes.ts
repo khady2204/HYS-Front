@@ -1,3 +1,4 @@
+
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -53,4 +54,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/suggestion/suggestion.page').then( m => m.SuggestionPage)
   },
 
+  {
+    path: 'otp-verification',
+    loadComponent: () => import('./pages/otp-verification/otp-verification.page').then( m => m.OtpVerificationPage)
+  },
+
+
 ];
+ 

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -37,21 +38,29 @@ export class AuthService {
     return this.http.post(`${this.ApiUrl}/verify-otp`, data);
   }
 
-  /**
-   * Envoie un OTP pour réinitialisation de mot de passe
-   * @param data Données de l'utilisateur (email ou téléphone)
-   * @returns Observable avec le code OTP (test)
-   */
-  reset(data: any): Observable<any> {
-    return this.http.post(`${this.ApiUrl}/reset`, data);
+  //Envoie un OTP pour réinitialisation de mot de passe
+  // Étape 1 : Envoi OTP
+  requestReset(data: any): Observable<any> {
+    return this.http.post(`${this.ApiUrl}/reset/request`, data, { responseType: 'text' });
   }
 
-  /**
-   * Confirme la réinitialisation avec OTP + nouveau mot de passe
-   * @param data Données avec OTP et nouveau mot de passe
-   * @returns Observable de confirmation
-   */
+  // Étape 2 : Vérification OTP
+  verifyOtpForReset(data:{ phone: string; otp: string } ): Observable<any> {
+    return this.http.post(`${this.ApiUrl}/reset/verify-otp`, data, { responseType: 'text' });
+  }
+
+  // Étape 3 : Changement de mot de passe
   confirmReset(data: any): Observable<any> {
-    return this.http.post(`${this.ApiUrl}/reset/confirm`, data);
+    return this.http.post(`${this.ApiUrl}/reset/password`, data,{ responseType: 'text' } );
+  }
+
+  // logout
+  logout(): Observable<any> {
+    return this.http.post(`${this.ApiUrl}/logout`, {}).pipe(
+      tap(() => {
+        // Supprimer le token localement
+        localStorage.removeItem('jwtToken'); 
+      })
+    );
   }
 }
