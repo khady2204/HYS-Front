@@ -25,9 +25,9 @@ ion-back-button {
 .login-wrapper {
   background: #fff;
   border-top-left-radius: 0;
-border-top-right-radius: 0;
-border-bottom-left-radius: 20px;
-border-bottom-right-radius: 20px;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
   padding: 24px;
   width: 100%;
   max-width: 350px;
@@ -68,13 +68,17 @@ border-bottom-right-radius: 20px;
   display: flex;
 }
 
+.text{
+  color: #f1f1f1;
+  text-transform: none;
+}
 .google-btn {
   --border-color:#0D3873;
   --background:#0D3873;
   border-radius: 8px;
   height: 20px;
-  width: 150px; 
-  margin: 15px 10px;         
+  width: 100%; 
+  margin: 15px 5px;         
   justify-content: space-between;
   display: flex;
   align-items: center;
@@ -85,6 +89,7 @@ border-bottom-right-radius: 20px;
 .google-icon {
   width: 20px;
   height: 20px;
+  margin-right: 10px;
 }
 .input-label {
   font-weight: 500;

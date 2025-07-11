@@ -50,7 +50,7 @@ export class ValidationsmsPage implements OnInit {
         next: (res) => {
           console.log('OTP vérifié', res);
           localStorage.setItem('jwtToken', res.token);
-          this.router.navigate(['/login']);
+          this.router.navigate(['/registration-success']);
         },
         error: (err) => {
           console.error('OTP invalide', err);

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
   {
@@ -12,7 +13,8 @@ export const routes: Routes = [
   },
   {
     path: 'dashbord',
-    loadComponent: () => import('./pages/dashbord/dashbord.page').then( m => m.DashbordPage)
+    loadComponent: () => import('./pages/dashbord/dashbord.page').then( m => m.DashbordPage),
+    canActivate: [AuthGuard]
   },
   {
     path: 'register',
@@ -41,7 +43,8 @@ export const routes: Routes = [
   {
     path: 'new-password',
     loadComponent: () => import('./pages/new-password/new-password.page').then( m => m.NewPasswordPage)
-  },  {
+  },
+  {
     path: 'otp-verification',
     loadComponent: () => import('./pages/otp-verification/otp-verification.page').then( m => m.OtpVerificationPage)
   },
