@@ -22,7 +22,7 @@ export class LoginPage {
     private toastController: ToastController // Pour afficher des messages toast
   ) {
     this.loginForm = this.fb.group({
-      identifier: ['', [Validators.required,Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)@(([^<>()[\]\\.,;:\s@\"]+\.)+[^<>()[\]\\.,;:\s@\"]{2,})|(\d{9,15}))$/) ]],
+      identifier: ['', [Validators.required,Validators.pattern( /^((\d{9,15})|([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}))$/)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
@@ -83,7 +83,7 @@ export class LoginPage {
         if (res.token) {
           localStorage.setItem('jwtToken', res.token);
         }
-        this.router.navigate(['/dashbord']); // Redirection vers la page d’accueil
+        this.router.navigate(['/dashboard']); // Redirection vers la page d’accueil
       },
       // Si la connexion échoue (email ou mot de passe incorrect par exemple)
       error: (err) => {

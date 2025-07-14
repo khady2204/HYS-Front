@@ -9,22 +9,30 @@
         <div class="input-container">
           <label class="input-label">Nom</label>
           <ion-input class="half-input" type="text" formControlName="nom"></ion-input>
+          <ion-text color="danger" *ngIf="nom?.invalid && nom?.touched">
+          <small>Veillez remplir votre nom</small>
+        </ion-text> 
         </div>
         <div class="input-container">
           <label class="input-label">Prenom(s)</label>
-          <ion-input class="half-input" type="text" formControlName="prenom">
-          </ion-input>
+          <ion-input class="half-input" type="text" formControlName="prenom"></ion-input>
+          <ion-text color="danger" *ngIf="prenom?.invalid && prenom?.touched">
+          <small>Veillez remplir votre prenom</small> </ion-text>
         </div>
       </div>
       <div class="row">
       <div class="input-container">
         <label class="input-label">Téléphone</label>
-        <ion-input class="half-input" type="tel" formControlName="phone">
-        </ion-input>
+        <ion-input class="half-input" type="tel" formControlName="phone"></ion-input>
+        <ion-text color="danger" *ngIf="phone?.invalid && phone?.touched">
+          <small>téléphone invalide</small>
+        </ion-text> 
       </div>
       <div class="input-container">
         <label class="input-label">Adresse</label>
         <ion-input type="text" formControlName="address"></ion-input>
+         <ion-text color="danger" *ngIf="adress?.invalid && adress?.touched">
+          <small>Veillez remplir votre adresse</small></ion-text>
       </div>
       </div>
       <div class="row">
@@ -43,19 +51,28 @@
       <div class="input-container">
         <label class="input-label">Email</label>
         <ion-input type="email" formControlName="email"></ion-input>
+        <ion-text color="danger" *ngIf="email?.invalid && email?.touched">
+          <small>Email invalide</small>
+        </ion-text>     
       </div>
       <div class="input-container">
         <label class="input-label">Mot de passe</label>
         <ion-input type="password" formControlName="password"></ion-input>
+        <ion-text color="danger" *ngIf="password?.invalid && password?.touched">
+          <small>Mot de passe requis (min 6 caractères)</small>
+        </ion-text>
       </div>
       <div class="input-container">
         <label class="input-label">Confirmer Mot de passe</label>
         <ion-input type="password" formControlName="confirmPassword"></ion-input>
       </div>
+      <div class="bp-container">
       <ion-item lines="none" class="checkbox-item">
         <ion-checkbox slot="start" formControlName="acceptTerms" class="term"></ion-checkbox>
         <ion-label>J’accepte</ion-label>
       </ion-item>
+      <a routerLink="/" >Lire nos T & C</a>
+      </div>
       <ion-button class="login-button" expand="block" type="submit" [disabled]="registerForm.invalid">
         S’inscrire
       </ion-button>

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem,IonLabel, IonInput, IonCheckbox, IonButton, IonText, IonImg, IonSelect, IonSelectOption} from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastController, IonicModule } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -11,13 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonContent,RouterModule, IonSelect, IonSelectOption,
-  IonItem,
-  IonLabel,
-  IonInput,
-  IonCheckbox,
-  IonButton,
-  IonImg]
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule, RouterModule]
 })
 export class RegisterPage {
   registerForm: FormGroup;
@@ -40,6 +34,15 @@ export class RegisterPage {
       acceptTerms: [false, Validators.requiredTrue],
     }, { validators: this.passwordMatchValidator });
   }
+  
+  get nom() { return this.registerForm.get('nom'); }
+  get prenom() { return this.registerForm.get('prenom');}
+  get adress() { return this.registerForm.get('adress');}
+  get email() { return this.registerForm.get('email'); }  
+  get password() { return this.registerForm.get('password');}
+  get datenaissance() { return this.registerForm.get('datenaissance');}
+  get phone() { return this.registerForm.get('phone'); }
+
    
   passwordMatchValidator(form: FormGroup) {
     const password = form.get('password')?.value;

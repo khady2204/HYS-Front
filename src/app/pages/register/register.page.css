@@ -115,3 +115,12 @@ ion-checkbox.term{
   box-shadow: 0 4px 4px rgba(15, 15, 15, 0.3);
   --background: #0D3873;
 }
+
+.bp-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 5px;
+}

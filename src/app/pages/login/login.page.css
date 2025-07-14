@@ -13,6 +13,7 @@ border-top-right-radius: 20px;
 }
 ion-back-button {
   margin-left: -20px; 
+  margin-top: 20px;
 }
  .login-container {
   --background: #c2c2d6;

@@ -21,7 +21,7 @@
         <ion-input type="text" formControlName="identifier"> </ion-input>
       </div>
       <ion-text color="danger" *ngIf="identifier.invalid && identifier.touched">
-        <small>Format invalide : entrez un email ou un numéro de téléphone</small>
+        <small>Entrez un email ou un numéro de téléphone</small>
       </ion-text>
       <div class="input-container">
         <label class="input-label">Mot de passe</label>
@@ -31,10 +31,7 @@
           <small>Mot de passe requis (min 6 caractères)</small>
         </ion-text>
       <div class="bp-container">
-      <ion-item lines="none" class="terms">
-        <ion-checkbox slot="start" name="acceptTerms" class="term"></ion-checkbox>
-        <ion-label>J’accepte</ion-label>
-      </ion-item>
+      
       <a routerLink="/f-password" class="forgot-link" > mot de passe oublié ?</a>
       </div>
       <ion-button class="login-button" expand="block" type="submit" [disabled]="loginForm.invalid">
