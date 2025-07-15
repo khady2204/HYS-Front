@@ -1,6 +1,6 @@
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/" text=""></ion-back-button>
+      <ion-back-button defaultHref="/" text="retour"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 <ion-content class=" login-container" fullscreen>
@@ -12,7 +12,7 @@
     <div class="google-login">
       <ion-button expand="block" fill="outline" class="google-btn">
       <ion-img src="assets/google-icon.png" class="google-icon" slot="start"></ion-img>
-      <ion-text class="text">Se connecter</ion-text>
+      <ion-text class="text">Se connecter avec google</ion-text>
       </ion-button>
     </div>
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">

@@ -10,14 +10,14 @@
           <label class="input-label">Nom</label>
           <ion-input class="half-input" type="text" formControlName="nom"></ion-input>
           <ion-text color="danger" *ngIf="nom?.invalid && nom?.touched">
-          <small>Veillez remplir votre nom</small>
+          <small>Veuillez remplir votre nom</small>
         </ion-text> 
         </div>
         <div class="input-container">
           <label class="input-label">Prenom(s)</label>
           <ion-input class="half-input" type="text" formControlName="prenom"></ion-input>
           <ion-text color="danger" *ngIf="prenom?.invalid && prenom?.touched">
-          <small>Veillez remplir votre prenom</small> </ion-text>
+          <small>Veuillez remplir votre prenom</small> </ion-text>
         </div>
       </div>
       <div class="row">
@@ -32,13 +32,16 @@
         <label class="input-label">Adresse</label>
         <ion-input type="text" formControlName="address"></ion-input>
          <ion-text color="danger" *ngIf="adress?.invalid && adress?.touched">
-          <small>Veillez remplir votre adresse</small></ion-text>
+          <small>Veuillez remplir votre adresse</small></ion-text>
       </div>
       </div>
       <div class="row">
       <div class="input-container">
         <label class="input-label">Date de Naissance</label>
-        <ion-input type="date" formControlName="datenaissance"></ion-input>
+        <ion-input type="date" formControlName="datenaissance" [max]="maxDate"></ion-input> 
+        <ion-text color="danger" *ngIf="datenaissance?.errors?.['tooYoung'] && datenaissance?.touched" >
+          <small>18 ans minimum requis</small>
+        </ion-text>
       </div>
       <div class="input-container">
         <label class="input-label">Genre</label>
@@ -59,7 +62,7 @@
         <label class="input-label">Mot de passe</label>
         <ion-input type="password" formControlName="password"></ion-input>
         <ion-text color="danger" *ngIf="password?.invalid && password?.touched">
-          <small>Mot de passe requis (min 6 caractères)</small>
+          <small>Au moins 8 caractères avec lettres, chiffres et symbole</small>
         </ion-text>
       </div>
       <div class="input-container">
@@ -71,7 +74,7 @@
         <ion-checkbox slot="start" formControlName="acceptTerms" class="term"></ion-checkbox>
         <ion-label>J’accepte</ion-label>
       </ion-item>
-      <a routerLink="/" >Lire nos T & C</a>
+      <a routerLink="/" class="a" >Lire nos T & C</a>
       </div>
       <ion-button class="login-button" expand="block" type="submit" [disabled]="registerForm.invalid">
         S’inscrire
