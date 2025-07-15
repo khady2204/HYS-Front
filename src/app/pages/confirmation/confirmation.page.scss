@@ -1,7 +1,7 @@
 ion-toolbar {
   --border-width: 0;
   box-shadow: none;
-  height: 56px;
+  height: 100px;
   --min-height: 56px; 
   max-width: 350px;
   margin: 0 auto;
@@ -9,11 +9,20 @@ ion-toolbar {
   padding: 0 16px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-}ion-back-button {
-  margin-left: -20px; 
 }
+ion-back-button {
+  margin-left: -20px;
+  margin-top: 50px; 
+}
+
+.check-icon {
+  font-size: 60px;
+  color: green;
+  margin-bottom: 16px;
+}
+
 .success-container {
-  --background: #c2c2d6;
+  --background: #f6f6fb;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,7 +69,7 @@ ion-toolbar {
 
 
 .send-btn {
-  --background-color: #0D3873;
+  --background: #0D3873;
   --color: white;
   border-radius: 8px;
 }

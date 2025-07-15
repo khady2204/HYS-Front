@@ -1,5 +1,5 @@
 .home-container {
-  --background: rgb(251, 247, 250);
+  --background:#f6f6fb ;
   display: flex;
   justify-content: center;
   align-items: center;

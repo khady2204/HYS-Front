@@ -13,7 +13,7 @@ ion-toolbar {
   margin-left: -20px; 
 }
 .sms-container {
-  --background: #c2c2d6;
+  --background: #f6f6fb;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,7 +65,7 @@ ion-input {
 }
 
 ion-button.send-btn {
-  --background-color: #0D3873;
+  --background: #0D3873;
   --color: white;
   border-radius: 8px;
 }
