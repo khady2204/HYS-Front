@@ -22,11 +22,7 @@ export class LoginPage {
     private toastController: ToastController // Pour afficher des messages toast
   ) {
     this.loginForm = this.fb.group({
-<<<<<<< HEAD
-      identifier: ['', [Validators.required,Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)@(([^<>()[\]\\.,;:\s@\"]+\.)+[^<>()[\]\\.,;:\s@\"]{2,})|(\d{9,15}))$/) ]],
-=======
       identifier: ['', [Validators.required,Validators.pattern( /^((\d{9,15})|([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}))$/)]],
->>>>>>> khady
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
