@@ -56,8 +56,10 @@ export const routes: Routes = [
     path: 'new-password',
     loadComponent: () => import('./pages/new-password/new-password.page').then( m => m.NewPasswordPage)
   },
-
-
+  {
+    path: 'dashboard',
+    loadComponent: () => import('./pages/rencontre/rencontre.page').then(m => m.RencontrePage)
+  },
   {
     path: 'suggestion',
     loadComponent: () => import('./pages/suggestion/suggestion.page').then( m => m.SuggestionPage)
