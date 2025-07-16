@@ -1,0 +1,70 @@
+/* Icônes */
+.bi-geo-alt-fill {
+  color: #000000;
+  margin-right: 10px;
+}
+
+.bi-arrow-left {
+  color: #000000;
+  font-weight: bolder;
+}
+
+/* Boutons */
+.btn-pink {
+  background-color: #ff008a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 16px;
+  font-size: 1rem;
+}
+
+/* Image profil */
+.profile-picture {
+  width: 105px;
+  height: 105px;
+  object-fit: cover;
+  margin-top: -60px !important;
+  border-radius: 50%;
+  border: 2px solid #242760;
+}
+
+/* Photos */
+.photos {
+  border-radius: 15px;
+  object-fit: cover;
+  width: 100px;
+  height: auto;
+}
+
+/* Responsive pour petits écrans */
+@media (max-width: 576px) {
+  .profile-picture {
+    width: 80px;
+    height: 80px;
+    margin-top: -25px;
+  }
+
+  .btn-pink {
+    font-size: 0.85rem;
+    padding: 4px 12px;
+  }
+
+  .photos {
+    width: 40vw;
+    max-width: 90px;
+    height: auto;
+  }
+
+  h5 {
+    font-size: 1rem;
+  }
+
+  .photo-list {
+    gap: 0.5rem;
+  }
+
+  .text-center.mt-5 {
+    margin-top: 2rem !important;
+  }
+}

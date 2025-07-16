@@ -1,89 +1,52 @@
-<ion-content class="bg-white">
-  <!-- Header -->
-  <div class="d-flex justify-content-between align-items-center px-3 py-3">
-    <img src="assets/img/myLOve/logoHYS.png" alt="Logo HYS" style="height: 60px;">
-    <div class="d-flex gap-3 align-items-center">
-      <img src="assets/img/myLOve/Frame.png" alt="Notifications" style="width: 20px; height: 20px;">
-      <img src="assets/img/myLOve/account.png" alt="Profil" class="rounded-circle" style="width: 24px; height: 24px;">
-    </div>
+<ion-content class="bg-pink">
+
+  <!-- En-tête -->
+  <div
+    class="header px-3 pt-5 pb-5 d-flex align-items-center justify-content-between"
+    style="background-color: #FF008A; margin-bottom: 25px;"
+  >
+    <!-- Icône retour -->
+    <i class="bi bi-arrow-left fs-4 text-dark fw-bold" (click)="goBack()"></i>
+
+    <!-- Menu déroulant centré -->
+    <app-dropdown-drawer></app-dropdown-drawer>
+
+    <!-- Avatar -->
+    <a href="/profile">
+      <img
+        src="assets/img/myLOve/suggestion/tabProfile.png"
+        alt="Profile"
+        class="rounded-circle border border-white"
+        width="40"
+        height="40"
+      />
+    </a>
   </div>
 
-  <!-- Barre de recherche -->
-  <div class="px-3 mb-3">
-    <div class="input-group">
-      <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-      <input type="text" class="form-control border-start-0 border-end-1 rounded mr-2" placeholder="Search here">
-      <span class="input-group-text bg-white border-start-1 rounded"><i class="bi bi-sliders"></i></span>
-    </div>
-  </div>
+<!-- Onglets -->
+<div class="d-flex w-100 position-relative" style="margin-top: -30px;">
+  <a class="tab-button active text-decoration-none" href="/discussions">Discussions</a>
+  <div class="tab-button inactive">Suggestions</div>
+</div>
 
-  <!-- Stories -->
-  <div class="overflow-auto px mb-3">
-    <div class="d-flex gap-3 flex-nowrap">
-      <div class="text-center">
-        <div class="border border-2 border-gray rounded-4 p-1 ml-4 d-flex justify-content-center align-items-center" style="width: 56px; height: 56px;">
-          <i class="bi bi-plus text-grey fs-2"></i>
-        </div>
-        <small class="d-block mt-1">Your Story</small>
-      </div>
-      <div class="text-center" *ngFor="let story of stories">
-        <img [src]="story.img" alt="" class="rounded-4 border border-grey p-1" style="width: 56px; height: 56px; object-fit: cover;">
-        <small class="d-block mt-1 text-truncate" style="width: 56px;">{{ story.name }}</small>
-      </div>
-    </div>
-  </div>
-
-  <!-- Section S'abonner -->
-  <div class="px-3 mb-3 d-flex justify-content-between align-items-center">
-    <h5 class="mb-0 fw-semi-bold">S'abonner</h5>
-    <a href="#" class="text-decoration-none text-primary small">View All</a>
-  </div>
-
-  <!-- Cartes suggestions -->
-  <div class="px-3 mb-5">
-    <div *ngFor="let item of suggestions" class="mb-3 position-relative rounded overflow-hidden border-0">
-      <img [src]="item.bg" alt="" class="rounded border-0" style="height: 180px; width:200px; object-fit: contain; image-rendering: auto;">
-
-      <div class="position-absolute top-0 end-0 m-2 mt-3 bg-white shadow-sm rounded-4 p-2 d-flex align-items-center" style="width: 200px;">
-        <div class="d-flex align-items-start w-100">
-          <!-- Colonne photo profil -->
-          <div class="me-2 d-flex align-items-start">
-            <img [src]="item.bg" alt="Profil" class="rounded-circle border border-2 border-white" style="width: 60px; height: 40px; object-fit: cover;">
-          </div>
-          <!-- Colonne infos -->
-          <div class="flex-grow-1">
-            <small class="text-uppercase fw-bold" style="color: #FF008A;">{{ item.role }}</small>
-            <strong class="fw-medium d-block">{{ item.name }}</strong>
-            <p class="text-muted small mb-2">{{ item.description }}</p>
-              <div class="d-flex align-items-center justify-content-between mb-1">
-                <span class="badge bg-light text-dark">
-                  <span style="background: linear-gradient(90deg, #FF008A 0%, #960853 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block;">
-                    <i class="bi bi-star-fill"></i>
-                  </span> {{ item.note }}
-                </span>
-                <button class="btn btn-sm text-white px-3 py-1 rounded-pill" style="background: linear-gradient(90deg, #FF008A 0%, #960853 100%);">Suivre</button>
+<!-- Cartes Suggestions -->
+  <div class="px-3 mt-5">
+    <div class="card mb-5 p-3 border-0 rounded-4 shadow-sm" *ngFor="let person of suggestions">
+      <div class="d-flex align-items-center">
+        <img [src]="person.photo" class="rounded-circle me-3" width="60" height="60" />
+        <div>
+          <h6 class="person-name fw-bold mb-1">{{ person.name }}</h6>
+            <div class="infos-person text-muted small" style="font-family: 'Inter'">
+            Compatibilité de {{ person.compatibility }} % <br />
+            {{ person.distance }} - Intérêts communs
             </div>
-          </div>
+          <button class="btn btn-pink mb-2 text-white w-100 mt-3 ">Commencer une discussion</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Menu flottant bas -->
-  <div class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 1050;">
-    <div class="text-white d-flex justify-content-between align-items-center px-4 py-2 rounded-pill shadow" style="min-width: 260px; background-color: rgba(255, 0, 138, 0.9);">
-      <a href="/rencontre" class="text-white">
-        <img src="assets/img/menuFlottant/Home.png" alt="Home" style="width: 22px; height:22px;">
-      </a>
-      <a href="#" class="text-white">
-        <img src="assets/img/menuFlottant/Romance.png" alt="Heart" style="width: 24px; height: 24px;">
-      </a>
-      <a href="#" class="text-white">
-        <img src="assets/img/menuFlottant/Add.png" alt="Add" class="d-flex align-items-center justify-content-center" style="width: 24px; height: 24px;">
-      </a>
-      <a href="#" class="text-white">
-        <img src="assets/img/menuFlottant/Chat.png" alt="Heart" style="width: 24px; height: 24px;">
-      </a>
-    </div>
-  </div>
+  <!-- Menu flottant -->
+  <app-floating-menu></app-floating-menu>
+
 </ion-content>

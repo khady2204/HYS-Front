@@ -1,0 +1,49 @@
+.chat-header {
+    background-color: #fff;
+}
+
+.msg-bubble {
+    border-radius: 20px;
+    padding: 10px 14px;
+    max-width: 75%;
+    font-size: 0.95rem;
+    position: relative;
+}
+
+.msg-bubble.sent {
+    background-color: #000;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+}
+
+.msg-bubble.received {
+    background-color: #f0f0f0;
+    color: black;
+    border-bottom-left-radius: 0;
+}
+
+.msg-time {
+    font-size: 0.7rem;
+    color: gray;
+    margin-top: 4px;
+    text-align: right;
+}
+
+.chat-input {
+    background-color: #fff;
+    position: stiky;
+    bottom: 0;
+}
+
+.waveform-placeholder {
+    width: 100px;
+    height: 16px;
+    background: repeating-linear-gradient(
+        90deg,
+        white,
+        white 2px,
+        transparent 2px,
+        transparent 4px
+    );
+}

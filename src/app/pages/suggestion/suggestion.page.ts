@@ -1,51 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar} from '@ionic/angular/standalone';
+import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
+import { DropdownDrawerComponent } from 'src/app/components/dropdown-drawer/dropdown-drawer.component';
 
 @Component({
   selector: 'app-suggestion',
   templateUrl: './suggestion.page.html',
   styleUrls: ['./suggestion.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule]
+  imports: [IonContent, CommonModule, FormsModule, FloatingMenuComponent, DropdownDrawerComponent]
 })
 export class SuggestionPage implements OnInit {
 
-  stories = [
-    {name: 'Christie B.', img: 'assets/img/myLOve/story/story01.png' },
-    {name: 'Mrs. Rodolfo', img: 'assets/img/myLOve/story/story02.png' },
-    {name: 'Eloise Legrand', img: 'assets/img/myLOve/story/story03.png' },
-    {name: 'Ahmed S.', img: 'assets/img/myLOve/story/story02.png' }
-  ];
+  
 
   suggestions = [
-    {
-      role: 'Beautician',
-      name: 'Miss Zachary Will',
-      description: 'Doloribus saepe aut necessitat qui non qui.',
-      note: '4.9',
-      bg: 'assets/img/myLOve/story/story03.png'
-    },
-    {
-      role: 'Beautician',
-      name: 'Miss Zachary Will',
-      description: 'Doloribus saepe aut necessitat qui non qui.',
-      note: '4.9',
-      bg: 'assets/img/myLOve/story/story03.png'
-    },
-    {
-      role: 'Beautician',
-      name: 'Miss Zachary Will',
-      description: 'Doloribus saepe aut necessitat qui non qui.',
-      note: '4.9',
-      bg: 'assets/img/myLOve/story/story03.png'
-    }
+    { name: 'Fatou Ly', compatibility: '93', distance: '5 km', photo: 'assets/img/myLOve/suggestion/user1.png' },
+    { name: 'Safy Sankara', compatibility: '90', distance: '2 km', photo: 'assets/img/myLOve/suggestion/user2.png' },
+    { name: 'Aicha Ndiaye', compatibility: '86', distance: '13 km', photo: 'assets/img/myLOve/suggestion/user3.png' },
+    { name: 'Hawa Sow', compatibility: '78', distance: '8 km', photo: 'assets/img/myLOve/suggestion/user4.png' },
+    { name: 'Salma Fall', compatibility: '60', distance: '4 km', photo: 'assets/img/myLOve/suggestion/user5.png' }
   ]
+selectedTab: any;
 
-  constructor() { }
+  constructor(private location: Location) { }
 
   ngOnInit() {
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

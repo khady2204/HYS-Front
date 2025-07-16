@@ -1,0 +1,54 @@
+.bi-chevron-left {
+    font-weight: bold;
+}
+
+.input-group select.form-select {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group-text {
+    border-left: none;
+    background: white;
+}
+
+ion-select.custom-select {
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --min-height: 46px;
+  --border-color: #dee2e6;
+  --background: #fff;
+  --placeholder-color: #6c757d;
+  font-size: 0.95rem;
+  border: 1px solid #ced4da;
+}
+
+.profile-wrapper {
+  display: inline-block;
+  padding: 2px;
+  border: 1px solid #ff008A;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // ombre douce
+}
+
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1px solid #ff008A; // deuxième bordure (interne)
+  background-color: white;
+}
+
+
+label {
+    font-family: Inter;
+}
+
+.btnSave {
+  background-color: #ff008A;
+  color: white;
+  border: none;
+  font-weight: 600;
+}

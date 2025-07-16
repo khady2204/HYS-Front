@@ -1,0 +1,64 @@
+/* Couleur rose principale */
+.bg-pink {
+  background-color: #FF008A;
+}
+
+
+.btn-pink {
+  background-color: #FF008A;
+  border: none;
+
+  &:hover {
+    background-color: #FF008A;
+  }
+}
+
+
+.tab-button {
+   margin-top: -27px;
+  flex: 1;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s ease-in-out;
+  border-radius: 0;
+}
+
+/* Premier bouton */
+.tab-button:first-child {
+  border-top-left-radius: 80px;
+  border-bottom-right-radius: 30px;
+}
+
+/* Deuxième bouton */
+.tab-button:last-child {
+  border-top-right-radius: 80px;
+}
+
+/* Bouton actif */
+.tab-button.active {
+  background-color: #000;
+  color: #fff;
+}
+
+/* Bouton inactif */
+.tab-button.inactive {
+  background-color: #ffffff;
+  color: #000;
+}
+
+.card {
+  background-color: #faf6f8;
+}
+
+.person-name {
+  font-family: Arial;
+}
+
+.infos-person {
+  font-family: Inter;
+  font-size: medium;
+}
