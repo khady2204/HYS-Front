@@ -62,7 +62,8 @@ export const routes: Routes = [
   },
   {
     path: 'suggestion',
-    loadComponent: () => import('./pages/suggestion/suggestion.page').then( m => m.SuggestionPage)
+    loadComponent: () => import('./pages/suggestion/suggestion.page').then( m => m.SuggestionPage),
+    canActivate: [AuthGuard]
   },
   {
     path: 'otp-verification',
@@ -96,6 +97,12 @@ export const routes: Routes = [
     path: 'report-partner',
     loadComponent: () => import('./pages/report-partner/report-partner.page').then( m => m.ReportPartnerPage)
   },
+  {
+    path: 'interets',
+    loadComponent: () => import('./pages/interets/interets.page').then( m => m.InteretsPage),
+    canActivate: [AuthGuard]
+  },
+
 
 
 

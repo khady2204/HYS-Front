@@ -33,14 +33,16 @@
   <div class="px-3 mt-5">
     <div class="card mb-5 p-3 border-0 rounded-4 shadow-sm" *ngFor="let person of suggestions">
       <div class="d-flex align-items-center">
-        <img [src]="person.photo" class="rounded-circle me-3" width="60" height="60" />
+        <img [src]="person.photoUrl" class="rounded-circle me-3" width="60" height="60" alt="Photo de {{ person.prenom }} {{ person.nom }}" />
         <div>
-          <h6 class="person-name fw-bold mb-1">{{ person.name }}</h6>
-            <div class="infos-person text-muted small" style="font-family: 'Inter'">
-            Compatibilité de {{ person.compatibility }} % <br />
-            {{ person.distance }} - Intérêts communs
-            </div>
-          <button class="btn btn-pink mb-2 text-white w-100 mt-3 ">Commencer une discussion</button>
+          <h6 class="fw-bold mb-1">{{ person.prenom }} {{ person.nom }}</h6>
+          <div class="text-muted small" style="font-family: 'Inter'">
+            Compatibilité : {{ person.compatibilite }} %<br />
+            {{ person.interetsCommuns }}
+          </div>
+          <button class="btn btn-pink mb-2 text-white w-100 mt-3">
+            Commencer une discussion
+          </button>
         </div>
       </div>
     </div>
