@@ -25,12 +25,9 @@ export class InteretsPage implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
-      const token = localStorage.getItem('jwtToken');
+  
 
-  }
-
-  /*ngOnInit() {
+  ngOnInit() {
     const token = localStorage.getItem('jwtToken');
 
     console.log("Token JWT:", token);
@@ -47,13 +44,28 @@ export class InteretsPage implements OnInit {
     this.interetService.getAllInterets().subscribe({
       next: (data: string) => {
       try {
+        console.log('Réponse brute JSON:', data);
+
         const parsed = JSON.parse(data);
+
+        // Vérifie si l'utilisateur apparait dans au moins un intérét
+        const userAlreadyHasInterets = parsed.some((interet: any) =>
+          interet.users && interet.users.some((u: any) => Number(u.id) === this.userId)
+        );
+
+        if (userAlreadyHasInterets) {
+          console.log("Utilisateur déjà inscrit à un ou plusieurs intérêts.");
+          this.router.navigate(['/dashboard']);
+          return;
+        }
+
+        // Sinon, charger les interets normalement
         this.interets = parsed.map((i: any) => ({
           id: i.id,
           nom: i.nom
         }));
       } catch (e) {
-        console.error('Erreur de parsing JSON:', e);
+        console.error("Erreur de parsing JSON:", e);
       }
     },
       error: (error) => {
@@ -61,7 +73,7 @@ export class InteretsPage implements OnInit {
       }
     });
   }
-*/
+
 
   toggleSelection(interetId: number) {
     if (this.selectedInterets.includes(interetId)) {

@@ -11,10 +11,10 @@ export class InteretService {
 
   constructor(private http: HttpClient) { }
 
-  /* Récupérer la liste des intérêts
-  getAllInterets(): Observable<string> {
-  return this.http.get(this.baseUrl, { responseType: 'text' });
-} */
+  // Récupérer la liste des intérêts
+  getAllInterets(): Observable<any> {
+  return this.http.get<any>(this.baseUrl);
+} 
 
 
   // Ajouter un nouvel intérêt
