@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonSelectOption, IonSelect } from '@ionic/angular/standalone';
 import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
 
@@ -14,9 +14,41 @@ import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating
 })
 export class EditProfilePage implements OnInit {
 
-  constructor(private location: Location) { }
+  editProfileForm! : FormGroup;
+  profileImagePreview: string | ArrayBuffer | null = null;
+
+  constructor(private location: Location, private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.editProfileForm = this.fb.group({
+      name: [''],
+      email: [''],
+      password: [''],
+      dob: [''],
+      country: [''],
+      profileImage: [null]
+    });
+
+    // Précharger les données utilisateur ici
+
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.profileImagePreview = reader.result;
+      };
+      reader.readAsDataURL(file);
+      this.editProfileForm.patchValue({ profileImage: file });
+    }
+  }
+
+  onSubmit() {
+    if (this.editProfileForm.valid) {
+      // Envoyer les données du formulaire au serveur
+    }
   }
 
   goBack() {
