@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, SelectControlValueAccessor } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonCheckbox, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonCheckbox, IonButton, IonText, IonRow, IonCol } from '@ionic/angular/standalone';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 import { InteretService } from 'src/app/services/interet/interet.service';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-interets',
   templateUrl: './interets.page.html',
   styleUrls: ['./interets.page.scss'],
   standalone: true,
-  imports: [IonButton, IonCheckbox, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonCol, IonRow, IonText, IonButton, IonCheckbox, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class InteretsPage implements OnInit {
 
@@ -19,10 +20,14 @@ export class InteretsPage implements OnInit {
   selectedInterets: number[] = [];
   userId: number | null = null;
 
+  leftColumn: any[] = [];
+  rightColumn: any[] = [];
+
   constructor(
     private userAuthService: UserAuthService,
     private interetService: InteretService,
-    private router: Router
+    private router: Router,
+    private toastController: ToastController
   ) { }
 
   
@@ -42,11 +47,11 @@ export class InteretsPage implements OnInit {
     this.userId = id ? Number(id) : null;
 
     this.interetService.getAllInterets().subscribe({
-      next: (data: string) => {
+      next: (data: any[]) => {
       try {
         console.log('Réponse brute JSON:', data);
 
-        const parsed = JSON.parse(data);
+        const parsed = data;
 
         // Vérifie si l'utilisateur apparait dans au moins un intérét
         const userAlreadyHasInterets = parsed.some((interet: any) =>
@@ -64,6 +69,9 @@ export class InteretsPage implements OnInit {
           id: i.id,
           nom: i.nom
         }));
+        const middle = Math.ceil(this.interets.length / 2);
+        this.leftColumn = this.interets.slice(0, middle);
+        this.rightColumn = this.interets.slice(middle)
       } catch (e) {
         console.error("Erreur de parsing JSON:", e);
       }
@@ -91,6 +99,7 @@ export class InteretsPage implements OnInit {
 
     if (this.selectedInterets.length === 0) {
       console.warn ("Aucun intérêt sélectionné.");
+      this.showToast("Veuillez sélectionner au moins un centre d'interet", 'danger')
       return;
     }
 
@@ -105,4 +114,12 @@ export class InteretsPage implements OnInit {
   } 
 
   
+  async showToast(message: string, color: 'success' | 'danger' = 'danger') {
+    const toast = await this.toastController.create({
+      message,
+      duration: 3000,
+      color,
+    });
+    toast.present();
+  }
 }

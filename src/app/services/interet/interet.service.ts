@@ -12,8 +12,8 @@ export class InteretService {
   constructor(private http: HttpClient) { }
 
   // Récupérer la liste des intérêts
-  getAllInterets(): Observable<any> {
-  return this.http.get<any>(this.baseUrl);
+  getAllInterets(): Observable<any[]> {
+  return this.http.get<any[]>(this.baseUrl);
 } 
 
 
