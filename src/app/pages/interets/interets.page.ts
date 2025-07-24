@@ -12,7 +12,7 @@ import { ToastController } from '@ionic/angular';
   templateUrl: './interets.page.html',
   styleUrls: ['./interets.page.scss'],
   standalone: true,
-  imports: [IonCol, IonRow, IonText, IonButton, IonCheckbox, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonCol, IonRow, IonText, IonButton, IonCheckbox, IonLabel, IonItem, IonList, IonContent, CommonModule, FormsModule]
 })
 export class InteretsPage implements OnInit {
 

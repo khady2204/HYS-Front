@@ -7,13 +7,13 @@ import { Observable } from 'rxjs';
 })
 export class InteretService {
 
-  private baseUrl = 'http://localhost:8081/api/interets';
+  private baseUrl = 'http://localhost:8081/api';
 
   constructor(private http: HttpClient) { }
 
   // Récupérer la liste des intérêts
   getAllInterets(): Observable<any[]> {
-  return this.http.get<any[]>(this.baseUrl);
+  return this.http.get<any[]>(`${this.baseUrl}/interets`);
 } 
 
 
