@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>interets</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item *ngFor="let interet of interets">
+      <ion-label>{{ interet.name }}</ion-label>
+      <ion-checkbox slot="end" (ionchange)="toggleSelection(interet.id)"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="full" (click)="envoyerChoix()">Envoyer</ion-button>
+</ion-content>
