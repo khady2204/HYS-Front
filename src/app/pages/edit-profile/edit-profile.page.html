@@ -1,4 +1,4 @@
-<ion-content class="bg-white">
+<ion-content class="bg-white" >
 
   <!-- Header -->
   <div class="d-flex align-items-center justify-content-between px-3 pt-4">
@@ -25,6 +25,7 @@
       id="profileImageInput"
       accept="image/*"
       style="display: none;"
+      (change)="onFileSelected($event)"
     />
 
     <!-- Bouton caméra lié à l'input -->
@@ -40,26 +41,26 @@
 
 
   <!-- Formulaire -->
-  <form class="px-3">
+  <form class="px-3"  (ngSubmit)="onSubmit()">
     <div class="mb-3">
       <label for="name" class="form-label fw-semibold">Name</label>
-      <input type="text" class="form-control" placeholder="Melissa Peters" />
+      <input type="text" formControlName="name" class="form-control" placeholder="Melissa Peters" />
     </div>
 
     <div class="mb-3">
       <label for="email" class="form-label fw-semibold">Email</label>
-      <input type="email" class="form-control" placeholder="melpetters@gmail.com" />
+      <input type="email" formControlName="email" class="form-control" placeholder="melpetters@gmail.com" />
     </div>
 
     <div class="mb-3">
       <label for="password" class="form-label fw-semibold">Password</label>
-      <input type="password" class="form-control" placeholder="••••••••" />
+      <input type="password" formControlName="password" class="form-control" placeholder="••••••••" />
     </div>
 
     <div class="mb-3">
       <label class="form-label fw-semibold">Date of Birth</label>
       <div class="input-group">
-        <input type="date" class="form-control" />
+        <input type="date" formControlName="dob" class="form-control" />
         <span class="input-group-text bg-white border-start-0">
           <i class="bi bi-chevron-down"></i>
         </span>
@@ -69,7 +70,7 @@
     <div class="mb-3">
       <label for="location" class="form-label fw-semibold">Country/Region</label>
       <div class="input-group">
-        <select class="form-select">
+        <select formControlName="country" class="form-select">
           <option selected disabled>Choose country</option>
           <option value="Senegal">Senegal</option>
           <option value="Nigeria">Nigeria</option>

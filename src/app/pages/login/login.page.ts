@@ -83,7 +83,7 @@ export class LoginPage {
         if (res.token) {
           localStorage.setItem('jwtToken', res.token);
         }
-        this.router.navigate(['/dashboard']); // Redirection vers la page d’accueil
+        this.router.navigate(['/accueil']); // Redirection vers la page d’accueil
       },
       // Si la connexion échoue (email ou mot de passe incorrect par exemple)
       error: (err) => {

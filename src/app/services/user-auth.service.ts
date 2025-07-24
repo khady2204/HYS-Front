@@ -27,4 +27,8 @@ export class UserAuthService {
   clear(): void {
     localStorage.clear();
   }
+
+  isAuthenticated(): boolean {
+    return this.getToken() !== null && this.getId() !== null;
+  }
 }

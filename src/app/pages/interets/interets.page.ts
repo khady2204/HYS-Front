@@ -1,0 +1,108 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, SelectControlValueAccessor } from '@angular/forms';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonCheckbox, IonButton } from '@ionic/angular/standalone';
+import { UserAuthService } from 'src/app/services/user-auth.service';
+import { InteretService } from 'src/app/services/interet/interet.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-interets',
+  templateUrl: './interets.page.html',
+  styleUrls: ['./interets.page.scss'],
+  standalone: true,
+  imports: [IonButton, IonCheckbox, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+})
+export class InteretsPage implements OnInit {
+
+  interets: any[] = [];
+  selectedInterets: number[] = [];
+  userId: number | null = null;
+
+  constructor(
+    private userAuthService: UserAuthService,
+    private interetService: InteretService,
+    private router: Router
+  ) { }
+
+  
+
+  ngOnInit() {
+    const token = localStorage.getItem('jwtToken');
+
+    console.log("Token JWT:", token);
+    // Vérifie si l'utilisateur est authentifié
+    if(!token) {
+      console.warn('Utilisateur non authentifié, redirection vers la page de connexion.');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const id = this.userAuthService.getId();
+    this.userId = id ? Number(id) : null;
+
+    this.interetService.getAllInterets().subscribe({
+      next: (data: string) => {
+      try {
+        console.log('Réponse brute JSON:', data);
+
+        const parsed = JSON.parse(data);
+
+        // Vérifie si l'utilisateur apparait dans au moins un intérét
+        const userAlreadyHasInterets = parsed.some((interet: any) =>
+          interet.users && interet.users.some((u: any) => Number(u.id) === this.userId)
+        );
+
+        if (userAlreadyHasInterets) {
+          console.log("Utilisateur déjà inscrit à un ou plusieurs intérêts.");
+          this.router.navigate(['/dashboard']);
+          return;
+        }
+
+        // Sinon, charger les interets normalement
+        this.interets = parsed.map((i: any) => ({
+          id: i.id,
+          nom: i.nom
+        }));
+      } catch (e) {
+        console.error("Erreur de parsing JSON:", e);
+      }
+    },
+      error: (error) => {
+        console.error('Erreur lors de la récupération des intérêts:', error);
+      }
+    });
+  }
+
+
+  toggleSelection(interetId: number) {
+    if (this.selectedInterets.includes(interetId)) {
+      this.selectedInterets = this.selectedInterets.filter(id => id !== interetId);     
+    } else {
+      this.selectedInterets.push(interetId);
+    }
+  }
+
+  envoyerChoix() {
+    if (!this.userId) {
+      console.warn("Utilisateur non connecté.");
+      return;
+    }
+
+    if (this.selectedInterets.length === 0) {
+      console.warn ("Aucun intérêt sélectionné.");
+      return;
+    }
+
+    this.interetService.createInteret({ userId: this.userId, interets: this.selectedInterets }).subscribe({
+      next : () => {
+        console.log("Intérêts envoyés avec succès.");
+      },
+      error: (err) => {
+        console.error("Erreur lors de l'envoi des intérêts:", err);
+      }
+    });
+  } 
+
+  
+}
