@@ -11,7 +11,8 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule, RouterModule]
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule, RouterModule
+  ]
 })
 export class RegisterPage implements OnInit{
   registerForm!: FormGroup;
