@@ -77,7 +77,7 @@ export class LoginPage {
     this.authService.login(loginPayload).subscribe({
       // Si la connexion réussit
       next: (res) => {
-        console.log('Connexion réussie :', res);
+        console.log('Réponse complet du backend :', res);
         this.showToast('Connexion réussie !');
         // Stocker le token (si fourni)
         if (res.token) {
