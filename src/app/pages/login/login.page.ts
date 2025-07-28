@@ -6,6 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserAuthService } from 'src/app/services/user-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginPage {
 
   constructor(private fb: FormBuilder, private router: Router,
     private authService: AuthService, 
-    private toastController: ToastController // Pour afficher des messages toast
+    private toastController: ToastController,// Pour afficher des messages toast
+    private userAuthService: UserAuthService
   ) {
     this.loginForm = this.fb.group({
       identifier: ['', [Validators.required,Validators.pattern( /^((\d{9,15})|([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}))$/)]],
@@ -77,11 +79,17 @@ export class LoginPage {
     this.authService.login(loginPayload).subscribe({
       // Si la connexion réussit
       next: (res) => {
-        console.log('Réponse complet du backend :', res);
         this.showToast('Connexion réussie !');
         // Stocker le token (si fourni)
         if (res.token) {
-          localStorage.setItem('jwtToken', res.token);
+          this.userAuthService.setToken(res.token);
+          const payload = this.decodeToken(res.token);
+          this.userAuthService.setUser(payload);
+          console.log('Utilisateur connecté:', payload);
+          if (payload?.id !== undefined) {
+            this.userAuthService.setId(String(payload.id));
+          }
+
         }
         this.router.navigate(['/accueil']); // Redirection vers la page d’accueil
       },
@@ -91,6 +99,17 @@ export class LoginPage {
         this.showToast('identifiant ou mot de passe incorrect', 'danger');
       }
     });
+  }
+
+  decodeToken(token: string): any {
+    try {
+      const playload = token.split('.')[1];
+      const decodePayload = JSON.parse(atob(playload));
+      return decodePayload;
+    } catch (error) {
+      console.error('Erreur de décodage du token:', error);
+      return null;
+    }
   }
 }
 

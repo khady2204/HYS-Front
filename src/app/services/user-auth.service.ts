@@ -5,8 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class UserAuthService {
 
-  private readonly IdKey = 'Id';
+  private readonly IdKey = 'ID';
   private readonly tokenKey = 'jwtToken';
+  private readonly userKey = 'userInfo';
 
   setToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
@@ -16,8 +17,33 @@ export class UserAuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
-  setId(Id: string): void {
-    localStorage.setItem(this.IdKey, Id);
+  setUser(payload: any): void {
+    localStorage.setItem(this.userKey, JSON.stringify(payload));
+  }
+
+  getUser(): any {
+    const user = localStorage.getItem(this.userKey);
+    return user ? JSON.parse(user) : null;
+  }
+
+  getUserId(): number | null {
+    const user = this.getUser();
+    return user ? user.id : null;
+  }
+
+  getEmail(): string | null {
+    const user = this.getUser();
+    return user ? user.email : null;
+  }
+
+  getFullName(): string | null {
+    const user = this.getUser();
+    return user ? `${user.prenom} ${user.nom}` : null;
+  }
+
+
+  setId(ID: string): void {
+    localStorage.setItem(this.IdKey, ID);
   }
 
   getId(): string | null {
@@ -31,4 +57,6 @@ export class UserAuthService {
   isAuthenticated(): boolean {
     return this.getToken() !== null && this.getId() !== null;
   }
+
+  
 }

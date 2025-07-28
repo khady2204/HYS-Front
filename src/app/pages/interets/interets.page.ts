@@ -47,18 +47,17 @@ export class InteretsPage implements OnInit {
     this.userId = id ? Number(id) : null;
 
     this.interetService.getAllInterets().subscribe({
-      next: (data: any[]) => {
+      next: (interets: any[]) => {
       try {
-        console.log('Réponse brute JSON:', data);
+        console.log('Réponse brute JSON:', interets);
 
-        const parsed = data;
+        const parsed = interets;
 
         // Vérifie si l'utilisateur apparait dans au moins un intérét
-        const userAlreadyHasInterets = parsed.some((interet: any) =>
-          interet.users && interet.users.some((u: any) => Number(u.id) === this.userId)
-        );
+        const dejaInscrit = interets.some(interet => interet.users?.some((user: any) => Number(user.id) === this.userId));
+        const userAlreadyHasInterets = dejaInscrit || interets.some(interet => interet.users?.some((user: any) => user.id === this.userId));
 
-        if (userAlreadyHasInterets) {
+        if (dejaInscrit) {
           console.log("Utilisateur déjà inscrit à un ou plusieurs intérêts.");
           this.router.navigate(['/dashboard']);
           return;
@@ -103,14 +102,19 @@ export class InteretsPage implements OnInit {
       return;
     }
 
-    this.interetService.createInteret({ userId: this.userId, interets: this.selectedInterets }).subscribe({
-      next : () => {
-        console.log("Intérêts envoyés avec succès.");
-      },
-      error: (err) => {
-        console.error("Erreur lors de l'envoi des intérêts:", err);
-      }
-    });
+   this.interetService.createInteret({
+    userId: this.userId,
+    interets: this.selectedInterets
+   }).subscribe({
+    next: () => {
+      this.showToast("Choix enregistré avec succès !", 'success' );
+      this.router.navigate(['/suggestion']);
+    },
+    error: (err) => {
+      console.error("Erreur lors de l'envoi des interets:", err);
+      this.showToast("Erreur lors de l'envoi des centres d'intérêt. Veuillez réessayer.", 'danger' );
+    }
+   });
   } 
 
   

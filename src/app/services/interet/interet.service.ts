@@ -18,7 +18,7 @@ export class InteretService {
 
 
   // Ajouter un nouvel intérêt
-  createInteret(interet: any): Observable<any> {
-    return this.http.post<any>(this.baseUrl, interet);
+  createInteret(data: { userId: number, interets: number[] }) {
+    return this.http.post(`${this.baseUrl}/interets`, data);
   }
 }
