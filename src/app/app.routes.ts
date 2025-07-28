@@ -11,6 +11,7 @@ export const routes: Routes = [
     path: 'login',
     loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
   },
+  
   {
     path: 'register',
     loadComponent: () => import('./pages/register/register.page').then( m => m.RegisterPage)
@@ -39,7 +40,6 @@ export const routes: Routes = [
     path: 'new-password',
     loadComponent: () => import('./pages/new-password/new-password.page').then( m => m.NewPasswordPage)
   },
-
   {
     path: 'validationsms',
     loadComponent: () => import('./pages/validationsms/validationsms.page').then( m => m.ValidationsmsPage)
@@ -102,9 +102,6 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/interets/interets.page').then( m => m.InteretsPage),
     canActivate: [AuthGuard]
   },
-
-
-
 
 
 ];
