@@ -11,6 +11,7 @@ import {
 import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
 import { DropdownDrawerComponent } from 'src/app/components/dropdown-drawer/dropdown-drawer.component';
 import { SuggestionService } from 'src/app/services/suggestion/suggestion.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-suggestion',
@@ -22,7 +23,8 @@ import { SuggestionService } from 'src/app/services/suggestion/suggestion.servic
     CommonModule,
     FormsModule,
     FloatingMenuComponent,
-    DropdownDrawerComponent
+    DropdownDrawerComponent,
+    RouterLink
   ]
 })
 export class SuggestionPage implements OnInit {
@@ -43,7 +45,6 @@ export class SuggestionPage implements OnInit {
     const token = localStorage.getItem('jwtToken');
 
     if (!token) {
-      console.warn('Token JWT manquant, utilisateur non authentifié.');
       return;
     }
 
@@ -53,7 +54,7 @@ export class SuggestionPage implements OnInit {
           .filter(s => s.compatibilite && s.compatibilite > 0)
           .sort((a, b) => b.compatibilite - a.compatibilite);
 
-        console.log('Suggestions filtrées et triées:', this.suggestions);
+        console.log('Suggestions chargées:', this.suggestions);
       },
       error: (error) => {
         console.error('Erreur lors du chargement des suggestions:', error);

@@ -96,15 +96,16 @@ export class InteretsPage implements OnInit {
       return;
     }
 
-    if (this.selectedInterets.length === 0) {
-      console.warn ("Aucun intérêt sélectionné.");
-      this.showToast("Veuillez sélectionner au moins un centre d'interet", 'danger')
+    if (!this.selectedInterets || this.selectedInterets.length === 0) {
+      console.warn("Aucun intérêt sélectionné.");
+      this.showToast("Veuillez sélectionner au moins un centre d'intérêt", 'danger');
       return;
     }
 
-   this.interetService.createInteret({
+
+   this.interetService.createUserInteret({
     userId: this.userId,
-    interets: this.selectedInterets
+    interetIds: this.selectedInterets
    }).subscribe({
     next: () => {
       this.showToast("Choix enregistré avec succès !", 'success' );

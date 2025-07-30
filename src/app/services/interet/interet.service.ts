@@ -13,12 +13,16 @@ export class InteretService {
 
   // Récupérer la liste des intérêts
   getAllInterets(): Observable<any[]> {
-  return this.http.get<any[]>(`${this.baseUrl}/interets`);
+  return this.http.get<any[]>(`${this.baseUrl}/interets/listeinterets`);
 } 
 
 
-  // Ajouter un nouvel intérêt
+  /* Ajouter un nouvel intérêt
   createInteret(data: { userId: number, interets: number[] }) {
     return this.http.post(`${this.baseUrl}/interets`, data);
+  } */
+
+  createUserInteret(data: { userId: number, interetIds: number[] }): Observable<any> {
+    return this.http.post(`${this.baseUrl}/interets/user`, data, { responseType: 'text' });
   }
 }

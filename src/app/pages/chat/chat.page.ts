@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -12,9 +13,25 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
 })
 export class ChatPage implements OnInit {
 
-  constructor(private location: Location) { }
+  user: any;
+
+  constructor(
+    private location: Location,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    const navigation = this.router.getCurrentNavigation();
+    this.user = navigation?.extras?.state?.['user'];
+  
+    if (!this.user) {
+      // Fallback si rechargement ou accès direct
+      const id = this.route.snapshot.paramMap.get('id');
+
+      console.warn('Pas de données utilisateur dans l\'état de navigation, tentative de récupération par ID:', id);
+    }
+  
   }
 
   goBack() {
