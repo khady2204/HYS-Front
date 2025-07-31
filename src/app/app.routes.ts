@@ -86,7 +86,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage)
   },
   {
-    path: 'chat',
+    path: 'chat/:userId',
     loadComponent: () => import('./pages/chat/chat.page').then( m => m.ChatPage)
   },
   {
