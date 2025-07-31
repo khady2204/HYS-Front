@@ -22,7 +22,7 @@
       <!-- Service 1 : My love -->
       <div class="col-6 d-flex justify-content-center">
         <a
-          [routerLink]="'/interets'"
+          [routerLink]="myLoveLink"
           class="btn text-white px-4 py-3 mb-3 d-flex align-items-center gap-2 rounded-3 fs-6 text-decoration-none"
           style="width: 100%; max-width: 160px; background-color: #ff008A; white-space: normal; word-break: break-word;">
           <div class="icon-wrapper d-flex align-items-center justify-content-center bg-white rounded-circle">
@@ -30,6 +30,13 @@
           </div>
           My love
         </a>
+        <ng-template #loading>
+          <div
+            class="btn text-white px-4 py-3 mb-3 d-flex align-items-center gap-2 rounded-3 fs-6 justify-content-center"
+            style="width: 100%; max-width: 160px; background-color: #ff008A;">
+            <ion-spinner name="dots" color="light"></ion-spinner>
+          </div>
+        </ng-template>
       </div>
 
       <!-- Service 2 : Santé -->

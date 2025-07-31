@@ -68,23 +68,6 @@ export class InteretsPage implements OnInit {
     const id = this.userAuthService.getId();
     this.userId = id ? Number(id) : null;
 
-    // Vérifie si l'utilisateur a déjà des intérêts
-    this.interetService.getCurrentUserInterets().subscribe({
-      next: (interets: any[]) => {
-        if (interets?.length > 0) {
-          this.router.navigate(['/dashboard']);
-          return;
-        }
-        this.loadInterets();
-      },
-      error: (err) => {
-        console.error(" Erreur lors de la vérification des intérêts utilisateur :", err);
-        this.loadInterets(); // Fallback
-      }
-    });
-  }
-
-  loadInterets() {
     this.interetService.getAllInterets().subscribe({
       next: (interets: any[]) => {
         this.interets = interets.map((i: any) => ({ id: i.id, nom: i.nom }));
@@ -98,6 +81,7 @@ export class InteretsPage implements OnInit {
       }
     });
   }
+  
 
   toggleSelection(interetId: number) {
     if (this.selectedInterets.includes(interetId)) {
