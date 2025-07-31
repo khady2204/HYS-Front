@@ -25,4 +25,10 @@ export class InteretService {
   createUserInteret(data: { userId: number, interetIds: number[] }): Observable<any> {
     return this.http.post(`${this.baseUrl}/interets/user`, data, { responseType: 'text' });
   }
+
+  getCurrentUserInterets(): Observable<any[]> {
+    const token = localStorage.getItem('jwtToken');
+    const headers = { Authorization : `Bearer ${token}` };
+    return this.http.get<any[]>(`${this.baseUrl}/interets/user/actuel`, { headers });
+  }
 }

@@ -27,7 +27,7 @@ export class ChatPage implements OnInit {
   
     if (!this.user) {
       // Fallback si rechargement ou accès direct
-      const id = this.route.snapshot.paramMap.get('id');
+      const id = this.route.snapshot.paramMap.get('userId');
 
       console.warn('Pas de données utilisateur dans l\'état de navigation, tentative de récupération par ID:', id);
     }
