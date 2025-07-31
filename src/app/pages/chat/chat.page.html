@@ -1,11 +1,11 @@
 <ion-content class="bg-white">
 
-  <!-- En tete -->
+  <!-- En-tête -->
   <div class="chat-header d-flex align-items-center gap-3 px-3 pt-4 pb-3 border-bottom">
-      <i class="bi bi-arrow-left fs-4" (click)="goBack()"></i>
-    <img src="assets/img/myLOve/suggestion/user4.png" alt="" class="rounded-circle" width="40" height="40" />
+    <i class="bi bi-arrow-left fs-4" (click)="goBack()"></i>
+    <img [src]="user?.profileImage || 'assets/img/myLOve/suggestion/user4.png'" class="rounded-circle" width="40" height="40" />
     <div class="ms-1">
-      <h6 class="mb-0 fw-bold">{{user?.prenom }} {{user?.nom}}</h6>
+      <h6 class="mb-0 fw-bold">{{ user?.prenom }} {{ user?.nom }}</h6>
       <small class="text-muted">En ligne</small>
     </div>
   </div>
@@ -15,54 +15,47 @@
     <span class="px-3 py-1 rounded-pill small text-muted">Aujourd'hui</span>
   </div>
 
-  <!-- Messages -->
-  <div class="px-3">
-    <div class="d-flex justify-content-end mb-2">
-      <div class="msg-bubble sent">Lorem ipsum is a <div class="msg-time">09:25 AM</div></div>
-    </div>
-
-    <div class="d-flex align-items-start gap-2 mb-2">
-      <img src="assets/img/myLOve/suggestion/user4.png" alt="" class="rounded-circle" width="35" height="35" />
-      <div>
-        <div class="fw-bold mb-1">Hawa Sow</div>
-        <div class="msg-bubble received">Lorem ipsum is a <div class="msg-time">09:25 AM</div></div>
-      </div>
-    </div>
-
-    <div class="d-flex align-items-start gap-2 mb-2">
-      <img src="assets/img/myLOve/suggestion/user4.png" alt="" class="rounded-circle" width="35" height="35" />
-      <div>
-        <div class="fw-bold mb-1">Hawa Sow</div>
-        <div class="msg-bubble received mb-1">Lorem ipsum is a</div>
-        <div class="msg-bubble received">Lorem ipsum is a</div>
-        <div class="msg-time ms-2">09:25 AM</div>
-      </div>
-    </div>
-
-    <div class="d-flex justify-content-end mb-2">
-      <div class="msg-bubble sent d-flex align-items-center gap-2 px-3 py-2">
-        <i class="bi bi-play-fill fs-4"></i>
-        <div class="flex-grow-1">
-          <div class="waveform-placeholder"></div>
+  <!-- Zone des messages -->
+  <div class="px-3 pb-5"> <!-- Ajoute un padding bottom pour ne pas cacher les messages -->
+    <div *ngFor="let message of messages">
+      <div
+        class="d-flex mb-2"
+        [ngClass]="{
+          'justify-content-end': message.senderId === currentUserId,
+          'justify-content-start': message.senderId !== currentUserId
+        }"
+      >
+        <div
+          class="msg-bubble p-2 rounded"
+          [ngClass]="{
+            'bg-primary text-white': message.senderId === currentUserId,
+            'bg-light text-dark': message.senderId !== currentUserId
+          }"
+          style="max-width: 75%;"
+        >
+          <div>{{ message.content }}</div>
+          <div class="msg-time text-muted small mt-1 text-end">{{ message.timestamp | date:'shortTime' }}</div>
         </div>
-        <small class="text-white">00:16</small>
       </div>
     </div>
-    <div class="text-end text-muted small pe-2">09:25 AM</div>
   </div>
 
-  <!-- Input zone de message -->
+  <!-- Zone de saisie -->
   <div class="chat-input d-flex align-items-center p-3 border-top gap-3 bg-white position-sticky bottom-0" style="z-index:10;">
     <label class="mb-0">
       <i class="bi bi-paperclip fs-5" style="cursor:pointer;"></i>
       <input type="file" accept="image/*,video/*" style="display:none;" />
     </label>
-    <input type="text" class="form-control rounded-pill" placeholder="Message" style="background:#f5f5f5; border:none;" />
-    <button type="button" class="btn p-0">
+    <input type="text"
+           class="form-control rounded-pill"
+           [(ngModel)]="newMessage"
+           (keydown.enter)="sendMessage()"
+           placeholder="Message"
+           style="background:#f5f5f5; border:none;" />
+    <button type="button" class="btn p-0" (click)="sendMessage()">
       <i class="bi bi-mic fs-5"></i>
     </button>
     <i class="bi bi-gear fs-5" style="cursor:pointer;"></i>
   </div>
-    
 
 </ion-content>

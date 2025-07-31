@@ -59,12 +59,11 @@
  <!-- DISCUSSIONS -->
 <div class="px-3 mt-3">
   <ion-list class="discussion-item">
-    <ion-item-sliding *ngFor="let user of discussions">
-    
-      <!-- Boutons affichés au glissement -->
+    <ion-item-sliding *ngFor="let discussion of discussions">
+    <ng-container *ngIf="discussion.ami.id !== currentUserId">
       <ion-item-options side="end">
         <!-- Bouton Supprimer -->
-        <ion-item-option class="bg-red" (click)="supprimer(user)">
+        <ion-item-option class="bg-red" (click)="supprimer(discussion)">
           <i class="bi bi-trash-fill text-white fs-5 d-flex align-items-center justify-content-center w-100 h-100"></i>
         </ion-item-option>
 
@@ -76,18 +75,18 @@
 
 
       <!-- Contenu de l'utilisateur -->
-      <ion-item button (click)="navigateToChat(user)" class="">
+      <ion-item button (click)="navigateToChat(discussion.ami.id)" class="">
         <ion-avatar slot="start">
-          <img [src]="user.photo" />
+          <img [src]="discussion.ami.profileImage" />
         </ion-avatar>
         <ion-label>
-          <h6 class="fw-bold mb-1">{{ user.name }}</h6>
-          <p class="text-muted small mb-0">Lorem ipsum is a</p>
+          <h6 class="fw-bold mb-1">{{ discussion.ami.prenom }} {{ discussion.ami.nom }}</h6>
+          <p class="text-muted small mb-0">{{ discussion.messages[discussion.messages.length - 1].content }}</p>
         </ion-label>
 
-        <ion-badge *ngIf="user.unread > 0" color="danger">{{ user.unread }}</ion-badge>
+        <ion-badge *ngIf="discussion.messages.length > 0" color="danger">{{ discussion.messages.length }}</ion-badge>
       </ion-item>
-      
+    </ng-container>
     </ion-item-sliding>
   </ion-list>
 

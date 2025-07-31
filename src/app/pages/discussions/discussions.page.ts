@@ -5,6 +5,8 @@ import { IonContent, IonList, IonHeader, IonTitle, IonToolbar, IonAvatar, IonIte
 import { Router, RouterLink } from '@angular/router';
 import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
 import { DropdownDrawerComponent } from 'src/app/components/dropdown-drawer/dropdown-drawer.component';
+import { DiscussionResponse, MessageService } from 'src/app/services/message/message.service';
+import { UserAuthService } from 'src/app/services/user-auth.service';
 
 @Component({
   selector: 'app-discussions',
@@ -16,18 +18,38 @@ import { DropdownDrawerComponent } from 'src/app/components/dropdown-drawer/drop
 export class DiscussionsPage implements OnInit {
 
   showDrawer = false;
-  discussions = [
-    { id: 1, name: 'Fatou Ly', photo: 'assets/img/myLOve/suggestion/user1.png', unread: 3, online: true },
-    { id: 2, name: 'Hawa Sow', photo: 'assets/img/myLOve/suggestion/user2.png', unread: 4, online: false },
-    { id: 3, name: 'Aicha Ndiaye', photo: 'assets/img/myLOve/suggestion/user3.png', unread: 0, online: true },
-    { id: 4, name: 'Salma Fall', photo: 'assets/img/myLOve/suggestion/user4.png', unread: 0, online: false},
-    { id: 5, name: 'Astou Diop', photo: 'assets/img/myLOve/suggestion/user5.png', unread: 0, online: true },
-  ];
+  discussions: DiscussionResponse[] = [];
+  currentUserId: number = 0;
+  
 
-
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private messageService: MessageService,
+    private userService: UserAuthService
+  ) { }
 
   ngOnInit() {
+
+    const token = this.userService.getToken();
+    if (!token) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.currentUserId = this.userService.getUserId() ?? 0;
+    this.loadDiscussions();
+  }
+
+  loadDiscussions() {
+    this.messageService.getAllDiscussions().subscribe({
+      next: (data) => {
+        this.discussions = data;
+        console.log('Discussions chargées avec succès', this.discussions);
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des discussions', err);
+      }
+    })
   }
 
   toggleDrawer() {
@@ -35,11 +57,19 @@ export class DiscussionsPage implements OnInit {
 }
 
 supprimer(user: any) {
-  this.discussions = this.discussions.filter(u => u.id !== user.id);
+  this.discussions = this.discussions.filter(u => u.ami.id !== user.user.id);
+} 
+
+navigateToChat(userId: number) {
+  const discussion = this.discussions.find(d => d.ami.id === userId);
+  this.router.navigate(['/chat', userId], {
+    state: { 
+      user: discussion?.ami,
+      messages: discussion?.messages
+    }
+  });
 }
 
-navigateToChat(user: any) {
-  this.router.navigate(['/chat'], { queryParams: { userId: user.id } });
-}
+
 
 }
