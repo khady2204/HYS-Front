@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FiltreServiceComponent } from 'src/app/components/filtre-service/filtre-service.component';
+import { UserAuthService } from 'src/app/services/user-auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-header-search',
@@ -11,9 +13,23 @@ import { FiltreServiceComponent } from 'src/app/components/filtre-service/filtre
 })
 export class HeaderSearchComponent  implements OnInit {
 
-  constructor() { }
+  userId: number | null = null;
 
-  ngOnInit() {}
+  constructor(
+    private userAuthService: UserAuthService,
+    private router: Router
+  ) { }
+
+  ngOnInit() {
+    // Vérifie s'il est connecté
+    if (!this.userAuthService.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const user = this.userAuthService.getUser();
+    this.userId = user?.id ?? null;
+  }
 
   
 
