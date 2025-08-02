@@ -7,11 +7,11 @@ export interface updateProfileRequest {
   id: number;
  // nom: string;
   prenom: string;
+  nom: string,
   email: string;
   phone?: string;
   adresse?: string;
   bio?: string;
-  profileImage?: string;
   //interetIds?: number[];
   dateNaissance: number;
   pays: string;
@@ -28,7 +28,7 @@ export class UserService {
 
   // Mise à jour du profil utilisateur
   updateProfile(data: updateProfileRequest): Observable<string> {
-    return this.http.put<string>(`${this.baseUrl}/update-profile`, data);
+    return this.http.put(`${this.baseUrl}/update-profile`, data, { responseType: 'text'});
   }
 
   

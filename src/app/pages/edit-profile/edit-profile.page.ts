@@ -5,6 +5,7 @@ import { IonContent } from '@ionic/angular/standalone';
 import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
 import { UserService } from 'src/app/services/user.service';
 import { UserAuthService } from 'src/app/services/user-auth.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-edit-profile',
@@ -23,7 +24,8 @@ export class EditProfilePage implements OnInit {
     private location: Location,
     private fb: FormBuilder,
     private userService: UserService,
-    private authUserService: UserAuthService
+    private authUserService: UserAuthService,
+    private toastController: ToastController
   ) {}
 
   ngOnInit(): void {
@@ -32,11 +34,10 @@ export class EditProfilePage implements OnInit {
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9 +()-]{10,20}$')]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9 +()-]{9,20}$')]],
       adresse: ['', Validators.required],
-      bio: [''],
-      profileImage: ['', Validators.pattern('(https?://.*\\.(?:png|jpg|jpeg|gif|svg|webp))')],
-      dateNaissance: ['', Validators.required],
+      bio: ['', Validators.required],
+      dob: ['', Validators.required],
       pays: ['', Validators.required],
     });
 
@@ -46,15 +47,18 @@ export class EditProfilePage implements OnInit {
     if (user && user.id) {
       this.userId = user.id;
 
+      console.log("Numéro récupéré :", user.phone);
+
       // Remplissage du formulaire directement depuis les données locales
       this.editProfileForm.patchValue({
-        name: user.prenom ?? '',
+        prenom: user.prenom ?? '',
+        nom: user.nom ?? '',
         email: user.email ?? '',
         phone: user.phone ?? '',
         adresse: user.adresse ?? '',
         bio: user.bio ?? '',
         dob: this.convertToDateInputFormat(user.dateNaissance),
-        country: user.pays ?? ''
+        pays: user.pays ?? ''
       });
     } else {
       console.error('Utilisateur non trouvé dans le localStorage');
@@ -72,6 +76,7 @@ export class EditProfilePage implements OnInit {
   }
 
   onSubmit(): void {
+
     if (this.editProfileForm.valid) {
       console.log('Formulaire envoyé avec les valeurs :', this.editProfileForm.value);
 
@@ -79,20 +84,19 @@ export class EditProfilePage implements OnInit {
 
       const updateData = {
         id: this.userId,
-        prenom: formValue.name,
+        prenom: formValue.prenom,
+        nom: formValue.nom,
         email: formValue.email,
         bio: formValue.bio,
         adresse: formValue.adresse,
         phone: formValue.phone,
         dateNaissance: new Date(formValue.dob).getTime(), // timestamp
-        pays: formValue.country
+        pays: formValue.pays
       };
-
-      console.log("Données à envoyer :", updateData);
 
       this.userService.updateProfile(updateData).subscribe({
         next: (res) => {
-          console.log('Profil mis à jour avec succès', res);
+          this.presentSuccessToast('Profil mis à jour avec succès');
         },
         error: (err) => {
           console.error("Erreur lors de la mise à jour du profil", err);
@@ -103,8 +107,19 @@ export class EditProfilePage implements OnInit {
     }
   }
 
+
   goBack() {
     this.location.back();
+  }
+
+  async presentSuccessToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 3000,
+      color: 'success',
+      position: 'bottom'
+    });
+    await toast.present();
   }
 
   onFileSelected(event: any) {
