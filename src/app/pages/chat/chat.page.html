@@ -16,7 +16,6 @@
   </div>
 
   <!-- Zone des messages -->
-  <!-- Zone des messages -->
 <div class="px-3 pb-5">
   <div *ngFor="let message of messages">
     <div
@@ -29,15 +28,16 @@
       <div
         class="msg-bubble p-2 rounded"
         [ngStyle]="{
-          'background-color': message.senderId === currentUserId ? '#FFFFFF' : '#D8D8D8',
-          'color': '#000000'
+          'background-color': message.senderId === currentUserId ? '#000000' : '#D8D8D8',
+          'color': message.senderId === currentUserId ? '#FFFFFF' : '#000000'
         }"
-        style="max-width: 75%;"
+        style="max-width: 60%;"
       >
         <div>{{ message.content }}</div>
         <div class="msg-time text-muted small mt-1 text-end">{{ message.timestamp | date:'shortTime' }}</div>
-      </div>
     </div>
+  </div>
+
   </div>
 </div>
 
