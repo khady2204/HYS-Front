@@ -1,78 +1,105 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
-import { FormBuilder, FormControl, FormControlName, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonSelectOption, IonSelect } from '@ionic/angular/standalone';
+import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IonContent } from '@ionic/angular/standalone';
 import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
 import { UserService } from 'src/app/services/user.service';
-import { ActivatedRoute } from '@angular/router';
 import { UserAuthService } from 'src/app/services/user-auth.service';
-
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.page.html',
   styleUrls: ['./edit-profile.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, ReactiveFormsModule, FloatingMenuComponent]
+  imports: [IonContent, CommonModule, FormsModule, ReactiveFormsModule, /*FloatingMenuComponent*/]
 })
 export class EditProfilePage implements OnInit {
 
-  editProfileForm!: FormGroup; // Déclaration du formulaire
-  userId!: number;             // ID de l'utilisateur extrait de l'URL
+  editProfileForm!: FormGroup;
+  userId!: number;
   profileImagePreview: string | ArrayBuffer | null = null;
 
   constructor(
     private location: Location,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private userService: UserService,
     private authUserService: UserAuthService
   ) {}
 
   ngOnInit(): void {
-    // Initialiser le formulaire avec les champs vides et validations
+    // Initialiser le formulaire avec validations
     this.editProfileForm = this.fb.group({
-      name: ['', Validators.required],
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      dob: [''],
-      country: ['']
+      phone: ['', [Validators.required, Validators.pattern('^[0-9 +()-]{10,20}$')]],
+      adresse: ['', Validators.required],
+      bio: [''],
+      profileImage: ['', Validators.pattern('(https?://.*\\.(?:png|jpg|jpeg|gif|svg|webp))')],
+      dateNaissance: ['', Validators.required],
+      pays: ['', Validators.required],
     });
 
-    // Récupérer l'ID à partir des paramètres de l'URL
-    this.route.paramMap.subscribe(params => {
-      const idParam = params.get('userId');
-      if (idParam) {
-        this.userId = +idParam; // Convertir en nombre
-        this.loadUserData(this.userId); // Charger les données
-      }
-    });
+    // Récupération des infos depuis le localStorage
+    const user = this.authUserService.getUser(); // Doit retourner un objet avec un id
+    console.log('user user', user);
+    if (user && user.id) {
+      this.userId = user.id;
+
+      // Remplissage du formulaire directement depuis les données locales
+      this.editProfileForm.patchValue({
+        name: user.prenom ?? '',
+        email: user.email ?? '',
+        phone: user.phone ?? '',
+        adresse: user.adresse ?? '',
+        bio: user.bio ?? '',
+        dob: this.convertToDateInputFormat(user.dateNaissance),
+        country: user.pays ?? ''
+      });
+    } else {
+      console.error('Utilisateur non trouvé dans le localStorage');
+    }
   }
 
-  // Charger les données utilisateur pour pré-remplir le formulaire
-  loadUserData(id: number): void {
-    this.userService.getUserById(id).subscribe({
-      next: (user: any) => {
-        console.log('Données utilisateur récupérées :', user);
-
-        // Pré-remplir le formulaire avec les données récupérées
-        this.editProfileForm.patchValue({
-          name: user.prenom,
-          email: user.email,
-          dob: user.dateNaissance,
-          country: user.pays ?? ''
-        });
-      },
-      error: err => {
-        console.error('Erreur lors du chargement de l’utilisateur :', err);
-      }
-    });
+  convertToDateInputFormat(timestamp: number): string {
+    if (!timestamp) return '';
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}`;
   }
 
-  // Méthode de soumission du formulaire
   onSubmit(): void {
     if (this.editProfileForm.valid) {
       console.log('Formulaire envoyé avec les valeurs :', this.editProfileForm.value);
-      // Ajoutez ici l'appel API pour enregistrer les modifications
+
+      const formValue = this.editProfileForm.value;
+
+      const updateData = {
+        id: this.userId,
+        prenom: formValue.name,
+        email: formValue.email,
+        bio: formValue.bio,
+        adresse: formValue.adresse,
+        phone: formValue.phone,
+        dateNaissance: new Date(formValue.dob).getTime(), // timestamp
+        pays: formValue.country
+      };
+
+      console.log("Données à envoyer :", updateData);
+
+      this.userService.updateProfile(updateData).subscribe({
+        next: (res) => {
+          console.log('Profil mis à jour avec succès', res);
+        },
+        error: (err) => {
+          console.error("Erreur lors de la mise à jour du profil", err);
+        }
+      });
+    } else {
+      console.warn('Le formulaire est invalide');
     }
   }
 

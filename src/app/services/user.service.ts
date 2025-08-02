@@ -4,14 +4,17 @@ import { Observable } from 'rxjs';
 
 
 export interface updateProfileRequest {
-  nom: string;
+  id: number;
+ // nom: string;
   prenom: string;
   email: string;
   phone?: string;
   adresse?: string;
   bio?: string;
   profileImage?: string;
-  interetIds?: number[];
+  //interetIds?: number[];
+  dateNaissance: number;
+  pays: string;
 }
 
 @Injectable({
@@ -28,7 +31,5 @@ export class UserService {
     return this.http.put<string>(`${this.baseUrl}/update-profile`, data);
   }
 
-  getUserById(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/profile/${id}`);
-  }
+  
 }
