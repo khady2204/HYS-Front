@@ -16,29 +16,31 @@
   </div>
 
   <!-- Zone des messages -->
-  <div class="px-3 pb-5"> <!-- Ajoute un padding bottom pour ne pas cacher les messages -->
-    <div *ngFor="let message of messages">
+  <!-- Zone des messages -->
+<div class="px-3 pb-5">
+  <div *ngFor="let message of messages">
+    <div
+      class="d-flex mb-2"
+      [ngClass]="{
+        'justify-content-end': message.senderId === currentUserId,
+        'justify-content-start': message.senderId !== currentUserId
+      }"
+    >
       <div
-        class="d-flex mb-2"
-        [ngClass]="{
-          'justify-content-end': message.senderId === currentUserId,
-          'justify-content-start': message.senderId !== currentUserId
+        class="msg-bubble p-2 rounded"
+        [ngStyle]="{
+          'background-color': message.senderId === currentUserId ? '#FFFFFF' : '#D8D8D8',
+          'color': '#000000'
         }"
+        style="max-width: 75%;"
       >
-        <div
-          class="msg-bubble p-2 rounded"
-          [ngClass]="{
-            'bg-primary text-white': message.senderId === currentUserId,
-            'bg-light text-dark': message.senderId !== currentUserId
-          }"
-          style="max-width: 75%;"
-        >
-          <div>{{ message.content }}</div>
-          <div class="msg-time text-muted small mt-1 text-end">{{ message.timestamp | date:'shortTime' }}</div>
-        </div>
+        <div>{{ message.content }}</div>
+        <div class="msg-time text-muted small mt-1 text-end">{{ message.timestamp | date:'shortTime' }}</div>
       </div>
     </div>
   </div>
+</div>
+
 
   <!-- Zone de saisie -->
   <div class="chat-input d-flex align-items-center p-3 border-top gap-3 bg-white position-sticky bottom-0" style="z-index:10;">
