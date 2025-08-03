@@ -20,7 +20,8 @@ export class DiscussionsPage implements OnInit {
   showDrawer = false;
   discussions: DiscussionResponse[] = [];
   currentUserId: number = 0;
-  
+  userId: number | null = null;
+
 
   constructor(
     private router: Router,
@@ -30,11 +31,14 @@ export class DiscussionsPage implements OnInit {
 
   ngOnInit() {
 
-    const token = this.userService.getToken();
-    if (!token) {
+    // Vérifie s'il est connecté
+    if (!this.userService.isAuthenticated()) {
       this.router.navigate(['/login']);
       return;
     }
+
+    const user = this.userService.getUser();
+    this.userId = user?.id ?? null;
 
     this.currentUserId = this.userService.getUserId() ?? 0;
     this.loadDiscussions();

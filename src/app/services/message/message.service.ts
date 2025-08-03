@@ -40,6 +40,8 @@ export class MessageService {
 
   private baseUrl = 'http://localhost:8081/api/messages';
 
+  private idsDiscussionsExistantes: number[] = [];
+
   constructor(private http: HttpClient) { }
   
   // Envoi d'un message
@@ -66,5 +68,13 @@ export class MessageService {
     if (params.prenom) httpParams = httpParams.set('prenom', params.prenom);
 
     return this.http.get<DiscussionResponse[]>(`${this.baseUrl}/discussions/search`, { params: httpParams });
+  }
+
+  setDiscussionIds(ids: number[]) {
+    this.idsDiscussionsExistantes = ids;
+  }
+
+  getDiscussionIds(): number[] {
+    return this.idsDiscussionsExistantes;
   }
 }

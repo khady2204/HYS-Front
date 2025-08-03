@@ -11,7 +11,8 @@ import {
 import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
 import { DropdownDrawerComponent } from 'src/app/components/dropdown-drawer/dropdown-drawer.component';
 import { SuggestionService } from 'src/app/services/suggestion/suggestion.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { UserAuthService } from 'src/app/services/user-auth.service';
 
 @Component({
   selector: 'app-suggestion',
@@ -30,13 +31,24 @@ import { RouterLink } from '@angular/router';
 export class SuggestionPage implements OnInit {
   
   suggestions: any[] = [];
+  userId: number | null = null;
 
   constructor(
     private location: Location,
-    private suggestionService: SuggestionService
+    private suggestionService: SuggestionService,
+    private userAuthService: UserAuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
+    // Vérifie s'il est connecté
+    if (!this.userAuthService.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const user = this.userAuthService.getUser();
+    this.userId = user?.id ?? null;
     this.loadSuggestions();
   }
 
