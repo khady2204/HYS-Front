@@ -65,4 +65,6 @@ export class SuggestionPage implements OnInit {
   goBack() {
     this.location.back();
   }
+
+  
 }

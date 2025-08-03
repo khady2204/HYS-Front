@@ -40,7 +40,7 @@
             Compatibilité : {{ person.compatibilite }} %<br />
             {{ person.interetsCommuns }}
           </div>
-          <button class="btn btn-pink mb-2 text-white w-100 mt-3" [routerLink]="['/chat', person.userId]" [state]="{user: person}">
+          <button class="btn btn-pink mb-2 text-white w-100 mt-3"  [routerLink]="['/chat', person.userId]" [state]="{user: person}">
             Commencer une discussion
           </button>
         </div>
