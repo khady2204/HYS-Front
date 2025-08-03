@@ -1,17 +1,14 @@
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px; /* espace entre les messages */
-  padding: 10px;
+.chat-input {
+  position: relative;
 }
 
 .msg-bubble {
   border-radius: 20px;
   padding: 10px 14px;
-  max-width: 75%;
   font-size: 0.95rem;
+  max-width: 75%;
   position: relative;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* ombre subtile */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   display: inline-block;
 }
 

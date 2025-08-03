@@ -20,6 +20,7 @@ export class ProfilePage implements OnInit {
   prenom: string = '';
   nom: string = '';
   adresse: string = '';
+  bio: string ='';
   userId: number = 0;
 
   photos = [
@@ -54,6 +55,7 @@ export class ProfilePage implements OnInit {
       this.prenom = user.prenom;
       this.nom = user.nom;
       this.adresse = user.adresse ?? 'Non renseignée';
+      this.bio = user.bio;
       console.log("Profil chargé :", user);
     } else {
       console.warn("L'utilisateur dans l'url ne corresponde pas à l'utilisateur actuel.");
