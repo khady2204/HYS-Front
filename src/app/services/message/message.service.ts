@@ -70,11 +70,11 @@ export class MessageService {
     return this.http.get<DiscussionResponse[]>(`${this.baseUrl}/discussions/search`, { params: httpParams });
   }
 
-  setDiscussionIds(ids: number[]) {
+  /*setDiscussionIds(ids: number[]) {
     this.idsDiscussionsExistantes = ids;
   }
 
   getDiscussionIds(): number[] {
     return this.idsDiscussionsExistantes;
-  }
+  } */
 }

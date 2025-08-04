@@ -20,6 +20,7 @@ export class ChatPage implements OnInit {
   messages: MessageResponse[] = [];
   currentUserId: number | null = null;
   newMessage: string = '';
+  selectedFile: File | null = null;
 
   constructor(
     private location: Location,
@@ -89,6 +90,15 @@ export class ChatPage implements OnInit {
         console.error('Erreur lors du chargement des messages:', err);
       }
     });
+  }
+
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      this.sendMessage();
+    }
   }
 
   sendMessage() {
