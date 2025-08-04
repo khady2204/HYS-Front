@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonicModule } from "@ionic/angular";
+import { IonicModule } from '@ionic/angular';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 import { MessageRequest, MessageResponse, MessageService } from 'src/app/services/message/message.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-chat',
@@ -25,8 +26,9 @@ export class ChatPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private authService: UserAuthService,
-    private messageService: MessageService
-  ) { }
+    private messageService: MessageService,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     const token = this.authService.getToken();
@@ -35,19 +37,42 @@ export class ChatPage implements OnInit {
       return;
     }
 
+    this.currentUserId = this.authService.getUserId() ?? null;
+
     const navigation = this.router.getCurrentNavigation();
-    this.user = navigation?.extras?.state?.['user'];
+    const stateUser = navigation?.extras?.state?.['user'];
 
-    const userId = this.authService.getUserId();
-    this.currentUserId = userId ? parseInt(userId.toString(), 10) : null;
+    if (stateUser) {
+      // Normalisation
+      this.user = {
+        id: stateUser.id ?? stateUser.userId, // Assure l'utilisation de 'id'
+        ...stateUser
+      };
+      console.log('✅ Utilisateur reçu depuis navigation state :', this.user);
+      this.loadMessages();
+    } else {
+      const idParam = this.route.snapshot.paramMap.get('userId');
+      const fallbackUserId = idParam ? parseInt(idParam, 10) : null;
 
-    if (!this.user) {
-      const id = this.route.snapshot.paramMap.get('userId');
-      console.warn('Aucun utilisateur trouvé dans l\'état ou les paramètres de la route. ID:', id);
-      // Possibilité d’appel API ici pour récupérer user
+      if (fallbackUserId) {
+        console.warn('⚠️ Utilisateur non présent dans navigation state, récupération via userId:', fallbackUserId);
+        this.userService.getProfile(fallbackUserId).subscribe({
+          next: (data) => {
+            this.user = {
+              id: fallbackUserId,
+              ...data
+            };
+            console.log('✅ Utilisateur chargé depuis l\'API :', this.user);
+            this.loadMessages();
+          },
+          error: (err) => {
+            console.error("❌ Erreur lors du chargement du profil :", err);
+          }
+        });
+      } else {
+        console.error('❌ Aucun utilisateur trouvé dans state ni dans les paramètres');
+      }
     }
-
-    this.loadMessages();
   }
 
   loadMessages() {
@@ -94,7 +119,6 @@ export class ChatPage implements OnInit {
     this.location.back();
   }
 
-  // Comparaison simple entre deux dates (jour, mois, année)
   isSameDate(date1: string, date2: string): boolean {
     const d1 = new Date(date1);
     const d2 = new Date(date2);
@@ -105,7 +129,6 @@ export class ChatPage implements OnInit {
     );
   }
 
-  // Formatage personnalisé des dates des messages
   formatDate(dateString: string): string {
     const date = new Date(dateString);
     const today = new Date();
@@ -117,13 +140,8 @@ export class ChatPage implements OnInit {
       d1.getMonth() === d2.getMonth() &&
       d1.getDate() === d2.getDate();
 
-    if (isSameDay(date, today)) {
-      return "Aujourd'hui";
-    }
-
-    if (isSameDay(date, yesterday)) {
-      return "Hier";
-    }
+    if (isSameDay(date, today)) return "Aujourd'hui";
+    if (isSameDay(date, yesterday)) return "Hier";
 
     const diffTime = today.getTime() - date.getTime();
     const diffDays = diffTime / (1000 * 3600 * 24);
@@ -139,5 +157,4 @@ export class ChatPage implements OnInit {
 
     return `${day}/${month}/${year}`;
   }
-
 }

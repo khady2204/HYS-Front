@@ -29,7 +29,7 @@ import { UserAuthService } from 'src/app/services/user-auth.service';
   ]
 })
 export class SuggestionPage implements OnInit {
-  
+
   suggestions: any[] = [];
   userId: number | null = null;
 
@@ -41,22 +41,32 @@ export class SuggestionPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Vérifie s'il est connecté
+    // Vérifie si l'utilisateur est authentifié
     if (!this.userAuthService.isAuthenticated()) {
       this.router.navigate(['/login']);
       return;
     }
 
+    // Récupère l'utilisateur connecté
     const user = this.userAuthService.getUser();
-    this.userId = user?.id ?? null;
+
+    // Normalise l'identifiant utilisateur
+    this.userId = user?.id ?? user?.userId ?? null;
+
+    if (!this.userId) {
+      console.warn('Identifiant utilisateur introuvable.');
+      return;
+    }
+
     this.loadSuggestions();
   }
 
-  // ✅ Chargement des suggestions filtrées et triées
+  // Charge les suggestions compatibles, triées par ordre décroissant de compatibilité
   loadSuggestions() {
     const token = localStorage.getItem('jwtToken');
 
     if (!token) {
+      console.warn('Token JWT introuvable.');
       return;
     }
 
@@ -74,9 +84,22 @@ export class SuggestionPage implements OnInit {
     });
   }
 
+  getUserState(person: any) {
+    return {
+      user: {
+        id: person.userId,               
+        prenom: person.prenom,
+        nom: person.nom,
+        photoUrl: person.photoUrl,
+        phone: person.phone
+      }
+    };
+  }
+
+
+  // Retour à la page précédente
   goBack() {
     this.location.back();
   }
 
-  
 }

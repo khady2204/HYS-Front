@@ -59,38 +59,45 @@
  <!-- DISCUSSIONS -->
 <div class="px-3 mt-3">
   <ion-list class="discussion-item">
+
+    <!-- Affiche un message si aucune discussion -->
+    <div *ngIf="discussions?.length === 0" class="text-center text-muted mt-5">
+      Aucune discussion pour le moment.
+    </div>
+
     <ion-item-sliding *ngFor="let discussion of discussions">
-    <ng-container *ngIf="discussion.ami.id !== currentUserId">
-      <ion-item-options side="end">
-        <!-- Bouton Supprimer -->
-        <ion-item-option class="bg-red" (click)="supprimer(discussion)">
-          <i class="bi bi-trash-fill text-white fs-5 d-flex align-items-center justify-content-center w-100 h-100"></i>
-        </ion-item-option>
+      <ng-container *ngIf="discussion.ami.id !== currentUserId">
+        <ion-item-options side="end">
+          <!-- Bouton Supprimer -->
+          <ion-item-option class="bg-red" (click)="supprimer(discussion)">
+            <i class="bi bi-trash-fill text-white fs-5 d-flex align-items-center justify-content-center w-100 h-100"></i>
+          </ion-item-option>
 
-        <!-- Bouton Signaler -->
-        <ion-item-option class="bg-yellow" [routerLink]="['/report-partner']">
-          <i class="bi bi-flag-fill text-white fs-5 d-flex align-items-center justify-content-center w-100 h-100"></i>
-        </ion-item-option>
-      </ion-item-options>
+          <!-- Bouton Signaler -->
+          <ion-item-option class="bg-yellow" [routerLink]="['/report-partner']">
+            <i class="bi bi-flag-fill text-white fs-5 d-flex align-items-center justify-content-center w-100 h-100"></i>
+          </ion-item-option>
+        </ion-item-options>
 
-
-      <!-- Contenu de l'utilisateur -->
-      <ion-item button (click)="navigateToChat(discussion.ami.id)" class="">
-        <ion-avatar slot="start">
-          <img [src]="discussion.ami.profileImage" />
-        </ion-avatar>
-        <ion-label>
-          <h6 class="fw-bold mb-1">{{ discussion.ami.prenom }} {{ discussion.ami.nom }}</h6>
-          <p class="text-muted small mb-0">{{ discussion.messages[discussion.messages.length - 1].content }}</p>
-        </ion-label>
-
-        <ion-badge *ngIf="discussion.messages.length > 0" color="danger">{{ discussion.messages.length }}</ion-badge>
-      </ion-item>
-    </ng-container>
+        <!-- Contenu de l'utilisateur -->
+        <ion-item button (click)="navigateToChat(discussion.ami.id)">
+          <ion-avatar slot="start">
+            <img [src]="discussion.ami.profileImage" />
+          </ion-avatar>
+          <ion-label>
+            <h6 class="fw-bold mb-1">{{ discussion.ami.prenom }} {{ discussion.ami.nom }}</h6>
+            <p class="text-muted small mb-0">
+              {{ discussion.messages[discussion.messages.length - 1]?.content || 'Aucun message' }}
+            </p>
+          </ion-label>
+          <ion-badge *ngIf="discussion.messages.length > 0" color="danger">{{ discussion.messages.length }}</ion-badge>
+        </ion-item>
+      </ng-container>
     </ion-item-sliding>
-  </ion-list>
 
+  </ion-list>
 </div>
+
 
   <!-- MENU FLOTTANT -->
   <app-floating-menu></app-floating-menu>

@@ -31,5 +31,8 @@ export class UserService {
     return this.http.put(`${this.baseUrl}/update-profile`, data, { responseType: 'text'});
   }
 
-  
+  // Récuperer le profil d'un utilisateur via son ID
+  getProfile(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/profile/${id}`);
+  }
 }
