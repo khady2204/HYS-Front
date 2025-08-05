@@ -103,9 +103,9 @@ export class EditProfilePage implements OnInit {
         adresse: formValue.adresse,
         phone: formValue.phone,
         dateNaissance: new Date(formValue.dob).getTime(), // timestamp
-        pays: formValue.pays
+        pays: formValue.pays,
+        interetIds: formValue.interets.map((id: any) => Number(id))
       };
-
       this.userService.updateProfile(updateData).subscribe({
         next: (res) => {
           this.presentSuccessToast('Profil mis à jour avec succès');
