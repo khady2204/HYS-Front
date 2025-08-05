@@ -87,7 +87,7 @@
           <ion-label>
             <h6 class="fw-bold mb-1">{{ discussion.ami.prenom }} {{ discussion.ami.nom }}</h6>
             <p class="text-muted small mb-0">
-              {{ discussion.messages[discussion.messages.length - 1]?.content || 'Aucun message' }}
+              {{ discussion.messages[discussion.messages.length - 1].content || 'Aucun message' }}
             </p>
           </ion-label>
           <ion-badge *ngIf="discussion.messages.length > 0" color="danger">{{ discussion.messages.length }}</ion-badge>

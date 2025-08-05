@@ -6,6 +6,7 @@ import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating
 import { UserService } from 'src/app/services/user.service';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 import { ToastController } from '@ionic/angular';
+import { InteretService } from 'src/app/services/interet/interet.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -19,13 +20,16 @@ export class EditProfilePage implements OnInit {
   editProfileForm!: FormGroup;
   userId!: number;
   profileImagePreview: string | ArrayBuffer | null = null;
+  interets: any[] = [];
+  userInterets: any[] = [];
 
   constructor(
     private location: Location,
     private fb: FormBuilder,
     private userService: UserService,
     private authUserService: UserAuthService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private interetService: InteretService
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +43,7 @@ export class EditProfilePage implements OnInit {
       bio: ['', Validators.required],
       dob: ['', Validators.required],
       pays: ['', Validators.required],
+      interets: ['', Validators.required],
     });
 
     // Récupération des infos depuis le localStorage
@@ -63,6 +68,13 @@ export class EditProfilePage implements OnInit {
     } else {
       console.error('Utilisateur non trouvé dans le localStorage');
     }
+
+    // Charger la liste des interets
+    this.loadInterets();
+    
+    // Charger les interets de l'utilisateur connecté
+    this.loadUserInterets();
+
   }
 
   convertToDateInputFormat(timestamp: number): string {
@@ -133,4 +145,46 @@ export class EditProfilePage implements OnInit {
       this.editProfileForm.patchValue({ profileImage: file });
     }
   }
+
+  loadInterets() {
+    this.interetService.getAllInterets().subscribe({
+      next: (data) => {
+        this.interets = data;
+      },
+      error: (err) => {
+        console.error('Erreurs lors du chargement des intérets :', err);
+      }
+    });
+  }
+
+  loadUserInterets(): void {
+    this.interetService.getCurrentUserInterets().subscribe({
+      next: (data) => {
+        this.userInterets = data;
+        this.editProfileForm.patchValue({
+          interets: this.userInterets.map((i: any) => i.id)
+        });
+      },
+      error: (err) => {
+        console.error("Erreur lors du chargement des interets de l'utilisateur :", err);
+      }
+    });
+  }
+
+  onCheckboxChange(event: any) {
+    const interetsFormArray = this.editProfileForm.get('interets')?.value || [];
+
+    if (event.target.checked) {
+      this.editProfileForm.patchValue({
+        // Ajoute l'id sélectionné
+        interets: [...interetsFormArray, event.target.value]
+      });
+    } else {
+        // Retire l'id déselectionné
+        this.editProfileForm.patchValue({
+          interets: interetsFormArray.filter((id: any) => id !== event.target.value)
+        })
+    }
+  }
+ 
 }

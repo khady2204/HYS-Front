@@ -81,6 +81,21 @@
       </span>
     </div>
   </div>
+  
+  <div class="row">
+    <div class="col-6" *ngFor="let interet of interets; let i = index">
+      <div class="form-check">
+        <input 
+          type="checkbox"
+          class="form-check-input"
+          [value]="interet.id"
+          (change)="onCheckboxChange($event)"
+          [checked]="editProfileForm.get('interets')?.value.includes(interet.id)"
+        />
+        <label for="" class="form-check-label">{{ interet.nom }}</label>
+      </div>
+    </div>
+  </div>
 
   <div class="mb-3">
     <label for="pays" class="form-label fw-semibold">Pays</label>

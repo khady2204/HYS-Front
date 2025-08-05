@@ -102,6 +102,7 @@ export class ChatPage implements OnInit {
   }
 
   sendMessage() {
+    
     if (!this.newMessage.trim() || !this.currentUserId || !this.user?.id) {
       return;
     }

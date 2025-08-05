@@ -15,6 +15,7 @@ export interface updateProfileRequest {
   //interetIds?: number[];
   dateNaissance: number;
   pays: string;
+  interetIds?: number[];
 }
 
 @Injectable({

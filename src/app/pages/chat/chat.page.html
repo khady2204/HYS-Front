@@ -55,7 +55,7 @@
     <div class="chat-input d-flex align-items-center p-3 border-top gap-3 bg-white">
       <label class="mb-0">
         <i class="bi bi-paperclip fs-5" style="cursor:pointer;"></i>
-        <input type="file" accept="image/*,video/*" style="display:none;" />
+        <input type="file" accept="image/*,video/*" style="display:none;" (change)="onFileSelected($event)" />
       </label>
       <input
         type="text"
