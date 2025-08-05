@@ -105,8 +105,29 @@ export class EditProfilePage implements OnInit {
         dateNaissance: new Date(formValue.dob).getTime(), // timestamp
         pays: formValue.pays,
         interetIds: formValue.interets.map((id: any) => Number(id))
-      };
-      this.userService.updateProfile(updateData).subscribe({
+      }; 
+
+    /*  const formData = new FormData();
+
+      formData.append('id', this.userId.toString());
+      formData.append('prenom', formValue.prenom);
+      formData.append('nom', formValue.nom);
+      formData.append('email', formValue.email);
+      formData.append('bio', formValue.bio);
+      formData.append('adresse', formValue.adresse);
+      formData.append('phone', formValue.phone);
+      formData.append('dateNaissance', new Date(formValue.dob).getTime().toString());
+      formData.append('pays', formValue.pays);
+
+      const interetsIds = formValue.interets.map((id: any) => Number(id)).join(',');
+      formData.append('interetIds', interetsIds);
+
+      // Ajout de la photo si elle existe
+      if (formValue.profileImage) {
+        formData.append('profileImage', formValue.profileImage);
+      } */
+
+      this.userService.updateProfile(formValue).subscribe({
         next: (res) => {
           this.presentSuccessToast('Profil mis à jour avec succès');
         },
