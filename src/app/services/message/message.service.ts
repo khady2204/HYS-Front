@@ -2,25 +2,27 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-// Interface pour le corps d'une requete d'envoi de message
+// 📨 Requête d'envoi de message
 export interface MessageRequest {
-   receiverId: number,
+  receiverId: number;
   content: string;
 }
 
-// Interface pour la réponse d'un message
+// 📩 Réponse de message
 export interface MessageResponse {
-  id: number,
-  senderId: number,
-  recipientId: number,
-  content: string,
+  id: number;
+  senderId: number;
+  receiverId: number;
+  content: string;
   timestamp: string;
+  read: true | false;
   mediaUrl?: string;
   mediaType?: string;
-  isSender?: boolean; // Indique si le message a été envoyé par l'utilisateur connecté
+  audioDuration?: number;
+  isSender?: boolean; // Champ local côté frontend
 }
 
-// Interface pour résumer un utilisateur dans une discussion
+// 👤 Résumé utilisateur dans une discussion
 export interface UserSummary {
   id: number;
   prenom: string;
@@ -29,10 +31,11 @@ export interface UserSummary {
   phone: string;
 }
 
-// Interface représentant une discussion complete entre deux utilisateurs
+// 🗨️ Représentation d'une discussion
 export interface DiscussionResponse {
   ami: UserSummary;
   messages: MessageResponse[];
+  unreadCount?: number;
 }
 
 @Injectable({
@@ -40,44 +43,40 @@ export interface DiscussionResponse {
 })
 export class MessageService {
 
-  private baseUrl = 'http://localhost:8081/api/messages';
+  private readonly baseUrl = 'http://localhost:8081/api/messages';
 
-  private idsDiscussionsExistantes: number[] = [];
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-  
-  // Envoi d'un message
+  // 🚀 Envoi d'un message (support FormData pour médias)
   sendMessage(formData: FormData): Observable<MessageResponse> {
-    
     return this.http.post<MessageResponse>(`${this.baseUrl}`, formData);
   }
 
-  // Récupération des messages d'une discussion
+  // 📥 Récupère les messages avec un utilisateur donné
   getMessageWithUser(userId: number): Observable<MessageResponse[]> {
     return this.http.get<MessageResponse[]>(`${this.baseUrl}/${userId}`);
   }
 
-  // Récupération de toutes les discussions de l'utilisateur connecté
+  // 🧵 Récupère toutes les discussions
   getAllDiscussions(): Observable<DiscussionResponse[]> {
     return this.http.get<DiscussionResponse[]>(`${this.baseUrl}/discussions`);
   }
 
-  // Rechercher une discussion en utilisant un numéro de téléphone ou un prénom/nom
-  searchDiscussion(params: { phone?: string; nom?: string; prenom?: string}): Observable<DiscussionResponse[]> {
-    let httpParams = new HttpParams();
+  // ✔️ Marque un message comme lu
+  markMessageAsRead(messageId: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${messageId}/read`, {});
+  }
 
-    if (params.phone) httpParams = httpParams.set('phone', params.phone);
-    if (params.nom) httpParams = httpParams.set('nom', params.nom);
-    if (params.prenom) httpParams = httpParams.set('prenom', params.prenom);
+  // 🔍 Recherche une discussion par prénom, nom ou téléphone
+  searchDiscussion(params: { phone?: string; nom?: string; prenom?: string }): Observable<DiscussionResponse[]> {
+    const httpParams = new HttpParams({
+      fromObject: {
+        ...(params.phone && { phone: params.phone }),
+        ...(params.nom && { nom: params.nom }),
+        ...(params.prenom && { prenom: params.prenom })
+      }
+    });
 
     return this.http.get<DiscussionResponse[]>(`${this.baseUrl}/discussions/search`, { params: httpParams });
   }
-
-  /*setDiscussionIds(ids: number[]) {
-    this.idsDiscussionsExistantes = ids;
-  }
-
-  getDiscussionIds(): number[] {
-    return this.idsDiscussionsExistantes;
-  } */
 }

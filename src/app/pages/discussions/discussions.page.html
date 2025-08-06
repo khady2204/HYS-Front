@@ -1,20 +1,11 @@
 <ion-content class="bg-pink">
 
-  <!-- HEADER + STORIES regroupés -->
-  <div
-    class="header px-3 pt-5 pb-3"
-  >
-
-    <!-- Ligne du haut -->
+  <!-- HEADER -->
+  <div class="header px-3 pt-5 pb-3">
     <div class="d-flex align-items-center justify-content-between pb-3">
-      <!-- Icône recherche -->
       <i class="bi bi-search fs-4 text-white rounded-circle d-flex align-items-center justify-content-center"></i>
-
-      <!-- Menu filtre -->
       <app-dropdown-drawer></app-dropdown-drawer>
-
-      <!-- Avatar profile -->
-      <a [routerLink] = "['/profile', userId]">
+      <a [routerLink]="['/profile', userId]">
         <img
           src="assets/img/myLOve/suggestion/tabProfile.png"
           alt="Profile"
@@ -25,29 +16,28 @@
       </a>
     </div>
 
+    <!-- Stories -->
     <div class="d-flex overflow-auto gap-3 pt-2 pb-1 px-3">
+      <!-- Mon statut -->
+      <div class="d-flex flex-column pb-3 align-items-center text-white text-center" style="font-size: 0.7rem;">
+        <div class="position-relative">
+          <img src="assets/img/myLOve/suggestion/tabProfile.png" class="rounded-circle border border-white" width="55" height="55" />
+          <div class="position-absolute bottom-0 end-0 bg-white text-pink rounded-circle"
+               style="width: 18px; height: 18px; font-size: 1rem; display: flex; align-items: center; justify-content: center;">
+            <i class="bi bi-plus text-black"></i>
+          </div>
+        </div>
+        <span class="mt-1">mon statut</span>
+      </div>
 
-  <!-- Mon statut -->
-  <div class="d-flex flex-column pb-3 align-items-center text-white text-center" style="font-size: 0.7rem;">
-    <div class="position-relative">
-      <img src="assets/img/myLOve/suggestion/tabProfile.png" class="rounded-circle border border-white" width="55" height="55" />
-      <div class="position-absolute bottom-0 end-0 bg-white text-pink rounded-circle"
-           style="width: 18px; height: 18px; font-size: 1rem; display: flex; align-items: center; justify-content: center;">
-        <i class="bi bi-plus text-black"></i>
+      <!-- Statuts utilisateurs -->
+      <div class="d-flex flex-column pb-3 align-items-center text-white text-center" style="font-size: 0.7rem;" *ngFor="let s of [1,2,3,4]">
+        <div>
+          <img src="assets/img/myLOve/suggestion/user2.png" class="rounded-circle bg-grey" style="object-fit: cover; display: block; height: 55px;" />
+        </div>
+        <span class="mt-1 user-status">statut</span>
       </div>
     </div>
-    <span class="mt-1">mon statut</span>
-  </div>
-
-  <!-- Autres statuts -->
-  <div class="d-flex flex-column pb-3 align-items-center text-white text-center" style="font-size: 0.7rem;" *ngFor="let s of [1,2,3,4]">
-    <div class="">
-      <img src="assets/img/myLOve/suggestion/user2.png" class="rounded-circle bg-grey" style="object-fit: cover; display: block; height: 55px;" />
-    </div>
-    <span class="mt-1 user-status">statut</span>
-  </div>
-
-</div>
   </div>
 
   <!-- ONGLET -->
@@ -56,50 +46,53 @@
     <a href="suggestion" class="tab-button inactive">Suggestions</a>
   </div>
 
- <!-- DISCUSSIONS -->
-<div class="px-3 mt-3">
-  <ion-list class="discussion-item">
+  <!-- DISCUSSIONS -->
+  <div class="px-3 mt-3">
+    <ion-list class="discussion-item">
 
-    <!-- Affiche un message si aucune discussion -->
-    <div *ngIf="discussions?.length === 0" class="text-center text-muted mt-5">
-      Aucune discussion pour le moment.
-    </div>
+      <!-- Message si aucune discussion -->
+      <div *ngIf="discussions?.length === 0" class="text-center text-muted mt-5">
+        Aucune discussion pour le moment.
+      </div>
 
-    <ion-item-sliding *ngFor="let discussion of discussions">
-      <ng-container *ngIf="discussion.ami.id !== currentUserId">
-        <ion-item-options side="end">
-          <!-- Bouton Supprimer -->
-          <ion-item-option class="bg-red" (click)="supprimer(discussion)">
-            <i class="bi bi-trash-fill text-white fs-5 d-flex align-items-center justify-content-center w-100 h-100"></i>
-          </ion-item-option>
+      <!-- Liste des discussions -->
+      <ion-item-sliding *ngFor="let discussion of discussions">
+        <ng-container *ngIf="discussion.ami.id !== currentUserId">
 
-          <!-- Bouton Signaler -->
-          <ion-item-option class="bg-yellow" [routerLink]="['/report-partner']">
-            <i class="bi bi-flag-fill text-white fs-5 d-flex align-items-center justify-content-center w-100 h-100"></i>
-          </ion-item-option>
-        </ion-item-options>
+          <!-- Options à droite -->
+          <ion-item-options side="end">
+            <ion-item-option class="bg-red" (click)="supprimer(discussion)">
+              <i class="bi bi-trash-fill text-white fs-5 d-flex align-items-center justify-content-center w-100 h-100"></i>
+            </ion-item-option>
+            <ion-item-option class="bg-yellow" [routerLink]="['/report-partner']">
+              <i class="bi bi-flag-fill text-white fs-5 d-flex align-items-center justify-content-center w-100 h-100"></i>
+            </ion-item-option>
+          </ion-item-options>
 
-        <!-- Contenu de l'utilisateur -->
-        <ion-item button (click)="navigateToChat(discussion.ami.id)">
-          <ion-avatar slot="start">
-            <img [src]="discussion.ami.profileImage" />
-          </ion-avatar>
-          <ion-label>
-            <h6 class="fw-bold mb-1">{{ discussion.ami.prenom }} {{ discussion.ami.nom }}</h6>
-            <p class="text-muted small mb-0">
-              {{ discussion.messages[discussion.messages.length - 1].content || 'Aucun message' }}
-            </p>
-          </ion-label>
-          <ion-badge *ngIf="discussion.messages.length > 0" color="danger">{{ discussion.messages.length }}</ion-badge>
-        </ion-item>
-      </ng-container>
-    </ion-item-sliding>
+          <!-- Contenu de la discussion -->
+          <ion-item button (click)="navigateToChat(discussion.ami.id)">
+            <ion-avatar slot="start">
+              <img [src]="discussion.ami.profileImage || 'assets/img/default-avatar.png'" />
+            </ion-avatar>
+            <ion-label class="ion-text-wrap">
+              <h6 class="fw-bold mb-1">
+                {{ discussion.ami.prenom }} {{ discussion.ami.nom }}
+              </h6>
+              <p class="text-muted small mb-0">
+                {{ discussion.messages[discussion.messages.length - 1]?.content || 'Aucun message' }}
+              </p>
+            </ion-label>
 
-  </ion-list>
-</div>
-
+            <!-- Badge message non lu -->
+            <ion-badge *ngIf="discussion.unreadCount && discussion.unreadCount > 0" color="danger">
+              {{ discussion.unreadCount }}
+            </ion-badge>
+          </ion-item>
+        </ng-container>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
 
   <!-- MENU FLOTTANT -->
   <app-floating-menu></app-floating-menu>
-
 </ion-content>
