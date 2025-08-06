@@ -84,8 +84,14 @@
         placeholder="Message"
         style="background:#f5f5f5; border:none;"
       />
-      <button type="button" class="btn p-0" (click)="sendMessage()">
-        <i class="bi bi-mic fs-5"></i>
+      <button type="button" class="btn p-0" *ngIf="!isRecording" (click)="startRecording()">
+        <i class="bi bi-mic fs-5 text-dark"></i>
+      </button>
+      <button type="button" class="btn p-0" *ngIf="isRecording" (click)="stopRecording()">
+        <i class="bi bi-stop-circle fs-5 text-danger"></i>
+      </button>
+      <button type="button" class="btn btn-sm 0" (click)="sendMessage()">
+        <i class="bi bi-send fs-5"></i>
       </button>
       <i class="bi bi-gear fs-5" style="cursor:pointer;"></i>
     </div>

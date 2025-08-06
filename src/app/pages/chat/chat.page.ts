@@ -22,6 +22,12 @@ export class ChatPage implements OnInit {
   newMessage: string = '';
   selectedFile: File | null = null;
   previewUrl: string | null = null;
+  audioChunks: any[] = [];
+  mediaRecorder!: MediaRecorder;
+  audioBlob: Blob | null = null;
+  audioUrl: string | null = null;
+  isRecording = false;
+  audioDuration: number = 0;
 
   constructor(
     private location: Location,
@@ -113,6 +119,61 @@ export class ChatPage implements OnInit {
   removeSelectedFile(): void {
     this.selectedFile = null;
     this.previewUrl = null;
+  }
+
+  startRecording() {
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+      this.mediaRecorder = new MediaRecorder(stream);
+      this.audioChunks = [];
+
+      this.mediaRecorder.ondataavailable = event => {
+        this.audioChunks.push(event.data);
+      };
+
+      this.mediaRecorder.onstop = () => {
+        this.audioBlob = new Blob(this.audioChunks, { type: 'audio/webm'});
+        this.audioUrl = URL.createObjectURL(this.audioBlob);
+
+        const audio = new Audio(this.audioUrl);
+        audio.onloadedmetadata = () => {
+          this.audioDuration = Math.round(audio.duration);
+          this.sendAudioMessage(); // Auto-envoi après arret;
+        };
+      };
+
+      this.mediaRecorder.start();
+      this.isRecording = true;
+    }).catch(err => {
+      console.error('Erreur accès micro :', err);
+    });
+  }
+
+  stopRecording() {
+    if (this.mediaRecorder && this.isRecording) {
+      this.mediaRecorder.stop();
+      this.isRecording = false;
+    }
+  }
+
+  sendAudioMessage() {
+    if (!this.audioBlob || !this.user?.id) return;
+
+    const formData = new FormData();
+    formData.append('receiverId', this.user.id.toString());
+    formData.append('mediaFile', this.audioBlob, 'audio.webm');
+    formData.append('mediaType', 'audio');
+    formData.append('audioDuration', this.audioDuration.toString());
+
+    this.messageService.sendMessage(formData).subscribe({
+      next: (response: MessageResponse) => {
+        this.messages.push({ ...response, isSender: true });
+        this.audioBlob = null;
+        this.audioUrl = null;
+      },
+      error: (err) => {
+        console.error('Erreur envoi vocal :', err);
+      } 
+    });
   }
 
 
