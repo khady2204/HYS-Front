@@ -21,6 +21,7 @@ export class ChatPage implements OnInit {
   currentUserId: number | null = null;
   newMessage: string = '';
   selectedFile: File | null = null;
+  previewUrl: string | null = null;
 
   constructor(
     private location: Location,
@@ -93,32 +94,62 @@ export class ChatPage implements OnInit {
   }
 
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
       this.selectedFile = file;
-      this.sendMessage();
+
+      //Création d'un aperçu local
+      const reader = new FileReader();
+      reader.onload = (e:any) => {
+        this.previewUrl = e.target.result;
+      };
+      reader.readAsDataURL(file);
+
+      console.log('Fichier sélectionné :', file.name, 'Type :', file.type);
     }
   }
 
+  removeSelectedFile(): void {
+    this.selectedFile = null;
+    this.previewUrl = null;
+  }
+
+
   sendMessage() {
-    
-    if (!this.newMessage.trim() || !this.currentUserId || !this.user?.id) {
+    if ((!this.newMessage.trim() && !this.selectedFile) || !this.currentUserId || !this.user?.id) {
       return;
     }
 
-    const request: MessageRequest = {
-      receiverId: this.user.id,
-      content: this.newMessage.trim()
-    };
+    const formData = new FormData();
+    formData.append('receiverId', this.user.id.toString());
 
-    this.messageService.sendMessage(request).subscribe({
+    if (this.newMessage.trim()) {
+      formData.append('content', this.newMessage.trim());
+    }
+
+    if (this.selectedFile) {
+
+      // Ajoute le fichier
+      formData.append('mediaFile', this.selectedFile);
+
+      // AJoute le type du média (image ou vidéo)
+      const mediaType = this.selectedFile.type.startsWith('image') ? 'image' : 'video';
+      formData.append('mediaType', mediaType);
+    }
+
+    this.messageService.sendMessage(formData).subscribe({
       next: (response: MessageResponse) => {
         this.messages.push({
           ...response,
           isSender: true
         });
         this.newMessage = '';
+        this.selectedFile = null;
+
+        // Rénitialise le champ fichier dans le DOM
+        const fileInput = document.querySelector<HTMLInputElement>('input[type="file"]');
+        if (fileInput) fileInput.value = '';
       },
       error: (err) => {
         console.error('Erreur lors de l\'envoi du message:', err);

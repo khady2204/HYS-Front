@@ -51,6 +51,25 @@
       </div>
     </div>
 
+    <!-- Aperçu du fichier sélectionné -->
+    <div *ngIf="previewUrl" class="p-2 position-relative" style="display:inline-block;">
+      <!-- Bouton Close -->
+      <button (click)="removeSelectedFile()" class="btn btn-light btn-sm position-absolute" style="top:5px; right:5px; border-radius:50%;">
+        ✖
+      </button>
+
+      <!-- Aperçu image -->
+      <div *ngIf="selectedFile?.type?.startsWith('image')">
+        <img [src]="previewUrl" alt="Aperçu" style="max-width: 200px; border-radius: 8px;" />
+      </div>
+
+      <!-- Aperçu vidéo -->
+      <div *ngIf="selectedFile?.type?.startsWith('video')">
+        <video [src]="previewUrl" controls style="max-width: 200px; border-radius: 8px;"></video>
+      </div>
+    </div>
+
+
     <!-- Zone de saisie -->
     <div class="chat-input d-flex align-items-center p-3 border-top gap-3 bg-white">
       <label class="mb-0">

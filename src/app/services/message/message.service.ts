@@ -15,6 +15,8 @@ export interface MessageResponse {
   recipientId: number,
   content: string,
   timestamp: string;
+  mediaUrl?: string;
+  mediaType?: string;
   isSender?: boolean; // Indique si le message a été envoyé par l'utilisateur connecté
 }
 
@@ -45,8 +47,9 @@ export class MessageService {
   constructor(private http: HttpClient) { }
   
   // Envoi d'un message
-  sendMessage(request: MessageRequest): Observable<MessageResponse> {
-    return this.http.post<MessageResponse>(`${this.baseUrl}`, request)
+  sendMessage(formData: FormData): Observable<MessageResponse> {
+    
+    return this.http.post<MessageResponse>(`${this.baseUrl}`, formData);
   }
 
   // Récupération des messages d'une discussion
