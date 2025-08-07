@@ -16,14 +16,23 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ChatPage implements OnInit {
 
+  // Référence au bas du conteneur pour le scroll automatique
   @ViewChild('bottom') bottomRef!: ElementRef;
 
-  user: any; // destinataire
+  // Utilisateur destinataire
+  user: any;
+  // Liste des messages échangés
   messages: MessageResponse[] = [];
+  // ID de l'utilisateur connecté
   currentUserId: number | null = null;
+  // Message texte à envoyer
   newMessage: string = '';
+  // Fichier média sélectionné (image/vidéo)
   selectedFile: File | null = null;
+  // URL de prévisualisation du média
   previewUrl: string | null = null;
+
+  // Variables liées à l'enregistrement audio
   audioChunks: any[] = [];
   mediaRecorder!: MediaRecorder;
   audioBlob: Blob | null = null;
@@ -40,10 +49,17 @@ export class ChatPage implements OnInit {
     private userService: UserService
   ) {}
 
+  // Scroll automatique à la fin des messages après le rendu
   ngAfterViewInit() {
     this.scrollToBottom();
   }
 
+  /**
+   * Initialisation du composant
+   * - Vérifie l'authentification
+   * - Récupère l'utilisateur destinataire
+   * - Charge les messages
+   */
   ngOnInit() {
     const token = this.authService.getToken();
     if (!token) {
@@ -57,38 +73,37 @@ export class ChatPage implements OnInit {
     const stateUser = navigation?.extras?.state?.['user'];
 
     if (stateUser) {
-      // Normalisation
+      // Cas normal : utilisateur passé par l'état de navigation
       this.user = {
-        id: stateUser.id ?? stateUser.userId, // Assure l'utilisation de 'id'
+        id: stateUser.id ?? stateUser.userId,
         ...stateUser
       };
-      console.log('✅ Utilisateur reçu depuis navigation state :', this.user);
       this.loadMessages();
     } else {
+      // Cas fallback : utilisateur récupéré via l'URL
       const idParam = this.route.snapshot.paramMap.get('userId');
       const fallbackUserId = idParam ? parseInt(idParam, 10) : null;
 
       if (fallbackUserId) {
-        console.warn('⚠️ Utilisateur non présent dans navigation state, récupération via userId:', fallbackUserId);
         this.userService.getProfile(fallbackUserId).subscribe({
           next: (data) => {
             this.user = {
               id: fallbackUserId,
               ...data
             };
-            console.log('✅ Utilisateur chargé depuis l\'API :', this.user);
             this.loadMessages();
           },
-          error: (err) => {
-            console.error("❌ Erreur lors du chargement du profil :", err);
-          }
+          error: (err) => console.error("❌ Erreur lors du chargement du profil :", err)
         });
       } else {
-        console.error('❌ Aucun utilisateur trouvé dans state ni dans les paramètres');
+        console.error('❌ Aucun utilisateur trouvé');
       }
     }
   }
 
+  /**
+   * Récupère l'historique des messages avec l'utilisateur ciblé
+   */
   loadMessages() {
     if (!this.user?.id || !this.currentUserId) return;
 
@@ -98,36 +113,40 @@ export class ChatPage implements OnInit {
           ...msg,
           isSender: msg.senderId === this.currentUserId
         }));
-        setTimeout( () => this.scrollToBottom(), 100);
+        setTimeout(() => this.scrollToBottom(), 100);
       },
-      error: (err) => {
-        console.error('Erreur lors du chargement des messages:', err);
-      }
+      error: (err) => console.error('Erreur chargement messages:', err)
     });
   }
 
-
+  /**
+   * Gère la sélection d’un fichier image/vidéo
+   * et génère un aperçu
+   */
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
       this.selectedFile = file;
 
-      //Création d'un aperçu local
       const reader = new FileReader();
-      reader.onload = (e:any) => {
+      reader.onload = (e: any) => {
         this.previewUrl = e.target.result;
       };
       reader.readAsDataURL(file);
-
-      console.log('Fichier sélectionné :', file.name, 'Type :', file.type);
     }
   }
 
+  /**
+   * Réinitialise le fichier sélectionné et son aperçu
+   */
   removeSelectedFile(): void {
     this.selectedFile = null;
     this.previewUrl = null;
   }
 
+  /**
+   * Démarre l'enregistrement audio via le micro
+   */
   startRecording() {
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
       this.mediaRecorder = new MediaRecorder(stream);
@@ -138,27 +157,28 @@ export class ChatPage implements OnInit {
       };
 
       this.mediaRecorder.onstop = () => {
-        this.audioBlob = new Blob(this.audioChunks, { type: 'audio/webm'});
+        this.audioBlob = new Blob(this.audioChunks, { type: 'audio/webm' });
         this.audioUrl = URL.createObjectURL(this.audioBlob);
 
         const audio = new Audio(this.audioUrl);
         audio.onloadedmetadata = () => {
           const duration = Math.round(audio.duration);
+          this.audioDuration = Number.isFinite(duration) ? duration : 0;
 
-          // Vérifie que la duré est un nombre valide et fini
-          this.audioDuration = Number.isFinite(duration) ? duration: 0;
-
-          this.sendAudioMessage(); // Auto-envoi après arret;
+          this.sendAudioMessage(); // Envoi automatique
         };
       };
 
       this.mediaRecorder.start();
       this.isRecording = true;
     }).catch(err => {
-      console.error('Erreur accès micro :', err);
+      console.error('Erreur micro :', err);
     });
   }
 
+  /**
+   * Arrête l'enregistrement audio
+   */
   stopRecording() {
     if (this.mediaRecorder && this.isRecording) {
       this.mediaRecorder.stop();
@@ -166,6 +186,9 @@ export class ChatPage implements OnInit {
     }
   }
 
+  /**
+   * Envoie un message audio au serveur
+   */
   sendAudioMessage() {
     if (!this.audioBlob || !this.user?.id) return;
 
@@ -181,13 +204,13 @@ export class ChatPage implements OnInit {
         this.audioBlob = null;
         this.audioUrl = null;
       },
-      error: (err) => {
-        console.error('Erreur envoi vocal :', err);
-      } 
+      error: (err) => console.error('Erreur envoi audio :', err)
     });
   }
 
-
+  /**
+   * Envoie un message texte (et éventuellement un média)
+   */
   sendMessage() {
     if ((!this.newMessage.trim() && !this.selectedFile) || !this.currentUserId || !this.user?.id) {
       return;
@@ -201,41 +224,36 @@ export class ChatPage implements OnInit {
     }
 
     if (this.selectedFile) {
-
-      // Ajoute le fichier
       formData.append('mediaFile', this.selectedFile);
-
-      // AJoute le type du média (image ou vidéo)
       const mediaType = this.selectedFile.type.startsWith('image') ? 'image' : 'video';
       formData.append('mediaType', mediaType);
     }
 
     this.messageService.sendMessage(formData).subscribe({
       next: (response: MessageResponse) => {
-        this.messages.push({
-          ...response,
-          isSender: true
-        });
+        this.messages.push({ ...response, isSender: true });
         this.newMessage = '';
         this.selectedFile = null;
 
-        // Rénitialise le champ fichier dans le DOM
         const fileInput = document.querySelector<HTMLInputElement>('input[type="file"]');
         if (fileInput) fileInput.value = '';
 
-        setTimeout( () => this.scrollToBottom(), 100);
-
+        setTimeout(() => this.scrollToBottom(), 100);
       },
-      error: (err) => {
-        console.error('Erreur lors de l\'envoi du message:', err);
-      }
+      error: (err) => console.error('Erreur envoi message :', err)
     });
   }
 
+  /**
+   * Retour à la page précédente
+   */
   goBack() {
     this.location.back();
   }
 
+  /**
+   * Vérifie si deux dates sont le même jour
+   */
   isSameDate(date1: string, date2: string): boolean {
     const d1 = new Date(date1);
     const d2 = new Date(date2);
@@ -246,6 +264,9 @@ export class ChatPage implements OnInit {
     );
   }
 
+  /**
+   * Formate une date sous forme relative (aujourd’hui, hier, etc.)
+   */
   formatDate(dateString: string): string {
     const date = new Date(dateString);
     const today = new Date();
@@ -275,11 +296,14 @@ export class ChatPage implements OnInit {
     return `${day}/${month}/${year}`;
   }
 
+  /**
+   * Scrolle automatiquement vers le bas de la zone de messages
+   */
   scrollToBottom() {
     try {
       this.bottomRef?.nativeElement?.scrollIntoView({ behavior: 'smooth' });
     } catch (err) {
-      console.error('Scroll error :', err);
+      console.error('Erreur scroll :', err);
     }
   }
 }

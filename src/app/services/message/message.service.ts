@@ -2,27 +2,27 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-// 📨 Requête d'envoi de message
+// Représente une requête d'envoi de message
 export interface MessageRequest {
   receiverId: number;
   content: string;
 }
 
-// 📩 Réponse de message
+//  Représente la réponse du serveur après l'envoi ou la récupération d'un message
 export interface MessageResponse {
   id: number;
   senderId: number;
   receiverId: number;
   content: string;
   timestamp: string;
-  read: true | false;
-  mediaUrl?: string;
-  mediaType?: string;
-  audioDuration?: number;
-  isSender?: boolean; // Champ local côté frontend
+  read: true | false;             // Indique si le message a été lu
+  mediaUrl?: string;              // URL d'un média joint (image, vidéo, audio)
+  mediaType?: string;             // Type du média (image, vidéo, audio)
+  audioDuration?: number;         // Durée du message vocal 
+  isSender?: boolean;             // Déterminé côté frontend pour savoir si le message a été envoyé par l'utilisateur courant
 }
 
-// 👤 Résumé utilisateur dans une discussion
+// Représente un utilisateur résumé dans une discussion
 export interface UserSummary {
   id: number;
   prenom: string;
@@ -31,11 +31,11 @@ export interface UserSummary {
   phone: string;
 }
 
-// 🗨️ Représentation d'une discussion
+// Représente une discussion entre l'utilisateur connecté et un autre utilisateur
 export interface DiscussionResponse {
-  ami: UserSummary;
-  messages: MessageResponse[];
-  unreadCount?: number;
+  ami: UserSummary;                 // L'utilisateur avec qui on échange
+  messages: MessageResponse[];     // Dernier message (ou tous selon implémentation)
+  unreadCount?: number;            // Nombre de messages non lus dans la conversation
 }
 
 @Injectable({
@@ -47,27 +47,45 @@ export class MessageService {
 
   constructor(private http: HttpClient) {}
 
-  // 🚀 Envoi d'un message (support FormData pour médias)
+  /**
+   * 🚀 Envoie un message au backend (supporte fichiers via FormData).
+   * Peut contenir un texte simple, une image, une vidéo ou un audio.
+   * @param formData Données multipart contenant receiverId, content et éventuellement mediaFile.
+   */
   sendMessage(formData: FormData): Observable<MessageResponse> {
     return this.http.post<MessageResponse>(`${this.baseUrl}`, formData);
   }
 
-  // 📥 Récupère les messages avec un utilisateur donné
+  /**
+   * Récupère tous les messages entre l'utilisateur connecté et un autre utilisateur.
+   * @param userId ID de l'utilisateur avec qui on discute
+   */
   getMessageWithUser(userId: number): Observable<MessageResponse[]> {
     return this.http.get<MessageResponse[]>(`${this.baseUrl}/${userId}`);
   }
 
-  // 🧵 Récupère toutes les discussions
+  /**
+   * Récupère toutes les discussions actives de l'utilisateur courant.
+   * Chaque discussion contient les infos de l'ami et le dernier message échangé.
+   */
   getAllDiscussions(): Observable<DiscussionResponse[]> {
     return this.http.get<DiscussionResponse[]>(`${this.baseUrl}/discussions`);
   }
 
-  // ✔️ Marque un message comme lu
+  /**
+   * Marque un message spécifique comme "lu".
+   * Cette action mettra à jour le champ `read = true` côté serveur.
+   * @param messageId ID du message à marquer
+   */
   markMessageAsRead(messageId: number): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/${messageId}/read`, {});
   }
 
-  // 🔍 Recherche une discussion par prénom, nom ou téléphone
+  /**
+   * Recherche des discussions existantes en filtrant par prénom, nom ou téléphone.
+   * Utile pour une barre de recherche dans la messagerie.
+   * @param params Filtres possibles : phone, nom ou prénom
+   */
   searchDiscussion(params: { phone?: string; nom?: string; prenom?: string }): Observable<DiscussionResponse[]> {
     const httpParams = new HttpParams({
       fromObject: {
