@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+
 
 // Représente une requête d'envoi de message
 export interface MessageRequest {
@@ -61,7 +62,7 @@ export class MessageService {
    * @param userId ID de l'utilisateur avec qui on discute
    */
   getMessageWithUser(userId: number): Observable<MessageResponse[]> {
-    return this.http.get<MessageResponse[]>(`${this.baseUrl}/${userId}`);
+    return this.http.get<MessageResponse[]>(`${this.baseUrl}/${userId}`)
   }
 
   /**
