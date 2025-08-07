@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
-import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
+import { ToastController } from '@ionic/angular';
+
 import { UserService } from 'src/app/services/user.service';
 import { UserAuthService } from 'src/app/services/user-auth.service';
-import { ToastController } from '@ionic/angular';
 import { InteretService } from 'src/app/services/interet/interet.service';
 
 @Component({
@@ -13,15 +13,15 @@ import { InteretService } from 'src/app/services/interet/interet.service';
   templateUrl: './edit-profile.page.html',
   styleUrls: ['./edit-profile.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, ReactiveFormsModule, /*FloatingMenuComponent*/]
+  imports: [IonContent, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class EditProfilePage implements OnInit {
 
-  editProfileForm!: FormGroup;
-  userId!: number;
-  profileImagePreview: string | ArrayBuffer | null = null;
-  interets: any[] = [];
-  userInterets: any[] = [];
+  editProfileForm!: FormGroup;             // Formulaire de modification
+  userId!: number;                         // ID de l'utilisateur
+  profileImagePreview: string | ArrayBuffer | null = null; // Aperçu image
+  interets: any[] = [];                    // Tous les intérêts disponibles
+  userInterets: any[] = [];                // Intérêts de l'utilisateur connecté
 
   constructor(
     private location: Location,
@@ -33,7 +33,7 @@ export class EditProfilePage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Initialiser le formulaire avec validations
+    // Création du formulaire avec validations
     this.editProfileForm = this.fb.group({
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
@@ -42,19 +42,16 @@ export class EditProfilePage implements OnInit {
       adresse: ['', Validators.required],
       bio: ['', Validators.required],
       dob: ['', Validators.required],
-      //pays: ['', Validators.required],
       interets: ['', Validators.required],
     });
 
-    // Récupération des infos depuis le localStorage
-    const user = this.authUserService.getUser(); // Doit retourner un objet avec un id
-    console.log('user user', user);
+    // Récupération utilisateur depuis le localStorage
+    const user = this.authUserService.getUser();
+
     if (user && user.id) {
       this.userId = user.id;
 
-      console.log("Numéro récupéré :", user.phone);
-
-      // Remplissage du formulaire directement depuis les données locales
+      // Remplissage initial du formulaire
       this.editProfileForm.patchValue({
         prenom: user.prenom ?? '',
         nom: user.nom ?? '',
@@ -63,88 +60,97 @@ export class EditProfilePage implements OnInit {
         adresse: user.adresse ?? '',
         bio: user.bio ?? '',
         dob: this.convertToDateInputFormat(user.dateNaissance),
-        //pays: user.pays ?? ''
       });
     } else {
       console.error('Utilisateur non trouvé dans le localStorage');
     }
 
-    // Charger la liste des interets
+    // Chargement des intérêts
     this.loadInterets();
-    
-    // Charger les interets de l'utilisateur connecté
     this.loadUserInterets();
-
   }
 
+  /**
+   * Convertit un timestamp en string compatible avec un input date (yyyy-MM-dd)
+   */
   convertToDateInputFormat(timestamp: number): string {
     if (!timestamp) return '';
     const date = new Date(timestamp);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
-    
     return `${year}-${month}-${day}`;
   }
 
+  /**
+   * Soumission du formulaire
+   */
   onSubmit(): void {
+  if (this.editProfileForm.valid) {
+    console.log('Formulaire envoyé avec les valeurs :', this.editProfileForm.value);
 
-    if (this.editProfileForm.valid) {
-      console.log('Formulaire envoyé avec les valeurs :', this.editProfileForm.value);
+    const formValue = this.editProfileForm.value;
 
-      const formValue = this.editProfileForm.value;
+    const updateData = {
+      id: this.userId,
+      prenom: formValue.prenom,
+      nom: formValue.nom,
+      email: formValue.email,
+      bio: formValue.bio,
+      adresse: formValue.adresse,
+      phone: formValue.phone,
+      dateNaissance: new Date(formValue.dob).getTime(), // timestamp
+      //pays: formValue.pays,
+      interetIds: formValue.interets.map((id: any) => Number(id))
+    }; 
 
-      const updateData = {
-        id: this.userId,
-        prenom: formValue.prenom,
-        nom: formValue.nom,
-        email: formValue.email,
-        bio: formValue.bio,
-        adresse: formValue.adresse,
-        phone: formValue.phone,
-        dateNaissance: new Date(formValue.dob).getTime(), // timestamp
-        //pays: formValue.pays,
-        interetIds: formValue.interets.map((id: any) => Number(id))
-      }; 
+    /* 
+    // Version FormData — à utiliser si tu actives l'envoi de fichiers
+    const formData = new FormData();
 
-    /*  const formData = new FormData();
+    formData.append('id', this.userId.toString());
+    formData.append('prenom', formValue.prenom);
+    formData.append('nom', formValue.nom);
+    formData.append('email', formValue.email);
+    formData.append('bio', formValue.bio);
+    formData.append('adresse', formValue.adresse);
+    formData.append('phone', formValue.phone);
+    formData.append('dateNaissance', new Date(formValue.dob).getTime().toString());
+    formData.append('pays', formValue.pays);
 
-      formData.append('id', this.userId.toString());
-      formData.append('prenom', formValue.prenom);
-      formData.append('nom', formValue.nom);
-      formData.append('email', formValue.email);
-      formData.append('bio', formValue.bio);
-      formData.append('adresse', formValue.adresse);
-      formData.append('phone', formValue.phone);
-      formData.append('dateNaissance', new Date(formValue.dob).getTime().toString());
-      formData.append('pays', formValue.pays);
+    const interetsIds = formValue.interets.map((id: any) => Number(id)).join(',');
+    formData.append('interetIds', interetsIds);
 
-      const interetsIds = formValue.interets.map((id: any) => Number(id)).join(',');
-      formData.append('interetIds', interetsIds);
-
-      // Ajout de la photo si elle existe
-      if (formValue.profileImage) {
-        formData.append('profileImage', formValue.profileImage);
-      } */
-
-      this.userService.updateProfile(formValue).subscribe({
-        next: (res) => {
-          this.presentSuccessToast('Profil mis à jour avec succès');
-        },
-        error: (err) => {
-          console.error("Erreur lors de la mise à jour du profil", err);
-        }
-      });
-    } else {
-      console.warn('Le formulaire est invalide');
+    // Ajout de la photo si elle existe
+    if (formValue.profileImage) {
+      formData.append('profileImage', formValue.profileImage);
     }
+    */
+
+    this.userService.updateProfile(updateData).subscribe({
+      next: (res) => {
+        this.presentSuccessToast('Profil mis à jour avec succès');
+      },
+      error: (err) => {
+        console.error("Erreur lors de la mise à jour du profil", err);
+      }
+    });
+  } else {
+    console.warn('Le formulaire est invalide');
   }
+}
 
 
+  /**
+   * Retour à la page précédente
+   */
   goBack() {
     this.location.back();
   }
 
+  /**
+   * Affiche un toast de succès
+   */
   async presentSuccessToast(message: string) {
     const toast = await this.toastController.create({
       message,
@@ -155,6 +161,9 @@ export class EditProfilePage implements OnInit {
     await toast.present();
   }
 
+  /**
+   * Gère la sélection d’une image pour le profil (en base64)
+   */
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -163,21 +172,28 @@ export class EditProfilePage implements OnInit {
         this.profileImagePreview = reader.result;
       };
       reader.readAsDataURL(file);
+
       this.editProfileForm.patchValue({ profileImage: file });
     }
   }
 
+  /**
+   * Charge tous les intérêts disponibles
+   */
   loadInterets() {
     this.interetService.getAllInterets().subscribe({
       next: (data) => {
         this.interets = data;
       },
       error: (err) => {
-        console.error('Erreurs lors du chargement des intérets :', err);
+        console.error('Erreurs lors du chargement des intérêts :', err);
       }
     });
   }
 
+  /**
+   * Charge les intérêts de l'utilisateur connecté
+   */
   loadUserInterets(): void {
     this.interetService.getCurrentUserInterets().subscribe({
       next: (data) => {
@@ -187,25 +203,25 @@ export class EditProfilePage implements OnInit {
         });
       },
       error: (err) => {
-        console.error("Erreur lors du chargement des interets de l'utilisateur :", err);
+        console.error("Erreur lors du chargement des intérêts utilisateur :", err);
       }
     });
   }
 
+  /**
+   * Gère l’ajout ou la suppression d’un intérêt dans le formulaire (checkbox)
+   */
   onCheckboxChange(event: any) {
     const interetsFormArray = this.editProfileForm.get('interets')?.value || [];
 
     if (event.target.checked) {
       this.editProfileForm.patchValue({
-        // Ajoute l'id sélectionné
         interets: [...interetsFormArray, event.target.value]
       });
     } else {
-        // Retire l'id déselectionné
-        this.editProfileForm.patchValue({
-          interets: interetsFormArray.filter((id: any) => id !== event.target.value)
-        })
+      this.editProfileForm.patchValue({
+        interets: interetsFormArray.filter((id: any) => id !== event.target.value)
+      });
     }
   }
- 
 }
