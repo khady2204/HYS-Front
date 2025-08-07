@@ -42,7 +42,7 @@ export class EditProfilePage implements OnInit {
       adresse: ['', Validators.required],
       bio: ['', Validators.required],
       dob: ['', Validators.required],
-      pays: ['', Validators.required],
+      //pays: ['', Validators.required],
       interets: ['', Validators.required],
     });
 
@@ -63,7 +63,7 @@ export class EditProfilePage implements OnInit {
         adresse: user.adresse ?? '',
         bio: user.bio ?? '',
         dob: this.convertToDateInputFormat(user.dateNaissance),
-        pays: user.pays ?? ''
+        //pays: user.pays ?? ''
       });
     } else {
       console.error('Utilisateur non trouvé dans le localStorage');
@@ -103,7 +103,7 @@ export class EditProfilePage implements OnInit {
         adresse: formValue.adresse,
         phone: formValue.phone,
         dateNaissance: new Date(formValue.dob).getTime(), // timestamp
-        pays: formValue.pays,
+        //pays: formValue.pays,
         interetIds: formValue.interets.map((id: any) => Number(id))
       }; 
 

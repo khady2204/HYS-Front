@@ -5,16 +5,14 @@ import { Observable } from 'rxjs';
 
 export interface updateProfileRequest {
   id: number;
- // nom: string;
   prenom: string;
   nom: string,
   email: string;
   phone?: string;
   adresse?: string;
   bio?: string;
-  //interetIds?: number[];
   dateNaissance: number;
-  pays: string;
+  //pays: string;
   interetIds?: number[];
 }
 

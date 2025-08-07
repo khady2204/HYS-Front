@@ -1,6 +1,5 @@
 <ion-content class="bg-white">
 
-  <!-- Conteneur principal en hauteur pleine -->
   <div class="d-flex flex-column vh-100">
 
     <!-- En-tête -->
@@ -9,25 +8,25 @@
       <img [src]="user?.profileImage || 'assets/img/myLOve/suggestion/user4.png'" class="rounded-circle" width="40" height="40" />
       <div class="ms-1">
         <h6 class="mb-0 fw-bold">{{ user?.prenom }} {{ user?.nom }}</h6>
-        <small class="text-muted">En ligne</small>
+        <small class="text-muted">{{ user?.is_online }}</small>
       </div>
     </div>
 
     <!-- Zone des messages -->
-    <div class="flex-grow-1 overflow-auto px-3">
+    <div class="flex-grow-1 overflow-auto px-3" #messageContainer>
       <div *ngIf="messages.length === 0" class="text-center text-muted mt-5">
         Aucune discussion trouvée.
       </div>
 
       <div *ngFor="let message of messages; let i = index">
-        
         <!-- Affiche la date entre messages quand elle change -->
         <div *ngIf="i === 0 || !isSameDate(messages[i-1].timestamp, message.timestamp)" class="text-center my-2">
           <span class="px-3 py-1 rounded-pill small text-muted">
             {{ formatDate(message.timestamp) }}
           </span>
         </div>
-        
+
+        <!-- Bulle du message -->
         <div
           class="d-flex mb-2"
           [ngClass]="{
@@ -42,33 +41,54 @@
               'received': message.senderId !== currentUserId
             }"
           >
-            <div>{{ message.content }}</div>
+
+            <!-- Texte -->
+            <div *ngIf="message.content">
+              {{ message.content }}
+            </div>
+
+            <!-- Image -->
+            <div *ngIf="message.mediaType === 'image' && message.mediaUrl">
+              <img [src]="message.mediaUrl" alt="Image" style="max-width: 200px; border-radius: 8px;" />
+            </div>
+
+            <!-- Vidéo -->
+            <div *ngIf="message.mediaType === 'video' && message.mediaUrl">
+              <video [src]="message.mediaUrl" controls style="max-width: 200px; border-radius: 8px;"></video>
+            </div>
+
+            <!-- Audio -->
+            <div *ngIf="message.mediaType === 'audio' && message.mediaUrl">
+              <audio [src]="message.mediaUrl" controls></audio>
+              <small class="text-muted">{{ message.audioDuration }}s</small>
+            </div>
+
+            <!-- Heure -->
             <div class="msg-time">
               {{ message.timestamp | date:'shortTime' }}
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Ancre pour scroll auto -->
+      <div #bottom></div>
     </div>
 
     <!-- Aperçu du fichier sélectionné -->
     <div *ngIf="previewUrl" class="p-2 position-relative" style="display:inline-block;">
-      <!-- Bouton Close -->
       <button (click)="removeSelectedFile()" class="btn btn-light btn-sm position-absolute" style="top:5px; right:5px; border-radius:50%;">
         ✖
       </button>
 
-      <!-- Aperçu image -->
       <div *ngIf="selectedFile?.type?.startsWith('image')">
         <img [src]="previewUrl" alt="Aperçu" style="max-width: 200px; border-radius: 8px;" />
       </div>
 
-      <!-- Aperçu vidéo -->
       <div *ngIf="selectedFile?.type?.startsWith('video')">
         <video [src]="previewUrl" controls style="max-width: 200px; border-radius: 8px;"></video>
       </div>
     </div>
-
 
     <!-- Zone de saisie -->
     <div class="chat-input d-flex align-items-center p-3 border-top gap-3 bg-white">
@@ -76,6 +96,7 @@
         <i class="bi bi-paperclip fs-5" style="cursor:pointer;"></i>
         <input type="file" accept="image/*,video/*" style="display:none;" (change)="onFileSelected($event)" />
       </label>
+
       <input
         type="text"
         class="form-control rounded-pill"
@@ -84,15 +105,18 @@
         placeholder="Message"
         style="background:#f5f5f5; border:none;"
       />
+
       <button type="button" class="btn p-0" *ngIf="!isRecording" (click)="startRecording()">
         <i class="bi bi-mic fs-5 text-dark"></i>
       </button>
       <button type="button" class="btn p-0" *ngIf="isRecording" (click)="stopRecording()">
         <i class="bi bi-stop-circle fs-5 text-danger"></i>
       </button>
-      <button type="button" class="btn btn-sm 0" (click)="sendMessage()">
+
+      <button type="button" class="btn btn-sm" (click)="sendMessage()">
         <i class="bi bi-send fs-5"></i>
       </button>
+
       <i class="bi bi-gear fs-5" style="cursor:pointer;"></i>
     </div>
 

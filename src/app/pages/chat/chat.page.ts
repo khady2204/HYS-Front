@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,6 +15,8 @@ import { UserService } from 'src/app/services/user.service';
   imports: [CommonModule, FormsModule, IonicModule]
 })
 export class ChatPage implements OnInit {
+
+  @ViewChild('bottom') bottomRef!: ElementRef;
 
   user: any; // destinataire
   messages: MessageResponse[] = [];
@@ -37,6 +39,10 @@ export class ChatPage implements OnInit {
     private messageService: MessageService,
     private userService: UserService
   ) {}
+
+  ngAfterViewInit() {
+    this.scrollToBottom();
+  }
 
   ngOnInit() {
     const token = this.authService.getToken();
@@ -92,6 +98,7 @@ export class ChatPage implements OnInit {
           ...msg,
           isSender: msg.senderId === this.currentUserId
         }));
+        setTimeout( () => this.scrollToBottom(), 100);
       },
       error: (err) => {
         console.error('Erreur lors du chargement des messages:', err);
@@ -136,7 +143,11 @@ export class ChatPage implements OnInit {
 
         const audio = new Audio(this.audioUrl);
         audio.onloadedmetadata = () => {
-          this.audioDuration = Math.round(audio.duration);
+          const duration = Math.round(audio.duration);
+
+          // Vérifie que la duré est un nombre valide et fini
+          this.audioDuration = Number.isFinite(duration) ? duration: 0;
+
           this.sendAudioMessage(); // Auto-envoi après arret;
         };
       };
@@ -211,6 +222,9 @@ export class ChatPage implements OnInit {
         // Rénitialise le champ fichier dans le DOM
         const fileInput = document.querySelector<HTMLInputElement>('input[type="file"]');
         if (fileInput) fileInput.value = '';
+
+        setTimeout( () => this.scrollToBottom(), 100);
+
       },
       error: (err) => {
         console.error('Erreur lors de l\'envoi du message:', err);
@@ -259,5 +273,13 @@ export class ChatPage implements OnInit {
     const year = date.getFullYear();
 
     return `${day}/${month}/${year}`;
+  }
+
+  scrollToBottom() {
+    try {
+      this.bottomRef?.nativeElement?.scrollIntoView({ behavior: 'smooth' });
+    } catch (err) {
+      console.error('Scroll error :', err);
+    }
   }
 }
