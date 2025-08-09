@@ -111,7 +111,8 @@ export class ChatPage implements OnInit {
       next: (data) => {
         this.messages = data.map(msg => ({
           ...msg,
-          isSender: msg.senderId === this.currentUserId
+          isSender: msg.senderId === this.currentUserId,
+
         }));
         setTimeout(() => this.scrollToBottom(), 100);
       },
