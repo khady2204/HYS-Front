@@ -82,6 +82,7 @@ export class MessageService {
     return this.http.put<void>(`${this.baseUrl}/${messageId}/read`, {});
   }
 
+
   /**
    * Recherche des discussions existantes en filtrant par prénom, nom ou téléphone.
    * Utile pour une barre de recherche dans la messagerie.

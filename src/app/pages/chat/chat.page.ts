@@ -91,6 +91,7 @@ export class ChatPage implements OnInit {
               id: fallbackUserId,
               ...data
             };
+            console.log('utilisateurs chargé', this.user);
             this.loadMessages();
           },
           error: (err) => console.error("❌ Erreur lors du chargement du profil :", err)
@@ -106,7 +107,7 @@ export class ChatPage implements OnInit {
    */
   loadMessages() {
     if (!this.user?.id || !this.currentUserId) return;
-
+    
     this.messageService.getMessageWithUser(this.user.id).subscribe({
       next: (data) => {
         this.messages = data.map(msg => ({
