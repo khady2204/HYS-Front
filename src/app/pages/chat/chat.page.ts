@@ -115,6 +115,7 @@ export class ChatPage implements OnInit {
           isSender: msg.senderId === this.currentUserId,
 
         }));
+        console.log('Messages chargés', this.messages);
         setTimeout(() => this.scrollToBottom(), 100);
       },
       error: (err) => console.error('Erreur chargement messages:', err)

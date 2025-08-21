@@ -81,40 +81,33 @@ export class DiscussionsPage implements OnInit {
       console.log("📂 Discussions brutes :", data);
 
       this.discussions = data.map(discussion => {
-        // Log détaillé des messages pour cette discussion
-        console.log(`💬 Discussion ${discussion.ami.id} - Messages:`, discussion.messages);
-
-        // On vérifie chaque message
+        // On considère que tous les messages où read === false et
+        // l'auteur supposé ≠ currentUserId sont des messages non lus pour moi
         const unreadMessages = discussion.messages.filter(msg => {
-          const isUnread = !msg.read;
-
-          // Tester plusieurs variantes pour trouver la bonne propriété du destinataire
-          const isForMe =
-            msg.receiverId === this.currentUserId ||       // si c'est un id direct
-            msg.receiverId === this.currentUserId ||         // si c'est un champ receiver simple
-            msg.receiverId === this.currentUserId;       // si c'est un objet avec .id
-
-          console.log(`📌 Message ${msg.id} => read:${msg.read}, receiverId:`, 
-                      msg.receiverId, "receiver:", msg.receiverId, 
-                      "=> match?", isForMe);
-
-          return isUnread && isForMe;
+          // Si currentUserId correspond à l'ami, ce sont mes propres messages
+          // Sinon, ce sont des messages reçus non lus
+          const isForMe = discussion.ami.id === this.currentUserId ? false : !msg.read;
+          return isForMe;
         });
 
-        console.log(`📊 Discussion ${discussion.ami.id} => ${unreadMessages.length} non lus pour moi`);
+        console.log(`💬 Discussion avec ${discussion.ami.prenom} ${discussion.ami.nom}`);
+        console.log(`📨 Messages non lus pour moi:`, unreadMessages.length);
 
-        return { ...discussion, unreadCount: unreadMessages.length };
-      }).sort((a, b) => (b.unreadCount ?? 0) - (a.unreadCount ?? 0));
+        return {
+          ...discussion,
+          unreadCount: unreadMessages.length
+        };
+      })
+      // Trier les discussions par nombre de messages non lus décroissant
+      .sort((a, b) => (b.unreadCount ?? 0) - (a.unreadCount ?? 0));
 
-      // Log final
-      console.log("📈 Discussions avec compteurs :", this.discussions);
+      console.log("📈 Discussions après calcul des badges :", this.discussions);
     },
     error: (err) => {
       console.error('❌ Erreur chargement discussions', err);
     }
   });
 }
-
 
 
 
