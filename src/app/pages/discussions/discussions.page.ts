@@ -37,13 +37,14 @@ import { UserAuthService } from 'src/app/services/user-auth.service';
   ]
 })
 export class DiscussionsPage implements OnInit {
-  // Affiche ou masque le tiroir déroulant
+
+  /** Affiche ou masque le tiroir déroulant */
   showDrawer = false;
 
-  // Liste des discussions avec compteur de non-lus
-  discussions: (DiscussionResponse & { unreadCount?: number })[] = [];
+  /** Liste des discussions avec compteur de messages non lus et timestamp du dernier message */
+  discussions: (DiscussionResponse & { unreadCount?: number, lastMessageTimestamp?: string })[] = [];
 
-  // Identifiants utilisateur
+  /** Identifiants utilisateur courant et profil consulté */
   currentUserId = 0;
   userId: number | null = null;
 
@@ -54,9 +55,9 @@ export class DiscussionsPage implements OnInit {
   ) {}
 
   /**
-   * Au chargement du composant :
-   * - Redirige vers la page de login si l'utilisateur n'est pas authentifié
-   * - Récupère l'utilisateur connecté
+   * Initialisation du composant
+   * - Redirige vers login si utilisateur non authentifié
+   * - Récupère l'utilisateur courant
    * - Charge toutes les discussions
    */
   ngOnInit(): void {
@@ -73,53 +74,62 @@ export class DiscussionsPage implements OnInit {
   }
 
   /**
-   * Charge les discussions et calcule les messages non lus pour l'utilisateur courant
+   * Charge toutes les discussions et calcule les messages non lus
+   * Tri principal : messages non lus décroissants
+   * Tri secondaire : dernier message le plus récent en haut
    */
   loadDiscussions(): void {
-  this.messageService.getAllDiscussions().subscribe({
-    next: (data: DiscussionResponse[]) => {
-      console.log("📂 Discussions brutes :", data);
+    this.messageService.getAllDiscussions().subscribe({
+      next: (data: DiscussionResponse[]) => {
+        console.log("📂 Discussions brutes :", data);
 
-      this.discussions = data.map(discussion => {
-        // On considère que tous les messages où read === false et
-        // l'auteur supposé ≠ currentUserId sont des messages non lus pour moi
-        const unreadMessages = discussion.messages.filter(msg => {
-          // Si currentUserId correspond à l'ami, ce sont mes propres messages
-          // Sinon, ce sont des messages reçus non lus
-          const isForMe = discussion.ami.id === this.currentUserId ? false : !msg.read;
-          return isForMe;
+        this.discussions = data.map(discussion => {
+          // Filtre les messages non lus destinés à l'utilisateur courant
+          const unreadMessages = discussion.messages.filter(msg =>
+            !msg.read && msg.receiverId === this.currentUserId
+          );
+
+          // Récupère le timestamp du dernier message pour tri secondaire
+          const lastMessage = discussion.messages.length
+            ? discussion.messages[discussion.messages.length - 1]
+            : null;
+          const lastMessageTimestamp = lastMessage ? lastMessage.timestamp : '';
+
+          console.log(`💬 Discussion avec ${discussion.ami.prenom} ${discussion.ami.nom}`);
+          console.log(`📨 Messages non lus pour moi:`, unreadMessages.length);
+          console.log(`🕒 Dernier message:`, lastMessageTimestamp);
+
+          return {
+            ...discussion,
+            unreadCount: unreadMessages.length,
+            lastMessageTimestamp
+          };
+        })
+        .sort((a, b) => {
+          // Tri principal : nombre de messages non lus
+          const unreadDiff = (b.unreadCount ?? 0) - (a.unreadCount ?? 0);
+          if (unreadDiff !== 0) return unreadDiff;
+
+          // Tri secondaire : timestamp du dernier message
+          return new Date(b.lastMessageTimestamp).getTime() - new Date(a.lastMessageTimestamp).getTime();
         });
 
-        console.log(`💬 Discussion avec ${discussion.ami.prenom} ${discussion.ami.nom}`);
-        console.log(`📨 Messages non lus pour moi:`, unreadMessages.length);
+        console.log("📈 Discussions après tri :", this.discussions);
+      },
+      error: (err) => {
+        console.error('❌ Erreur chargement discussions', err);
+      }
+    });
+  }
 
-        return {
-          ...discussion,
-          unreadCount: unreadMessages.length
-        };
-      })
-      // Trier les discussions par nombre de messages non lus décroissant
-      .sort((a, b) => (b.unreadCount ?? 0) - (a.unreadCount ?? 0));
-
-      console.log("📈 Discussions après calcul des badges :", this.discussions);
-    },
-    error: (err) => {
-      console.error('❌ Erreur chargement discussions', err);
-    }
-  });
-}
-
-
-
-  /**
-   * Affiche ou masque le tiroir latéral (DropdownDrawer)
-   */
+  /** Affiche ou masque le tiroir latéral (DropdownDrawer) */
   toggleDrawer(): void {
     this.showDrawer = !this.showDrawer;
   }
 
   /**
-   * Supprime localement une discussion de l'affichage (sans la supprimer côté serveur)
+   * Supprime localement une discussion de l'affichage
+   * Attention : ne supprime pas côté serveur
    */
   supprimer(user: any): void {
     this.discussions = this.discussions.filter(
@@ -129,60 +139,62 @@ export class DiscussionsPage implements OnInit {
 
   /**
    * Navigue vers la page de chat avec un utilisateur donné
+   * @param userId ID de l'utilisateur cible
    */
   navigateToChat(userId: number): void {
     this.openDiscussion(userId);
   }
 
   /**
-   * Ouvre la discussion et marque les messages non lus comme lus
+   * Ouvre une discussion et marque tous les messages non lus comme lus
+   * @param userId ID de l'utilisateur cible
    */
   openDiscussion(userId: number): void {
-  console.log('🔍 Ouverture de la discussion avec userId:', userId);
+    console.log('🔍 Ouverture de la discussion avec userId:', userId);
 
-  const discussion = this.discussions.find(d => d.ami.id === userId);
-  if (!discussion) {
-    console.warn('⚠️ Discussion introuvable pour userId:', userId);
-    return;
-  }
+    const discussion = this.discussions.find(d => d.ami.id === userId);
+    if (!discussion) {
+      console.warn('⚠️ Discussion introuvable pour userId:', userId);
+      return;
+    }
 
-  console.log('📦 Discussion trouvée:', discussion);
+    console.log('📦 Discussion trouvée:', discussion);
 
-  // Correctif : marquer comme lu tous les messages non lus envoyés par l'autre utilisateur
-  const unreadMessages = discussion.messages.filter(msg =>
-    !msg.read && msg.senderId !== this.currentUserId
-  );
+    // Marque les messages non lus de l'autre utilisateur
+    const unreadMessages = discussion.messages.filter(msg =>
+      !msg.read && msg.senderId !== this.currentUserId
+    );
 
-  console.log('👤 ID utilisateur courant:', this.currentUserId);
-  console.log(`📨 ${unreadMessages.length} message(s) non lu(s) à marquer`);
+    console.log('👤 ID utilisateur courant:', this.currentUserId);
+    console.log(`📨 ${unreadMessages.length} message(s) non lu(s) à marquer`);
 
-  // On marque côté frontend et on appelle le backend
-  unreadMessages.forEach(msg => {
-    console.log(`➡️ Tentative de marquage du message ${msg.id} comme lu`);
-    msg.read = true; // MAJ immédiate côté frontend
+    unreadMessages.forEach(msg => {
+      console.log(`➡️ Tentative de marquage du message ${msg.id} comme lu`);
+      msg.read = true; // MAJ immédiate côté frontend
 
-    this.messageService.markMessageAsRead(msg.id).subscribe({
-      next: () => console.log(`✅ Message ${msg.id} marqué comme lu côté serveur`),
-      error: (err) => {
-        console.error(`❌ Erreur lors du marquage du message ${msg.id}`, err);
-        msg.read = false; // rollback si erreur
+      // Appel backend pour persister le statut lu
+      this.messageService.markMessageAsRead(msg.id).subscribe({
+        next: () => console.log(`✅ Message ${msg.id} marqué comme lu côté serveur`),
+        error: (err) => {
+          console.error(`❌ Erreur lors du marquage du message ${msg.id}`, err);
+          msg.read = false; // rollback si erreur
+        }
+      });
+    });
+
+    // Réinitialise le compteur de messages non lus côté frontend
+    discussion.unreadCount = 0;
+    console.log('🔄 Compteur de messages non lus réinitialisé');
+
+    // Navigation vers le chat avec les messages
+    this.router.navigate(['/chat', userId], {
+      state: {
+        user: discussion.ami,
+        messages: discussion.messages
       }
     });
-  });
 
-  // Réinitialiser le compteur de non-lus côté frontend
-  discussion.unreadCount = 0;
-  console.log('🔄 Compteur de messages non lus réinitialisé');
-
-  // Naviguer vers le chat avec l'état correct
-  this.router.navigate(['/chat', userId], {
-    state: {
-      user: discussion.ami,
-      messages: discussion.messages
-    }
-  });
-
-  console.log('🚀 Navigation vers /chat avec userId:', userId);
-}
+    console.log('🚀 Navigation vers /chat avec userId:', userId);
+  }
 
 }
