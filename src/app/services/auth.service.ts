@@ -8,7 +8,8 @@ import { tap } from 'rxjs/operators';
 })
 export class AuthService {
 
-   private ApiUrl = 'http://localhost:8081/api/auth';
+  private ApiUrl = 'http://192.168.1.64:8081/api/auth';
+
 
   constructor(private http: HttpClient) {}
 
@@ -19,7 +20,7 @@ export class AuthService {
   login(credentials: { email: string; phone: string; password: string }): Observable<any> {
     return this.http.post<any>(`${this.ApiUrl}/login`, credentials);
   }
-  
+
   /**
    * Envoie un code OTP pour connexion par OTP
    * @param data Données contenant l'email ou le numéro
@@ -59,7 +60,7 @@ export class AuthService {
     return this.http.post(`${this.ApiUrl}/logout`, {}).pipe(
       tap(() => {
         // Supprimer le token localement
-        localStorage.removeItem('jwtToken'); 
+        localStorage.removeItem('jwtToken');
       })
     );
   }

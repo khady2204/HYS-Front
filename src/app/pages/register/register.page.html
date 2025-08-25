@@ -11,7 +11,7 @@
           <ion-input class="half-input" type="text" formControlName="nom"></ion-input>
           <ion-text color="danger" *ngIf="nom?.invalid && nom?.touched">
           <small>Veuillez remplir votre nom</small>
-        </ion-text> 
+        </ion-text>
         </div>
         <div class="input-container">
           <label class="input-label">Prenom(s)</label>
@@ -26,7 +26,7 @@
         <ion-input class="half-input" type="tel" formControlName="phone"></ion-input>
         <ion-text color="danger" *ngIf="phone?.invalid && phone?.touched">
           <small>téléphone invalide</small>
-        </ion-text> 
+        </ion-text>
       </div>
       <div class="input-container">
         <label class="input-label">Adresse</label>
@@ -38,7 +38,7 @@
       <div class="row">
       <div class="input-container">
         <label class="input-label">Date de Naissance</label>
-        <ion-input type="date" formControlName="datenaissance" [max]="maxDate"></ion-input> 
+        <ion-input type="date" formControlName="datenaissance" [max]="maxDate"></ion-input>
         <ion-text color="danger" *ngIf="datenaissance?.errors?.['tooYoung'] && datenaissance?.touched" >
           <small>18 ans minimum requis</small>
         </ion-text>
@@ -56,7 +56,7 @@
         <ion-input type="email" formControlName="email"></ion-input>
         <ion-text color="danger" *ngIf="email?.invalid && email?.touched">
           <small>Email invalide</small>
-        </ion-text>     
+        </ion-text>
       </div>
       <div class="input-container">
         <label class="input-label">Mot de passe</label>
@@ -81,7 +81,7 @@
       </ion-button>
     </form>
     <div class="bottom-text">
-      <p>Vous avez un compte ? 
+      <p>Vous avez un compte ?
         <a routerLink="/login" class="login-link">Se connecter</a>
       </p>
     </div>
