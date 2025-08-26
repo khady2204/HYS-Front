@@ -1,0 +1,25 @@
+
+.nameInteret {
+    background-color: #ff0084;
+    color: white;
+    padding: 10px;
+    margin: 05px;
+    border-radius: 10px;
+}
+
+.bouton-container {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-suivant {
+    margin-top: 30px;
+  font-size: 1.1em;
+  font-weight: 300;
+  min-width: 170px;
+  border-radius: 6px;
+  color: #000000;
+  background: #f4f4f4;
+  --background: #f4f4f4;
+  --color: #000000;
+}

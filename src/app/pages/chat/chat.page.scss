@@ -1,49 +1,34 @@
-.chat-header {
-    background-color: #fff;
+.chat-input {
+  position: relative;
 }
 
 .msg-bubble {
-    border-radius: 20px;
-    padding: 10px 14px;
-    max-width: 75%;
-    font-size: 0.95rem;
-    position: relative;
+  border-radius: 20px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  max-width: 75%;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: inline-block;
 }
 
 .msg-bubble.sent {
-    background-color: #000;
-    color: white;
-    align-self: flex-end;
-    border-bottom-right-radius: 0;
+  background-color: #000;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 0;
 }
 
 .msg-bubble.received {
-    background-color: #f0f0f0;
-    color: black;
-    border-bottom-left-radius: 0;
+  background-color: #f0f0f0;
+  color: black;
+  margin-right: auto;
+  border-bottom-left-radius: 0;
 }
 
 .msg-time {
-    font-size: 0.7rem;
-    color: gray;
-    margin-top: 4px;
-    text-align: right;
-}
-
-.chat-input {
-    background-color: #fff;
-    position: stiky;
-    bottom: 0;
-}
-
-.waveform-placeholder {
-    width: 100px;
-    height: 16px;
-    background: repeating-linear-gradient(
-        90deg,
-        white,
-        white 2px,
-        transparent 2px,
-        transparent 4px
-    );
+  font-size: 0.7rem;
+  color: gray;
+  margin-top: 4px;
+  text-align: right;
 }

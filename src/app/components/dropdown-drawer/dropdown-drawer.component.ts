@@ -18,31 +18,31 @@ export class DropdownDrawerComponent  implements OnInit {
   drawerLinks = [
     {
       label: 'Éducation',
-      href: '/education',
+      href: '/construction',
       icon: 'bi-book',
       bgColor: 'bg-primary'
     },
     {
       label: 'Banque',
-      href: '/banque',
+      href: '/construction',
       icon: 'bi-bank',
       bgColor: 'bg-success'
     },
     {
       label: 'Santé',
-      href: '/sante',
+      href: '/construction',
       icon: 'bi-heart-pulse',
       bgColor: 'bg-danger'
     },
     {
       label: 'Voyage',
-      href: '/voyage',
+      href: '/construction',
       icon: 'bi-airplane-engines',
       bgColor: 'bg-info'
     },
     {
       label: 'Islamique',
-      href: '/islamique',
+      href: '/construction',
       icon: 'bi-moon-stars',
       bgColor: 'bg-warning'
     }

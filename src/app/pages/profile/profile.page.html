@@ -25,16 +25,16 @@
 
   <!-- Infos utilisateur -->
   <div class="text-center mt-5 pt-3">
-    <h5 class="fw-bold mb-1">Omar Diop</h5>
-    <div class="text-muted">Docteur</div>
+    <h5 class="fw-bold mb-1">{{ prenom }} {{ nom }}</h5>
+    <div class="text-muted">{{ bio }}</div>
     <div class="text-muted small">
-      <i class="bi bi-geo-alt-fill"></i> Point E
+      <i class="bi bi-geo-alt-fill"></i> {{ adresse }}
     </div>
   </div>
 
   <!-- Boutons -->
   <div class="d-flex justify-content-center mt-4 gap-3 flex-wrap">
-    <ion-button class="btn-pink" routerLink="/edit-profile" fill="clear">Modifier</ion-button>
+    <ion-button class="btn-pink" fill="clear" [routerLink]="['/edit-profile', userId]">Modifier</ion-button>
     <ion-button class="btn-pink" fill="clear">Ajouter</ion-button>
   </div>
 

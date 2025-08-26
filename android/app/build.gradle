@@ -16,11 +16,14 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+<<<<<<< HEAD
         // AJOUT : Configuration Java
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+=======
+>>>>>>> feature/integration-ui
     buildTypes {
         release {
             minifyEnabled false

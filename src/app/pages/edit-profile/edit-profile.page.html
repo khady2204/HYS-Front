@@ -40,55 +40,86 @@
 
 
 
-  <!-- Formulaire -->
-  <form class="px-3"  (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-      <label for="name" class="form-label fw-semibold">Name</label>
-      <input type="text" formControlName="name" class="form-control" placeholder="Melissa Peters" />
-    </div>
+  <form class="px-3" [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
 
-    <div class="mb-3">
-      <label for="email" class="form-label fw-semibold">Email</label>
-      <input type="email" formControlName="email" class="form-control" placeholder="melpetters@gmail.com" />
-    </div>
+  <div class="mb-3">
+    <label for="nom" class="form-label fw-semibold">Nom</label>
+    <input type="text" formControlName="nom" class="form-control" placeholder="Sow" />
+  </div>
 
-    <div class="mb-3">
-      <label for="password" class="form-label fw-semibold">Password</label>
-      <input type="password" formControlName="password" class="form-control" placeholder="••••••••" />
-    </div>
+  <div class="mb-3">
+    <label for="prenom" class="form-label fw-semibold">Prénom</label>
+    <input type="text" formControlName="prenom" class="form-control" placeholder="Ahmadou Bamba" />
+  </div>
 
-    <div class="mb-3">
-      <label class="form-label fw-semibold">Date of Birth</label>
-      <div class="input-group">
-        <input type="date" formControlName="dob" class="form-control" />
-        <span class="input-group-text bg-white border-start-0">
-          <i class="bi bi-chevron-down"></i>
-        </span>
+  <div class="mb-3">
+    <label for="email" class="form-label fw-semibold">Email</label>
+    <input type="email" formControlName="email" class="form-control" placeholder="ahmadou@example.com" />
+  </div>
+
+  <div class="mb-3">
+    <label for="phone" class="form-label fw-semibold">Téléphone</label>
+    <input type="text" formControlName="phone" class="form-control" placeholder="+221 77 000 00 00" />
+  </div>
+
+  <div class="mb-3">
+    <label for="adresse" class="form-label fw-semibold">Adresse</label>
+    <input type="text" formControlName="adresse" class="form-control" placeholder="123, Rue du Développement" />
+  </div>
+
+  <div class="mb-3">
+    <label for="bio" class="form-label fw-semibold">Bio</label>
+    <textarea formControlName="bio" class="form-control" rows="3" placeholder="Parlez-nous de vous..."></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label fw-semibold">Date de naissance</label>
+    <div class="input-group">
+      <input type="date" formControlName="dob" class="form-control" />
+      <span class="input-group-text bg-white border-start-0">
+        <i class="bi bi-calendar"></i>
+      </span>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-6" *ngFor="let interet of interets; let i = index">
+      <div class="form-check">
+        <input 
+          type="checkbox"
+          class="form-check-input"
+          [value]="interet.id"
+          (change)="onCheckboxChange($event)"
+          [checked]="editProfileForm.get('interets')?.value.includes(interet.id)"
+        />
+        <label for="" class="form-check-label">{{ interet.nom }}</label>
       </div>
     </div>
+  </div>
 
-    <div class="mb-3">
-      <label for="location" class="form-label fw-semibold">Country/Region</label>
-      <div class="input-group">
-        <select formControlName="country" class="form-select">
-          <option selected disabled>Choose country</option>
-          <option value="Senegal">Senegal</option>
-          <option value="Nigeria">Nigeria</option>
-          <option value="canada">Canada</option>
-          <option value="uk">United Kingdom</option>
-        </select>
-        <span class="input-group-text bg-white border-start-0">
-        </span>
-      </div>
+  <!--<div class="mb-3">
+    <label for="pays" class="form-label fw-semibold">Pays</label>
+    <div class="input-group">
+      <select formControlName="pays" class="form-select">
+        <option value="" selected disabled>Choisissez un pays</option>
+        <option value="Senegal">Sénégal</option>
+        <option value="Nigeria">Nigeria</option>
+        <option value="Canada">Canada</option>
+        <option value="UK">Royaume-Uni</option>
+      </select>
+      <span class="input-group-text bg-white border-start-0">
+        <i class="bi bi-geo-alt"></i>
+      </span>
     </div>
+  </div> -->
 
-    <div class="mb-3 text-center">
-      <button class="btn btn-sm btnSave px-4">Save Changes</button>
-    </div>
+  <div class="mb-3 text-center">
+    <button class="btn btn-sm btnSave px-4">Enregistrer</button>
+  </div>
 
-  </form>
+</form>
 
-  <!-- Menu flottant -->
-  <app-floating-menu></app-floating-menu>
+  <!-- Menu flottant 
+  <app-floating-menu></app-floating-menu> -->
 
 </ion-content>

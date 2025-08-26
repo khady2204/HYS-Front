@@ -12,7 +12,7 @@
     <app-dropdown-drawer></app-dropdown-drawer>
 
     <!-- Avatar -->
-    <a href="/profile">
+    <a [routerLink] = "['/profile', userId]">
       <img
         src="assets/img/myLOve/suggestion/tabProfile.png"
         alt="Profile"
@@ -40,7 +40,7 @@
             Compatibilité : {{ person.compatibilite }} %<br />
             {{ person.interetsCommuns }}
           </div>
-          <button class="btn btn-pink mb-2 text-white w-100 mt-3">
+          <button class="btn btn-pink mb-2 text-white w-100 mt-3"   [routerLink]="['/chat', person.userId]" [state]="getUserState(person)">
             Commencer une discussion
           </button>
         </div>

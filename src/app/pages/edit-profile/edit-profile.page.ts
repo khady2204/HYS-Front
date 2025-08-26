@@ -1,38 +1,169 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonSelectOption, IonSelect } from '@ionic/angular/standalone';
-import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
+import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IonContent } from '@ionic/angular/standalone';
+import { ToastController } from '@ionic/angular';
 
+import { UserService } from 'src/app/services/user.service';
+import { UserAuthService } from 'src/app/services/user-auth.service';
+import { InteretService } from 'src/app/services/interet/interet.service';
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.page.html',
   styleUrls: ['./edit-profile.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, FloatingMenuComponent]
+  imports: [IonContent, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class EditProfilePage implements OnInit {
 
-  editProfileForm! : FormGroup;
-  profileImagePreview: string | ArrayBuffer | null = null;
+  editProfileForm!: FormGroup;             // Formulaire de modification
+  userId!: number;                         // ID de l'utilisateur
+  profileImagePreview: string | ArrayBuffer | null = null; // Aperçu image
+  interets: any[] = [];                    // Tous les intérêts disponibles
+  userInterets: any[] = [];                // Intérêts de l'utilisateur connecté
 
-  constructor(private location: Location, private fb: FormBuilder) { }
+  constructor(
+    private location: Location,
+    private fb: FormBuilder,
+    private userService: UserService,
+    private authUserService: UserAuthService,
+    private toastController: ToastController,
+    private interetService: InteretService
+  ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    // Création du formulaire avec validations
     this.editProfileForm = this.fb.group({
-      name: [''],
-      email: [''],
-      password: [''],
-      dob: [''],
-      country: [''],
-      profileImage: [null]
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9 +()-]{9,20}$')]],
+      adresse: ['', Validators.required],
+      bio: ['', Validators.required],
+      dob: ['', Validators.required],
+      interets: ['', Validators.required],
     });
 
-    // Précharger les données utilisateur ici
+    // Récupération utilisateur depuis le localStorage
+    const user = this.authUserService.getUser();
 
+    if (user && user.id) {
+      this.userId = user.id;
+
+      // Remplissage initial du formulaire
+      this.editProfileForm.patchValue({
+        prenom: user.prenom ?? '',
+        nom: user.nom ?? '',
+        email: user.email ?? '',
+        phone: user.phone ?? '',
+        adresse: user.adresse ?? '',
+        bio: user.bio ?? '',
+        dob: this.convertToDateInputFormat(user.dateNaissance),
+      });
+    } else {
+      console.error('Utilisateur non trouvé dans le localStorage');
+    }
+
+    // Chargement des intérêts
+    this.loadInterets();
+    this.loadUserInterets();
   }
 
+  /**
+   * Convertit un timestamp en string compatible avec un input date (yyyy-MM-dd)
+   */
+  convertToDateInputFormat(timestamp: number): string {
+    if (!timestamp) return '';
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  /**
+   * Soumission du formulaire
+   */
+  onSubmit(): void {
+  if (this.editProfileForm.valid) {
+    console.log('Formulaire envoyé avec les valeurs :', this.editProfileForm.value);
+
+    const formValue = this.editProfileForm.value;
+
+    const updateData = {
+      id: this.userId,
+      prenom: formValue.prenom,
+      nom: formValue.nom,
+      email: formValue.email,
+      bio: formValue.bio,
+      adresse: formValue.adresse,
+      phone: formValue.phone,
+      dateNaissance: new Date(formValue.dob).getTime(), // timestamp
+      //pays: formValue.pays,
+      interetIds: formValue.interets.map((id: any) => Number(id))
+    }; 
+
+    /* 
+    // Version FormData — à utiliser si tu actives l'envoi de fichiers
+    const formData = new FormData();
+
+    formData.append('id', this.userId.toString());
+    formData.append('prenom', formValue.prenom);
+    formData.append('nom', formValue.nom);
+    formData.append('email', formValue.email);
+    formData.append('bio', formValue.bio);
+    formData.append('adresse', formValue.adresse);
+    formData.append('phone', formValue.phone);
+    formData.append('dateNaissance', new Date(formValue.dob).getTime().toString());
+    formData.append('pays', formValue.pays);
+
+    const interetsIds = formValue.interets.map((id: any) => Number(id)).join(',');
+    formData.append('interetIds', interetsIds);
+
+    // Ajout de la photo si elle existe
+    if (formValue.profileImage) {
+      formData.append('profileImage', formValue.profileImage);
+    }
+    */
+
+    this.userService.updateProfile(updateData).subscribe({
+      next: (res) => {
+        this.presentSuccessToast('Profil mis à jour avec succès');
+      },
+      error: (err) => {
+        console.error("Erreur lors de la mise à jour du profil", err);
+      }
+    });
+  } else {
+    console.warn('Le formulaire est invalide');
+  }
+}
+
+
+  /**
+   * Retour à la page précédente
+   */
+  goBack() {
+    this.location.back();
+  }
+
+  /**
+   * Affiche un toast de succès
+   */
+  async presentSuccessToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 3000,
+      color: 'success',
+      position: 'bottom'
+    });
+    await toast.present();
+  }
+
+  /**
+   * Gère la sélection d’une image pour le profil (en base64)
+   */
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -41,18 +172,56 @@ export class EditProfilePage implements OnInit {
         this.profileImagePreview = reader.result;
       };
       reader.readAsDataURL(file);
+
       this.editProfileForm.patchValue({ profileImage: file });
     }
   }
 
-  onSubmit() {
-    if (this.editProfileForm.valid) {
-      // Envoyer les données du formulaire au serveur
+  /**
+   * Charge tous les intérêts disponibles
+   */
+  loadInterets() {
+    this.interetService.getAllInterets().subscribe({
+      next: (data) => {
+        this.interets = data;
+      },
+      error: (err) => {
+        console.error('Erreurs lors du chargement des intérêts :', err);
+      }
+    });
+  }
+
+  /**
+   * Charge les intérêts de l'utilisateur connecté
+   */
+  loadUserInterets(): void {
+    this.interetService.getCurrentUserInterets().subscribe({
+      next: (data) => {
+        this.userInterets = data;
+        this.editProfileForm.patchValue({
+          interets: this.userInterets.map((i: any) => i.id)
+        });
+      },
+      error: (err) => {
+        console.error("Erreur lors du chargement des intérêts utilisateur :", err);
+      }
+    });
+  }
+
+  /**
+   * Gère l’ajout ou la suppression d’un intérêt dans le formulaire (checkbox)
+   */
+  onCheckboxChange(event: any) {
+    const interetsFormArray = this.editProfileForm.get('interets')?.value || [];
+
+    if (event.target.checked) {
+      this.editProfileForm.patchValue({
+        interets: [...interetsFormArray, event.target.value]
+      });
+    } else {
+      this.editProfileForm.patchValue({
+        interets: interetsFormArray.filter((id: any) => id !== event.target.value)
+      });
     }
   }
-
-  goBack() {
-    this.location.back();
-  }
-
 }

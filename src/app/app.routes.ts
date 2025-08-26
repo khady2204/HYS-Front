@@ -58,7 +58,8 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('./pages/rencontre/rencontre.page').then(m => m.RencontrePage)
+    loadComponent: () => import('./pages/rencontre/rencontre.page').then(m => m.RencontrePage),
+    canActivate: [AuthGuard]
   },
   {
     path: 'suggestion',
@@ -71,31 +72,38 @@ export const routes: Routes = [
   },
   {
     path: 'construction',
-    loadComponent: () => import('./pages/construction/construction.page').then( m => m.ConstructionPage)
+    loadComponent: () => import('./pages/construction/construction.page').then( m => m.ConstructionPage),
+    canActivate: [AuthGuard]
   },
   {
     path: 'accueil',
-    loadComponent: () => import('./pages/accueil/accueil.page').then( m => m.AccueilPage)
+    loadComponent: () => import('./pages/accueil/accueil.page').then( m => m.AccueilPage),
+    canActivate: [AuthGuard]
   },
   {
     path: 'discussions',
-    loadComponent: () => import('./pages/discussions/discussions.page').then( m => m.DiscussionsPage)
+    loadComponent: () => import('./pages/discussions/discussions.page').then( m => m.DiscussionsPage),
+    canActivate: [AuthGuard]
   },
   {
-    path: 'profile',
-    loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage)
+    path: 'profile/:id',
+    loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage),
+    canActivate: [AuthGuard]
   },
   {
-    path: 'chat',
-    loadComponent: () => import('./pages/chat/chat.page').then( m => m.ChatPage)
+    path: 'chat/:userId',
+    loadComponent: () => import('./pages/chat/chat.page').then( m => m.ChatPage),
+    canActivate: [AuthGuard]
   },
   {
-    path: 'edit-profile',
-    loadComponent: () => import('./pages/edit-profile/edit-profile.page').then( m => m.EditProfilePage)
+    path: 'edit-profile/:userId',
+    loadComponent: () => import('./pages/edit-profile/edit-profile.page').then( m => m.EditProfilePage),
+    canActivate: [AuthGuard]
   },
   {
     path: 'report-partner',
-    loadComponent: () => import('./pages/report-partner/report-partner.page').then( m => m.ReportPartnerPage)
+    loadComponent: () => import('./pages/report-partner/report-partner.page').then( m => m.ReportPartnerPage),
+    canActivate: [AuthGuard]
   },
   {
     path: 'interets',
