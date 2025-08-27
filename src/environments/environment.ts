@@ -2,9 +2,13 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// src/environments/environment.ts
 export const environment = {
-  production: false
+  production: false,
+  apiBase: 'http://10.0.2.2:8081', // change selon le cas ci-dessus
+  withCredentials: true            // si tu utilises cookies/session
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file
