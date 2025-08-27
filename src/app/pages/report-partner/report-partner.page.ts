@@ -8,7 +8,7 @@ import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating
 @Component({
   selector: 'app-report-partner',
   templateUrl: './report-partner.page.html',
-  styleUrls: ['./report-partner.page.scss'],
+  styleUrls: ['./report-partner.page.css'],
   standalone: true,
   imports: [IonContent, CommonModule, FormsModule, DropdownDrawerComponent, FloatingMenuComponent]
 })

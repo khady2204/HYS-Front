@@ -17,7 +17,7 @@ import { UserAuthService } from 'src/app/services/user-auth.service';
 @Component({
   selector: 'app-suggestion',
   templateUrl: './suggestion.page.html',
-  styleUrls: ['./suggestion.page.scss'],
+  styleUrls: ['./suggestion.page.css'],
   standalone: true,
   imports: [
     IonContent,

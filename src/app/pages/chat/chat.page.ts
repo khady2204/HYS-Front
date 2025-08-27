@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.page.html',
-  styleUrls: ['./chat.page.scss'],
+  styleUrls: ['./chat.page.css'],
   standalone: true,
   imports: [CommonModule, FormsModule, IonicModule]
 })

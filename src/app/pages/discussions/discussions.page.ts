@@ -17,7 +17,7 @@ import { UserAuthService } from 'src/app/services/user-auth.service';
 @Component({
   selector: 'app-discussions',
   templateUrl: './discussions.page.html',
-  styleUrls: ['./discussions.page.scss'],
+  styleUrls: ['./discussions.page.css'],
   standalone: true,
   imports: [
     CommonModule,

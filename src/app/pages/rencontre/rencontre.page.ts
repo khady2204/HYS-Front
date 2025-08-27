@@ -9,7 +9,7 @@ import { FiltreServiceComponent } from 'src/app/components/filtre-service/filtre
 @Component({
   selector: 'app-rencontre',
   templateUrl: './rencontre.page.html',
-  styleUrls: ['./rencontre.page.scss'],
+  styleUrls: ['./rencontre.page.css'],
   standalone: true,
   imports: [IonContent, CommonModule, FormsModule, HeaderSearchComponent, FloatingMenuComponent]
 })

@@ -11,7 +11,7 @@ import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-otp-verification',
   templateUrl: './otp-verification.page.html',
-  styleUrls: ['./otp-verification.page.scss'],
+  styleUrls: ['./otp-verification.page.css'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule]
 })

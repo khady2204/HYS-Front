@@ -11,7 +11,7 @@ import { InteretService } from 'src/app/services/interet/interet.service';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.page.html',
-  styleUrls: ['./edit-profile.page.scss'],
+  styleUrls: ['./edit-profile.page.css'],
   standalone: true,
   imports: [IonContent, CommonModule, FormsModule, ReactiveFormsModule]
 })

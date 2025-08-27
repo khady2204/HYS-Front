@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-construction',
   templateUrl: './construction.page.html',
-  styleUrls: ['./construction.page.scss'],
+  styleUrls: ['./construction.page.css'],
   standalone: true,
   imports: [ CommonModule, FormsModule]
 })

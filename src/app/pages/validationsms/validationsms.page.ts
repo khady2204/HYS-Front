@@ -11,7 +11,7 @@ import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-validationsms',
   templateUrl: './validationsms.page.html',
-  styleUrls: ['./validationsms.page.scss'],
+  styleUrls: ['./validationsms.page.css'],
   standalone: true,
   imports: [ IonicModule , CommonModule, FormsModule, ReactiveFormsModule]
 })
