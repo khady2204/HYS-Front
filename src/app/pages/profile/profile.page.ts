@@ -11,7 +11,7 @@ import { UserAuthService } from 'src/app/services/user-auth.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
-  styleUrls: ['./profile.page.scss'],
+  styleUrls: ['./profile.page.css'],
   standalone: true,
   imports: [IonButton, IonContent, RouterLink, CommonModule, FormsModule, RouterLink, FloatingMenuComponent, ReactiveFormsModule]
 })

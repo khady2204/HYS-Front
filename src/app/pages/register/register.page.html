@@ -1,3 +1,127 @@
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="/login" text="Retour"></ion-back-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content class="register-container" fullscreen>
+  <div class="register-wrapper">
+    <div class="logo-container">
+      <ion-img src="assets/logo.png" class="logo"></ion-img>
+    </div>
+
+    <h2 class="form-title">Inscription</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+
+      <!-- Nom et Prénom -->
+      <div class="row">
+        <div class="input-container">
+          <label class="input-label">Nom</label>
+          <input type="text" formControlName="nom" placeholder="Votre nom" />
+          <ion-text color="danger" *ngIf="nom?.invalid && nom?.touched">
+            <small>Veuillez remplir votre nom</small>
+          </ion-text>
+        </div>
+
+        <div class="input-container">
+          <label class="input-label">Prénom(s)</label>
+          <input type="text" formControlName="prenom" placeholder="Votre prénom" />
+          <ion-text color="danger" *ngIf="prenom?.invalid && prenom?.touched">
+            <small>Veuillez remplir votre prénom</small>
+          </ion-text>
+        </div>
+      </div>
+
+      <!-- Téléphone et Adresse -->
+      <div class="row">
+        <div class="input-container">
+          <label class="input-label">Téléphone</label>
+          <input type="tel" formControlName="phone" placeholder="Votre téléphone" />
+          <ion-text color="danger" *ngIf="phone?.invalid && phone?.touched">
+            <small>Téléphone invalide</small>
+          </ion-text>
+        </div>
+
+        <div class="input-container">
+          <label class="input-label">Adresse</label>
+          <input type="text" formControlName="address" placeholder="Votre adresse" />
+          <ion-text color="danger" *ngIf="address?.invalid && address?.touched">
+            <small>Veuillez remplir votre adresse</small>
+          </ion-text>
+        </div>
+      </div>
+
+      <!-- Date de naissance et Genre -->
+      <div class="row">
+        <div class="input-container">
+          <label class="input-label">Date de naissance</label>
+          <input type="date" formControlName="datenaissance" [max]="maxDate" />
+          <ion-text color="danger" *ngIf="datenaissance?.errors?.['tooYoung'] && datenaissance?.touched">
+            <small>18 ans minimum requis</small>
+          </ion-text>
+        </div>
+
+      <ion-item lines="none">
+        <ion-label position="stacked">Genre</ion-label>
+        <ion-select formControlName="sexe" interface="alert" placeholder="Choisir...">
+          <ion-select-option value="Homme">Homme</ion-select-option>
+          <ion-select-option value="Femme">Femme</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+
+      </div>
+
+      <!-- Email -->
+      <div class="input-container">
+        <label class="input-label">Email</label>
+        <input type="email" formControlName="email" placeholder="Votre email" />
+        <ion-text color="danger" *ngIf="email?.invalid && email?.touched">
+          <small>Email invalide</small>
+        </ion-text>
+      </div>
+
+      <!-- Mot de passe -->
+      <div class="input-container">
+        <label class="input-label">Mot de passe</label>
+        <input type="password" formControlName="password" placeholder="Mot de passe" />
+        <ion-text color="danger" *ngIf="password?.invalid && password?.touched">
+          <small>Au moins 8 caractères avec lettres, chiffres et symbole</small>
+        </ion-text>
+      </div>
+
+      <!-- Confirmation -->
+      <div class="input-container">
+        <label class="input-label">Confirmer mot de passe</label>
+        <input type="password" formControlName="confirmPassword" placeholder="Confirmez votre mot de passe" />
+      </div>
+
+      <!-- Checkbox et T&C -->
+      <div class="bp-container">
+        <ion-item lines="none" class="checkbox-item">
+          <ion-checkbox slot="start" formControlName="acceptTerms" class="term"></ion-checkbox>
+          <ion-label>J’accepte</ion-label>
+        </ion-item>
+        <a routerLink="/" class="a">Lire nos T & C</a>
+      </div>
+
+      <!-- Bouton -->
+      <ion-button class="login-button" expand="block" type="submit" [disabled]="registerForm.invalid">
+        S’inscrire
+      </ion-button>
+    </form>
+
+    <!-- Lien vers login -->
+    <div class="bottom-text">
+      <p>Vous avez un compte ? <a routerLink="/login" class="login-link">Se connecter</a></p>
+    </div>
+  </div>
+</ion-content>
+
+
+
+<!-- TEST REGISTER
 <ion-content class="register-container">
   <div class="register-wrapper">
     <div class="logo-container">
@@ -87,3 +211,5 @@
     </div>
   </div>
 </ion-content>
+
+FIN TEST -->

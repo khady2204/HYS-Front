@@ -7,7 +7,7 @@ import { Router, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-confirmation',
   templateUrl: './confirmation.page.html',
-  styleUrls: ['./confirmation.page.scss'],
+  styleUrls: ['./confirmation.page.css'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, RouterModule]
 })

@@ -8,7 +8,7 @@ import { Router, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-registration-success',
   templateUrl: './registration-success.page.html',
-  styleUrls: ['./registration-success.page.scss'],
+  styleUrls: ['./registration-success.page.css'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, RouterModule]
 })

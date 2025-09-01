@@ -8,7 +8,7 @@ import { InteretService } from 'src/app/services/interet/interet.service';
 @Component({
   selector: 'app-accueil',
   templateUrl: './accueil.page.html',
-  styleUrls: ['./accueil.page.scss'],
+  styleUrls: ['./accueil.page.css'],
   standalone: true,
   imports: [IonSpinner, RouterLink,CommonModule, FormsModule]
 })

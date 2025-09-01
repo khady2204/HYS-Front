@@ -12,14 +12,14 @@ ion-toolbar {
 }ion-back-button {
   margin-left: -20px; 
 }
-.new-container {
+.sms-container {
   --background: #f6f6fb;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
 }
-.new-wrapper {
+.sms-wrapper {
   background: #fff;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
@@ -60,9 +60,14 @@ ion-item {
   align-items: center; 
 }
 
-ion-input {
-  font-size: 0.95rem;
+input {
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
 }
+
 
 ion-button.send-btn {
   --background: #0D3873;

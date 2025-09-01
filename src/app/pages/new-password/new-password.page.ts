@@ -10,7 +10,7 @@ import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-new-password',
   templateUrl: './new-password.page.html',
-  styleUrls: ['./new-password.page.scss'],
+  styleUrls: ['./new-password.page.css'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, RouterModule, ReactiveFormsModule]
 })

@@ -24,7 +24,7 @@ import { InteretService } from 'src/app/services/interet/interet.service';
 @Component({
   selector: 'app-interets',
   templateUrl: './interets.page.html',
-  styleUrls: ['./interets.page.scss'],
+  styleUrls: ['./interets.page.css'],
   standalone: true,
   imports: [
     IonCol,
