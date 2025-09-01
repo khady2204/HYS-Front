@@ -17,6 +17,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RegisterPage implements OnInit{
   registerForm!: FormGroup;
   maxDate!: string;
+address: any;
 
   constructor(private authService: AuthService,
     private router: Router,

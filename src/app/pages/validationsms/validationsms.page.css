@@ -61,9 +61,7 @@ ion-item {
   align-items: center; 
 }
 
-ion-input {
-  font-size: 0.95rem;
-}
+
 
 ion-button.send-btn {
   --background: #0D3873;
@@ -94,8 +92,12 @@ ion-button.send-btn {
   --border-radius: 10px;
 }
 
-ion-input {
-  --background: #f1f1f1;
-  --padding-start: 10px;
-  --border-radius: 10px;
+
+input {
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+    --padding-start: 10px;
 }

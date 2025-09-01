@@ -14,7 +14,7 @@
     <form [formGroup]="otpForm" (ngSubmit)="onSubmit()">
       <div class="input-container">
           <label class="input-label">Code</label>
-          <ion-input type="email"  placeholder="xxxxxxx" formControlName="otp"> </ion-input>
+          <input type="tel"  placeholder="xxxxxxx" formControlName="phone"> 
       </div>
       <ion-button expand="block" class="send-btn" type="submit">Valider</ion-button>
     </form>

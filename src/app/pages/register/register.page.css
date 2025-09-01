@@ -4,6 +4,127 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.register-wrapper {
+  background: #fff;
+  padding: 20px;
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.logo {
+  width: 150px;
+  height: auto;
+}
+
+.form-title {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #0D3873;
+  margin: 10px 0 20px 0;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.input-label {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #000;
+  display: block;
+  padding-left: 4px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+input {
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+}
+
+ion-text small {
+  padding-left: 8px;
+  font-size: 0.8rem;
+}
+
+.checkbox-item {
+  background: transparent;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+.bp-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+
+ion-checkbox.term {
+  box-shadow: 0 4px 4px rgba(15, 15, 15, 0.3);
+  --background: #0D3873;
+}
+
+ion-button.login-button {
+  --background: #20398c;
+  --border-radius: 12px;
+  font-weight: 600;
+  color: white;
+  margin-top: 10px;
+}
+
+.bottom-text {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.login-link,
+.a {
+  color: #0D3873;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+ion-select {
+  --background: #f1f1f1;
+  --padding-start: 10px;
+  --border-radius: 10px;
+  font-size: 14px;
+}
+
+/* TEST 
+
+.register-container {
+  --background: #f6f6fb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
   margin: 0 auto;
 }
 
@@ -130,3 +251,5 @@ ion-checkbox.term{
 .a{
   color: #0D3873;
 }
+
+FIN TEST*/

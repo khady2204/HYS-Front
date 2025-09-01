@@ -8,7 +8,15 @@ const config: CapacitorConfig = {
   server: {
     cleartext: true,      
     androidScheme: 'http' 
+  },
+  plugins: {
+  Keyboard: {
+      resize: "body", // options: "body", "native", "none"
+      style: "light",
+      scrollAssist: true,
+      resizeOnFullScreen: true
   }
+}
 
   
 };

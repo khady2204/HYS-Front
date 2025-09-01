@@ -17,6 +17,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class FPasswordPage implements OnInit {
 
   resetForm!: FormGroup;
+phone: any;
 
   constructor(private router: Router,
     private authService:AuthService,

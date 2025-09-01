@@ -35,3 +35,20 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+
+
+/* You can add global styles to this file, and also import other style files */
+/* DEBUG: désactive totalement le click-block Ionic */
+/* Debug : s'assurer que tout est cliquable */
+
+
+ion-content {
+  --padding-bottom: env(safe-area-inset-bottom);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
