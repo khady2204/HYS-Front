@@ -5,7 +5,7 @@
 // src/environments/environment.ts
 export const environment = {
   production: false,
-  apiBase: 'http://10.0.2.2:8081', // change selon le cas ci-dessus
+  apiBase: 'http://192.168.1.127:8081', // change selon le cas ci-dessus
   withCredentials: true            // si tu utilises cookies/session
 };
 

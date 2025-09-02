@@ -7,7 +7,7 @@ const config: CapacitorConfig = {
 
   server: {
     cleartext: true,      
-    androidScheme: 'http' 
+    androidScheme: 'http',
   },
   plugins: {
   Keyboard: {
