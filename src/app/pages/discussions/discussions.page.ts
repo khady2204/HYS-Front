@@ -4,8 +4,7 @@ import { FormsModule } from '@angular/forms';
 import {
   IonContent, IonList, IonHeader, IonTitle, IonToolbar, IonAvatar,
   IonItem, IonLabel, IonBadge, IonItemSliding, IonItemOptions,
-  IonItemOption
-} from '@ionic/angular/standalone';
+  IonItemOption, IonIcon } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 
 import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
@@ -19,7 +18,7 @@ import { UserAuthService } from 'src/app/services/user-auth.service';
   templateUrl: './discussions.page.html',
   styleUrls: ['./discussions.page.css'],
   standalone: true,
-  imports: [
+  imports: [ 
     CommonModule,
     FormsModule,
     RouterLink,
@@ -95,9 +94,9 @@ export class DiscussionsPage implements OnInit {
             : null;
           const lastMessageTimestamp = lastMessage ? lastMessage.timestamp : '';
 
-          console.log(`💬 Discussion avec ${discussion.ami.prenom} ${discussion.ami.nom}`);
-          console.log(`📨 Messages non lus pour moi:`, unreadMessages.length);
-          console.log(`🕒 Dernier message:`, lastMessageTimestamp);
+          console.log(`Discussion avec ${discussion.ami.prenom} ${discussion.ami.nom}`);
+          console.log(`Messages non lus pour moi:`, unreadMessages.length);
+          console.log(`Dernier message:`, lastMessageTimestamp);
 
           return {
             ...discussion,
@@ -114,10 +113,10 @@ export class DiscussionsPage implements OnInit {
           return new Date(b.lastMessageTimestamp).getTime() - new Date(a.lastMessageTimestamp).getTime();
         });
 
-        console.log("📈 Discussions après tri :", this.discussions);
+        console.log("Discussions après tri :", this.discussions);
       },
       error: (err) => {
-        console.error('❌ Erreur chargement discussions', err);
+        console.error('Erreur chargement discussions', err);
       }
     });
   }
@@ -150,33 +149,33 @@ export class DiscussionsPage implements OnInit {
    * @param userId ID de l'utilisateur cible
    */
   openDiscussion(userId: number): void {
-    console.log('🔍 Ouverture de la discussion avec userId:', userId);
+    console.log('Ouverture de la discussion avec userId:', userId);
 
     const discussion = this.discussions.find(d => d.ami.id === userId);
     if (!discussion) {
-      console.warn('⚠️ Discussion introuvable pour userId:', userId);
+      console.warn('Discussion introuvable pour userId:', userId);
       return;
     }
 
-    console.log('📦 Discussion trouvée:', discussion);
+    console.log('Discussion trouvée:', discussion);
 
     // Marque les messages non lus de l'autre utilisateur
     const unreadMessages = discussion.messages.filter(msg =>
       !msg.read && msg.senderId !== this.currentUserId
     );
 
-    console.log('👤 ID utilisateur courant:', this.currentUserId);
-    console.log(`📨 ${unreadMessages.length} message(s) non lu(s) à marquer`);
+    console.log('ID utilisateur courant:', this.currentUserId);
+    console.log(`${unreadMessages.length} message(s) non lu(s) à marquer`);
 
     unreadMessages.forEach(msg => {
-      console.log(`➡️ Tentative de marquage du message ${msg.id} comme lu`);
+      console.log(`Tentative de marquage du message ${msg.id} comme lu`);
       msg.read = true; // MAJ immédiate côté frontend
 
       // Appel backend pour persister le statut lu
       this.messageService.markMessageAsRead(msg.id).subscribe({
         next: () => console.log(`✅ Message ${msg.id} marqué comme lu côté serveur`),
         error: (err) => {
-          console.error(`❌ Erreur lors du marquage du message ${msg.id}`, err);
+          console.error(`Erreur lors du marquage du message ${msg.id}`, err);
           msg.read = false; // rollback si erreur
         }
       });
@@ -184,7 +183,7 @@ export class DiscussionsPage implements OnInit {
 
     // Réinitialise le compteur de messages non lus côté frontend
     discussion.unreadCount = 0;
-    console.log('🔄 Compteur de messages non lus réinitialisé');
+    console.log('Compteur de messages non lus réinitialisé');
 
     // Navigation vers le chat avec les messages
     this.router.navigate(['/chat', userId], {
@@ -194,7 +193,7 @@ export class DiscussionsPage implements OnInit {
       }
     });
 
-    console.log('🚀 Navigation vers /chat avec userId:', userId);
+    console.log('Navigation vers /chat avec userId:', userId);
   }
 
 }

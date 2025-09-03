@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class InteretService {
 
-  private baseUrl = 'http://192.168.54.47:8081/api';
+  /*private baseUrl = 'http://192.168.54.47:8081/api';*/
+  private baseUrl = 'http://localhost:8081/api';
 
   constructor(private http: HttpClient) { }
 

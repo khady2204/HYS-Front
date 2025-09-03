@@ -61,7 +61,8 @@ export interface DiscussionResponse {
 export class MessageService {
 
   /** URL de base de l'API messages */
-  private readonly baseUrl = 'http://192.168.54.47:8081/api/messages';
+  /* private readonly baseUrl = 'http://192.168.54.47:8081/api/messages';*/
+  private readonly baseUrl = 'http://localhost:8081/api/messages';
 
   constructor(private http: HttpClient) {}
 

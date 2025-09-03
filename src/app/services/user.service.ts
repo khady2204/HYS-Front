@@ -21,7 +21,8 @@ export interface updateProfileRequest {
 })
 export class UserService {
 
-  private baseUrl = 'http://192.168.54.47:8081/api/user';
+  /* private baseUrl = 'http://192.168.54.47:8081/api/user';*/
+  private baseUrl = 'http://localhost:8081/api/user';
 
   constructor(private http: HttpClient) { }
 

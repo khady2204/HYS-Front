@@ -56,7 +56,7 @@
       </div>
 
       <!-- Liste des discussions -->
-      <ion-item-sliding *ngFor="let discussion of discussions">
+      <ion-item-sliding #slidingItem *ngFor="let discussion of discussions">
         <ng-container *ngIf="discussion.ami.id !== currentUserId">
 
           <!-- Options à droite -->
@@ -78,6 +78,7 @@
               <h6 class="fw-bold mb-1">
                 {{ discussion.ami.prenom }} {{ discussion.ami.nom }}
               </h6>
+              
 
               <!-- Dernier message avec distinction audio/image/video -->
               <p class="text-muted small mb-0" style="display: flex; align-items: center; gap: 4px;">
@@ -105,6 +106,11 @@
             <ion-badge *ngIf="discussion.unreadCount && discussion.unreadCount > 0" color="danger">
               {{ discussion.unreadCount }}
             </ion-badge>
+
+            <!-- Chevron Bootstrap placé à droite -->
+            <i class="bi bi-chevron-right text-muted ms-2" slot="end"
+              (click)="slidingItem.open('end')"
+            ></i>
           </ion-item>
         </ng-container>
       </ion-item-sliding>

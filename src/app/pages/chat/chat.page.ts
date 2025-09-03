@@ -145,13 +145,14 @@ export class ChatPage implements OnInit, AfterViewInit {
       this.mediaRecorder.ondataavailable = event => this.audioChunks.push(event.data);
 
       this.mediaRecorder.onstop = () => {
-        this.audioBlob = new Blob(this.audioChunks, { type: 'audio/webm' });
+        this.audioBlob = new Blob(this.audioChunks, { type: 'audio/wav' });
         this.audioUrl = URL.createObjectURL(this.audioBlob);
 
         // Mesure de la durée de l'audio
         const audio = new Audio(this.audioUrl);
         audio.onloadedmetadata = () => {
-          this.audioDuration = Math.round(audio.duration) || 0;
+          const duration = Math.round(audio.duration);
+          this.audioDuration = Number.isFinite(duration) ? duration : 0;
           this.sendAudioMessage();
         };
       };
