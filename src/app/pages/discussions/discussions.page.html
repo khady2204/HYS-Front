@@ -71,8 +71,21 @@
 
           <!-- Contenu de la discussion -->
           <ion-item button (click)="navigateToChat(discussion.ami.id)">
-            <ion-avatar slot="start">
+            <ion-avatar slot="start" style="position: relative;">
               <img [src]="discussion.ami.profileImage || 'assets/img/default-avatar.png'" />
+              <!-- Bouton de statut -->
+              <span
+                [ngStyle]="{
+                  'background-color': discussion.ami.online ? 'green' : 'gray',
+                  'width.px': 12,
+                  'height.px': 12,
+                  'border-radius': '50%',
+                  'border': '2px solid white',
+                  'position': 'absolute',
+                  'bottom.px': 0,
+                  'right.px': 0
+                }">
+              </span>
             </ion-avatar>
             <ion-label class="ion-text-wrap">
               <h6 class="fw-bold mb-1">

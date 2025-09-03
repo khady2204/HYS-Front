@@ -35,6 +35,7 @@ export interface UserSummary {
   nom: string;                  // Nom
   profileImage?: string;        // URL image de profil (optionnel)
   phone: string;                // Numéro de téléphone
+  online?: boolean;
 }
 
 /**
