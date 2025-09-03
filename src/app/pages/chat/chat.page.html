@@ -8,7 +8,7 @@
       <img [src]="user?.profileImage || 'assets/img/myLOve/suggestion/user4.png'" class="rounded-circle" width="40" height="40" />
       <div class="ms-1">
         <h6 class="mb-3 fw-bold">{{ user?.prenom }} {{ user?.nom }}</h6>
-        <small class="text-muted">{{ user?.is_online }}</small>
+        <small class="text-muted">{{ getUserStatus }}</small>
       </div>
     </div>
 

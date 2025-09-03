@@ -78,24 +78,53 @@ export class ChatPage implements OnInit, AfterViewInit {
     const navigation = this.router.getCurrentNavigation();
     const stateUser = navigation?.extras?.state?.['user'];
 
-    if (stateUser) {
-      this.user = { id: stateUser.id ?? stateUser.userId, ...stateUser };
-      this.loadMessages();
-    } else {
-      // Sinon, fallback via paramètre URL
-      const idParam = this.route.snapshot.paramMap.get('userId');
-      const fallbackUserId = idParam ? parseInt(idParam, 10) : null;
+    // ID utilisateur cible
+    const fallbackUserId = stateUser?.id ?? stateUser?.userId
+                        ?? (this.route.snapshot.paramMap.get('userId')
+                            ? parseInt(this.route.snapshot.paramMap.get('userId')!, 10)
+                            : null);
 
-      if (fallbackUserId) {
-        this.userService.getProfile(fallbackUserId).subscribe({
-          next: (data) => {
-            this.user = { id: fallbackUserId, ...data };
-            this.loadMessages();
-          },
-          error: (err) => console.error("Erreur chargement profil :", err)
-        });
-      }
+    if (fallbackUserId) {
+      this.userService.getProfile(fallbackUserId).subscribe({
+        next: (data) => {
+          this.user = { id: fallbackUserId, ...data };
+          this.loadMessages();
+        },
+        error: (err) => console.error("Erreur chargement profil :", err)
+      });
     }
+  }
+
+  /**
+   * Retourner le texte à afficher pour le statut de l'utilisateur
+   */
+  getUserStatus(): string {
+    if (!this.user) return '';
+
+    if (this.user.online) {
+      return 'En ligne';
+    }
+
+    if (this.user.lastOnlineLabel) {
+      return this.user.lastOnlineLabel;
+    }
+
+    if (this.user.lastOnlineAt) {
+      return 'Dernière connexion : ' + this.formatDateTime(this.user.lastOnlineAt); 
+    }
+
+    return 'Hors ligne';
+  }
+
+  formatDateTime(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleString('fr-FR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   }
 
   /**
