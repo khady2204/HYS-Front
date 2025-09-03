@@ -7,11 +7,14 @@ import {
   IonItemOption, IonIcon } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 
+import { forkJoin } from 'rxjs';
+
 import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
 import { DropdownDrawerComponent } from 'src/app/components/dropdown-drawer/dropdown-drawer.component';
 
 import { DiscussionResponse, MessageService } from 'src/app/services/message/message.service';
 import { UserAuthService } from 'src/app/services/user-auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-discussions',
@@ -50,7 +53,8 @@ export class DiscussionsPage implements OnInit {
   constructor(
     private router: Router,
     private messageService: MessageService,
-    private userService: UserAuthService
+    private userAuthService: UserAuthService,
+    private userService: UserService
   ) {}
 
   /**
@@ -60,14 +64,14 @@ export class DiscussionsPage implements OnInit {
    * - Charge toutes les discussions
    */
   ngOnInit(): void {
-    if (!this.userService.isAuthenticated()) {
+    if (!this.userAuthService.isAuthenticated()) {
       this.router.navigate(['/login']);
       return;
     }
 
-    const user = this.userService.getUser();
+    const user = this.userAuthService.getUser();
     this.userId = user?.id ?? null;
-    this.currentUserId = this.userService.getUserId() ?? 0;
+    this.currentUserId = this.userAuthService.getUserId() ?? 0;
 
     this.loadDiscussions();
   }
@@ -82,42 +86,62 @@ export class DiscussionsPage implements OnInit {
       next: (data: DiscussionResponse[]) => {
         console.log("📂 Discussions brutes :", data);
 
-        this.discussions = data.map(discussion => {
-          // Filtre les messages non lus destinés à l'utilisateur courant
-          const unreadMessages = discussion.messages.filter(msg =>
-            !msg.read && msg.receiverId === this.currentUserId
-          );
+        // Créer un tableau d'observables pour récupérer tous les profils
+        const profileRequests = data.map(d => this.userService.getProfile(d.ami.id));
 
-          // Récupère le timestamp du dernier message pour tri secondaire
-          const lastMessage = discussion.messages.length
-            ? discussion.messages[discussion.messages.length - 1]
-            : null;
-          const lastMessageTimestamp = lastMessage ? lastMessage.timestamp : '';
+        forkJoin(profileRequests).subscribe({
+          next: (profiles) => {
+            this.discussions = data.map((discussion, i) => {
+              const profileData = profiles[i]; // Profil correspondant
+              const unreadMessages = discussion.messages.filter(
+                msg => !msg.read && msg.receiverId === this.currentUserId
+              );
+              const lastMessage = discussion.messages.length
+                ? discussion.messages[discussion.messages.length - 1]
+                : null;
+              const lastMessageTimestamp = lastMessage ? lastMessage.timestamp : '';
 
-          console.log(`Discussion avec ${discussion.ami.prenom} ${discussion.ami.nom}`);
-          console.log(`Messages non lus pour moi:`, unreadMessages.length);
-          console.log(`Dernier message:`, lastMessageTimestamp);
+              return {
+                ...discussion,
+                ami: { ...discussion.ami, ...profileData },
+                unreadCount: unreadMessages.length,
+                lastMessageTimestamp
+              };
+            })
+            .sort((a, b) => {
+              const unreadDiff = (b.unreadCount ?? 0) - (a.unreadCount ?? 0);
+              if (unreadDiff !== 0) return unreadDiff;
+              return new Date(b.lastMessageTimestamp).getTime() - new Date(a.lastMessageTimestamp).getTime();
+            });
 
-          return {
-            ...discussion,
-            unreadCount: unreadMessages.length,
-            lastMessageTimestamp
-          };
-        })
-        .sort((a, b) => {
-          // Tri principal : nombre de messages non lus
-          const unreadDiff = (b.unreadCount ?? 0) - (a.unreadCount ?? 0);
-          if (unreadDiff !== 0) return unreadDiff;
-
-          // Tri secondaire : timestamp du dernier message
-          return new Date(b.lastMessageTimestamp).getTime() - new Date(a.lastMessageTimestamp).getTime();
+            console.log("📈 Discussions après tri et profils chargés :", this.discussions);
+          },
+          error: (err) => console.error('❌ Erreur récupération profils', err)
         });
-
-        console.log("Discussions après tri :", this.discussions);
       },
-      error: (err) => {
-        console.error('Erreur chargement discussions', err);
-      }
+      error: (err) => console.error('❌ Erreur chargement discussions', err)
+    });
+  }
+
+  /**
+   * Retourner le texte à afficher pour le statut de l'utilisateur
+   */
+  getUserStatus(user: any): string {
+    if (!user) return '';
+    if (user.online) return 'En ligne';
+    if (user.lastOnlineLabel) return user.lastOnlineLabel;
+    if (user.lastOnlineAt) return 'Dernière connexion : ' + this.formatDateTime(user.lastOnlineAt);
+    return 'Hors ligne';
+  }
+
+  formatDateTime(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleString('fr-FR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
     });
   }
 
