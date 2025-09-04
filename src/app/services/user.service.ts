@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 export interface updateProfileRequest {
@@ -14,6 +15,7 @@ export interface updateProfileRequest {
   dateNaissance: number;
   //pays: string;
   interetIds?: number[];
+  profileImage: string;
 }
 
 @Injectable({
@@ -21,14 +23,13 @@ export interface updateProfileRequest {
 })
 export class UserService {
 
-  /* private baseUrl = 'http://192.168.54.47:8081/api/user';*/
-  private baseUrl = 'http://localhost:8081/api/user';
+  private baseUrl = environment.apiBase + '/api/user';
 
   constructor(private http: HttpClient) { }
 
   // Mise à jour du profil utilisateur
-  updateProfile(data: updateProfileRequest): Observable<string> {
-    return this.http.put(`${this.baseUrl}/update-profile`, data, { responseType: 'text'});
+  updateProfile(formData: FormData): Observable<updateProfileRequest> {
+    return this.http.put<updateProfileRequest>(`${this.baseUrl}/update-profile`, formData);
   }
 
   /* updateProfile(formData: FormData): Observable<any> {

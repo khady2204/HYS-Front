@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 /**
  * Représente la requête pour envoyer un message texte ou média.
@@ -61,9 +62,9 @@ export interface DiscussionResponse {
 })
 export class MessageService {
 
+  
   /** URL de base de l'API messages */
-  /* private readonly baseUrl = 'http://192.168.54.47:8081/api/messages';*/
-  private readonly baseUrl = 'http://localhost:8081/api/messages';
+  private readonly baseUrl = environment.apiBase + '/api/messages';
 
   constructor(private http: HttpClient) {}
 

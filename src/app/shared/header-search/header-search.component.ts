@@ -14,6 +14,7 @@ import { UserService } from 'src/app/services/user.service';
 export class HeaderSearchComponent  implements OnInit {
 
   userId: number | null = null;
+  profileImageUrl: any;
 
   constructor(
     private userAuthService: UserAuthService,
@@ -29,6 +30,7 @@ export class HeaderSearchComponent  implements OnInit {
 
     const user = this.userAuthService.getUser();
     this.userId = user?.id ?? null;
+    this.profileImageUrl = user?.profileImage ?? null;
   }
 
   

@@ -5,7 +5,8 @@
 // src/environments/environment.ts
 export const environment = {
   production: false,
-  apiBase: 'http://192.168.1.127:8081', // change selon le cas ci-dessus
+  apiBase: 'http://192.168.54.47:8081', // Utilisation réseau local
+  /*apiBase: 'http://localhost:8081', */ // Utilisation locale
   withCredentials: true            // si tu utilises cookies/session
 };
 

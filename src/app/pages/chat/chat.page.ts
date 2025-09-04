@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 import { MessageResponse, MessageService } from 'src/app/services/message/message.service';
 import { UserService } from 'src/app/services/user.service';
+import { VoiceRecorder } from 'capacitor-voice-recorder';
 
 @Component({
   selector: 'app-chat',
@@ -16,34 +17,23 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ChatPage implements OnInit, AfterViewInit {
 
-  /** Référence vers l'élément en bas de la liste pour le scroll automatique */
   @ViewChild('bottom') bottomRef!: ElementRef;
 
-  /** Informations de l'utilisateur avec qui on discute */
   user: any;
-
-  /** Liste des messages de la conversation */
   messages: MessageResponse[] = [];
-
-  /** Identifiant de l'utilisateur courant */
   currentUserId: number | null = null;
 
-  /** Texte du nouveau message */
   newMessage: string = '';
-
-  /** Fichier sélectionné pour envoi (image ou vidéo) */
   selectedFile: File | null = null;
-
-  /** Aperçu du fichier sélectionné */
   previewUrl: string | null = null;
 
-  /** Gestion de l'enregistrement audio */
-  audioChunks: any[] = [];
-  mediaRecorder!: MediaRecorder;
+  /** Audio */
+  isRecording = false;
+  recordingTime = 0;
+  recordingInterval: any;
   audioBlob: Blob | null = null;
   audioUrl: string | null = null;
-  isRecording = false;
-  audioDuration: number = 0;
+  audioDuration = 0;
 
   constructor(
     private location: Location,
@@ -54,31 +44,18 @@ export class ChatPage implements OnInit, AfterViewInit {
     private userService: UserService
   ) {}
 
-  /** Après l'initialisation de la vue, scroll vers le bas */
   ngAfterViewInit() {
     this.scrollToBottom();
   }
 
-  /**
-   * Initialisation du composant
-   * - Vérifie que l'utilisateur est authentifié
-   * - Récupère l'utilisateur courant et l'utilisateur cible
-   * - Charge les messages
-   */
   ngOnInit() {
     const token = this.authService.getToken();
-    if (!token) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
+    if (!token) { this.router.navigate(['/login']); return; }
     this.currentUserId = this.authService.getUserId() ?? null;
 
-    // Vérifie si l'utilisateur a été passé via la navigation
     const navigation = this.router.getCurrentNavigation();
     const stateUser = navigation?.extras?.state?.['user'];
 
-    // ID utilisateur cible
     const fallbackUserId = stateUser?.id ?? stateUser?.userId
                         ?? (this.route.snapshot.paramMap.get('userId')
                             ? parseInt(this.route.snapshot.paramMap.get('userId')!, 10)
@@ -86,66 +63,37 @@ export class ChatPage implements OnInit, AfterViewInit {
 
     if (fallbackUserId) {
       this.userService.getProfile(fallbackUserId).subscribe({
-        next: (data) => {
-          this.user = { id: fallbackUserId, ...data };
-          this.loadMessages();
-        },
+        next: (data) => { 
+          this.user = { id: fallbackUserId, ...data }; 
+          this.loadMessages();  
+          console.log('Utilisateur chargé :', this.user); },
         error: (err) => console.error("Erreur chargement profil :", err)
       });
     }
   }
 
-  /**
-   * Retourner le texte à afficher pour le statut de l'utilisateur
-   */
   getUserStatus(): string {
     if (!this.user) return '';
-
-    if (this.user.online) {
-      return 'En ligne';
-    }
-
-    if (this.user.lastOnlineLabel) {
-      return this.user.lastOnlineLabel;
-    }
-
-    if (this.user.lastOnlineAt) {
-      return 'Dernière connexion : ' + this.formatDateTime(this.user.lastOnlineAt); 
-    }
-
+    if (this.user.online) return 'En ligne';
+    if (this.user.lastOnlineLabel) return this.user.lastOnlineLabel;
+    if (this.user.lastOnlineAt) return 'Dernière connexion : ' + this.formatDateTime(this.user.lastOnlineAt); 
     return 'Hors ligne';
   }
 
   formatDateTime(dateString: string): string {
     const date = new Date(dateString);
-    return date.toLocaleString('fr-FR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
+    return date.toLocaleString('fr-FR', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
   }
 
-  /**
-   * Charge tous les messages avec l'utilisateur courant
-   */
   loadMessages() {
     if (!this.user?.id || !this.currentUserId) return;
-
     this.messageService.getMessageWithUser(this.user.id, this.currentUserId).subscribe({
-      next: (data) => {
-        this.messages = data;
-        setTimeout(() => this.scrollToBottom(), 100);
-      },
+      next: (data) => { this.messages = data; setTimeout(() => this.scrollToBottom(), 100); },
       error: (err) => console.error('Erreur chargement messages:', err)
     });
   }
 
-  /**
-   * Gestion de la sélection d'un fichier (image/vidéo)
-   */
-  onFileSelected(event: any): void {
+  onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
       this.selectedFile = file;
@@ -155,61 +103,77 @@ export class ChatPage implements OnInit, AfterViewInit {
     }
   }
 
-  /** Supprime le fichier sélectionné et l'aperçu */
-  removeSelectedFile(): void {
+  removeSelectedFile() {
     this.selectedFile = null;
     this.previewUrl = null;
   }
 
-  /**
-   * Démarre l'enregistrement audio
-   * - Demande la permission du micro
-   * - Enregistre les données audio dans audioChunks
-   */
-  startRecording() {
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-      this.mediaRecorder = new MediaRecorder(stream);
-      this.audioChunks = [];
-
-      this.mediaRecorder.ondataavailable = event => this.audioChunks.push(event.data);
-
-      this.mediaRecorder.onstop = () => {
-        this.audioBlob = new Blob(this.audioChunks, { type: 'audio/wav' });
-        this.audioUrl = URL.createObjectURL(this.audioBlob);
-
-        // Mesure de la durée de l'audio
-        const audio = new Audio(this.audioUrl);
-        audio.onloadedmetadata = () => {
-          const duration = Math.round(audio.duration);
-          this.audioDuration = Number.isFinite(duration) ? duration : 0;
-          this.sendAudioMessage();
-        };
-      };
-
-      this.mediaRecorder.start();
-      this.isRecording = true;
-    }).catch(err => console.error('Erreur micro :', err));
-  }
-
-  /** Arrête l'enregistrement audio */
-  stopRecording() {
-    if (this.mediaRecorder && this.isRecording) {
-      this.mediaRecorder.stop();
-      this.isRecording = false;
+  /** Démarre l’enregistrement audio */
+  /** Démarre l’enregistrement audio */
+async startRecording() {
+  try {
+    const perm = await VoiceRecorder.hasAudioRecordingPermission();
+    if (!perm.value) {
+      const req = await VoiceRecorder.requestAudioRecordingPermission();
+      if (!req.value) {
+        console.warn('Permission micro refusée');
+        return;
+      }
     }
-  }
 
-  /**
-   * Envoie le message audio
-   * - Crée un FormData avec audioBlob
-   * - Met à jour la liste des messages
-   */
+    await VoiceRecorder.startRecording();
+    this.isRecording = true;
+
+    // 🔥 Initialiser et lancer le compteur
+    this.recordingTime = 0;
+    this.recordingInterval = setInterval(() => {
+      this.recordingTime++;
+    }, 1000);
+
+  } catch (err) {
+    console.error('Erreur démarrage enregistrement:', err);
+  }
+}
+
+async stopRecording() {
+  try {
+    const recordingData = await VoiceRecorder.stopRecording();
+    this.isRecording = false;
+
+    // 🔥 Stopper le compteur
+    if (this.recordingInterval) {
+      clearInterval(this.recordingInterval);
+      this.recordingInterval = null;
+    }
+
+    if (recordingData.value?.recordDataBase64) {
+      const base64 = recordingData.value.recordDataBase64;
+      const mimeType = recordingData.value.mimeType || 'audio/webm';
+
+      const byteString = atob(base64);
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      this.audioBlob = new Blob([ab], { type: mimeType });
+      this.audioUrl = URL.createObjectURL(this.audioBlob);
+      this.audioDuration = Math.floor((recordingData.value.msDuration || 0) / 1000);
+    }
+
+    this.sendAudioMessage();
+  } catch (err) {
+    console.error('Erreur stop audio:', err);
+  }
+}
+
+  /** Envoi du message audio */
   sendAudioMessage() {
     if (!this.audioBlob || !this.user?.id) return;
 
     const formData = new FormData();
     formData.append('receiverId', this.user.id.toString());
-    formData.append('mediaFile', this.audioBlob, 'audio.webm');
+    formData.append('mediaFile', this.audioBlob, `audio.${this.audioBlob.type.split('/')[1]}`);
     formData.append('mediaType', 'audio');
     formData.append('audioDuration', this.audioDuration.toString());
 
@@ -224,17 +188,11 @@ export class ChatPage implements OnInit, AfterViewInit {
     });
   }
 
-  /**
-   * Envoie un message texte ou média
-   * - Crée un FormData avec le contenu ou le fichier
-   * - Vide les champs après envoi
-   */
   sendMessage() {
     if ((!this.newMessage.trim() && !this.selectedFile) || !this.currentUserId || !this.user?.id) return;
 
     const formData = new FormData();
     formData.append('receiverId', this.user.id.toString());
-
     if (this.newMessage.trim()) formData.append('content', this.newMessage.trim());
     if (this.selectedFile) {
       formData.append('mediaFile', this.selectedFile);
@@ -247,7 +205,6 @@ export class ChatPage implements OnInit, AfterViewInit {
         this.newMessage = '';
         this.selectedFile = null;
         this.previewUrl = null;
-
         const fileInput = document.querySelector<HTMLInputElement>('input[type="file"]');
         if (fileInput) fileInput.value = '';
         setTimeout(() => this.scrollToBottom(), 100);
@@ -256,14 +213,8 @@ export class ChatPage implements OnInit, AfterViewInit {
     });
   }
 
-  /** Retour à la page précédente */
-  goBack() {
-    this.location.back();
-  }
+  goBack() { this.location.back(); }
 
-  /**
-   * Compare deux dates et retourne vrai si elles sont le même jour
-   */
   isSameDate(date1: string, date2: string): boolean {
     const d1 = new Date(date1), d2 = new Date(date2);
     return d1.getFullYear() === d2.getFullYear() &&
@@ -271,9 +222,6 @@ export class ChatPage implements OnInit, AfterViewInit {
            d1.getDate() === d2.getDate();
   }
 
-  /**
-   * Formate une date en texte lisible : Aujourd'hui, Hier, jour de la semaine ou jj/mm/yyyy
-   */
   formatDate(dateString: string): string {
     const date = new Date(dateString), today = new Date(), yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
@@ -297,12 +245,8 @@ export class ChatPage implements OnInit, AfterViewInit {
     return `${day}/${month}/${year}`;
   }
 
-  /** Scroll automatique vers le bas de la conversation */
   scrollToBottom() {
-    try {
-      this.bottomRef?.nativeElement?.scrollIntoView({ behavior: 'smooth' });
-    } catch (err) {
-      console.error('Erreur scroll :', err);
-    }
+    try { this.bottomRef?.nativeElement?.scrollIntoView({ behavior: 'smooth' }); }
+    catch (err) { console.error('Erreur scroll :', err); }
   }
 }

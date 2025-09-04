@@ -5,7 +5,7 @@
 
     <img src="assets/img/myLOve/Frame.png" alt="Notifications" style="width: 20px; height: 20px;">
     <a [routerLink] = "['/profile', userId]">
-      <img src="assets/img/myLOve/account.png" alt="Profil" class="rounded-circle" style="width: 24px; height: 24px;">
+      <img [src]="profileImageUrl || 'assets/img/myLOve/profile/profile1.png'" alt="Profil" class="rounded-circle" style="width: 24px; height: 24px;">
     </a>
     <!-- Filtre service -->
     <app-filtre-service></app-filtre-service>

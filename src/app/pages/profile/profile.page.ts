@@ -19,6 +19,7 @@ export class ProfilePage implements OnInit {
 
   prenom: string = '';
   nom: string = '';
+  profileImageUrl: any;
   adresse: string = '';
   bio: string ='';
   userId: number = 0;
@@ -54,6 +55,7 @@ export class ProfilePage implements OnInit {
       this.userId = user.id;
       this.prenom = user.prenom;
       this.nom = user.nom;
+      this.profileImageUrl = user.profileImage ?? null;
       this.adresse = user.adresse ?? 'Non renseignée';
       this.bio = user.bio;
       console.log("Profil chargé :", user);

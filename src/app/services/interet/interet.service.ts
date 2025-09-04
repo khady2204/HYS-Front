@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InteretService {
 
-  /*private baseUrl = 'http://192.168.54.47:8081/api';*/
-  private baseUrl = 'http://localhost:8081/api';
+  private baseUrl = environment.apiBase + '/api';
+  /*private baseUrl = 'http://localhost:8081/api';*/
 
   constructor(private http: HttpClient) { }
 

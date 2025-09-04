@@ -59,7 +59,7 @@
 
             <!-- Audio -->
             <div *ngIf="message.mediaType === 'audio' && message.mediaUrl">
-              <audio [src]="message.mediaUrl" controls></audio>
+              <audio [src]="message.mediaUrl" controls style="max-width: 200px; border-radius: 8px;"></audio>
               <small class="text-muted">{{ message.audioDuration }}s</small>
             </div>
 
@@ -114,12 +114,19 @@
       </button>
 
       <!-- Bouton d'enregistrement audio -->
-      <button type="button" class="btn p-0" *ngIf="!isRecording" (click)="startRecording()">
-        <i class="bi bi-mic fs-5 text-dark"></i>
-      </button>
-      <button type="button" class="btn p-0" *ngIf="isRecording" (click)="stopRecording()">
-        <i class="bi bi-stop-circle fs-5 text-danger"></i>
-      </button>
+      <div class="d-flex align-items-center gap-2">
+        <button type="button" class="btn p-0" *ngIf="!isRecording" (click)="startRecording()">
+          <i class="bi bi-mic fs-5 text-dark"></i>
+        </button>
+        
+        <button type="button" class="btn p-0" *ngIf="isRecording" (click)="stopRecording()">
+          <i class="bi bi-stop-circle fs-5 text-danger"></i>
+        </button>
+        
+        <!-- Affiche la durée pendant l'enregistrement -->
+        <span *ngIf="isRecording" class="text-muted">{{ recordingTime }}s</span>
+      </div>
+
 
       <!-- Bouton de paramètres -->
       <i class="bi bi-gear fs-5" style="cursor:pointer;"></i>

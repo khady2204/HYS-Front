@@ -7,7 +7,7 @@
       <app-dropdown-drawer></app-dropdown-drawer>
       <a [routerLink]="['/profile', userId]">
         <img
-          src="assets/img/myLOve/suggestion/tabProfile.png"
+          [src]="profileImageUrl || 'assets/img/myLOve/profile/profile1.png'"
           alt="Profile"
           class="rounded-circle border border-white"
           width="40"
@@ -72,7 +72,7 @@
           <!-- Contenu de la discussion -->
           <ion-item button (click)="navigateToChat(discussion.ami.id)">
             <ion-avatar slot="start" style="position: relative;">
-              <img [src]="discussion.ami.profileImage || 'assets/img/default-avatar.png'" />
+              <img [src]="discussion.ami.profileImage || 'assets/img/myLOve/profile/profile1.png'" />
               <!-- Bouton de statut -->
               <span
                 [ngStyle]="{

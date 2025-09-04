@@ -22,6 +22,7 @@ export class EditProfilePage implements OnInit {
   profileImagePreview: string | ArrayBuffer | null = null; // Aperçu image
   interets: any[] = [];                    // Tous les intérêts disponibles
   userInterets: any[] = [];                // Intérêts de l'utilisateur connecté
+  profileImageUrl: any;
 
   constructor(
     private location: Location,
@@ -43,10 +44,16 @@ export class EditProfilePage implements OnInit {
       bio: ['', Validators.required],
       dob: ['', Validators.required],
       interets: ['', Validators.required],
+      profileImage:[null]
     });
 
     // Récupération utilisateur depuis le localStorage
     const user = this.authUserService.getUser();
+    console.log('Utilisateur connecté :', user);
+
+    if (user && user.profileImage) {
+      this.profileImageUrl = user.profileImage;
+    }
 
     if (user && user.id) {
       this.userId = user.id;
@@ -60,6 +67,7 @@ export class EditProfilePage implements OnInit {
         adresse: user.adresse ?? '',
         bio: user.bio ?? '',
         dob: this.convertToDateInputFormat(user.dateNaissance),
+        profileImage: user.profileImage ?? '',
       });
     } else {
       console.error('Utilisateur non trouvé dans le localStorage');
@@ -87,47 +95,29 @@ export class EditProfilePage implements OnInit {
    */
   onSubmit(): void {
   if (this.editProfileForm.valid) {
-    console.log('Formulaire envoyé avec les valeurs :', this.editProfileForm.value);
-
     const formValue = this.editProfileForm.value;
 
-    const updateData = {
-      id: this.userId,
-      prenom: formValue.prenom,
-      nom: formValue.nom,
-      email: formValue.email,
-      bio: formValue.bio,
-      adresse: formValue.adresse,
-      phone: formValue.phone,
-      dateNaissance: new Date(formValue.dob).getTime(), // timestamp
-      //pays: formValue.pays,
-      interetIds: formValue.interets.map((id: any) => Number(id))
-    }; 
-
-    /* 
-    // Version FormData — à utiliser si tu actives l'envoi de fichiers
     const formData = new FormData();
 
-    formData.append('id', this.userId.toString());
-    formData.append('prenom', formValue.prenom);
     formData.append('nom', formValue.nom);
+    formData.append('prenom', formValue.prenom);
     formData.append('email', formValue.email);
     formData.append('bio', formValue.bio);
     formData.append('adresse', formValue.adresse);
     formData.append('phone', formValue.phone);
-    formData.append('dateNaissance', new Date(formValue.dob).getTime().toString());
-    formData.append('pays', formValue.pays);
+    formData.append('dob', new Date(formValue.dob).getTime().toString());
 
-    const interetsIds = formValue.interets.map((id: any) => Number(id)).join(',');
-    formData.append('interetIds', interetsIds);
+    // Ajout des intérêts (en tableau)
+    formValue.interets.forEach((id: number) => {
+      formData.append('interetIds', id.toString());
+    });
 
     // Ajout de la photo si elle existe
     if (formValue.profileImage) {
       formData.append('profileImage', formValue.profileImage);
     }
-    */
 
-    this.userService.updateProfile(updateData).subscribe({
+    this.userService.updateProfile(formData).subscribe({
       next: (res) => {
         this.presentSuccessToast('Profil mis à jour avec succès');
       },

@@ -49,6 +49,7 @@ export class DiscussionsPage implements OnInit {
   /** Identifiants utilisateur courant et profil consulté */
   currentUserId = 0;
   userId: number | null = null;
+  profileImageUrl: any;
 
   constructor(
     private router: Router,
@@ -72,6 +73,7 @@ export class DiscussionsPage implements OnInit {
     const user = this.userAuthService.getUser();
     this.userId = user?.id ?? null;
     this.currentUserId = this.userAuthService.getUserId() ?? 0;
+    this.profileImageUrl = user?.profileImage ?? null;
 
     this.loadDiscussions();
   }
