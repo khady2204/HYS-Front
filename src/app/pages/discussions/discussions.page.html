@@ -121,9 +121,14 @@
             </ion-badge>
 
             <!-- Chevron Bootstrap placé à droite -->
-            <i class="bi bi-chevron-right text-muted ms-2" slot="end"
-              (click)="slidingItem.open('end')"
-            ></i>
+            <ion-button 
+              fill="clear" 
+              slot="end" 
+              (click)="openOptions($event, slidingItem)">
+              <i class="bi bi-chevron-right"></i>
+            </ion-button>
+
+
           </ion-item>
         </ng-container>
       </ion-item-sliding>

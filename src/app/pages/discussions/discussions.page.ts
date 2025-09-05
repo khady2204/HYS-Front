@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import {
   IonContent, IonList, IonHeader, IonTitle, IonToolbar, IonAvatar,
   IonItem, IonLabel, IonBadge, IonItemSliding, IonItemOptions,
-  IonItemOption, IonIcon } from '@ionic/angular/standalone';
+  IonItemOption, IonIcon, IonButton } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 
 import { forkJoin } from 'rxjs';
@@ -32,6 +32,8 @@ import { UserService } from 'src/app/services/user.service';
     IonItemOptions,
     IonAvatar,
     IonLabel,
+    IonIcon,
+    IonButton,
     IonItemOption,
     IonBadge,
     FloatingMenuComponent,
@@ -221,5 +223,11 @@ export class DiscussionsPage implements OnInit {
 
     console.log('Navigation vers /chat avec userId:', userId);
   }
+
+  openOptions(event: Event, slidingItem: any) {
+    event.stopPropagation(); // bloque la propagation vers ion-item
+    slidingItem.open('end'); // ouvre les options
+  }
+
 
 }
