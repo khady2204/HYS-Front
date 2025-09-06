@@ -8,6 +8,7 @@ import { MessageResponse, MessageService } from 'src/app/services/message/messag
 import { UserService } from 'src/app/services/user.service';
 import { VoiceRecorder } from 'capacitor-voice-recorder';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-chat',
@@ -36,13 +37,16 @@ export class ChatPage implements OnInit, AfterViewInit {
   audioUrl: string | null = null;
   audioDuration = 0;
 
+  showOptions: boolean = false;
+
   constructor(
     private location: Location,
     private router: Router,
     private route: ActivatedRoute,
     private authService: UserAuthService,
     private messageService: MessageService,
-    private userService: UserService
+    private userService: UserService,
+    private popoverCtrl: PopoverController
   ) {}
 
   ngAfterViewInit() {
@@ -94,39 +98,32 @@ export class ChatPage implements OnInit, AfterViewInit {
     });
   }
 
+// Afficher/Masquer les options (photo, etc.)
+toggleOptions() {
+  this.showOptions = !this.showOptions;
+}
+
+// Prendre une photo avec la caméra
   async takePhoto() {
-  try {
-    alert('📸 Début de takePhoto()');
+    try {
+      // Vérifie les permissions caméra et photos
+      const perm = await Camera.checkPermissions();
+      let needRequest = false;
 
-    // Vérifie les permissions caméra et photos
-    const perm = await Camera.checkPermissions();
-    alert(`🔍 Permissions actuelles - Caméra: ${perm.camera}, Photos: ${perm.photos}`);
-
-    let needRequest = false;
-
-    if (perm.camera !== 'granted' || perm.photos !== 'granted') {
-      needRequest = true;
-      alert('⚠️ Permissions non accordées, demande en cours...');
-    }
-
-    if (needRequest) {
-      const newPerm = await Camera.requestPermissions({
-        permissions: ['camera', 'photos'] as Array<'camera' | 'photos'>
-      });
-
-      alert(`📋 Permissions après demande - Caméra: ${newPerm.camera}, Photos: ${newPerm.photos}`);
-
-      if (newPerm.camera !== 'granted') {
-        alert('🚫 Permission caméra refusée !');
-        return;
+      if (perm.camera !== 'granted' || perm.photos !== 'granted') {
+        needRequest = true;
       }
-      if (newPerm.photos !== 'granted') {
-        alert('🚫 Permission galerie refusée !');
+
+      if (needRequest) {
+        const newPerm = await Camera.requestPermissions({
+          permissions: ['camera', 'photos'] as Array<'camera' | 'photos'>
+        });
+
+      if (newPerm.camera !== 'granted' || newPerm.photos !== 'granted') {
+        console.warn('Permissions refusées');
         return;
       }
     }
-
-    alert('✅ Permissions OK, prise de photo en cours...');
 
     // Prendre la photo
     const image: Photo = await Camera.getPhoto({
@@ -136,23 +133,18 @@ export class ChatPage implements OnInit, AfterViewInit {
       source: CameraSource.Camera
     });
 
-    alert('📷 Photo capturée avec succès');
-
     this.previewUrl = image.dataUrl || null;
     this.selectedFile = this.dataUrltoFile(
       image.dataUrl || '',
       `photo_${new Date().getTime()}.jpeg`
     );
 
-    alert('🖼️ Image convertie et stockée');
-
   } catch (err) {
     console.error('Erreur prise de photo :', err);
-    alert(`❌ Erreur prise de photo : ${JSON.stringify(err)}`);
   }
 }
 
-
+// Sélection depuis la galerie
 async pickFromGallery() {
   try {
     // Vérifie les permissions photos
@@ -162,7 +154,7 @@ async pickFromGallery() {
         permissions: ['photos'] as Array<'photos'>
       });
       if (newPerm.photos !== 'granted') {
-        alert('Permission galerie refusée !');
+        console.warn('Permission galerie refusée');
         return;
       }
     }
@@ -185,6 +177,7 @@ async pickFromGallery() {
     console.error('Erreur sélection galerie :', err);
   }
 }
+
 
 // Conversion DataURL -> File
 private dataUrltoFile(dataUrl: string, filename: string): File {

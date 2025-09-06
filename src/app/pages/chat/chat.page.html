@@ -99,16 +99,23 @@
         <input type="file" accept="image/*,video/*" style="display:none;" (change)="onFileSelected($event)" />
       </label> -->
 
-      <!-- Bouton Caméra -->
-       <ion-button fill="clear" (click)="takePhoto()">
-        <i class="bi bi-camera fs-5" style="cursor:pointer;"></i>
-       </ion-button>
-
-      <!-- Bouton Galerie -->
-      <ion-button fill="clear" (click)="pickFromGallery()">
-        <i class="bi bi-image fs-5" style="cursor:pointer;"></i>
+      <!-- Bouton principal -->
+      <ion-button fill="clear" (click)="toggleOptions()">
+        <i class="bi bi-plus-circle fs-5" style="cursor:pointer;"></i>
       </ion-button>
 
+      <!-- Sous-boutons qui apparaissent -->
+      <div *ngIf="showOptions" class="flex gap-2 mt-2">
+        <ion-button fill="clear" (click)="takePhoto()">
+          <i class="bi bi-camera fs-5" style="cursor:pointer;"></i>
+        </ion-button>
+
+        <ion-button fill="clear" (click)="pickFromGallery()">
+          <i class="bi bi-image fs-5" style="cursor:pointer;"></i>
+        </ion-button>
+      </div>
+
+      <!-- Champ de saisie -->
       <input
         type="text"
         class="form-control rounded-pill"
