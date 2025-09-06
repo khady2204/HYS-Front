@@ -93,11 +93,21 @@
     <!-- Zone de saisie -->
     <div class="chat-input d-flex align-items-center p-3 border-top gap-3 bg-white">
 
-      <!-- Bouton de sélection de fichier -->
+      <!-- Bouton de sélection de fichier 
       <label class="mb-0">
         <i class="bi bi-camera fs-5" style="cursor:pointer;"></i>
         <input type="file" accept="image/*,video/*" style="display:none;" (change)="onFileSelected($event)" />
-      </label>
+      </label> -->
+
+      <!-- Bouton Caméra -->
+       <ion-button fill="clear" (click)="takePhoto()">
+        <i class="bi bi-camera fs-5" style="cursor:pointer;"></i>
+       </ion-button>
+
+      <!-- Bouton Galerie -->
+      <ion-button fill="clear" (click)="pickFromGallery()">
+        <i class="bi bi-image fs-5" style="cursor:pointer;"></i>
+      </ion-button>
 
       <input
         type="text"

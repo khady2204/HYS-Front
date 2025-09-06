@@ -15,7 +15,13 @@ const config: CapacitorConfig = {
       style: "light",
       scrollAssist: true,
       resizeOnFullScreen: true
-  }
+  },
+  Camera: {
+      android: {
+        enableCameraPermission: true,
+        enableGalleryPermission: true
+      }
+    }
 }
 
   

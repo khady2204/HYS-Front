@@ -7,6 +7,7 @@ import { UserAuthService } from 'src/app/services/user-auth.service';
 import { MessageResponse, MessageService } from 'src/app/services/message/message.service';
 import { UserService } from 'src/app/services/user.service';
 import { VoiceRecorder } from 'capacitor-voice-recorder';
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 
 @Component({
   selector: 'app-chat',
@@ -93,6 +94,113 @@ export class ChatPage implements OnInit, AfterViewInit {
     });
   }
 
+  async takePhoto() {
+  try {
+    alert('📸 Début de takePhoto()');
+
+    // Vérifie les permissions caméra et photos
+    const perm = await Camera.checkPermissions();
+    alert(`🔍 Permissions actuelles - Caméra: ${perm.camera}, Photos: ${perm.photos}`);
+
+    let needRequest = false;
+
+    if (perm.camera !== 'granted' || perm.photos !== 'granted') {
+      needRequest = true;
+      alert('⚠️ Permissions non accordées, demande en cours...');
+    }
+
+    if (needRequest) {
+      const newPerm = await Camera.requestPermissions({
+        permissions: ['camera', 'photos'] as Array<'camera' | 'photos'>
+      });
+
+      alert(`📋 Permissions après demande - Caméra: ${newPerm.camera}, Photos: ${newPerm.photos}`);
+
+      if (newPerm.camera !== 'granted') {
+        alert('🚫 Permission caméra refusée !');
+        return;
+      }
+      if (newPerm.photos !== 'granted') {
+        alert('🚫 Permission galerie refusée !');
+        return;
+      }
+    }
+
+    alert('✅ Permissions OK, prise de photo en cours...');
+
+    // Prendre la photo
+    const image: Photo = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera
+    });
+
+    alert('📷 Photo capturée avec succès');
+
+    this.previewUrl = image.dataUrl || null;
+    this.selectedFile = this.dataUrltoFile(
+      image.dataUrl || '',
+      `photo_${new Date().getTime()}.jpeg`
+    );
+
+    alert('🖼️ Image convertie et stockée');
+
+  } catch (err) {
+    console.error('Erreur prise de photo :', err);
+    alert(`❌ Erreur prise de photo : ${JSON.stringify(err)}`);
+  }
+}
+
+
+async pickFromGallery() {
+  try {
+    // Vérifie les permissions photos
+    const perm = await Camera.checkPermissions();
+    if (perm.photos !== 'granted') {
+      const newPerm = await Camera.requestPermissions({
+        permissions: ['photos'] as Array<'photos'>
+      });
+      if (newPerm.photos !== 'granted') {
+        alert('Permission galerie refusée !');
+        return;
+      }
+    }
+
+    // Sélection depuis la galerie
+    const image: Photo = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Photos
+    });
+
+    this.previewUrl = image.dataUrl || null;
+    this.selectedFile = this.dataUrltoFile(
+      image.dataUrl || '',
+      `photo_${new Date().getTime()}.jpeg`
+    );
+
+  } catch (err) {
+    console.error('Erreur sélection galerie :', err);
+  }
+}
+
+// Conversion DataURL -> File
+private dataUrltoFile(dataUrl: string, filename: string): File {
+  const arr = dataUrl.split(',');
+  const mime = arr[0].match(/:(.*?);/)![1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, { type: mime });
+}
+
+
+/*  Gestion des fichiers sélectionnés */
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
@@ -108,7 +216,6 @@ export class ChatPage implements OnInit, AfterViewInit {
     this.previewUrl = null;
   }
 
-  /** Démarre l’enregistrement audio */
   /** Démarre l’enregistrement audio */
 async startRecording() {
   try {

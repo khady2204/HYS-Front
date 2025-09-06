@@ -25,6 +25,7 @@
     "@capacitor-community/media": "^8.0.1",
     "@capacitor/android": "^7.4.3",
     "@capacitor/app": "7.0.1",
+    "@capacitor/camera": "^7.0.2",
     "@capacitor/core": "^7.4.3",
     "@capacitor/haptics": "7.0.1",
     "@capacitor/ios": "^7.4.3",
