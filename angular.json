@@ -42,7 +42,6 @@
               "src/theme/variables.css"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ],
             "browser": "src/main.ts"
           },

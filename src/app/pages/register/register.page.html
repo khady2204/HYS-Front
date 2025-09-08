@@ -1,35 +1,36 @@
-<ion-toolbar>
-  <ion-buttons slot="start">
-    <ion-back-button defaultHref="/login" text="Retour"></ion-back-button>
-  </ion-buttons>
-</ion-toolbar>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-<ion-content class="register-container" fullscreen>
+<ion-content class="register-container" fullscreen="">
   <div class="register-wrapper">
     <div class="logo-container">
-      <ion-img src="assets/logo.png" class="logo"></ion-img>
+      <img src="assets/logo.png" class="logo" />
     </div>
 
     <h2 class="form-title">Inscription</h2>
 
     <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-
       <!-- Nom et Prénom -->
       <div class="row">
         <div class="input-container">
           <label class="input-label">Nom</label>
-          <input type="text" formControlName="nom" placeholder="Votre nom" />
-          <ion-text color="danger" *ngIf="nom?.invalid && nom?.touched">
+          <input type="text" formControlName="nom" />
+          <div class="error" *ngIf="nom?.invalid && nom?.touched">
             <small>Veuillez remplir votre nom</small>
-          </ion-text>
+          </div>
         </div>
 
         <div class="input-container">
           <label class="input-label">Prénom(s)</label>
-          <input type="text" formControlName="prenom" placeholder="Votre prénom" />
-          <ion-text color="danger" *ngIf="prenom?.invalid && prenom?.touched">
+          <input type="text" formControlName="prenom" />
+          <div class="error" *ngIf="prenom?.invalid && prenom?.touched">
             <small>Veuillez remplir votre prénom</small>
-          </ion-text>
+          </div>
         </div>
       </div>
 
@@ -37,173 +38,80 @@
       <div class="row">
         <div class="input-container">
           <label class="input-label">Téléphone</label>
-          <input type="tel" formControlName="phone" placeholder="Votre téléphone" />
-          <ion-text color="danger" *ngIf="phone?.invalid && phone?.touched">
+          <input type="tel" formControlName="phone" />
+          <div class="error" *ngIf="phone?.invalid && phone?.touched">
             <small>Téléphone invalide</small>
-          </ion-text>
+          </div>
         </div>
 
         <div class="input-container">
           <label class="input-label">Adresse</label>
-          <input type="text" formControlName="address" placeholder="Votre adresse" />
-          <ion-text color="danger" *ngIf="address?.invalid && address?.touched">
+          <input type="text" formControlName="address" />
+          <div class="error" *ngIf="address?.invalid && address?.touched">
             <small>Veuillez remplir votre adresse</small>
-          </ion-text>
+          </div>
         </div>
       </div>
 
-      <!-- Date de naissance et Genre -->
+      <!-- Date de Naissance et Genre -->
       <div class="row">
         <div class="input-container">
-          <label class="input-label">Date de naissance</label>
+          <label class="input-label">Date de Naissance</label>
           <input type="date" formControlName="datenaissance" [max]="maxDate" />
-          <ion-text color="danger" *ngIf="datenaissance?.errors?.['tooYoung'] && datenaissance?.touched">
+          <div class="error" *ngIf="datenaissance?.errors?.['tooYoung'] && datenaissance?.touched">
             <small>18 ans minimum requis</small>
-          </ion-text>
+          </div>
         </div>
 
-      <ion-item lines="none">
-        <ion-label position="stacked">Genre</ion-label>
-        <ion-select formControlName="sexe" interface="alert" placeholder="Choisir...">
-          <ion-select-option value="Homme">Homme</ion-select-option>
-          <ion-select-option value="Femme">Femme</ion-select-option>
-        </ion-select>
-      </ion-item>
-
-
+        <div class="input-container">
+          <label class="input-label">Genre</label>
+          <select formControlName="sexe">
+            <option value="">-- Choisir --</option>
+            <option value="Homme">Homme</option>
+            <option value="Femme">Femme</option>
+          </select>
+        </div>
       </div>
 
       <!-- Email -->
       <div class="input-container">
         <label class="input-label">Email</label>
-        <input type="email" formControlName="email" placeholder="Votre email" />
-        <ion-text color="danger" *ngIf="email?.invalid && email?.touched">
+        <input type="email" formControlName="email" />
+        <div class="error" *ngIf="email?.invalid && email?.touched">
           <small>Email invalide</small>
-        </ion-text>
+        </div>
       </div>
 
       <!-- Mot de passe -->
       <div class="input-container">
         <label class="input-label">Mot de passe</label>
-        <input type="password" formControlName="password" placeholder="Mot de passe" />
-        <ion-text color="danger" *ngIf="password?.invalid && password?.touched">
+        <input type="password" formControlName="password" />
+        <div class="error" *ngIf="password?.invalid && password?.touched">
           <small>Au moins 8 caractères avec lettres, chiffres et symbole</small>
-        </ion-text>
+        </div>
       </div>
 
-      <!-- Confirmation -->
+      <!-- Confirmation mot de passe -->
       <div class="input-container">
-        <label class="input-label">Confirmer mot de passe</label>
-        <input type="password" formControlName="confirmPassword" placeholder="Confirmez votre mot de passe" />
+        <label class="input-label">Confirmer Mot de passe</label>
+        <input type="password" formControlName="confirmPassword" />
       </div>
 
-      <!-- Checkbox et T&C -->
+      <!-- Conditions -->
       <div class="bp-container">
-        <ion-item lines="none" class="checkbox-item">
-          <ion-checkbox slot="start" formControlName="acceptTerms" class="term"></ion-checkbox>
-          <ion-label>J’accepte</ion-label>
-        </ion-item>
+        <label class="checkbox-item">
+          <input type="checkbox" formControlName="acceptTerms" />
+          J’accepte
+        </label>
         <a routerLink="/" class="a">Lire nos T & C</a>
       </div>
 
       <!-- Bouton -->
-      <ion-button class="login-button" expand="block" type="submit" [disabled]="registerForm.invalid">
+      <button class="login-button" type="submit" [disabled]="registerForm.invalid">
         S’inscrire
-      </ion-button>
+      </button>
     </form>
 
-    <!-- Lien vers login -->
-    <div class="bottom-text">
-      <p>Vous avez un compte ? <a routerLink="/login" class="login-link">Se connecter</a></p>
-    </div>
-  </div>
-</ion-content>
-
-
-
-<!-- TEST REGISTER
-<ion-content class="register-container">
-  <div class="register-wrapper">
-    <div class="logo-container">
-      <ion-img src="assets/logo.png" class="logo"></ion-img>
-    </div>
-    <h2 class="form-title">Inscription</h2>
-    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-      <div class="row">
-        <div class="input-container">
-          <label class="input-label">Nom</label>
-          <ion-input class="half-input" type="text" formControlName="nom"></ion-input>
-          <ion-text color="danger" *ngIf="nom?.invalid && nom?.touched">
-          <small>Veuillez remplir votre nom</small>
-        </ion-text>
-        </div>
-        <div class="input-container">
-          <label class="input-label">Prenom(s)</label>
-          <ion-input class="half-input" type="text" formControlName="prenom"></ion-input>
-          <ion-text color="danger" *ngIf="prenom?.invalid && prenom?.touched">
-          <small>Veuillez remplir votre prenom</small> </ion-text>
-        </div>
-      </div>
-      <div class="row">
-      <div class="input-container">
-        <label class="input-label">Téléphone</label>
-        <ion-input class="half-input" type="tel" formControlName="phone"></ion-input>
-        <ion-text color="danger" *ngIf="phone?.invalid && phone?.touched">
-          <small>téléphone invalide</small>
-        </ion-text>
-      </div>
-      <div class="input-container">
-        <label class="input-label">Adresse</label>
-        <ion-input type="text" formControlName="address"></ion-input>
-         <ion-text color="danger" *ngIf="adress?.invalid && adress?.touched">
-          <small>Veuillez remplir votre adresse</small></ion-text>
-      </div>
-      </div>
-      <div class="row">
-      <div class="input-container">
-        <label class="input-label">Date de Naissance</label>
-        <ion-input type="date" formControlName="datenaissance" [max]="maxDate"></ion-input>
-        <ion-text color="danger" *ngIf="datenaissance?.errors?.['tooYoung'] && datenaissance?.touched" >
-          <small>18 ans minimum requis</small>
-        </ion-text>
-      </div>
-      <div class="input-container">
-        <label class="input-label">Genre</label>
-        <ion-select formControlName="sexe">
-        <ion-select-option value="Homme">Homme</ion-select-option>
-        <ion-select-option value="Femme">Femme</ion-select-option>
-        </ion-select>
-      </div>
-      </div>
-      <div class="input-container">
-        <label class="input-label">Email</label>
-        <ion-input type="email" formControlName="email"></ion-input>
-        <ion-text color="danger" *ngIf="email?.invalid && email?.touched">
-          <small>Email invalide</small>
-        </ion-text>
-      </div>
-      <div class="input-container">
-        <label class="input-label">Mot de passe</label>
-        <ion-input type="password" formControlName="password"></ion-input>
-        <ion-text color="danger" *ngIf="password?.invalid && password?.touched">
-          <small>Au moins 8 caractères avec lettres, chiffres et symbole</small>
-        </ion-text>
-      </div>
-      <div class="input-container">
-        <label class="input-label">Confirmer Mot de passe</label>
-        <ion-input type="password" formControlName="confirmPassword"></ion-input>
-      </div>
-      <div class="bp-container">
-      <ion-item lines="none" class="checkbox-item">
-        <ion-checkbox slot="start" formControlName="acceptTerms" class="term"></ion-checkbox>
-        <ion-label>J’accepte</ion-label>
-      </ion-item>
-      <a routerLink="/" class="a" >Lire nos T & C</a>
-      </div>
-      <ion-button class="login-button" expand="block" type="submit" [disabled]="registerForm.invalid">
-        S’inscrire
-      </ion-button>
-    </form>
     <div class="bottom-text">
       <p>Vous avez un compte ?
         <a routerLink="/login" class="login-link">Se connecter</a>
@@ -211,5 +119,3 @@
     </div>
   </div>
 </ion-content>
-
-FIN TEST -->
