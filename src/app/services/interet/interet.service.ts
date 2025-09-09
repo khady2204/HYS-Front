@@ -8,8 +8,6 @@ import { environment } from 'src/environments/environment';
 })
 export class InteretService {
 
-  //private baseUrl = 'http://localhost:8081/api';
-
   private baseUrl = environment.apiBase ;
 
   constructor(private http: HttpClient) { }
@@ -17,7 +15,7 @@ export class InteretService {
   // Récupérer la liste des intérêts
   getAllInterets(): Observable<any[]> {
   return this.http.get<any[]>(`${this.baseUrl}/api/interets/listeinterets`);
-} 
+}
 
 
   /* Ajouter un nouvel intérêt

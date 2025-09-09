@@ -5,7 +5,10 @@
 // src/environments/environment.ts
 export const environment = {
   production: false,
-  apiBase: 'http://10.0.2.2:8081', // change selon le cas ci-dessus
+  // Pour le développement web (navigateur) : localhost
+  // Pour l'émulateur Android : 10.0.2.2
+  // Pour l'appareil physique : 192.168.1.64 (votre IP locale)
+  apiBase: 'http://192.168.1.64:8081',
   withCredentials: true            // si tu utilises cookies/session
 };
 

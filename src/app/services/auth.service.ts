@@ -9,12 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
 
-  //private ApiUrl = 'http://192.168.1.15:8081';
-
-  //private ApiUrl = 'http://10.0.2.2:8081/api/auth';
-
   private ApiUrl = environment.apiBase ;
-
 
   constructor(private http: HttpClient) {}
 

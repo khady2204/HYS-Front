@@ -22,8 +22,6 @@ export interface updateProfileRequest {
 })
 export class UserService {
 
-  //private baseUrl = 'http://localhost:8081/api/user';
-
   private baseUrl = environment.apiBase ;
 
   constructor(private http: HttpClient) { }

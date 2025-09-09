@@ -8,8 +8,6 @@ import { environment } from 'src/environments/environment';
 })
 export class SuggestionService {
 
-  //private baseUrl = 'http://localhost:8081/api/suggestions';
-
   private baseUrl = environment.apiBase ;
 
   constructor(private http: HttpClient) { }
