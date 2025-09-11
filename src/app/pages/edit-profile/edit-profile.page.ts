@@ -3,6 +3,7 @@ import { CommonModule, Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
 import { ToastController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
 import { UserService } from 'src/app/services/user.service';
 import { UserAuthService } from 'src/app/services/user-auth.service';
@@ -13,7 +14,7 @@ import { InteretService } from 'src/app/services/interet/interet.service';
   templateUrl: './edit-profile.page.html',
   styleUrls: ['./edit-profile.page.css'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, ReactiveFormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class EditProfilePage implements OnInit {
 
