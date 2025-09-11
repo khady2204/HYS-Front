@@ -17,7 +17,6 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RegisterPage implements OnInit{
   registerForm!: FormGroup;
   maxDate!: string;
-address: any;
 
   constructor(private authService: AuthService,
     private router: Router,
@@ -50,7 +49,7 @@ address: any;
   
   get nom() { return this.registerForm.get('nom'); }
   get prenom() { return this.registerForm.get('prenom');}
-  get adress() { return this.registerForm.get('adress');}
+  get address() { return this.registerForm.get('address');}
   get email() { return this.registerForm.get('email'); }  
   get password() { return this.registerForm.get('password');}
   get datenaissance() { return this.registerForm.get('datenaissance');}

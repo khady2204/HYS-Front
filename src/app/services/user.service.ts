@@ -23,13 +23,13 @@ export interface updateProfileRequest {
 })
 export class UserService {
 
-  private baseUrl = environment.apiBase + '/api/user';
+  private baseUrl = environment.apiBase ;
 
   constructor(private http: HttpClient) { }
 
   // Mise à jour du profil utilisateur
   updateProfile(formData: FormData): Observable<updateProfileRequest> {
-    return this.http.put<updateProfileRequest>(`${this.baseUrl}/update-profile`, formData);
+    return this.http.put<updateProfileRequest>(`${this.baseUrl}/api/user/update-profile`, formData);
   }
 
   /* updateProfile(formData: FormData): Observable<any> {
@@ -38,6 +38,6 @@ export class UserService {
 
   // Récuperer le profil d'un utilisateur via son ID
   getProfile(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/profile/${id}`);
+    return this.http.get(`${this.baseUrl}/api/user/profile/${id}`);
   }
 }

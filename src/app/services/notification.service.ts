@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export interface NotificationDTO {
   id: number;
@@ -17,7 +18,10 @@ export interface NotificationDTO {
   providedIn: 'root'
 })
 export class NotificationService {
-  private apiUrl = 'http://192.168.54.47:8081/api/notifications';
+
+  //private apiUrl = 'http://localhost:8081/api/notifications';
+
+  private readonly apiUrl = `${environment.apiBase}/api/notifications`;
 
   constructor(private http: HttpClient) {}
 

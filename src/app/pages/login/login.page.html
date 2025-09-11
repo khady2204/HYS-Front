@@ -1,13 +1,15 @@
-<ion-toolbar>
-  <ion-buttons slot="start">
-    <ion-back-button defaultHref="/" text="retour"></ion-back-button>
-  </ion-buttons>
-</ion-toolbar>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content class="login-container" fullscreen>
   <div class="login-wrapper">
     <div class="logo-container">
-      <ion-img src="assets/logo.png" class="logo-img"></ion-img>
+      <img src="assets/logo.png" class="logo-img">
     </div>
 
     <h2 class="login-title">Connexion</h2>
@@ -15,14 +17,14 @@
     <!-- Bouton Google -->
     <div class="google-login">
       <ion-button expand="block" fill="outline" class="google-btn">
-        <ion-img src="assets/google-icon.png" class="google-icon" slot="start"></ion-img>
+        <img src="assets/google-icon.png" class="google-icon" slot="start"><img>
         <ion-text class="text">Se connecter avec Google</ion-text>
       </ion-button>
     </div>
 
     <!-- Formulaire -->
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-      
+
       <!-- Email -->
       <div class="input-container">
         <label class="input-label">Email ou Téléphone</label>
@@ -55,7 +57,7 @@
     <!-- Redirection inscription -->
     <div class="secondary-actions">
       <ion-text>
-        <p>Vous n'avez pas de compte ? 
+        <p>Vous n'avez pas de compte ?
           <a routerLink="/register" class="login-link">S'inscrire</a>
         </p>
       </ion-text>
@@ -65,7 +67,7 @@
 
 
 
-<!-- tEST DU LOGIN PAGE 
+<!-- tEST DU LOGIN PAGE
 <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/" text="retour"></ion-back-button>

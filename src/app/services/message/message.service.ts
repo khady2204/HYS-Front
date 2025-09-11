@@ -64,7 +64,8 @@ export class MessageService {
 
   
   /** URL de base de l'API messages */
-  private readonly baseUrl = environment.apiBase + '/api/messages';
+
+  private baseUrl = environment.apiBase ;
 
   constructor(private http: HttpClient) {}
 
@@ -74,7 +75,7 @@ export class MessageService {
    * @returns Observable<MessageResponse> contenant le message envoyé avec les champs normalisés
    */
   sendMessage(formData: FormData): Observable<MessageResponse> {
-    return this.http.post<MessageResponse>(`${this.baseUrl}`, formData)
+    return this.http.post<MessageResponse>(`${this.baseUrl}/api/messages`, formData)
       .pipe(
         map(msg => this.mapMessage(msg))
       );
@@ -87,7 +88,7 @@ export class MessageService {
    * @returns Observable<MessageResponse[]> avec les messages normalisés
    */
   getMessageWithUser(userId: number, currentUserId?: number): Observable<MessageResponse[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/${userId}`).pipe(
+    return this.http.get<any[]>(`${this.baseUrl}/api/messages/${userId}`).pipe(
       map(messages => messages.map(msg => this.mapMessage(msg, currentUserId)))
     );
   }
@@ -98,7 +99,7 @@ export class MessageService {
    * @returns Observable<DiscussionResponse[]> contenant toutes les discussions avec les messages normalisés
    */
   getAllDiscussions(currentUserId?: number): Observable<DiscussionResponse[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/discussions`).pipe(
+    return this.http.get<any[]>(`${this.baseUrl}/api/messages/discussions`).pipe(
       map(discussions => discussions.map(d => ({
         ami: {
           id: d.ami.id,
@@ -119,7 +120,7 @@ export class MessageService {
    * @returns Observable<void>
    */
   markMessageAsRead(messageId: number): Observable<void> {
-    return this.http.put<void>(`${this.baseUrl}/${messageId}/read`, {});
+    return this.http.put<void>(`${this.baseUrl}/api/messages/${messageId}/read`, {});
   }
 
   /**
@@ -137,7 +138,7 @@ export class MessageService {
       }
     });
 
-    return this.http.get<any[]>(`${this.baseUrl}/discussions/search`, { params: httpParams }).pipe(
+    return this.http.get<any[]>(`${this.baseUrl}/api/messages/discussions/search`, { params: httpParams }).pipe(
       map(discussions => discussions.map(d => ({
         ami: {
           id: d.ami.id,
