@@ -41,10 +41,6 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/new-password/new-password.page').then( m => m.NewPasswordPage)
   },
   {
-    path: 'validationsms',
-    loadComponent: () => import('./pages/validationsms/validationsms.page').then( m => m.ValidationsmsPage)
-  },
-  {
     path: 'registration-success',
     loadComponent: () => import('./pages/registration-success/registration-success.page').then( m => m.RegistrationSuccessPage)
   },

@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
 export class InteretService {
 
   private baseUrl = environment.apiBase + '/api';
-  /*private baseUrl = 'http://localhost:8081/api';*/
 
   constructor(private http: HttpClient) { }
 

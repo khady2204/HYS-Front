@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
 import { UserService } from 'src/app/services/user.service';
 import { UserAuthService } from 'src/app/services/user-auth.service';
+import { IonicModule } from '@ionic/angular';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { UserAuthService } from 'src/app/services/user-auth.service';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.css'],
   standalone: true,
-  imports: [IonButton, IonContent, RouterLink, CommonModule, FormsModule, RouterLink, FloatingMenuComponent, ReactiveFormsModule]
+  imports: [IonicModule, RouterLink, CommonModule, FormsModule, RouterLink, FloatingMenuComponent, ReactiveFormsModule]
 })
 export class ProfilePage implements OnInit {
 
