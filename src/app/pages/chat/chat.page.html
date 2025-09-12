@@ -1,81 +1,99 @@
-<ion-content class="bg-white">
 
-  <div class="d-flex flex-column vh-100">
 
-    <!-- En-tête -->
-    <div class="chat-header d-flex align-items-center gap-3 px-3 pt-5 pb-3 border-bottom">
-      <i class="bi bi-arrow-left fs-4" (click)="goBack()"></i>
-      <img [src]="user?.profileImage || 'assets/img/myLOve/suggestion/user4.png'" class="rounded-circle" width="40" height="40" />
-      <div class="ms-1">
-        <h6 class="mb-0 fw-bold">{{ user?.prenom }} {{ user?.nom }}</h6>
-        <small class="text-muted">{{ getUserStatus() }}</small>
+  <ion-header class="ion-no-border" style="background-color: #ffffff; --background: white;">
+    <ion-toolbar class="d-flex align-items-center px-3 pt-4 pb-2">
+
+      <!-- Bouton retour -->
+      <ion-buttons slot="start">
+        <ion-back-button fill="clear" defaultHref="/discussion" text="" (click)="goBack()">
+          <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+        </ion-back-button>
+      </ion-buttons>
+
+      <!-- Avatar et infos utilisateur -->
+      <div class="d-flex align-items-center" style="margin-left:8px;">
+        <!-- Avatar -->
+        <ion-avatar>
+          <img [src]="user?.profileImage || 'assets/img/myLOve/suggestion/user4.png'" />
+        </ion-avatar>
+
+        <!-- Nom et statut -->
+        <div class="ms-2 d-flex flex-column justify-content-center">
+          <span class="fw-bold">{{ user?.prenom }} {{ user?.nom }}</span>
+          <small class="text-muted">{{ getUserStatus() }}</small>
+        </div>
       </div>
+
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content class="bg-white" fullscreen>
+  <!-- Zone messages -->
+  <div class="flex-grow-1 px-3" #messageContainer>
+
+    <div *ngIf="messages.length === 0" class="ion-text-center ion-text-muted mt-5">
+      Aucune discussion trouvée.
     </div>
 
-    <!-- Zone des messages -->
-    <div class="flex-grow-1 overflow-auto px-3" #messageContainer>
-      <div *ngIf="messages.length === 0" class="text-center text-muted mt-5">
-        Aucune discussion trouvée.
+    <div *ngFor="let message of messages; let i = index">
+
+      <!-- Date entre messages -->
+      <div *ngIf="i === 0 || !isSameDate(messages[i-1].timestamp, message.timestamp)" class="ion-text-center my-2">
+        <ion-chip>{{ formatDate(message.timestamp) }}</ion-chip>
       </div>
 
-      <div *ngFor="let message of messages; let i = index">
-        <!-- Affiche la date entre messages quand elle change -->
-        <div *ngIf="i === 0 || !isSameDate(messages[i-1].timestamp, message.timestamp)" class="text-center my-2">
-          <span class="px-3 py-1 rounded-pill small text-muted">
-            {{ formatDate(message.timestamp) }}
-          </span>
-        </div>
-
-        <!-- Bulle du message -->
-        <div
-          class="d-flex mb-2"
+      <!-- Conteneur message avec alignement -->
+      <div class="d-flex flex-column mb-2" 
           [ngClass]="{
-            'justify-content-end': message.senderId === currentUserId,
-            'justify-content-start': message.senderId !== currentUserId
-          }"
-        >
-          <div
-            class="msg-bubble"
-            [ngClass]="{
-              'sent': message.senderId === currentUserId,
-              'received': message.senderId !== currentUserId
-            }"
-          >
+            'align-items-end': message.senderId === currentUserId, 
+            'align-items-start': message.senderId !== currentUserId
+          }">
+
+        <!-- Bulle -->
+        <ion-chip [ngClass]="{'sent': message.senderId === currentUserId, 'received': message.senderId !== currentUserId}">
+          <div class="bubble-content">
 
             <!-- Texte -->
-            <div *ngIf="message.content">
-              {{ message.content }}
-            </div>
+            <div *ngIf="message.content">{{ message.content }}</div>
 
             <!-- Image -->
-            <div *ngIf="message.mediaType === 'image' && message.mediaUrl">
-              <img [src]="message.mediaUrl" alt="Image" style="max-width: 200px; border-radius: 8px;" />
-            </div>
+            <ion-img *ngIf="message.mediaType==='image' && message.mediaUrl" [src]="message.mediaUrl" class="media-msg"></ion-img>
 
             <!-- Vidéo -->
-            <div *ngIf="message.mediaType === 'video' && message.mediaUrl">
-              <video [src]="message.mediaUrl" controls style="max-width: 200px; border-radius: 8px;"></video>
-            </div>
+            <video *ngIf="message.mediaType==='video' && message.mediaUrl" [src]="message.mediaUrl" controls class="media-msg"></video>
 
             <!-- Audio -->
-            <div *ngIf="message.mediaType === 'audio' && message.mediaUrl">
-              <audio [src]="message.mediaUrl" controls style="max-width: 200px; border-radius: 8px;"></audio>
-              <small class="text-muted">{{ message.audioDuration }}s</small>
-            </div>
+            <audio *ngIf="message.mediaType==='audio' && message.mediaUrl" [src]="message.mediaUrl" controls class="media-msg"></audio>
+            <small *ngIf="message.mediaType==='audio'" class="text-muted">{{ message.audioDuration }}s</small>
 
-            <!-- Heure -->
-            <div class="msg-time">
-              {{ message.timestamp | date:'shortTime' }}
-            </div>
           </div>
-        </div>
+        </ion-chip>
+
+        <!-- Heure sous la bulle -->
+        <small class="text-muted mt-1" 
+              [ngClass]="{
+                'text-end': message.senderId === currentUserId,
+                'text-start': message.senderId !== currentUserId
+              }">
+          {{ message.timestamp | date:'shortTime' }}
+        </small>
+
       </div>
-
-      <!-- Ancre pour scroll auto -->
-      <div #bottom></div>
     </div>
+  </div>
 
-    <!-- Aperçu du fichier sélectionné -->
+
+  <div #bottom></div> <!-- Ancre pour scroll auto -->
+
+  <!-- Preview fichier -->
+  <div *ngIf="previewUrl" class="ion-padding" style="display:inline-block; position:relative;">
+    <ion-button fill="clear" size="small" style="position:absolute; top:5px; right:5px; border-radius:50%;" (click)="removeSelectedFile()">✖</ion-button>
+
+    <ion-img *ngIf="selectedFile?.type?.startsWith('image')" [src]="previewUrl" class="media-msg"></ion-img>
+    <video *ngIf="selectedFile?.type?.startsWith('video')" [src]="previewUrl" controls class="media-msg"></video>
+  </div>
+
+  <!-- Aperçu du fichier sélectionné -->
     <div *ngIf="previewUrl" class="p-2 position-relative" style="display:inline-block;">
       <button (click)="removeSelectedFile()" class="btn btn-light btn-sm position-absolute" style="top:5px; right:5px; border-radius:50%;">
         ✖
@@ -148,7 +166,5 @@
       <!-- Bouton de paramètres -->
       <i class="bi bi-gear fs-5" style="cursor:pointer;"></i>
     </div>
-
-  </div>
 
 </ion-content>
