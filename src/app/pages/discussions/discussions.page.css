@@ -231,12 +231,12 @@
 }
 
 /* Options de glissement */
-.bg-red {
-  background: #ff4757 !important;
+.btn-delete {
+  background: #ff008a !important;
 }
 
-.bg-yellow {
-  background: #ffa502 !important;
+.btn-signalement {
+  background: #ff008a !important;
 }
 
 ion-item-option {
