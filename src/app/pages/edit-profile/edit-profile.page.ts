@@ -9,12 +9,14 @@ import { UserService } from 'src/app/services/user.service';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 import { InteretService } from 'src/app/services/interet/interet.service';
 
+import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
+
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.page.html',
   styleUrls: ['./edit-profile.page.css'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule, FloatingMenuComponent]
 })
 export class EditProfilePage implements OnInit {
 

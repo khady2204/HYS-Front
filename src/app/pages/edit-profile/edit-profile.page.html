@@ -1,10 +1,10 @@
 <ion-content class="bg-white">
 
   <!-- Header -->
-  <ion-header translucent>
-    <ion-toolbar class="toolbar-transparent">
+  <ion-header>
+    <ion-toolbar class="toolbar-solid">
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="/" text="" icon="chevron-back" (click)="goBack()"></ion-back-button>
+        <ion-back-button defaultHref="/dashboard" text="" (click)="goBack()"></ion-back-button>
       </ion-buttons>
       <ion-title class="text-center fw-bold">Edit Profile</ion-title>
     </ion-toolbar>
@@ -71,7 +71,7 @@
 
     <div class="mb-3">
       <ion-label class="fw-semibold">Date de naissance</ion-label>
-      <ion-datetime formControlName="dob" placeholder="Sélectionner une date" display-format="DD/MM/YYYY" class="input-bordered"></ion-datetime>
+      <input type="date" formControlName="dob" class="input-ordered w-100" placeholder="JJ/MM/AAAA" />
     </div>
 
     <!-- Intérêts -->
@@ -92,5 +92,8 @@
     </div>
 
   </form>
+
+  <!-- Menu flottant -->
+  <app-floating-menu></app-floating-menu>
 
 </ion-content>

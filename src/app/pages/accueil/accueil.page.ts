@@ -4,13 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton, IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 import { InteretService } from 'src/app/services/interet/interet.service';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-accueil',
   templateUrl: './accueil.page.html',
   styleUrls: ['./accueil.page.css'],
   standalone: true,
-  imports: [IonSpinner, RouterLink,CommonModule, FormsModule]
+  imports: [IonSpinner, RouterLink,CommonModule, FormsModule, IonicModule]
 })
 export class AccueilPage implements OnInit {
 

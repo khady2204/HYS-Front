@@ -1,9 +1,19 @@
+.toolbar-solid {
+  --background: #ffffff;
+  --color: #000000;
+}
+
+ion-back-button {
+  color:#000000;
+}
+
 /* Champ avec bordure uniquement */
 .input-bordered {
-  border: 1px solid #ced4da;
+  border: 1px solid #000000;
   border-radius: 6px;
   padding: 10px;
   background-color: #fff;
+  width: 100px;
 }
 
 /* Labels au-dessus */
@@ -11,6 +21,18 @@ ion-label {
   font-weight: 600;
   margin-bottom: 4px;
   display: block;
+}
+
+ion-input, ion-textarea {
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --min-height: 45px;
+  font-size: 0.95rem;
+}
+
+ion-input:focus-within, ion-textarea:focus-within {
+  border: 1px solid #000000;
+
 }
 
 .profile-wrapper {
@@ -38,7 +60,32 @@ ion-label {
 }
 
 .btnSave {
-  background-color: #ff008A;
-  color: white;
+  --background: #ff008A;
+  --color: white;
+  --background-activated: #ff008a;
+  --background-focused: #ff008a;
+  --border-radius: 8px;
   font-weight: 600;
+
+  width: 50%;
+  display: block;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+
+.input-bordered {
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: #fff;
+  width: 100%;
+}
+
+ion-checkbox {
+  --checkbox-background-checked: #ff008a;
+  --checkmark-color: #fff;
+  --border-color-checked: #ff008a;
+  --boder-color: #ccc;
 }

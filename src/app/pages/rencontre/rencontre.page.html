@@ -87,17 +87,6 @@
   <!-- Menu flottant bas -->
   <app-floating-menu></app-floating-menu>
 
-  <!-- Debug Section (à retirer en production) -->
-  <!-- <div class="debug-section p-3 mt-3" style="background: #f8f9fa; border-radius: 8px;">
-    <h6 class="text-muted">Debug Info</h6>
-    <div class="small">
-      <div><strong>API Base:</strong> {{ getApiBase() }}</div>
-      <div><strong>User ID:</strong> {{ getCurrentUserId() }}</div>
-      <div><strong>Users with stories:</strong> {{ userStories.length }}</div>
-      <div><strong>Loading:</strong> {{ isLoading }}</div>
-      <div><strong>Error:</strong> {{ error || 'Aucune' }}</div>
-    </div>
-  </div> -->
 
     <!-- Add Story Modal -->
   <ion-modal [isOpen]="isAddStoryOpen" (didDismiss)="closeAddStory()">
