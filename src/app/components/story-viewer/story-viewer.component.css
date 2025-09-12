@@ -22,8 +22,10 @@
   flex-direction: column;
   overflow: hidden;
   border-radius: 0;
+}
 
-  @media (min-width: 768px) {
+@media (min-width: 768px) {
+  .story-viewer-container {
     height: 90vh;
     max-height: 800px;
     border-radius: 12px;
@@ -31,58 +33,64 @@
   }
 }
 
-// Header avec barres de progression - REPOSITIONNÉ
 .story-header {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   z-index: 10;
-  padding: 50px 16px 16px; // Plus d'espace en haut pour éviter les éléments système
-  background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 70%, transparent 100%);
+  padding: 50px 16px 16px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.6) 70%,
+    transparent 100%
+  );
+}
 
-  @media (max-width: 480px) {
-    padding: 60px 12px 12px; // Encore plus d'espace sur mobile
+@media (max-width: 480px) {
+  .story-header {
+    padding: 60px 12px 12px;
   }
 }
 
 .progress-bars {
   display: flex;
   gap: 4px;
-  margin-bottom: 20px; // Plus d'espace entre les barres et les infos utilisateur
+  margin-bottom: 20px;
 }
 
 .progress-bar {
   flex: 1;
-  height: 4px; // Barres plus épaisses pour meilleure visibilité
+  height: 4px;
   background: rgba(255, 255, 255, 0.25);
   border-radius: 2px;
   cursor: pointer;
   overflow: hidden;
   transition: all 0.2s ease;
+}
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.35);
-  }
+.progress-bar:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
 
-  &.active {
-    background: rgba(255, 255, 255, 0.4);
-  }
+.progress-bar.active {
+  background: rgba(255, 255, 255, 0.4);
+}
 
-  &.completed {
-    background: rgba(255, 255, 255, 0.6);
+.progress-bar.completed {
+  background: rgba(255, 255, 255, 0.6);
+}
 
-    .progress-fill {
-      width: 100% !important;
-    }
-  }
+.progress-bar.completed .progress-fill {
+  width: 100% !important;
 }
 
 .progress-fill {
   height: 100%;
   background: #fff;
   border-radius: 2px;
-  transition: width 0.05s linear; // Animation plus fluide
+  transition: width 0.05s linear;
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
 }
 
@@ -93,7 +101,7 @@
 }
 
 .user-avatar {
-  width: 36px; // Légèrement plus grand
+  width: 36px;
   height: 36px;
   border-radius: 50%;
   object-fit: cover;
@@ -117,7 +125,7 @@
 
 .close-btn {
   position: absolute;
-  top: 55px; // Ajusté selon le nouveau padding
+  top: 55px;
   right: 16px;
   background: rgba(0, 0, 0, 0.5);
   border: none;
@@ -128,19 +136,20 @@
   border-radius: 50%;
   transition: all 0.2s ease;
   backdrop-filter: blur(10px);
+}
 
-  &:hover {
-    background: rgba(0, 0, 0, 0.7);
-    transform: scale(1.05);
-  }
+.close-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+  transform: scale(1.05);
+}
 
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
+  .close-btn {
     top: 65px;
     right: 12px;
   }
 }
 
-// Contenu de la story - AMÉLIORÉ POUR LA NETTETÉ
 .story-content {
   flex: 1;
   display: flex;
@@ -161,8 +170,8 @@
   position: relative;
 }
 
-// Conteneurs pour un meilleur contrôle de l'affichage
-.image-container, .video-container {
+.image-container,
+.video-container {
   width: 100%;
   height: 100%;
   display: flex;
@@ -177,36 +186,30 @@
   max-height: 100%;
   width: auto;
   height: auto;
-  object-fit: contain; // CHANGÉ: contain au lieu de cover pour éviter le rognage
+  object-fit: contain;
   object-position: center;
   border-radius: 0;
-
-  // Assurer la netteté de l'image
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
-
-  // Animation de chargement
   opacity: 0;
   transition: opacity 0.3s ease;
+}
 
-  &:not([src=""]) {
-    opacity: 1;
+.story-image:not([src=""]) {
+  opacity: 1;
+}
+
+@media (orientation: landscape) {
+  .story-image[style*="landscape"] {
+    width: 100%;
+    height: auto;
   }
+}
 
-  // Si l'image est plus large que haute, l'adapter à la largeur
-  @media (orientation: landscape) {
-    &[style*="landscape"] {
-      width: 100%;
-      height: auto;
-    }
-  }
-
-  // Si l'image est plus haute que large, l'adapter à la hauteur
-  @media (orientation: portrait) {
-    &[style*="portrait"] {
-      width: auto;
-      height: 100%;
-    }
+@media (orientation: portrait) {
+  .story-image[style*="portrait"] {
+    width: auto;
+    height: 100%;
   }
 }
 
@@ -215,23 +218,21 @@
   max-height: 100%;
   width: auto;
   height: auto;
-  object-fit: contain; // CHANGÉ: contain au lieu de cover
+  object-fit: contain;
   object-position: center;
-
-  // Animation de chargement
   opacity: 0;
   transition: opacity 0.3s ease;
+}
 
-  &:not([src=""]) {
-    opacity: 1;
-  }
+.story-video:not([src=""]) {
+  opacity: 1;
 }
 
 .story-text-only {
   padding: 60px 40px;
   text-align: center;
   color: #fff;
-  font-size: 20px; // Taille augmentée
+  font-size: 20px;
   line-height: 1.4;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
   width: 100%;
@@ -240,40 +241,30 @@
   align-items: center;
   justify-content: center;
   position: relative;
-
-  // Effet d'animation de dégradé
   background-size: 200% 200%;
   animation: gradientShift 6s ease infinite;
-
-  p {
-    margin: 0;
-    max-width: 320px;
-    font-weight: 500;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    z-index: 1;
-    position: relative;
-  }
-
-  // Effet de superposition
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.1);
-    z-index: 0;
-  }
 }
 
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+.story-text-only p {
+  margin: 0;
+  max-width: 320px;
+  font-weight: 500;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  position: relative;
 }
 
-// Navigation
+.story-text-only::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 0;
+}
+
 .story-navigation {
   position: absolute;
   top: 0;
@@ -285,41 +276,43 @@
   z-index: 5;
 }
 
-.nav-left, .nav-right {
+.nav-left,
+.nav-right {
   flex: 1;
   pointer-events: auto;
   cursor: pointer;
   transition: background 0.2s ease;
+}
 
-  &:active {
-    background: rgba(255, 255, 255, 0.05);
-  }
+.nav-left:active,
+.nav-right:active {
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .nav-left:hover {
-  background: linear-gradient(to right, rgba(0,0,0,0.1), transparent);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent);
 }
 
 .nav-right:hover {
-  background: linear-gradient(to left, rgba(0,0,0,0.1), transparent);
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.1), transparent);
 }
 
-// Footer avec actions - AMÉLIORÉ
 .story-footer {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 24px 16px 32px; // Plus d'espace en bas
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 70%, transparent 100%);
+  padding: 24px 16px 32px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.6) 70%,
+    transparent 100%
+  );
   display: flex;
   align-items: center;
   gap: 16px;
   z-index: 10;
-
-  @media (max-width: 480px) {
-    padding: 20px 12px 40px; // Encore plus d'espace sur mobile
-  }
 }
 
 .reply-btn {
@@ -338,20 +331,20 @@
   backdrop-filter: blur(10px);
   flex: 1;
   justify-content: center;
+}
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-1px);
-  }
+.reply-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
 
-  &:active {
-    transform: translateY(0);
-  }
+.reply-btn:active {
+  transform: translateY(0);
+}
 
-  i {
-    font-size: 16px;
-  }
+.reply-btn i {
+  font-size: 16px;
 }
 
 .like-btn {
@@ -369,39 +362,67 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
-  }
+.like-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
 
-  &:active {
-    transform: scale(0.95);
-  }
+.like-btn:active {
+  transform: scale(0.95);
+}
 
-  &.liked {
-    color: #ff4757;
-    background: rgba(255, 71, 87, 0.2);
-    animation: heartBeat 0.4s ease;
+.like-btn.liked {
+  color: #ff4757;
+  background: rgba(255, 71, 87, 0.2);
+  animation: heartBeat 0.4s ease;
+}
 
-    &:hover {
-      background: rgba(255, 71, 87, 0.3);
-    }
-  }
+.like-btn.liked:hover {
+  background: rgba(255, 71, 87, 0.3);
+}
 
-  i {
-    transition: all 0.2s ease;
-  }
+.like-btn i {
+  transition: all 0.2s ease;
 }
 
 @keyframes heartBeat {
-  0% { transform: scale(1); }
-  25% { transform: scale(1.15); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.15);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
-// Responsive amélioré
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media (max-width: 480px) {
   .story-viewer-container {
     border-radius: 0;
@@ -423,19 +444,19 @@
   .story-text-only {
     padding: 40px 30px;
     font-size: 18px;
+  }
 
-    p {
-      max-width: 280px;
-    }
+  .story-text-only p {
+    max-width: 280px;
   }
 
   .reply-btn {
     padding: 8px 14px;
     font-size: 13px;
+  }
 
-    i {
-      font-size: 14px;
-    }
+  .reply-btn i {
+    font-size: 14px;
   }
 
   .like-btn {
@@ -443,9 +464,12 @@
     min-width: 44px;
     min-height: 44px;
   }
+
+  .story-footer {
+    padding: 20px 12px 40px;
+  }
 }
 
-// États de chargement
 .loading-placeholder {
   display: flex;
   align-items: center;
@@ -455,20 +479,15 @@
   background: #000;
   color: rgba(255, 255, 255, 0.6);
   font-size: 16px;
-
-  &::after {
-    content: '';
-    width: 40px;
-    height: 40px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-top: 3px solid #fff;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-left: 12px;
-  }
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.loading-placeholder::after {
+  content: "";
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: 12px;
 }
