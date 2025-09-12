@@ -51,9 +51,9 @@
   </div>
 
     <!-- Card profil -->
-    <div class="mb-5 card-profile">
+    <div *ngFor="let pub of publications" class="mb-5 card-profile">
       <div class="position-relative rounded overflow-hidden" style="height: 320px">
-        <img src="assets/img/myLOve/photo01.png" alt="Profile" class="w-90 h-90 object-fit-cover">
+        <img *ngIf="pub.mediaType.startsWith('image')" [src]="getFullMediaUrl(pub.mediaUrl)" class="w-90 h-90 object-fit-cover">
         <div class="position-absolute top-0 start-0 m-2 rounded-circle p-2">
           <img src="assets/img/myLOve/account.png" alt="" >
         </div>
@@ -67,22 +67,7 @@
         </div>
       </div>
     </div>
-
-    <div class="position-relative rounded overflow-hidden card-profile" style="height: 280px;">
-      <img src="assets/img/myLOve/photo02.png" alt="Profile" class="w-90 h-90 object-fit-cover">
-      <div class="position-absolute top-0 start-0 m-2 rounded-circle p-2">
-        <img src="assets/img/myLOve/account.png" alt="" >
-      </div>
-      <div class="position-absolute bottom-0 end-0 mb-5 m-3 d-flex flex-column gap-2" style="bottom: 40px;">
-        <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center btn-action" style="width:32px; height:32px;">
-          <img src="assets/img/cardRencontre/Close.png" alt="" style="width:16px; height:16px;">
-        </button>
-        <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center btn-action" style="width:32px; height:32px;">
-          <img src="assets/img/cardRencontre/Love.png" alt="" style="width:16px; height:16px;">
-        </button>
-      </div>
-      </div>
-    </div>
+  </div>
 
   <!-- Menu flottant bas -->
   <app-floating-menu></app-floating-menu>
