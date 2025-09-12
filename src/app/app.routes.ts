@@ -11,7 +11,7 @@ export const routes: Routes = [
     path: 'login',
     loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
   },
-  
+
   {
     path: 'register',
     loadComponent: () => import('./pages/register/register.page').then( m => m.RegisterPage)
@@ -105,10 +105,6 @@ export const routes: Routes = [
     path: 'interets',
     loadComponent: () => import('./pages/interets/interets.page').then( m => m.InteretsPage),
     canActivate: [AuthGuard]
-  },
-  {
-    path: 'ajouter-media',
-    loadComponent: () => import('./pages/ajouter-media/ajouter-media.page').then( m => m.AjouterMediaPage)
   },
   {
     path: 'publication',

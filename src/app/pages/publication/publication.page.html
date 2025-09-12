@@ -1,31 +1,84 @@
-<ion-content class="camera-content">
-   <!-- Bouton retour -->
-  <div class="floating-left">
-    <ion-button fill="clear" class="back-btn" (click)="goBack()">
-      <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
-    </ion-button>
-  </div>
-  <div class="media-preview">
-    <img *ngIf="imageData" [src]="imageData" alt="preview" class="preview-img" />
-  </div>
-  <div class="bottom-section">
-    <ion-item class="custom-input">
-      <ion-input placeholder="Entrer votre texte ici"
-        [(ngModel)]="texte">
-      </ion-input>
-    </ion-item>
-    <div class="option-buttons">
-      <ion-button class="option-btn" (click)="selectStoryOrProfil()" >
-        <ion-icon name="person-circle-outline" slot="start"></ion-icon>
-        Story/profil
+<ion-header class="modern-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="goBack()">
+        <ion-icon name="close-outline"></ion-icon>
       </ion-button>
-      <ion-button  class="option-btn" (click)="selectConfidentiality()">
-        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-        Confidentialité
+    </ion-buttons>
+
+    <ion-title>Créer une publication</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button
+        [disabled]="!canPublish"
+        (click)="publier()"
+        class="publish-btn"
+        [class.publishing]="isPublishing">
+        <span *ngIf="!isPublishing">Publier</span>
+        <ion-spinner *ngIf="isPublishing" name="crescent"></ion-spinner>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="modern-content">
+
+  <!-- Zone texte -->
+  <div class="user-input">
+    <ion-textarea
+      [(ngModel)]="texte"
+      placeholder="Partagez votre avis..."
+      autoGrow="true"
+      rows="3"
+      [attr.maxlength]="MAX_TEXT_LENGTH"
+      class="text-area">
+    </ion-textarea>
+
+    <div class="char-counter"
+         [class.warning]="remainingChars < 100"
+         [class.danger]="remainingChars < 0">
+      {{ remainingChars }}
+    </div>
+  </div>
+
+  <!-- Prévisualisation des médias -->
+  <div *ngIf="medias.length > 0" class="media-preview">
+    <div *ngFor="let media of medias" class="media-item">
+      <img *ngIf="media.type === 'image'" [src]="media.url" class="media-element" (click)="previewMedia(media)">
+      <video *ngIf="media.type === 'video'" [src]="media.url" class="media-element" controls></video>
+
+      <ion-button fill="clear" size="small" class="remove-btn"
+                  (click)="removeMedia(media.id)">
+        <ion-icon name="close-circle"></ion-icon>
       </ion-button>
     </div>
-    <ion-button expand="block" class="publish-btn" (click)="submitPost()">
-      Publier
-      </ion-button>
   </div>
+
 </ion-content>
+
+<ion-footer class="action-footer">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="takePhoto()" [disabled]="medias.length >= MAX_MEDIA_COUNT">
+        <ion-icon name="camera-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" (click)="recordVideo()" [disabled]="medias.length >= MAX_MEDIA_COUNT">
+        <ion-icon name="videocam-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" (click)="openGallery()" [disabled]="medias.length >= MAX_MEDIA_COUNT">
+        <ion-icon name="images-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
+
+<input
+  type="file"
+  id="fileInput"
+  accept="image/*,video/*"
+  (change)="handleFileInput($event)"
+  hidden
+  multiple
+/>

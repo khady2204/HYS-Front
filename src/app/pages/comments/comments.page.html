@@ -1,41 +1,143 @@
-<ion-header>
+<ion-header class="modern-header">
   <ion-toolbar>
-    <ion-title>Commentaires</ion-title>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="dismiss()" class="back-btn">
+        <i class="bi bi-arrow-left"></i>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="header-title">
+      <i class="bi bi-chat-dots me-2"></i>
+      Commentaires
+      <span *ngIf="commentaires.length > 0" class="comment-count">({{ commentaires.length }})</span>
+    </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">Fermer</ion-button>
+      <ion-button fill="clear" (click)="dismiss()" class="close-btn">
+        <i class="bi bi-x-lg"></i>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="comments-content">
+
+  <!-- Message d'erreur -->
+  <div *ngIf="error" class="alert alert-danger mx-3 mt-3">
+    <i class="bi bi-exclamation-triangle me-2"></i>
+    {{ error }}
+    <button class="btn btn-sm btn-outline-danger ms-2" (click)="loadCommentaires()">
+      Réessayer
+    </button>
+  </div>
+
+  <!-- Indicateur de chargement -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner-container">
+      <div class="custom-spinner"></div>
+      <p class="loading-text">Chargement des commentaires...</p>
+    </div>
+  </div>
 
   <!-- Liste des commentaires -->
+  <div *ngIf="!isLoading && !error" class="comments-list">
 
-  <ion-list>
-    <ion-item *ngFor="let c of commentaires">
-      <ion-avatar slot="start">
-        <img [src]="c.auteur?.photo || 'assets/default-avatar.png'" />
-      </ion-avatar>
-      <ion-label>
-        <h3>{{ c.auteur?.prenom }} {{ c.auteur?.nom }}</h3>
-        <p>{{ c.contenu }}</p>
+    <!-- Message si aucun commentaire -->
+    <div *ngIf="commentaires.length === 0" class="empty-comments">
+      <div class="empty-icon">
+        <i class="bi bi-chat-square"></i>
+      </div>
+      <h6>Aucun commentaire pour le moment</h6>
+      <p>Soyez le premier à commenter cette publication !</p>
+    </div>
 
-        <div class="d-flex align-items-center">
-          <!-- Like -->
-          <ion-button fill="clear" size="small" (click)="toggleLikeComment(c)">
-            <ion-icon [name]="c.liked ? 'heart' : 'heart-outline'" [color]="c.liked ? 'danger' : 'medium'"></ion-icon>
-            <span>{{ c.nombreLikes }}</span>
-          </ion-button>
+    <!-- Commentaires -->
+    <div *ngFor="let commentaire of commentaires; let i = index"
+         class="comment-item"
+         [class.comment-animation]="true"
+         [style.animation-delay]="(i * 100) + 'ms'">
+
+      <div class="comment-header">
+        <div class="author-info">
+          <img [src]="getAvatarUrl(commentaire)"
+               [alt]="commentaire.auteurNom"
+               class="author-avatar"
+               loading="lazy">
+          <div class="author-details">
+            <h6 class="author-name">{{ commentaire.auteurNom }}</h6>
+            <span class="comment-date">{{ getRelativeTime(commentaire.createdAt) }}</span>
+          </div>
         </div>
-      </ion-label>
-      
-    </ion-item>
-  </ion-list>
+      </div>
 
-  <!-- Ajout d'un commentaire -->
+      <div class="comment-content">
+        <p>{{ commentaire.contenu }}</p>
+      </div>
 
-  <ion-item>
-    <ion-input [(ngModel)]="newComment" placeholder="Écrire un commentaire..."></ion-input>
-    <ion-button (click)="ajouterCommentaire()">Envoyer</ion-button>
-  </ion-item>
+      <div class="comment-actions">
+        <button class="action-btn like-btn"
+                [class.active]="commentaire.liked"
+                (click)="toggleLikeComment(commentaire)">
+          <i class="bi" [class]="commentaire.liked ? 'bi-heart-fill' : 'bi-heart'"></i>
+          <span class="action-count" *ngIf="commentaire.likesCount > 0">{{ commentaire.likesCount }}</span>
+        </button>
+
+        <button class="action-btn reply-btn">
+          <i class="bi bi-reply"></i>
+          <span>Répondre</span>
+        </button>
+      </div>
+
+      <!-- Réponses (si existantes) -->
+      <div *ngIf="commentaire.reponses && commentaire.reponses.length > 0" class="replies-container">
+        <div *ngFor="let reponse of commentaire.reponses" class="reply-item">
+          <img [src]="getAvatarUrl(reponse)"
+               [alt]="reponse.auteurNom"
+               class="reply-avatar">
+          <div class="reply-content">
+            <span class="reply-author">{{ reponse.auteurNom }}</span>
+            <p>{{ reponse.contenu }}</p>
+            <span class="reply-date">{{ getRelativeTime(reponse.createdAt) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </ion-content>
+
+<!-- Zone de saisie du commentaire (sticky bottom) -->
+<div class="comment-input-container">
+  <div class="input-wrapper">
+    <img src="assets/img/myLOve/account.png"
+         alt="Mon profil"
+         class="my-avatar">
+
+    <div class="input-group">
+      <textarea
+        [(ngModel)]="newComment"
+        placeholder="Écrire un commentaire..."
+        class="comment-input"
+        rows="1"
+        maxlength="500"
+        (keydown)="onEnterPressed($event)"
+        [disabled]="isSubmitting">
+      </textarea>
+
+      <button class="send-btn"
+              [disabled]="!newComment.trim() || isSubmitting"
+              (click)="ajouterCommentaire()">
+        <span *ngIf="!isSubmitting" class="send-icon">
+          <i class="bi bi-send-fill"></i>
+        </span>
+        <span *ngIf="isSubmitting" class="sending-spinner">
+          <div class="mini-spinner"></div>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Compteur de caractères -->
+  <div *ngIf="newComment.length > 400" class="char-counter">
+    {{ newComment.length }}/500
+  </div>
+</div>
+

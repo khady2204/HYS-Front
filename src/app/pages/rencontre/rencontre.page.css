@@ -119,11 +119,464 @@
   }
 
   .liked {
-  color: deeppink ;
+    color: deeppink;
+  }
+
+  .unliked {
+    color: grey;
+  }
+}
+/* ===== NOUVEAUX STYLES PUBLICATIONS ===== */
+
+.publication-feed {
+  background: #f8f9fa;
+}
+
+.publications-section {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.publication-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.publication-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* En-tête de publication */
+.publication-header {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.author-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Contenu de publication */
+.publication-content {
+  padding: 0 20px 16px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* Styles des médias */
+.publication-media {
+  position: relative;
+}
+
+.single-media {
+  position: relative;
+}
+
+.single-image {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+  display: block;
+}
+
+.single-video {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  display: block;
+}
+
+.multiple-media {
+  position: relative;
+}
+
+.media-grid {
+  display: grid;
+  gap: 2px;
+  background: #f0f0f0;
+}
+
+.grid-2 {
+  grid-template-columns: 1fr 1fr;
+  max-height: 400px;
+}
+
+.grid-3 {
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  max-height: 400px;
+}
+
+.grid-3 .media-item:first-child {
+  grid-row: 1 / 3;
+}
+
+.grid-4 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  max-height: 400px;
+}
+
+.media-item {
+  position: relative;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.grid-image,
+.grid-video {
+  width: 100%;
+  height: 100%;
+  min-height: 150px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.media-item:hover .grid-image,
+.media-item:hover .grid-video {
+  transform: scale(1.05);
+}
+
+.media-more-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.media-more-overlay:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.more-count {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Actions de publication */
+.publication-actions {
+  padding: 12px 20px 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.action-btn:hover {
+  background: #f0f0f0;
+  transform: scale(1.1);
+}
+
+.like-btn i {
+  font-size: 20px;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.like-btn.active i {
+  color: #e91e63;
+  animation: likeAnimation 0.3s ease;
+}
+
+.comment-btn i,
+.share-btn i {
+  font-size: 18px;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.comment-btn:hover i {
+  color: #2196f3;
+}
+
+.share-btn:hover i {
+  color: #4caf50;
+}
+
+@keyframes likeAnimation {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.action-counters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.counter-item {
+  font-size: 13px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.counter-item i {
+  font-size: 14px;
+}
+
+/* Styles pour les likes */
+.liked {
+  color: #e91e63 !important;
 }
 
 .unliked {
-  color: grey ;
+  color: #666 !important;
 }
 
+/* Responsive design */
+@media (max-width: 768px) {
+  .publication-card {
+    border-radius: 0;
+    margin-bottom: 8px;
+  }
+
+  .publications-section {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .publication-header {
+    padding: 12px 16px 8px;
+  }
+
+  .publication-content {
+    padding: 0 16px 12px;
+  }
+
+  .publication-actions {
+    padding: 8px 16px 12px;
+  }
+
+  .author-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .action-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .story-ring {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .story-count {
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .story-ring {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .story-count {
+    width: 16px;
+    height: 16px;
+    font-size: 8px;
+  }
+
+  .publication-header {
+    padding: 10px 12px 6px;
+  }
+
+  .publication-content {
+    padding: 0 12px 10px;
+    font-size: 14px;
+  }
+
+  .publication-actions {
+    padding: 6px 12px 10px;
+  }
+
+  .action-buttons {
+    gap: 12px;
+  }
+
+  .action-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .like-btn i {
+    font-size: 18px;
+  }
+
+  .comment-btn i,
+  .share-btn i {
+    font-size: 16px;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    max-height: 250px;
+  }
+}
+
+/* Animation de chargement */
+.spinner-border {
+  width: 2rem;
+  height: 2rem;
+}
+
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Styles pour les alertes */
+.alert {
+  border-radius: 12px;
+  border: none;
+  font-size: 14px;
+}
+
+.alert-danger {
+  background: #ffeaea;
+  color: #d63384;
+}
+
+/* Boutons personnalisés */
+.btn {
+  border-radius: 10px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.btn-outline-primary {
+  border: 2px solid #667eea;
+  color: #667eea;
+}
+
+.btn-outline-primary:hover {
+  background: #667eea;
+  transform: translateY(-2px);
+}
+
+/* Dropdown personnalisé */
+.dropdown-menu {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  padding: 8px 0;
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 8px;
+  margin: 0 8px;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: #f8f9fa;
+  transform: translateX(4px);
+}
+
+.dropdown-item.text-danger:hover {
+  background: #ffeaea;
+  color: #d63384;
+}
+
+/* Styles pour les modales */
+ion-modal {
+  --border-radius: 16px;
+  --box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Améliorations visuelles */
+.text-primary {
+  color: #667eea !important;
+}
+
+.fw-bold {
+  font-weight: 600;
+}
+
+.fw-semibold {
+  font-weight: 500;
+}
+
+/* Scrollbar personnalisée */
+.story-container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.story-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+.story-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 2px;
+}
+
+.story-container::-webkit-scrollbar-thumb:hover {
+  background: #999;
 }
