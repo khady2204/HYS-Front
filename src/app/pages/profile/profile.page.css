@@ -1,8 +1,11 @@
+
 .toolbarProfile {
   --background: #ff008a;
   --color: #ffffff;
   --border-width: 0 !important;
   --box-shadow: none !important;
+
+  padding-top: 10px;
 }
 
 ion-back-button {

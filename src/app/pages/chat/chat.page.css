@@ -43,13 +43,13 @@ ion-chip.received {
   margin-top: 5px;
 }
 
-/* Champ de saisie */
+/* Champ de saisie 
 .chat-input ion-input {
   background: #f5f5f5;
   border-radius: 50px;
   padding-left: 15px;
   flex: 1;
-}
+} */
 
 .chat-input ion-button {
   display: flex;
@@ -58,7 +58,10 @@ ion-chip.received {
 }
 
 ion-header {
-  --background: #ffffff !important;
+  background-color: #ffffff; 
+  padding-top:20px;
+
+  --background: white; 
 }
 
 ion-back-button {
@@ -68,4 +71,32 @@ ion-back-button {
 ion-toolbar {
   --background: white !important;
   background-color: white !important;
+}
+
+/* Footer toujours en bas */
+.chat-input {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Toujours au-dessus */
+  background-color: #fff; /* Forcer le fond blanc */
+  border-top: 1px solid #ddd;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Pour que le contenu derrière le footer ne soit pas masqué */
+.content-wrapper {
+  padding-bottom: 80px; /* hauteur approximative de .chat-input */
+}
+
+/* Ajuste les sous-boutons qui apparaissent */
+.chat-input .flex {
+  position: absolute;
+  bottom: 60px; /* au-dessus de la zone de saisie */
+  left: 10px;
+  z-index: 1001;
 }
