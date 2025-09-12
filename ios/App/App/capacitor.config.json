@@ -1,0 +1,23 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "HYS-Front",
+	"webDir": "www",
+	"server": {
+		"cleartext": true,
+		"androidScheme": "http"
+	},
+	"plugins": {
+		"Keyboard": {
+			"resize": "body",
+			"style": "light",
+			"scrollAssist": true,
+			"resizeOnFullScreen": true
+		}
+	},
+	"packageClassList": [
+		"AppPlugin",
+		"HapticsPlugin",
+		"KeyboardPlugin",
+		"StatusBarPlugin"
+	]
+}

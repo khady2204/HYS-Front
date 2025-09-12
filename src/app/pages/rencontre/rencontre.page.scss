@@ -7,27 +7,50 @@
         font-size: 0.75rem;
     }
 
-    /* Image principale dans la carte profile */
+    /* Image principale dans la carte profile 
     .card-profile img {
         width: 100% !important;
         height: auto !important;
     }
+    */
+     
+    .post-media {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
 
-    /* Boutons Love / Close réduits */
-    .btn-action {
-        width: 28px !important;
-        height: 28px !important;
-        padding: 4px !important;
-    }
+.post-media img,
+.post-media video {
+  width: 100%;
+  height: 500px;           
+  object-fit: cover;
+}
 
-    .btn-action img {
-        width: 14px !important;
-        height: 14px !important;
-    }
+/* Infos auteur en bas à gauche */
+.author-info {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0,0,0,0.3);
+  padding: 4px 8px;
+  border-radius: 20px;
+}
 
-    /* Conteneur principal */
-    .container {
-        padding-left: 8px !important;
-        padding-right: 8px !important;
-    }
+
+/* Chaque publication prend toute la hauteur restante de l'écran */
+.post{
+  height: 100vh;        /* plein écran */
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
+
 }

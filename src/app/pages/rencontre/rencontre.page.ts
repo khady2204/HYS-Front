@@ -77,7 +77,4 @@ export class RencontrePage implements OnInit {
   return `${environment.backendUrl}/media/${mediaUrl}`;
 }
 
-
-  
-  
 }

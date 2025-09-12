@@ -17,31 +17,32 @@
         <small class="d-block mt-1 text-truncate" style="width: 56px;">{{ story.name }}</small>
       </div>
     </div>
-    <!-- Card profil -->
-  <div *ngFor="let pub of publications" class="card mb-3">
-    <div class="card-body">
-      <div class="d-flex align-items-center mb-2">
-        <img src="assets/img/myLOve/account.png" alt="" class="rounded-circle me-2" width="32" height="32">
-        <div>
-          <h6 class="mb-0">{{ pub.auteurNom }}</h6>
-          <small class="text-muted">{{ pub.createdAt | date:'short' }}</small>
-        </div>
-      </div>
-
-      <p>{{ pub.texte }}</p>
-
-      <div *ngIf="pub.mediaUrl">
-        <img *ngIf="pub.mediaType.startsWith('image')" [src]="getFullMediaUrl(pub.mediaUrl)" class="img-fluid rounded" />
-        <video *ngIf="pub.mediaType.startsWith('video')" [src]="getFullMediaUrl(pub.mediaUrl)" controls class="w-100 rounded"></video>
-      </div>
-
-      <div class="d-flex justify-content-between mt-2">
-        <small>{{ pub.nombreLikes }}</small>
-      </div>
-    </div>
   </div>
-  </div> 
-</div> 
+    
+      <!-- Publications -->
+    <div class="posts-container">
+      <div *ngFor="let pub of publications" class="post">
+        <!-- Media : image ou vidéo -->
+        <div *ngIf="pub.mediaUrl" class="post-media position-relative" >
+          <img *ngIf="pub.mediaType.startsWith('image')" [src]="getFullMediaUrl(pub.mediaUrl)" class="img-fluid rounded" />
+          <video *ngIf="pub.mediaType.startsWith('video')" [src]="getFullMediaUrl(pub.mediaUrl)" controls class="w-100 rounded"></video>
+        </div>
+        <!-- Infos auteur  -->
+        <div class="author-info d-flex align-items-center">
+          <img src="assets/img/myLOve/account.png" alt="avatar" class="rounded-circle me-2" width="40" height="40">
+          <strong class="text-white">{{ pub.auteurNom }}</strong>
+        </div>
+
+          <!--<div class="d-flex align-items-center mt-2">
+            <i class="bi bi-heart-fill me-1"
+            [ngStyle]="{'color': pub.likedByUser ? 'pink' : 'gray'}"
+            (click)="toggleLike(pub)">
+            </i>
+            <small>{{ pub.nombreLikes }}</small>
+          </div>-->
+      </div>
+    </div> 
+  </div>
 
   <!-- Menu flottant bas -->
   <app-floating-menu></app-floating-menu>
