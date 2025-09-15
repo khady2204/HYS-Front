@@ -7,7 +7,7 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-header-search',
   templateUrl: './header-search.component.html',
-  styleUrls: ['./header-search.component.scss'],
+  styleUrls: ['./header-search.component.css'],
   imports: [RouterLink, FiltreServiceComponent],
   standalone: true
 })
@@ -33,6 +33,6 @@ export class HeaderSearchComponent  implements OnInit {
     this.profileImageUrl = user?.profileImage ?? null;
   }
 
-  
+
 
 }

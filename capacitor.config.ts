@@ -1,30 +1,28 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'com.helpingyourself.hysfront',  // Identifiant unique pour votre app
   appName: 'HYS-Front',
   webDir: 'www',
-
   server: {
-    cleartext: true,      
+    cleartext: true,
     androidScheme: 'http',
   },
   plugins: {
-  Keyboard: {
+    Keyboard: {
       resize: "body", // options: "body", "native", "none"
       style: "light",
       scrollAssist: true,
       resizeOnFullScreen: true
-  },
-  Camera: {
+    },
+    Camera: {
       android: {
         enableCameraPermission: true,
         enableGalleryPermission: true
       }
     }
-}
-
-  
+  }
 };
 
 export default config;
+
