@@ -32,7 +32,7 @@ ion-chip.received {
   font-size: 0.7rem;
   color: gray;
   margin-top: 5px;
-  align-self: flex-end; /* place l'heure en bas à droite */
+  align-self: flex-end; 
 }
 
 
@@ -73,14 +73,13 @@ ion-toolbar {
   background-color: white !important;
 }
 
-/* Footer toujours en bas */
 .chat-input {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  z-index: 1000; /* Toujours au-dessus */
-  background-color: #fff; /* Forcer le fond blanc */
+  z-index: 1000;
+  background-color: #fff;
   border-top: 1px solid #ddd;
   padding: 0.75rem 1rem;
   display: flex;
@@ -88,15 +87,13 @@ ion-toolbar {
   gap: 0.5rem;
 }
 
-/* Pour que le contenu derrière le footer ne soit pas masqué */
 .content-wrapper {
-  padding-bottom: 80px; /* hauteur approximative de .chat-input */
+  padding-bottom: 80px;
 }
 
-/* Ajuste les sous-boutons qui apparaissent */
 .chat-input .flex {
   position: absolute;
-  bottom: 60px; /* au-dessus de la zone de saisie */
+  bottom: 60px;
   left: 10px;
   z-index: 1001;
 }
