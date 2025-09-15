@@ -12,6 +12,8 @@ import { firstValueFrom } from 'rxjs';
 import { StoryViewerComponent } from '../../components/story-viewer/story-viewer.component';
 import { Page, Publication, PublicationService } from 'src/app/services/publication.service';
 
+
+type PublicationWithLike = Publication & { liked: boolean };
 @Component({
   selector: 'app-rencontre',
   templateUrl: './rencontre.page.html',
@@ -35,7 +37,7 @@ export class RencontrePage implements OnInit {
   newStoryFiles: File[] = [];
   isPosting = false;
 
-  publications: Publication [] = []; // Tableau pour stocker les publications récupérées
+  publications: PublicationWithLike [] = []; // Tableau pour stocker les publications récupérées
    isLoadingPublications = true;
 
   constructor(private storyService: StoryService, private userAuthService: UserAuthService,
@@ -225,10 +227,15 @@ export class RencontrePage implements OnInit {
   getPublications() {
     this.publicationService.getPublications().subscribe({
       next: (page: Page<Publication>) => {
-        this.publications = page.content; 
+        this.publications = page.content.map(pub => ({
+        ...pub,
+        liked: false
+      }))as PublicationWithLike[]; 
+      this.isLoadingPublications = false; 
       },
       error: (err) => {
         console.error('Erreur de chargement des publications', err);
+        this.isLoadingPublications = false;
       }
     });
   }
@@ -255,6 +262,18 @@ export class RencontrePage implements OnInit {
   }
 
   return `${environment.apiBase}/media/${mediaUrl}`;
+}
+
+toggleLike(pub: PublicationWithLike) {
+  this.publicationService.toggleLike(pub.id).subscribe({
+    next: (updatedPub) => {
+      pub.nombreLikes = updatedPub.nombreLikes;
+      pub.liked = updatedPub.liked;   // bascule la couleur du cœur
+    },
+    error: (err) => {
+      console.error("Erreur lors du like :", err);
+    }
+  });
 }
 
 }

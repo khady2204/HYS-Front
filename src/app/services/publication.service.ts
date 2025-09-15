@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { UserAuthService } from './user-auth.service';
 
 export interface Page<T> {
   content: T[];
@@ -30,7 +31,9 @@ export class PublicationService {
   
   private apiUrl = environment.apiBase;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private userAuthService : UserAuthService
+  ) {}
 
   posterPublication(texte: string, mediaFile? : Blob) : Observable<any> {
     const formData = new FormData();
@@ -43,6 +46,17 @@ export class PublicationService {
   
   getPublications(page: number= 0): Observable<Page<Publication>> {
     return this.http.get<Page<Publication>>(`${this.apiUrl}/publications?page=${page}`);
+  }
+
+  
+  toggleLike(pubId: number): Observable<any> {
+    const token = this.userAuthService.getToken();
+    return this.http.post<any>(`${this.apiUrl}/publications/${pubId}/like`, {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}` // envoie le token au backend
+      }
+    });
   }
 
 }

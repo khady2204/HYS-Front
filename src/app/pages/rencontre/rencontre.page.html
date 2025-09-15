@@ -61,9 +61,13 @@
           <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center" style="width:32px; height:32px;">
             <img src="assets/img/cardRencontre/Close.png" alt="" style="width:16px; height:16px;">
           </button>
-          <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center" style="width:32px; height:32px;">
-            <img src="assets/img/cardRencontre/Love.png" alt="" style="width:16px; height:16px;">
-          </button>
+          <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center"
+           style="width:32px; height:32px;" (click)="toggleLike(pub)"> 
+             <i class="bi" 
+              [ngClass]="pub.liked ? 'bi-heart-fill liked' : 'bi-heart unliked'" 
+              style="font-size: 16px;">
+            </i>
+          </button> <span>{{ pub.nombreLikes }}</span>
         </div>
       </div>
     </div>
