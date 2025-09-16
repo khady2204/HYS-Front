@@ -10,7 +10,10 @@ import { environment } from '../../../environments/environment';
 import { UserAuthService } from '../../services/user-auth.service';
 import { firstValueFrom } from 'rxjs';
 import { StoryViewerComponent } from '../../components/story-viewer/story-viewer.component';
+import { Page, Publication, PublicationService } from 'src/app/services/publication.service';
 
+
+type PublicationWithLike = Publication & { liked: boolean };
 @Component({
   selector: 'app-rencontre',
   templateUrl: './rencontre.page.html',
@@ -34,11 +37,17 @@ export class RencontrePage implements OnInit {
   newStoryFiles: File[] = [];
   isPosting = false;
 
-  constructor(private storyService: StoryService, private userAuthService: UserAuthService) { }
+  publications: PublicationWithLike [] = []; // Tableau pour stocker les publications récupérées
+   isLoadingPublications = true;
+
+  constructor(private storyService: StoryService, private userAuthService: UserAuthService,
+    private publicationService: PublicationService
+  ) { }
 
   ngOnInit() {
     this.loadStories();
     this.loadMyStories();
+    this.getPublications();  // Au chargement du composant, on appelle la méthode pour récupérer les publications  
   }
 
   loadStories(): void {
@@ -208,4 +217,63 @@ export class RencontrePage implements OnInit {
       }
     }
   }
+
+   /**
+ * Récupère la liste des publications depuis le service.
+ * S'abonne à l'observable et met à jour le tableau publications avec le contenu reçu.
+ * En cas d'erreur, affiche l'erreur dans la console.
+ */
+
+  getPublications() {
+    this.publicationService.getPublications().subscribe({
+      next: (page: Page<Publication>) => {
+        this.publications = page.content.map(pub => ({
+        ...pub,
+        liked: false
+      }))as PublicationWithLike[]; 
+      this.isLoadingPublications = false; 
+      },
+      error: (err) => {
+        console.error('Erreur de chargement des publications', err);
+        this.isLoadingPublications = false;
+      }
+    });
+  }
+
+  /**
+   * Construit l'URL complète d'un média à partir d'un chemin relatif ou absolu.
+   * - Si mediaUrl est vide, retourne une image par défaut.
+   * - Si mediaUrl est une URL complète (http ou data URI), la retourne telle quelle.
+   * - Si mediaUrl commence par /uploads/ ou /media/, préfixe avec l'URL backend.
+   * - Sinon, considère mediaUrl comme un nom de fichier et ajoute le chemin /media/ du backend.
+   * 
+   * @param mediaUrl Chemin ou URL du média
+   * @returns URL complète accessible du média
+  */
+
+  getFullMediaUrl(mediaUrl: string): string {
+  if (!mediaUrl) return 'assets/img/default.jpg';
+
+  if (mediaUrl.startsWith('http') || mediaUrl.startsWith('data:')) return mediaUrl;
+
+  // Accepte mediaUrl commençant par /uploads/ ou /media/
+  if (mediaUrl.startsWith('/uploads/') || mediaUrl.startsWith('/media/')) {
+    return `${environment.apiBase}${mediaUrl}`;
+  }
+
+  return `${environment.apiBase}/media/${mediaUrl}`;
+}
+
+toggleLike(pub: PublicationWithLike) {
+  this.publicationService.toggleLike(pub.id).subscribe({
+    next: (updatedPub) => {
+      pub.nombreLikes = updatedPub.nombreLikes;
+      pub.liked = updatedPub.liked;   // bascule la couleur du cœur
+    },
+    error: (err) => {
+      console.error("Erreur lors du like :", err);
+    }
+  });
+}
+
 }

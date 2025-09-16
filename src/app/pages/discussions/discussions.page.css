@@ -189,7 +189,6 @@
 .tab-button.inactive {
   background: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.7);
-  margin-top: 5px;
 }
 
 .tab-button.inactive:hover {

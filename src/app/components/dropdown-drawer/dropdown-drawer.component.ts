@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-dropdown-drawer',
   templateUrl: './dropdown-drawer.component.html',
-  styleUrls: ['./dropdown-drawer.component.scss'],
+  styleUrls: ['./dropdown-drawer.component.css'],
   imports: [CommonModule]
 })
 export class DropdownDrawerComponent  implements OnInit {
@@ -49,7 +49,7 @@ export class DropdownDrawerComponent  implements OnInit {
   ];
 
  ngOnInit(): void {
-   
- } 
+
+ }
 
 }

@@ -117,4 +117,13 @@
     height: 16px;
     font-size: 8px;
   }
+
+  .liked {
+  color: deeppink ;
+}
+
+.unliked {
+  color: grey ;
+}
+
 }

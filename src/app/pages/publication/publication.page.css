@@ -1,0 +1,67 @@
+.toolbar-header {
+  height: 44px;
+}
+
+.camera-content {
+  --background: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0;
+}
+
+.media-preview {
+  flex: 1;
+  overflow: hidden;
+}
+
+.preview-img {
+  width: 100%;
+  height: 550px;
+  object-fit: cover;
+}
+
+.custom-input {
+  --background: #ffffff;
+  --color: #000000;
+  border: 1.5px solid #ff69b4; 
+  border-radius: 8px;
+  margin: 20px 0px;
+  padding: 10px;
+  
+
+
+}
+
+/* Section blanche en bas */
+.bottom-section {
+  background: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.option-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  
+
+}
+
+.option-btn {
+  width: 48%; 
+  --border-radius: 12px;
+  --background: #D97B9A;
+  color: black;
+   font-weight: bold;
+}
+
+/* Bouton Publier */
+.publish-btn {
+  --background: #ff008a;
+  --color: white;
+  --border-radius: 12px;
+  font-weight: bold;
+}

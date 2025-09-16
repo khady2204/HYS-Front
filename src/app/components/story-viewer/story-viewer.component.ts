@@ -92,7 +92,7 @@ import { StoryService } from '../../services/story/story.service';
       </div>
     </div>
   `,
-  styleUrls: ['./story-viewer.component.scss']
+  styleUrls: ['./story-viewer.component.css']
 })
 export class StoryViewerComponent implements OnInit, OnDestroy {
   @Input() userStories: UserStories | null = null;

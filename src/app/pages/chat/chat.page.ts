@@ -224,7 +224,7 @@ async startRecording() {
     await VoiceRecorder.startRecording();
     this.isRecording = true;
 
-    // 🔥 Initialiser et lancer le compteur
+    // Initialiser et lancer le compteur
     this.recordingTime = 0;
     this.recordingInterval = setInterval(() => {
       this.recordingTime++;
@@ -240,7 +240,7 @@ async stopRecording() {
     const recordingData = await VoiceRecorder.stopRecording();
     this.isRecording = false;
 
-    // 🔥 Stopper le compteur
+    // Stopper le compteur
     if (this.recordingInterval) {
       clearInterval(this.recordingInterval);
       this.recordingInterval = null;

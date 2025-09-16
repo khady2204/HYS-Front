@@ -1,0 +1,44 @@
+<ion-content class="ion-padding">
+  <div class="media-preview">
+    <!-- Bouton retour -->
+    <div class="floating-left">
+      <ion-button class="back-btn" fill="clear" routerLink="/dashboard">
+       <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </div>
+
+    <!-- Icônes caméra et micro -->
+    <div class="floating-right">
+      <ion-button fill="clear" (click)="toggleCamera()">
+        <ion-icon name="camera-reverse-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" (click)="toggleFlash()">
+        <ion-icon name="flash-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <div class="footer-wrapper">
+    
+    <!-- Icône Galerie -->
+    <ion-button fill="clear" class="gallery-btn" (click)="openGallery()">
+      <ion-icon name="images-outline"></ion-icon>
+    </ion-button>
+
+    <!-- Bloc rose avec les 3 boutons -->
+    <div class="media-controls">
+      <ion-button fill="clear" (click)="mode = 'photo'" [color]="mode === 'photo' ? 'primary' : 'medium'">
+        <ion-icon name="camera-outline"></ion-icon>
+      </ion-button>
+      <ion-button shape="round" class="capture-btn">
+        <ion-icon name="ellipse-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" (click)="mode = 'video'" [color]="mode === 'video' ? 'primary' : 'medium'">
+        <ion-icon name="videocam-outline"></ion-icon>
+      </ion-button>
+    </div>
+
+  </div>
+</ion-footer>

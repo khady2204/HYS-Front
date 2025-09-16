@@ -1,0 +1,23 @@
+<ion-content class="camera-content">
+  <div class="media-preview">
+    <img *ngIf="imageData" [src]="imageData" alt="preview" class="preview-img" />
+  </div>
+  <div class="bottom-section">
+    <ion-item class="custom-input">
+      <ion-input placeholder="Entrer votre texte ici"></ion-input>
+    </ion-item>
+    <div class="option-buttons">
+      <ion-button class="option-btn" (click)="selectStoryOrProfil()" >
+        <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+        Story/profil
+      </ion-button>
+      <ion-button  class="option-btn" (click)="selectConfidentiality()">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        Confidentialité
+      </ion-button>
+    </div>
+    <ion-button expand="block" class="publish-btn" (click)="submitPost()">
+      Publier
+      </ion-button>
+  </div>
+</ion-content>

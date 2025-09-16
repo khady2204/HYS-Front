@@ -7,6 +7,7 @@ export const environment = {
   production: false,
   // Pour le développement web (navigateur) : localhost
   // Pour l'émulateur Android : 10.0.2.2
+  //apiBase: 'http://10.0.2.2:8081',
   // Pour l'appareil physique : 192.168.1.64 (votre IP locale)
   apiBase: 'http://192.168.54.47:8081',
   withCredentials: true            // si tu utilises cookies/session
