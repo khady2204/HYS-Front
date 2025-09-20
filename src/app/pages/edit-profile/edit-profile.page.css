@@ -1,27 +1,40 @@
-.bi-chevron-left {
-    font-weight: bold;
+.toolbar-solid {
+  --background: #ffffff;
+  --color: #000000;
+
+  padding-top: 30px;
 }
 
-.input-group select.form-select {
-    border-right: none;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+ion-back-button {
+  color:#000000;
 }
 
-.input-group-text {
-    border-left: none;
-    background: white;
+/* Champ avec bordure uniquement */
+.input-bordered {
+  border: 1px solid #000000;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: #fff;
+  width: 100px;
 }
 
-ion-select.custom-select {
-  --border-radius: 8px;
+/* Labels au-dessus */
+ion-label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: block;
+}
+
+ion-input, ion-textarea {
   --padding-start: 12px;
-  --min-height: 46px;
-  --border-color: #dee2e6;
-  --background: #fff;
-  --placeholder-color: #6c757d;
+  --padding-end: 12px;
+  --min-height: 45px;
   font-size: 0.95rem;
-  border: 1px solid #ced4da;
+}
+
+ion-input:focus-within, ion-textarea:focus-within {
+  border: 1px solid #000000;
+
 }
 
 .profile-wrapper {
@@ -30,25 +43,51 @@ ion-select.custom-select {
   border: 1px solid #ff008A;
   border-radius: 50%;
   background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // ombre douce
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .profile-picture {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  border: 1px solid #ff008A; // deuxième bordure (interne)
+  border: 1px solid #ff008A;
   background-color: white;
 }
 
-
-label {
-    font-family: Inter;
+.btn-pink {
+  background-color: #ff008A;
+  color: white;
+  border-radius: 50%;
+  padding: 6px;
 }
 
 .btnSave {
-  background-color: #ff008A;
-  color: white;
-  border: none;
+  --background: #ff008A;
+  --color: white;
+  --background-activated: #ff008a;
+  --background-focused: #ff008a;
+  --border-radius: 8px;
   font-weight: 600;
+
+  width: 50%;
+  display: block;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+
+.input-bordered {
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: #fff;
+  width: 100%;
+}
+
+ion-checkbox {
+  --checkbox-background-checked: #ff008a;
+  --checkmark-color: #fff;
+  --border-color-checked: #ff008a;
+  --boder-color: #ccc;
 }

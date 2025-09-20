@@ -2,7 +2,7 @@
 
   <!-- HEADER -->
   <div class="header px-3 pt-5 pb-3">
-    <div class="d-flex align-items-center justify-content-between pb-3">
+    <div class="d-flex align-items-center justify-content-between mt-5 pb-3">
       <i class="bi bi-search fs-4 text-white rounded-circle d-flex align-items-center justify-content-center"></i>
       <app-dropdown-drawer></app-dropdown-drawer>
       <a [routerLink]="['/profile', userId]">
@@ -96,10 +96,10 @@
 
           <!-- Options à droite -->
           <ion-item-options side="end">
-            <ion-item-option class="bg-red" (click)="supprimer(discussion)">
+            <ion-item-option class="btn-delete" (click)="supprimer(discussion)">
               <i class="bi bi-trash-fill text-white fs-5 d-flex align-items-center justify-content-center w-100 h-100"></i>
             </ion-item-option>
-            <ion-item-option class="bg-yellow" [routerLink]="['/report-partner']">
+            <ion-item-option class="btn-signalement" [routerLink]="['/report-partner']">
               <i class="bi bi-flag-fill text-white fs-5 d-flex align-items-center justify-content-center w-100 h-100"></i>
             </ion-item-option>
           </ion-item-options>

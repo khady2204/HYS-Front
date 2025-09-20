@@ -24,38 +24,45 @@
   </div>
 
   <!-- Form section -->
+<div id="sectionForm">
+  <h2>Bloquer ou signaler</h2>
+  <p>Pourquoi souhaitez-vous bloquer ou signaler votre partenaire ?</p>
 
-  <div  id="sectionForm">
-    <h2 class="">Bloquer ou signaler</h2>
+  <form>
 
-    <p class="">Pourquoi souhaitez-vous bloquer ou signaler votre partenaire</p>
-  
+    <!-- Radios Ionic -->
+    <ion-list lines="none">
+      <ion-radio-group name="reason">
 
-    <form>
-      <div class="form-check mb-2">
-        <input type="radio" class="form-check-input" name="reason" id="reason1" value="" />
-        <label for="" class="form-check-label" for="reason1">Comportement inapproprié</label>
-      </div>
+        <ion-item class="mb-2">
+          <ion-radio slot="start" value="Comportement inapproprié"></ion-radio>
+          <ion-label>Comportement inapproprié</ion-label>
+        </ion-item>
 
-      <div class="form-check mb-2">
-        <input type="radio" class="form-check-input"  name="reason" id="reason2" value="" />
-        <label for="" class="form-check-label" for="reason2">Faux profil</label>
-      </div>
+        <ion-item class="mb-2">
+          <ion-radio slot="start" value="Faux profil"></ion-radio>
+          <ion-label>Faux profil</ion-label>
+        </ion-item>
 
-      <div class="form-check mb-2">
-        <input type="radio" class="form-check-input" name="reason" id="reason3" value="" />
-        <label for="" class="form-check-label" for="reason3">Autre</label>
-      </div>
+        <ion-item class="mb-2">
+          <ion-radio slot="start" value="Autre"></ion-radio>
+          <ion-label>Autre</ion-label>
+        </ion-item>
 
-      <div class="mb-4 mt-6">
-        <p class="fw-semibold">Commentaires supplémentaires</p>
-        <textarea class="form-control" rows="4" placeholder="Ecrivez ici..."></textarea>
-      </div>
+      </ion-radio-group>
+    </ion-list>
 
-      <button class="btn btn-pink text-white w-100 fw-bold">Envoyer</button>
+    <!-- Commentaires -->
+    <div class="mb-4 mt-6">
+      <p class="fw-semibold">Commentaires supplémentaires</p>
+      <ion-textarea rows="4" placeholder="Écrivez ici..." class="custom-textarea"></ion-textarea>
+    </div>
 
-    </form>
-  </div>
+    <!-- Bouton Envoyer -->
+    <ion-button expand="block" class="btn-pink text-white fw-bold">Envoyer</ion-button>
+
+  </form>
+</div>
 
   <!-- Menu flottant -->
   <app-floating-menu></app-floating-menu>

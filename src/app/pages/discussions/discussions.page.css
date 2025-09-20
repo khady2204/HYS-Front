@@ -189,7 +189,6 @@
 .tab-button.inactive {
   background: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.7);
-  margin-top: 5px;
 }
 
 .tab-button.inactive:hover {
@@ -231,12 +230,12 @@
 }
 
 /* Options de glissement */
-.bg-red {
-  background: #ff4757 !important;
+.btn-delete {
+  background: #ff008a !important;
 }
 
-.bg-yellow {
-  background: #ffa502 !important;
+.btn-signalement {
+  background: #ff008a !important;
 }
 
 ion-item-option {

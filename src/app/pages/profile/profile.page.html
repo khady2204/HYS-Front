@@ -1,50 +1,75 @@
-<ion-content class="bg-white">
+<ion-header>
+  <ion-toolbar class="toolbarProfile">
+    <ion-buttons slot="start">
+      <ion-back-button fill="clear" text="" defaultHref="" (click)="goBack()" />        
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-  <!-- Bouton retour -->
-  <ion-button fill="clear" color="light" class="position-absolute top-0 start-0 m-2" (click)="goBack()" style="z-index: 10;">
-    <i class="bi bi-arrow-left text-dark m-2 pt-3 fs-5"></i>
-  </ion-button>
+<ion-content color="">
 
-  <!-- HEADER -->
+  <!-- HEADER IMAGE + PROFILE IMAGE -->
   <div class="position-relative text-center w-100">
-    <img
+    <ion-img
       src="assets/img/myLOve/profile/backgroundPink.png"
       alt="background"
-      class="img-fluid w-100"
-    />
+      class="img-fluid w-100">
+    </ion-img>
 
     <!-- Profile utilisateur -->
     <div class="position-absolute start-50 translate-middle-x">
       <img
         [src]="profileImageUrl || 'assets/img/myLOve/suggestion/tabProfile.png'"
         alt="Profile"
-        class="profile-picture"
-      />
+        class="profile-picture">
     </div>
   </div>
 
   <!-- Infos utilisateur -->
-  <div class="text-center mt-5 pt-3">
-    <h5 class="fw-bold mb-1">{{ prenom }} {{ nom }}</h5>
-    <div class="text-muted">{{ bio }}</div>
-    <div class="text-muted small">
-      <i class="bi bi-geo-alt-fill"></i> {{ adresse }}
-    </div>
-  </div>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" class="text-center  pt-3">
+        <h5 class="fw-bold mb-3">{{ prenom }} {{ nom }}</h5>
+        <div class="text-muted">{{ bio }}</div>
+        <div class="text-muted small d-flex justify-content-center align-items-center">
+          <i class="bi bi-geo-alt-fill me-1"></i> {{ adresse }}
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <!-- Boutons -->
-  <div class="d-flex justify-content-center mt-4 gap-3 flex-wrap">
-    <ion-button class="btn-pink" fill="clear" [routerLink]="['/edit-profile', userId]">Modifier</ion-button>
-    <ion-button class="btn-pink" fill="clear">Ajouter</ion-button>
-  </div>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center mt-4">
+      <ion-col size="auto">
+        <ion-button class="btn-pink" fill="solid" [routerLink]="['/edit-profile', userId]">
+          Modifier
+        </ion-button>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-button class="btn-pink" fill="solid">
+          Ajouter
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <!-- Section Photos -->
-  <div class="mt-5 px-3">
-    <h5 class="text-center fw-bold mb-2">Photos</h5>
-    <div class="d-flex justify-content-center flex-wrap gap-2 border-top pt-3 photo-list">
-      <img *ngFor="let photo of photos" [src]="photo" alt="Photo" class="photos" />
-    </div>
-  </div>
+  <ion-grid class="mt-5 px-3">
+    <ion-row>
+      <ion-col size="12" class="text-center">
+        <h5 class="fw-bold mb-2">Photos</h5>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center border-top pt-3 photo-list">
+      <ion-col size="3" size-sm="4" size-md="4" *ngFor="let photo of photos">
+        <ion-card class="photos">
+          <ion-img [src]="photo" alt="Photo"></ion-img>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <!-- Menu flottant -->
   <app-floating-menu></app-floating-menu>
