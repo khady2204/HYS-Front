@@ -55,12 +55,12 @@
       <div class="position-relative rounded overflow-hidden" style="height: 320px">
         <img *ngIf="pub.mediaType.startsWith('image')" [src]="getFullMediaUrl(pub.mediaUrl)" class="w-90 h-90 object-fit-cover">
         <div class="position-absolute top-0 start-0 m-2 rounded-circle p-2">
-          <img src="assets/img/myLOve/account.png" alt="" >
+          <a [routerLink]="['/profile', pub.user.id]">
+            <img [src]="pub.user.profileImage ? getFullMediaUrl(pub.user.profileImage) : 'assets/img/myLOve/account.png'" alt="Profil" 
+            class="w-100 h-100 object-fit-cover rounded-circle">
+          </a>
         </div>
         <div class="position-absolute bottom-0 end-0 mb-5 m-3 d-flex flex-column gap-2" style="bottom: 40px;">
-          <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center" style="width:32px; height:32px;">
-            <img src="assets/img/cardRencontre/Close.png" alt="" style="width:16px; height:16px;">
-          </button>
           <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center"
            style="width:32px; height:32px;" (click)="toggleLike(pub)"> 
              <i class="bi" 
@@ -68,6 +68,14 @@
               style="font-size: 16px;">
             </i>
           </button> <span>{{ pub.nombreLikes }}</span>
+          <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center"
+            style="width:32px; height:32px;" (click)="openComments(pub)" >
+            <i class="bi bi-chat" style="font-size: 16px;"></i>
+          </button> <span>{{ pub.nombreCommentaires || 0 }}</span>
+          <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center"
+            style="width:32px; height:32px;" (click)="partagerPublication(pub)" >
+            <i class="bi bi-share-fill" style="font-size: 16px;"></i>
+          </button> <span>{{ pub.nombrePartages || 0 }}</span>
         </div>
       </div>
     </div>

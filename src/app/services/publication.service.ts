@@ -20,6 +20,15 @@ export interface Publication {
   auteurNom: string;
   createdAt: string;
   nombreLikes : number;
+  nombreCommentaires: number;  
+  nombrePartages: number;
+  commentaires?: any[];
+  
+  
+  user: {
+    id: number;
+    profileImage?: string;
+  };
 
 }
 
@@ -55,8 +64,21 @@ export class PublicationService {
     {
       headers: {
         Authorization: `Bearer ${token}` // envoie le token au backend
-      }
-    });
+      },
+       responseType: 'text' as 'json'
+    } );
   }
+  
+  getCommentaires(pubId: number) {
+    return this.http.get<any[]>(`${this.apiUrl}/publications/${pubId}/commentaires`);
+  }
+
+  addCommentaire(pubId: number, contenu: string) {
+    return this.http.post(`${this.apiUrl}/publications/${pubId}/commentaires`, { contenu });
+  }
+  
+  toggleLikeCommentaire(commentId: number) {
+  return this.http.post<any>(`${this.apiUrl}/commentaires/${commentId}/like`, {});
+}
 
 }

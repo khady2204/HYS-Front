@@ -105,13 +105,19 @@ export const routes: Routes = [
     path: 'interets',
     loadComponent: () => import('./pages/interets/interets.page').then( m => m.InteretsPage),
     canActivate: [AuthGuard]
-  },  {
+  },
+  {
     path: 'ajouter-media',
     loadComponent: () => import('./pages/ajouter-media/ajouter-media.page').then( m => m.AjouterMediaPage)
   },
   {
     path: 'publication',
     loadComponent: () => import('./pages/publication/publication.page').then( m => m.PublicationPage)
+  },
+
+  {
+    path: 'comments',
+    loadComponent: () => import('./pages/comments/comments.page').then( m => m.CommentsPage)
   },
 
 
