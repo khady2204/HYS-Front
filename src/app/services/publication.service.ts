@@ -23,12 +23,7 @@ export interface Publication {
   nombreCommentaires: number;  
   nombrePartages: number;
   commentaires?: any[];
-  
-  
-  user: {
-    id: number;
-    profileImage?: string;
-  };
+  userId: number;
 
 }
 

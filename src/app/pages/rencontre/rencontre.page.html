@@ -55,8 +55,8 @@
       <div class="position-relative rounded overflow-hidden" style="height: 320px">
         <img *ngIf="pub.mediaType.startsWith('image')" [src]="getFullMediaUrl(pub.mediaUrl)" class="w-90 h-90 object-fit-cover">
         <div class="position-absolute top-0 start-0 m-2 rounded-circle p-2">
-          <a [routerLink]="['/profile', pub.user.id]">
-            <img [src]="pub.user.profileImage ? getFullMediaUrl(pub.user.profileImage) : 'assets/img/myLOve/account.png'" alt="Profil" 
+          <a [routerLink]="['/profile', pub.userId]">
+            <img src= 'assets/img/myLOve/account.png' alt="Profil" 
             class="w-100 h-100 object-fit-cover rounded-circle">
           </a>
         </div>
