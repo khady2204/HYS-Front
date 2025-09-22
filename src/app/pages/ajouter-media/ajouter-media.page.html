@@ -7,6 +7,10 @@
       </ion-button>
     </div>
 
+    <div *ngIf="capturedPhoto" class="photo-preview">
+     <img [src]="capturedPhoto" alt="Photo capturée" />
+    </div>
+
     <!-- Icônes caméra et micro -->
     <div class="floating-right">
       <ion-button fill="clear" (click)="toggleCamera()">
