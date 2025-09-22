@@ -46,6 +46,15 @@ export class AjouterMediaPage {
     return this.isFlashOn ? 'flash-outline' : 'flash-off-outline';
   }
 
+  switchMode(newMode: 'photo' | 'video') {
+    this.mode = newMode;
+    if (newMode === 'photo') {
+      this.takePhoto();
+    } else {
+      // Logique vidéo
+    }
+  }
+
   /** Prendre une photo */
   async takePhoto() {
     try {
