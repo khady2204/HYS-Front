@@ -29,7 +29,7 @@
 
     <!-- Bloc rose avec les 3 boutons -->
     <div class="media-controls">
-      <ion-button fill="clear" (click)="mode = 'photo'" [color]="mode === 'photo' ? 'primary' : 'medium'">
+      <ion-button fill="clear" (click)="switchMode('photo')" [color]="mode === 'photo' ? 'primary' : 'medium'">
         <ion-icon name="camera-outline"></ion-icon>
       </ion-button>
       <ion-button shape="round" class="capture-btn">
