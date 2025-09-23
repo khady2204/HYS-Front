@@ -18,7 +18,9 @@ import {
   ellipseOutline,
   person,
   personCircleOutline,
-  lockClosedOutline
+  lockClosedOutline,
+  pencilOutline,
+  sendOutline
 } from 'ionicons/icons';
 
 // Enregistrement des icônes Ionic utilisées dans ajouter-media
@@ -32,7 +34,9 @@ addIcons({
   'ellipse-outline': ellipseOutline,
   'videocam-outline': videocamOutline,
   'person-circle-outline': personCircleOutline,
-  'lock-closed-outline': lockClosedOutline
+  'lock-closed-outline': lockClosedOutline,
+  'pencil-outline' : pencilOutline,
+  'send-outline' : sendOutline
 });
 
 bootstrapApplication(AppComponent, {
