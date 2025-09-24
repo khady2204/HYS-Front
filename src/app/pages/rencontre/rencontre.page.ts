@@ -11,7 +11,9 @@ import { UserAuthService } from '../../services/user-auth.service';
 import { firstValueFrom } from 'rxjs';
 import { StoryViewerComponent } from '../../components/story-viewer/story-viewer.component';
 import { Page, Publication, PublicationService } from 'src/app/services/publication.service';
-
+import { CommentsPage } from '../comments/comments.page';
+import { ModalController, IonicModule } from '@ionic/angular';
+import { RouterModule } from '@angular/router';
 
 type PublicationWithLike = Publication & { liked: boolean };
 @Component({
@@ -19,7 +21,7 @@ type PublicationWithLike = Publication & { liked: boolean };
   templateUrl: './rencontre.page.html',
   styleUrls: ['./rencontre.page.css'],
   standalone: true,
-  imports: [IonContent, IonModal, CommonModule, FormsModule, HeaderSearchComponent, FloatingMenuComponent, StoryViewerComponent]
+  imports: [IonicModule, CommonModule, FormsModule,RouterModule, HeaderSearchComponent, FloatingMenuComponent, StoryViewerComponent]
 })
 export class RencontrePage implements OnInit {
 
@@ -41,7 +43,7 @@ export class RencontrePage implements OnInit {
    isLoadingPublications = true;
 
   constructor(private storyService: StoryService, private userAuthService: UserAuthService,
-    private publicationService: PublicationService
+    private publicationService: PublicationService, private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {
@@ -266,14 +268,44 @@ export class RencontrePage implements OnInit {
 
 toggleLike(pub: PublicationWithLike) {
   this.publicationService.toggleLike(pub.id).subscribe({
-    next: (updatedPub) => {
-      pub.nombreLikes = updatedPub.nombreLikes;
-      pub.liked = updatedPub.liked;   // bascule la couleur du cœur
+     next: (res: string) => {
+      console.log(res); // "Like toggled"
+      // On bascule juste l'état local, sans attendre le backend
+      pub.liked = !pub.liked;
+      pub.nombreLikes += pub.liked ? 1 : -1;
     },
     error: (err) => {
       console.error("Erreur lors du like :", err);
     }
   });
+}
+
+
+async openComments(pub:PublicationWithLike ) {
+  const modal = await this.modalCtrl.create({
+    component: CommentsPage,
+    componentProps: { publicationId: pub.id }
+  });
+  return await modal.present();
+}
+
+partagerPublication(pub: PublicationWithLike) {
+  if (!pub?.id) return;
+
+  const url = `${environment.apiBase}/publications/${pub.id}`;
+
+  if (navigator.share) {
+    navigator.share({
+      title: 'Voir cette publication',
+      text: 'Découvrez cette publication !',
+      url: url
+    }).then(() => console.log('Publication partagée !'))
+      .catch(err => console.error('Erreur partage :', err));
+  } else {
+    navigator.clipboard.writeText(url)
+      .then(() => alert('Lien copié dans le presse-papier !'))
+      .catch(err => console.error('Erreur copie lien :', err));
+  }
 }
 
 }

@@ -32,6 +32,7 @@ export class SuggestionPage implements OnInit {
 
   suggestions: any[] = [];
   userId: number | null = null;
+  profileImageUrl: any;
 
   constructor(
     private location: Location,
@@ -49,7 +50,7 @@ export class SuggestionPage implements OnInit {
 
     // Récupère l'utilisateur connecté
     const user = this.userAuthService.getUser();
-
+    this.profileImageUrl = user?.profileImage ?? null;
     // Normalise l'identifiant utilisateur
     this.userId = user?.id ?? user?.userId ?? null;
 

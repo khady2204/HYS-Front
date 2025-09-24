@@ -6,8 +6,18 @@
        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </div>
+    
+    <!-- Prévisualisation photo -->
+    <div *ngIf="capturedPhoto" class="photo-preview">
+     <img [src]="capturedPhoto" alt="Photo capturée" />
+    </div>
 
-    <!-- Icônes caméra et micro -->
+    <!-- Prévisualisation vidéo -->
+    <div *ngIf="recordedVideoUrl && mode === 'video'" class="video-preview">
+      <video [src]="recordedVideoUrl" controls></video>
+    </div>
+
+    <!-- Icônes caméra et flash -->
     <div class="floating-right">
       <ion-button fill="clear" (click)="toggleCamera()">
         <ion-icon name="camera-reverse-outline"></ion-icon>
@@ -29,16 +39,26 @@
 
     <!-- Bloc rose avec les 3 boutons -->
     <div class="media-controls">
-      <ion-button fill="clear" (click)="mode = 'photo'" [color]="mode === 'photo' ? 'primary' : 'medium'">
+      <ion-button fill="clear" (click)="switchMode('photo')" [color]="mode === 'photo' ? 'primary' : 'medium'">
         <ion-icon name="camera-outline"></ion-icon>
       </ion-button>
-      <ion-button shape="round" class="capture-btn">
+
+      <ion-button shape="round" class="capture-btn" (click)="captureMedia()"  >
         <ion-icon name="ellipse-outline"></ion-icon>
       </ion-button>
+
       <ion-button fill="clear" (click)="mode = 'video'" [color]="mode === 'video' ? 'primary' : 'medium'">
         <ion-icon name="videocam-outline"></ion-icon>
       </ion-button>
     </div>
 
+    <ion-button fill="clear" *ngIf="capturedPhoto || recordedVideoUrl" (click)="sendToPublication()">
+      <ion-icon name="send-outline"></ion-icon>
+    </ion-button>
+
+    <!-- bouton pour texte -->
+    <ion-button fill="clear" class="text-btn" (click)="writeText()">
+      <ion-icon name="pencil-outline"></ion-icon>
+    </ion-button>
   </div>
 </ion-footer>

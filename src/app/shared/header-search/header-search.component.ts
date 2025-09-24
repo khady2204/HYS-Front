@@ -3,18 +3,21 @@ import { Router, RouterLink } from '@angular/router';
 import { FiltreServiceComponent } from 'src/app/components/filtre-service/filtre-service.component';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 import { UserService } from 'src/app/services/user.service';
+import { IonHeader, IonContent } from "@ionic/angular/standalone";
+import { IonicModule } from "@ionic/angular";
 
 @Component({
   selector: 'app-header-search',
   templateUrl: './header-search.component.html',
   styleUrls: ['./header-search.component.css'],
-  imports: [RouterLink, FiltreServiceComponent],
+  imports: [IonContent, IonHeader, RouterLink, FiltreServiceComponent, IonicModule],
   standalone: true
 })
 export class HeaderSearchComponent  implements OnInit {
 
   userId: number | null = null;
   profileImageUrl: any;
+  filterOpen = false;
 
   constructor(
     private userAuthService: UserAuthService,
@@ -34,5 +37,8 @@ export class HeaderSearchComponent  implements OnInit {
   }
 
 
+  toggleFilter() {
+  this.filterOpen = !this.filterOpen;
+}
 
 }

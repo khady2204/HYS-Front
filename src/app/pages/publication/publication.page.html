@@ -1,10 +1,18 @@
 <ion-content class="camera-content">
+   <!-- Bouton retour -->
+  <div class="floating-left">
+    <ion-button fill="clear" class="back-btn" (click)="goBack()">
+      <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+    </ion-button>
+  </div>
   <div class="media-preview">
     <img *ngIf="imageData" [src]="imageData" alt="preview" class="preview-img" />
   </div>
   <div class="bottom-section">
     <ion-item class="custom-input">
-      <ion-input placeholder="Entrer votre texte ici"></ion-input>
+      <ion-input placeholder="Entrer votre texte ici"
+        [(ngModel)]="texte">
+      </ion-input>
     </ion-item>
     <div class="option-buttons">
       <ion-button class="option-btn" (click)="selectStoryOrProfil()" >

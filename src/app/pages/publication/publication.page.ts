@@ -31,6 +31,10 @@ export class PublicationPage  {
     console.log('image reçue dans publication : ', this.imageData);
   }
 
+  goBack() {
+  this.router.navigate(['/ajouter-media']); 
+  }
+
   // Convertit base64 en Blob
   base64ToBlob(base64: string, contentType = 'image/jpeg'): Blob {
     const byteCharacters = atob(base64.split(',')[1]);

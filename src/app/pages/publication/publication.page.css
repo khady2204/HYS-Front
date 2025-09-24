@@ -2,6 +2,11 @@
   height: 44px;
 }
 
+.back-btn {
+  --color: #ff008a; 
+}
+
+
 .camera-content {
   --background: transparent;
   display: flex;

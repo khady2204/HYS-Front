@@ -14,7 +14,7 @@
       <div class="d-flex align-items-center" style="margin-left:8px;">
         <!-- Avatar -->
         <ion-avatar>
-          <img [src]="user?.profileImage || 'assets/img/myLOve/suggestion/user4.png'" />
+          <img [src]="user?.profileImage || 'assets/profileParDefaut.jpg'" />
         </ion-avatar>
 
         <!-- Nom et statut -->
@@ -29,7 +29,7 @@
 
 <ion-content class="bg-white" fullscreen>
   <!-- Zone messages -->
-  <div class="flex-grow-1 px-3" #messageContainer>
+  <div class="flex-grow-1 px-3 message-container-wrapper" #messageContainer>
 
     <div *ngIf="messages.length === 0" class="ion-text-center ion-text-muted mt-5">
       Aucune discussion trouvée.

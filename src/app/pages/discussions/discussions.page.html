@@ -7,7 +7,7 @@
       <app-dropdown-drawer></app-dropdown-drawer>
       <a [routerLink]="['/profile', userId]">
         <img
-          [src]="profileImageUrl || 'assets/img/myLOve/profile/profile1.png'"
+          [src]="profileImageUrl || 'assets/profileParDefaut.jpg'"
           alt="Profile"
           class="rounded-circle border border-white"
           width="40"
@@ -21,7 +21,7 @@
       <!-- Mon statut -->
       <div class="d-flex flex-column pb-3 align-items-center text-white text-center" style="font-size: 0.7rem;">
         <div class="position-relative" (click)="openMyStories()">
-          <img src="assets/img/myLOve/suggestion/tabProfile.png" class="rounded-circle border border-white" width="55" height="55" />
+          <img src="assets/profileParDefaut.jpg" class="rounded-circle border border-white" width="55" height="55" />
           <div class="position-absolute bottom-0 end-0 bg-white text-pink rounded-circle"
               style="width: 18px; height: 18px; font-size: 1rem; display: flex; align-items: center; justify-content: center;"
               (click)="openAddStory(); $event.stopPropagation()">
@@ -107,7 +107,7 @@
           <!-- Contenu de la discussion -->
           <ion-item button (click)="navigateToChat(discussion.ami.id)">
             <ion-avatar slot="start" style="position: relative;">
-              <img [src]="discussion.ami.profileImage || 'assets/img/myLOve/profile/profile1.png'" />
+              <img [src]="discussion.ami.profileImage || 'assets/profileParDefaut.jpg'">
               <!-- Bouton de statut -->
               <span
                 [ngStyle]="{

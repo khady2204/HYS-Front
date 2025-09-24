@@ -1,24 +1,24 @@
-<ion-content class="">
+<ion-content class="" fullscreen>
   <div class="container py-3">
 
-  <!--Header-->
-  <app-header-search></app-header-search>
+    <!--Header-->
+    <app-header-search></app-header-search>
     <!-- Stories -->
-  <div class="overflow-auto px mb-3 story-container">
-    <div class="d-flex gap-3 flex-nowrap">
-      <div class="text-center">
-        <div class="story-ring me-1 d-flex justify-content-center align-items-center" style="width: 56px; height: 56px;" (click)="openMyStories()">
-          <i class="bi bi-person text-grey fs-2"></i>
+    <div class="overflow-auto px mb-3 story-container">
+      <div class="d-flex gap-3 flex-nowrap">
+        <div class="text-center">
+          <div class="story-ring me-1 d-flex justify-content-center align-items-center" style="width: 56px; height: 56px;" (click)="openMyStories()">
+            <i class="bi bi-person text-grey fs-2"></i>
+          </div>
+          <small class="d-block mt-1">Moi</small>
         </div>
-        <small class="d-block mt-1">Moi</small>
-      </div>
 
-      <div class="text-center">
-        <div class="story-ring me-1 d-flex justify-content-center align-items-center" style="width: 56px; height: 56px;" (click)="openAddStory()">
-          <i class="bi bi-plus text-grey fs-2"></i>
+        <div class="text-center">
+          <div class="story-ring me-1 d-flex justify-content-center align-items-center" style="width: 56px; height: 56px;" (click)="openAddStory()">
+            <i class="bi bi-plus text-grey fs-2"></i>
+          </div>
+          <small class="d-block mt-1">Ajouter</small>
         </div>
-        <small class="d-block mt-1">Ajouter</small>
-      </div>
 
       <!-- Loading state -->
       <div *ngIf="isLoading" class="text-center">
@@ -55,12 +55,13 @@
       <div class="position-relative rounded overflow-hidden" style="height: 320px">
         <img *ngIf="pub.mediaType.startsWith('image')" [src]="getFullMediaUrl(pub.mediaUrl)" class="w-90 h-90 object-fit-cover">
         <div class="position-absolute top-0 start-0 m-2 rounded-circle p-2">
-          <img src="assets/img/myLOve/account.png" alt="" >
+          <a [routerLink]="['/profile', pub.userId]">
+            <img src= 'assets/img/myLOve/account.png' alt="Profil" 
+            class="w-100 h-100 object-fit-cover rounded-circle">
+          </a>
+          
         </div>
         <div class="position-absolute bottom-0 end-0 mb-5 m-3 d-flex flex-column gap-2" style="bottom: 40px;">
-          <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center" style="width:32px; height:32px;">
-            <img src="assets/img/cardRencontre/Close.png" alt="" style="width:16px; height:16px;">
-          </button>
           <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center"
            style="width:32px; height:32px;" (click)="toggleLike(pub)"> 
              <i class="bi" 
@@ -68,6 +69,14 @@
               style="font-size: 16px;">
             </i>
           </button> <span>{{ pub.nombreLikes }}</span>
+          <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center"
+            style="width:32px; height:32px;" (click)="openComments(pub)" >
+            <i class="bi bi-chat" style="font-size: 16px;"></i>
+          </button> <span>{{ pub.nombreCommentaires || 0 }}</span>
+          <button class="btn btn-light rounded-circle shadow p-1 mb-1 d-flex align-items-center justify-content-center"
+            style="width:32px; height:32px;" (click)="partagerPublication(pub)" >
+            <i class="bi bi-share-fill" style="font-size: 16px;"></i>
+          </button> <span>{{ pub.nombrePartages || 0 }}</span>
         </div>
       </div>
     </div>
