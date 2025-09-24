@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Commentaires</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Fermer</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Liste des commentaires -->
+
+  <ion-list>
+    <ion-item *ngFor="let c of commentaires">
+      <ion-avatar slot="start">
+        <img [src]="c.auteur?.photo || 'assets/default-avatar.png'" />
+      </ion-avatar>
+      <ion-label>
+        <h3>{{ c.auteur?.prenom }} {{ c.auteur?.nom }}</h3>
+        <p>{{ c.contenu }}</p>
+
+        <div class="d-flex align-items-center">
+          <!-- Like -->
+          <ion-button fill="clear" size="small" (click)="toggleLikeComment(c)">
+            <ion-icon [name]="c.liked ? 'heart' : 'heart-outline'" [color]="c.liked ? 'danger' : 'medium'"></ion-icon>
+            <span>{{ c.nombreLikes }}</span>
+          </ion-button>
+        </div>
+      </ion-label>
+      
+    </ion-item>
+  </ion-list>
+
+  <!-- Ajout d'un commentaire -->
+
+  <ion-item>
+    <ion-input [(ngModel)]="newComment" placeholder="Écrire un commentaire..."></ion-input>
+    <ion-button (click)="ajouterCommentaire()">Envoyer</ion-button>
+  </ion-item>
+</ion-content>
