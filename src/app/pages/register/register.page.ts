@@ -93,11 +93,11 @@ export class RegisterPage implements OnInit{
 
     this.authService.register(formData).subscribe({
       next: async () => {
-        // Stocker le numéro de téléphone pour vérification OTP plus tard
-        localStorage.setItem('phone', formData.phone);
+        // Stocker l'email pour vérification OTP plus tard
+        localStorage.setItem('email', formData.email);
 
         const toast = await this.toastCtrl.create({
-          message: 'Inscription réussie. Code OTP envoyé au numéro !',
+          message: 'Inscription réussie. Code OTP envoyé par email !',
           duration: 2500,
           color: 'success'
         });

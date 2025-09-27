@@ -40,13 +40,13 @@
 
 /* Bouton actif */
 .tab-button.active {
-  background-color: #000;
-  color: #fff;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 /* Bouton inactif */
 .tab-button.inactive {
-  background-color: #ffffff;
+  background-color: #ebe4e4;
   color: #000;
 }
 

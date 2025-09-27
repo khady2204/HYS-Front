@@ -1,3 +1,7 @@
+.message-container-wrapper {
+  padding-bottom: 120px; 
+}
+
 /* Alignement bulles */
 .message-container.sent {
   justify-content: flex-end;

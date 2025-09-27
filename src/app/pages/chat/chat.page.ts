@@ -346,7 +346,7 @@ async stopRecording() {
   }
 
   scrollToBottom() {
-    try { this.bottomRef?.nativeElement?.scrollIntoView({ behavior: 'smooth' }); }
+    try { this.bottomRef?.nativeElement?.scrollIntoView({ behavior: 'auto' }); }
     catch (err) { console.error('Erreur scroll :', err); }
   }
 }
