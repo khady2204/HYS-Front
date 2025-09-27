@@ -19,6 +19,7 @@ export class ValidationsmsPage implements OnInit {
   otpForm!: FormGroup; 
   phoneNumber!: string;
  
+  addressEmail!: string;
 
   
   constructor(private fb: FormBuilder,
@@ -32,8 +33,8 @@ export class ValidationsmsPage implements OnInit {
       otp: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(6)]],
     });
 
-  // Récupère le numéro stocké précédemment (par exemple dans localStorage)
-    this.phoneNumber = localStorage.getItem('phone') || '';
+  // Récupère l'email stocké précédemment
+    this.addressEmail = localStorage.getItem('email') || '';
 
   }
 
@@ -42,7 +43,7 @@ export class ValidationsmsPage implements OnInit {
       const otp = this.otpForm.value.otp;
       
       const payload = {
-        phone: this.phoneNumber,
+        email: this.addressEmail,
         otp: otp,
       };
 
