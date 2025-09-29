@@ -1,5 +1,8 @@
+/* ============================
+   Styles Home - Mode Clair
+   ============================ */
 .home-container {
-  --background:#f6f6fb ;
+  --background: #f6f6fb;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,6 +58,7 @@ ion-content {
   height: auto;
   margin: 0 auto;
 }
+
 /* Points de progression */
 .dots {
   display: flex;
@@ -97,4 +101,43 @@ ion-content {
   margin-top: 10px;
   width: 200px;
   text-transform: none;
+}
+
+/* ============================
+   Styles Home - Mode Sombre
+   ============================ */
+@media (prefers-color-scheme: dark) {
+
+  .home-container {
+    --background: #121212;
+  }
+
+  .home-wrapper {
+    background: #1e1e1e;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.7);
+  }
+
+  .illustration-circle {
+    background-color: #2c2c2c;
+  }
+
+  .dot {
+    background-color: #555;
+  }
+
+  .dot.active {
+    background-color: #0D3873;
+  }
+
+  .welcome-text p,
+  .subtitle {
+    color: #ffffff;
+  }
+
+  .start-button {
+    --background: #0D3873;
+    --color: #ffffff;
+  }
+
+  
 }

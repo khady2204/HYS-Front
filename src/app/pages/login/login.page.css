@@ -1,3 +1,7 @@
+/* ============================
+   Styles Login - Mode Clair
+   ============================ */
+
 ion-toolbar {
   --border-width: 0;
   box-shadow: none;
@@ -9,6 +13,7 @@ ion-toolbar {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
+
 ion-back-button {
   margin-left: -20px; 
   margin-top: 40px;
@@ -31,7 +36,8 @@ ion-back-button {
   border-bottom-right-radius: 20px;
   padding: 24px;
   width: 100%;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-width: 350px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -71,22 +77,23 @@ ion-back-button {
   color: #f1f1f1;
   text-transform: none;
 }
+
 .google-btn {
   --border-color: #0D3873;
   --background: #0D3873;
   border-radius: 8px;
-  height: 20px;
+  height: 40px;
   width: 100%; 
-  margin: 15px 5px;         
+  margin: 15px 0;         
   justify-content: space-between;
   display: flex;
   align-items: center;
-  padding: 0px;
+  padding: 0 10px;
 }
+
 .google-icon {
   width: 20px;
   height: 20px;
-  margin-right: 10px;
 }
 
 .input-label {
@@ -105,22 +112,8 @@ ion-back-button {
   width: 100%;
 }
 
-.half-input {
-  flex: 1;
-  --background: #f1f1f1;
-  --padding-start: 10px;
-  --border-radius: 10px;
-}
-
-/* Ancien style ion-input (inutile si tu passes sur <input>) */
-ion-input {
-  --background: #f1f1f1;
-  --padding-start: 10px;
-  --border-radius: 10px;
-}
-
-/* 👉 Nouveau style pour les inputs natifs */
-.native-input {
+input,
+ion-input::part(input) {
   width: 100%;
   border: none;
   outline: none;
@@ -128,15 +121,18 @@ ion-input {
   padding: 12px 10px;
   border-radius: 10px;
   background: #f1f1f1;
+  color: #000;
   box-sizing: border-box;
 }
-.native-input:focus {
-  border: 1px solid #0D3873;
+
+input::placeholder,
+ion-input::part(input)::placeholder {
+  color: #888;
 }
 
-ion-text small {
-  padding-left: 12px;
-  font-size: 0.85rem;
+input:focus,
+ion-input::part(input):focus {
+  border: 1px solid #0D3873;
 }
 
 ion-button.login-button {
@@ -165,26 +161,6 @@ ion-button.login-button {
   margin-bottom: 20px;
 }
 
-.terms {
-  --background: transparent;
-  margin: 0;
-  padding: 0;
-  --inner-padding-end: 0;
-  --inner-padding-start: 0;
-  --padding-start: 0;
-  --min-height: 40px;
-}
-
-ion-checkbox.term {
-  box-shadow: 0 4px 4px rgba(15, 15, 15, 0.3);
-  color: #0D3873;
-}
-
-.password-item {
-  flex: 1;
-  margin-right: 8px;
-}
-
 .forgot-link {
   color: #0D3873;
   font-size: 0.85rem;
@@ -192,188 +168,45 @@ ion-checkbox.term {
   white-space: nowrap;
 }
 
+/* ============================
+   Styles Dark Mode
+   ============================ */
+@media (prefers-color-scheme: dark) {
+  .login-container {
+    --background: #121212;
+  }
 
-/* Styles for the login page 
-ion-toolbar {
-  --border-width: 0;
-  box-shadow: none;
-  height: 100px;
-  --min-height: 56px;
-  
-  max-width: 350px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 0 16px;
-  border-top-left-radius: 20px;
-border-top-right-radius: 20px;
-}
-ion-back-button {
-  margin-left: -20px; 
-  margin-top: 40px;
-}
- .login-container {
-  --background: #f6f6fb;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
+  .login-wrapper {
+    background: #1e1e1e;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.7);
+  }
 
-.login-wrapper {
-  background: #fff;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  padding: 24px;
-  width: 100%;
-  max-width: 350px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-  margin: auto;
-  height: 100%;
-}
-  
+  .login-title,
+  .input-label,
+  .login-link,
+  .forgot-link,
+  .secondary-actions {
+    color: #ffffff;
+  }
 
-.logo-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 3px;
-}
+  input,
+  ion-input::part(input) {
+    background: #2c2c2c;
+    color: #ffffff;
+  }
 
-.logo-img {
-  width: 150px;
-  height: auto;
-  margin: 0 auto;
-}
+  input::placeholder,
+  ion-input::part(input)::placeholder {
+    color: #bbbbbb;
+  }
 
-.login-title {
-  text-align: center;
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin-top: 5px;
-  margin-bottom: 20px;
-  color: #0D3873;
-}
+  ion-button.login-button,
+  .google-btn {
+    --background: #0D3873;
+    --color: #ffffff;
+  }
 
-.google-login {
-  margin-top: 2px;
-  text-align: center;
-  display: flex;
+  ion-back-button {
+    color: #ffffff;
+  }
 }
-
-.text{
-  color: #f1f1f1;
-  text-transform: none;
-}
-.google-btn {
-  --border-color:#0D3873;
-  --background:#0D3873;
-  border-radius: 8px;
-  height: 20px;
-  width: 100%; 
-  margin: 15px 5px;         
-  justify-content: space-between;
-  display: flex;
-  align-items: center;
-  padding: 0px;
-  
-}
-
-.google-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-}
-.input-label {
-  font-weight: 500;
-  font-size: 14px;
-  margin-bottom: 4px;
-  color: #000;
-  display: block;
-  padding-left: 4px;
-}
-
-.input-container {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  width: 100%;
-}
-
-.half-input {
-  flex: 1;
-  --background: #f1f1f1;
-  --padding-start: 10px;
-  --border-radius: 10px;
-}
-
-ion-input {
-  --background: #f1f1f1;
-  --padding-start: 10px;
-  --border-radius: 10px;
-}
-
-ion-text small {
-  padding-left: 12px;
-  font-size: 0.85rem;
-}
-
-ion-button.login-button{
-  --background: #0D3873; 
-  --color: white ;
-  text-transform: none;
-  margin-bottom: 15px;
-}
-
-.login-link{
-  color: #0D3873;
-
-}
-
-.secondary-actions {
-  text-align: center;
-  margin-top: 5px;
-  font-style: italic;
-}
-
-.bp-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 300px;
-  margin-bottom: 20px;
-}
-
-.terms {
-  --background: transparent;
-  margin: 0;
-  padding: 0;
-  --inner-padding-end: 0;
-  --inner-padding-start: 0;
-  --padding-start: 0;
-  --min-height: 40px;
-}
-
-ion-checkbox.term{
-  box-shadow: 0 4px 4px rgba(15, 15, 15, 0.3);
-  color: #0D3873;
-}
-
-.password-item {
-  flex: 1;
-  margin-right: 8px;
-}
-
-.forgot-link {
-  color: #0D3873;
-  font-size: 0.85rem;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-*/

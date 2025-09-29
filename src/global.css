@@ -47,8 +47,10 @@ ion-content {
   --padding-bottom: env(safe-area-inset-bottom);
 }
 
+
 form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
+
