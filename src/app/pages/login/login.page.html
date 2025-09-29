@@ -15,12 +15,12 @@
     <h2 class="login-title">Connexion</h2>
 
     <!-- Bouton Google -->
-    <div class="google-login">
-      <ion-button expand="block" fill="outline" class="google-btn">
-        <img src="assets/google-icon.png" class="google-icon" slot="start"><img>
-        <ion-text class="text">Se connecter avec Google</ion-text>
-      </ion-button>
-    </div>
+<div class="google-login">
+  <ion-button fill="outline" class="google-btn" (click)="onGoogleLogin()">
+    <img src="assets/google-icon.png" class="google-icon" slot="start">
+    <ion-text class="text">Continuer avec Google</ion-text>
+  </ion-button>
+</div>
 
     <!-- Formulaire -->
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
