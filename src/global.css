@@ -44,6 +44,16 @@
 
 
 ion-content {
+  --background: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  ion-app, ion-content {
+    --background: #121212;
+  }
+}
+
+ion-content {
   --padding-bottom: env(safe-area-inset-bottom);
 }
 

@@ -12,38 +12,36 @@ ion-toolbar {
   padding: 0 16px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  background: transparent;
 }
 
 ion-back-button {
-  margin-left: -20px; 
+  margin-left: -20px;
   margin-top: 40px;
   color: #0D3873;
 }
 
-.login-container {
-  --background: #f6f6fb;
+/* Fond unique global */
+ion-content.login-container {
+  --background: #f9f9f9;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
 }
 
+/* Wrapper du formulaire */
 .login-wrapper {
-  background: #fff;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  background: transparent; 
   padding: 24px;
   width: 100%;
   max-width: 350px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
-  margin: auto;
-  height: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
 }
 
 .logo-container {
@@ -81,10 +79,11 @@ ion-back-button {
 .google-btn {
   --border-color: #0D3873;
   --background: #0D3873;
+  --color: #ffffff;
   border-radius: 8px;
   height: 40px;
-  width: 100%; 
-  margin: 15px 0;         
+  width: 100%;
+  margin: 15px 0;
   justify-content: space-between;
   display: flex;
   align-items: center;
@@ -136,7 +135,7 @@ ion-input::part(input):focus {
 }
 
 ion-button.login-button {
-  --background: #0D3873; 
+  --background: #0D3873;
   --color: white;
   text-transform: none;
   margin-bottom: 15px;
@@ -172,13 +171,8 @@ ion-button.login-button {
    Styles Dark Mode
    ============================ */
 @media (prefers-color-scheme: dark) {
-  .login-container {
+  ion-content.login-container {
     --background: #121212;
-  }
-
-  .login-wrapper {
-    background: #1e1e1e;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.7);
   }
 
   .login-title,
@@ -208,5 +202,46 @@ ion-button.login-button {
 
   ion-back-button {
     color: #ffffff;
+  }
+}
+
+/* ============================
+   Responsive
+   ============================ */
+@media (max-width: 480px) {
+  .login-wrapper {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .login-title {
+    font-size: 1.2rem;
+  }
+
+  input,
+  ion-input::part(input) {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .google-btn {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  .login-wrapper {
+    max-width: 450px;
+    padding: 32px;
+  }
+
+  .login-title {
+    font-size: 1.6rem;
+  }
+
+  input,
+  ion-input::part(input) {
+    font-size: 16px;
+    padding: 14px;
   }
 }
