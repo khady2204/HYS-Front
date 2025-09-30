@@ -1,38 +1,47 @@
+/* ============================
+   Styles Inscription - Mode Clair
+   ============================ */
+
+/* Toolbar et bouton retour */
 ion-toolbar {
   --border-width: 0;
   box-shadow: none;
   height: 100px;
   --min-height: 56px;
-  margin: 0 auto;
   width: 100%;
   padding: 0 16px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  background: #f6f6fb; 
 }
+
 ion-back-button {
-  margin-left: -20px; 
+  margin-left: -10px; 
   margin-top: 40px;
   color: #0D3873;
 }
 
 /* Conteneur principal */
 .register-container {
+  --background: #f9f9f9; 
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
-  background: #f9f9f9;
   height: 100%;
 }
 
 /* Wrapper du formulaire */
 .register-wrapper {
-  background: #fff;
+  background: transparent; 
   border-radius: 12px;
   padding: 24px;
   width: 100%;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  height: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
 }
 
 /* Logo */
@@ -88,12 +97,19 @@ select {
   font-size: 14px;
   outline: none;
   transition: all 0.2s ease;
+  color: #000;
 }
 
 input:focus,
 select:focus {
   background: #eaeaea;
   border: 1px solid #3b82f6;
+}
+
+/* Placeholder */
+input::placeholder,
+select::placeholder {
+  color: #999;
 }
 
 /* Erreurs */
@@ -168,4 +184,97 @@ select:focus {
 
 .login-link:hover {
   text-decoration: underline;
+}
+
+/* ============================
+   Styles Inscription - Mode Sombre
+   ============================ */
+@media (prefers-color-scheme: dark) {
+  .register-container {
+    --background: #121212;
+  }
+
+  .register-wrapper {
+    background: transparent;
+  }
+
+  .form-title,
+  .input-label,
+  .login-link,
+  .bottom-text,
+  .a {
+    color: #ffffff;
+  }
+
+  input,
+  select {
+    background: #2c2c2c !important;
+    color: #ffffff !important;
+  }
+
+  input::placeholder,
+  select::placeholder {
+    color: #bbbbbb !important;
+  }
+
+  input:focus,
+  select:focus {
+    border: 1px solid #0D3873;
+    background: #2c2c2c !important;
+  }
+
+  .login-button {
+    background: #0D3873;
+    color: #ffffff;
+  }
+
+  .login-button:disabled {
+    background: #555555;
+  }
+
+  ion-back-button {
+    color: #ffffff !important;
+  }
+
+  ion-toolbar {
+    --background: #1e1e1e;
+    color: #ffffff;
+  }
+}
+
+/* ============================
+   Responsive
+   ============================ */
+@media (max-width: 480px) {
+  .register-wrapper {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .form-title {
+    font-size: 1.2rem;
+  }
+
+  input,
+  select {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  .register-wrapper {
+    max-width: 500px;
+    padding: 32px;
+  }
+
+  .form-title {
+    font-size: 1.6rem;
+  }
+
+  input,
+  select {
+    font-size: 16px;
+    padding: 14px;
+  }
 }

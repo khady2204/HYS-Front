@@ -17,7 +17,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class FPasswordPage implements OnInit {
 
   resetForm!: FormGroup;
-phone: any;
+email: any;
 
   constructor(private router: Router,
     private authService:AuthService,
@@ -26,10 +26,13 @@ phone: any;
    ){ }
 
   ngOnInit(): void {
-    // Initialisation du formulaire avec validation
+    // Initialisation du formulaire avec validation email et typage strict
     this.resetForm = this.fb.group({
-      phone: ['', [Validators.required, Validators.pattern(/^\d{9,15}$/)]],
+      email: ['', [Validators.required, Validators.email]],
     });
+
+    // S'assurer que email est de type string
+    this.email = '';
   }
 
   async showToast(message: string, color: 'success' | 'danger' = 'success') {
@@ -42,11 +45,11 @@ phone: any;
   }
   onSendOtp() {
   if (this.resetForm.invalid) {
-    this.showToast('Veuillez entrer un numéro valide', 'danger');
+    this.showToast('Veuillez entrer un email valide', 'danger');
     return;
   }
 
-  const data = { phone: this.resetForm.value.phone };
+  const data = { email: this.resetForm.value.email };
 
   this.authService.requestReset(data).subscribe({
     next: (res) => {
@@ -55,7 +58,7 @@ phone: any;
       // rediriger vers la page de saisie de code OTP
       this.router.navigate(['/otp-verification'], {
          queryParams: { 
-          phone: data.phone,
+          phone: data.email,
         } 
       });
     },

@@ -1,3 +1,7 @@
+/* ============================
+   Styles Login - Mode Clair
+   ============================ */
+
 ion-toolbar {
   --border-width: 0;
   box-shadow: none;
@@ -8,36 +12,36 @@ ion-toolbar {
   padding: 0 16px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  background: transparent;
 }
+
 ion-back-button {
-  margin-left: -20px; 
+  margin-left: -20px;
   margin-top: 40px;
   color: #0D3873;
 }
 
-.login-container {
-  --background: #f6f6fb;
+/* Fond unique global */
+ion-content.login-container {
+  --background: #f9f9f9;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
 }
 
+/* Wrapper du formulaire */
 .login-wrapper {
-  background: #fff;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  background: transparent; 
   padding: 24px;
   width: 100%;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-width: 350px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
-  margin: auto;
-  height: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
 }
 
 .logo-container {
@@ -71,22 +75,24 @@ ion-back-button {
   color: #f1f1f1;
   text-transform: none;
 }
+
 .google-btn {
   --border-color: #0D3873;
   --background: #0D3873;
+  --color: #ffffff;
   border-radius: 8px;
-  height: 20px;
-  width: 100%; 
-  margin: 15px 5px;         
+  height: 40px;
+  width: 100%;
+  margin: 15px 0;
   justify-content: space-between;
   display: flex;
   align-items: center;
-  padding: 0px;
+  padding: 0 10px;
 }
+
 .google-icon {
   width: 20px;
   height: 20px;
-  margin-right: 10px;
 }
 
 .input-label {
@@ -105,22 +111,8 @@ ion-back-button {
   width: 100%;
 }
 
-.half-input {
-  flex: 1;
-  --background: #f1f1f1;
-  --padding-start: 10px;
-  --border-radius: 10px;
-}
-
-/* Ancien style ion-input (inutile si tu passes sur <input>) */
-ion-input {
-  --background: #f1f1f1;
-  --padding-start: 10px;
-  --border-radius: 10px;
-}
-
-/* 👉 Nouveau style pour les inputs natifs */
-.native-input {
+input,
+ion-input::part(input) {
   width: 100%;
   border: none;
   outline: none;
@@ -128,19 +120,22 @@ ion-input {
   padding: 12px 10px;
   border-radius: 10px;
   background: #f1f1f1;
+  color: #000;
   box-sizing: border-box;
 }
-.native-input:focus {
+
+input::placeholder,
+ion-input::part(input)::placeholder {
+  color: #888;
+}
+
+input:focus,
+ion-input::part(input):focus {
   border: 1px solid #0D3873;
 }
 
-ion-text small {
-  padding-left: 12px;
-  font-size: 0.85rem;
-}
-
 ion-button.login-button {
-  --background: #0D3873; 
+  --background: #0D3873;
   --color: white;
   text-transform: none;
   margin-bottom: 15px;
@@ -165,26 +160,6 @@ ion-button.login-button {
   margin-bottom: 20px;
 }
 
-.terms {
-  --background: transparent;
-  margin: 0;
-  padding: 0;
-  --inner-padding-end: 0;
-  --inner-padding-start: 0;
-  --padding-start: 0;
-  --min-height: 40px;
-}
-
-ion-checkbox.term {
-  box-shadow: 0 4px 4px rgba(15, 15, 15, 0.3);
-  color: #0D3873;
-}
-
-.password-item {
-  flex: 1;
-  margin-right: 8px;
-}
-
 .forgot-link {
   color: #0D3873;
   font-size: 0.85rem;
@@ -192,188 +167,81 @@ ion-checkbox.term {
   white-space: nowrap;
 }
 
+/* ============================
+   Styles Dark Mode
+   ============================ */
+@media (prefers-color-scheme: dark) {
+  ion-content.login-container {
+    --background: #121212;
+  }
 
-/* Styles for the login page 
-ion-toolbar {
-  --border-width: 0;
-  box-shadow: none;
-  height: 100px;
-  --min-height: 56px;
-  
-  max-width: 350px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 0 16px;
-  border-top-left-radius: 20px;
-border-top-right-radius: 20px;
-}
-ion-back-button {
-  margin-left: -20px; 
-  margin-top: 40px;
-}
- .login-container {
-  --background: #f6f6fb;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
+  .login-title,
+  .input-label,
+  .login-link,
+  .forgot-link,
+  .secondary-actions {
+    color: #ffffff;
+  }
 
-.login-wrapper {
-  background: #fff;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  padding: 24px;
-  width: 100%;
-  max-width: 350px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-  margin: auto;
-  height: 100%;
-}
-  
+  input,
+  ion-input::part(input) {
+    background: #2c2c2c;
+    color: #ffffff;
+  }
 
-.logo-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 3px;
+  input::placeholder,
+  ion-input::part(input)::placeholder {
+    color: #bbbbbb;
+  }
+
+  ion-button.login-button,
+  .google-btn {
+    --background: #0D3873;
+    --color: #ffffff;
+  }
+
+  ion-back-button {
+    color: #ffffff;
+  }
 }
 
-.logo-img {
-  width: 150px;
-  height: auto;
-  margin: 0 auto;
+/* ============================
+   Responsive
+   ============================ */
+@media (max-width: 480px) {
+  .login-wrapper {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .login-title {
+    font-size: 1.2rem;
+  }
+
+  input,
+  ion-input::part(input) {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .google-btn {
+    font-size: 14px;
+  }
 }
 
-.login-title {
-  text-align: center;
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin-top: 5px;
-  margin-bottom: 20px;
-  color: #0D3873;
-}
+@media (min-width: 768px) {
+  .login-wrapper {
+    max-width: 450px;
+    padding: 32px;
+  }
 
-.google-login {
-  margin-top: 2px;
-  text-align: center;
-  display: flex;
-}
+  .login-title {
+    font-size: 1.6rem;
+  }
 
-.text{
-  color: #f1f1f1;
-  text-transform: none;
+  input,
+  ion-input::part(input) {
+    font-size: 16px;
+    padding: 14px;
+  }
 }
-.google-btn {
-  --border-color:#0D3873;
-  --background:#0D3873;
-  border-radius: 8px;
-  height: 20px;
-  width: 100%; 
-  margin: 15px 5px;         
-  justify-content: space-between;
-  display: flex;
-  align-items: center;
-  padding: 0px;
-  
-}
-
-.google-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-}
-.input-label {
-  font-weight: 500;
-  font-size: 14px;
-  margin-bottom: 4px;
-  color: #000;
-  display: block;
-  padding-left: 4px;
-}
-
-.input-container {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  width: 100%;
-}
-
-.half-input {
-  flex: 1;
-  --background: #f1f1f1;
-  --padding-start: 10px;
-  --border-radius: 10px;
-}
-
-ion-input {
-  --background: #f1f1f1;
-  --padding-start: 10px;
-  --border-radius: 10px;
-}
-
-ion-text small {
-  padding-left: 12px;
-  font-size: 0.85rem;
-}
-
-ion-button.login-button{
-  --background: #0D3873; 
-  --color: white ;
-  text-transform: none;
-  margin-bottom: 15px;
-}
-
-.login-link{
-  color: #0D3873;
-
-}
-
-.secondary-actions {
-  text-align: center;
-  margin-top: 5px;
-  font-style: italic;
-}
-
-.bp-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 300px;
-  margin-bottom: 20px;
-}
-
-.terms {
-  --background: transparent;
-  margin: 0;
-  padding: 0;
-  --inner-padding-end: 0;
-  --inner-padding-start: 0;
-  --padding-start: 0;
-  --min-height: 40px;
-}
-
-ion-checkbox.term{
-  box-shadow: 0 4px 4px rgba(15, 15, 15, 0.3);
-  color: #0D3873;
-}
-
-.password-item {
-  flex: 1;
-  margin-right: 8px;
-}
-
-.forgot-link {
-  color: #0D3873;
-  font-size: 0.85rem;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-*/

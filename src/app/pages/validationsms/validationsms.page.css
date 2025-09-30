@@ -1,57 +1,108 @@
+/* ============================
+   Styles SMS/OTP - Mode Clair
+   ============================ */
+
 ion-toolbar {
   --border-width: 0;
   box-shadow: none;
   height: 100px;
-  --min-height: 56px; 
-  max-width: 350px;
-  margin: 0 auto;
+  --min-height: 56px;
   width: 100%;
+  margin: 0;
   padding: 0 16px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-}ion-back-button {
+}
+
+ion-back-button {
   margin-left: -20px; 
   margin-top: 50px;
+  color: #0D3873;
 }
+
 .sms-container {
   --background: #f6f6fb;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
+  width: 100%;
 }
+
 .sms-wrapper {
-  background: #fff;
+  background: transparent;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   padding: 24px;
   width: 100%;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-width: 350px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
   margin: auto;
-  height: 100%;
+  box-sizing: border-box;
 }
 
 .logo-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 6px;
+  margin-bottom: 12px;
 }
 
 .logo-img {
-  width: 150px;
+  width: 120px;
   height: auto;
 }
+
 .title-container {
   text-align: center;
-  margin-bottom: 50px; 
-  font-size: 0.5rem;
+  margin-bottom: 30px; 
+  font-size: 20px;
+  font-weight: bold;
+  color: #0D3873;
 }
 
+/* Inputs */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  width: 100%;
+}
 
+input,
+ion-input::part(input) {
+  background: #f1f1f1;
+  padding: 12px 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+  color: #000;
+  box-sizing: border-box;
+}
+
+input::placeholder,
+ion-input::part(input)::placeholder {
+  color: #999;
+}
+
+input:focus,
+ion-input::part(input):focus {
+  border: 1px solid #0D3873;
+  background: #eaeaea;
+  color: #000; 
+  outline: none;
+}
+
+.half-input {
+  flex: 1;
+  background: #f1f1f1;
+  padding-left: 10px;
+  border-radius: 10px;
+}
+
+/* Ion item */
 ion-item {
   width: 100%;
   margin-bottom: 20px;
@@ -60,43 +111,107 @@ ion-item {
   align-items: center; 
 }
 
-
-
+/* Bouton */
 ion-button.send-btn {
   --background: #0D3873;
   --color: white;
   border-radius: 8px;
-}
-
-.input-label {
-  font-weight: 500;
-  font-size: 14px;
-  margin-bottom: 4px;
-  color: #000;
-  display: block;
-  padding-left: 4px;
-}
-
-.input-container {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
   width: 100%;
 }
 
-.half-input {
-  flex: 1;
-  --background: #f1f1f1;
-  --padding-start: 10px;
-  --border-radius: 10px;
+/* ============================
+   Dark Mode
+   ============================ */
+@media (prefers-color-scheme: dark) {
+
+  ion-toolbar {
+    --background: #1e1e1e;
+    color: #ffffff;
+  }
+
+  ion-back-button {
+    color: #ffffff;
+  }
+
+  .sms-container {
+    --background: #121212;
+  }
+
+  .sms-wrapper {
+    background: transparent;
+  }
+
+  .title-container {
+    color: #ffffff;
+  }
+
+  input,
+  ion-input::part(input) {
+    background: #2c2c2c;
+    color: #ffffff;
+  }
+
+  input::placeholder,
+  ion-input::part(input)::placeholder {
+    color: #aaaaaa;
+  }
+
+  input:focus,
+  ion-input::part(input):focus {
+    background: #2c2c2c;
+    color: #ffffff;
+  }
+
+  ion-button.send-btn {
+    --background: #0D3873;
+    --color: #ffffff;
+  }
 }
 
+/* ============================
+   Responsive
+   ============================ */
+@media (max-width: 480px) {
+  .sms-wrapper {
+    padding: 16px;
+    max-width: 100%;
+  }
 
-input {
-  background: #f1f1f1;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  font-size: 14px;
-    --padding-start: 10px;
+  .title-container {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  input,
+  ion-input::part(input) {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  ion-button.send-btn {
+    font-size: 14px;
+    padding: 10px 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .sms-wrapper {
+    max-width: 450px;
+    padding: 32px;
+  }
+
+  .title-container {
+    font-size: 22px;
+  }
+
+  input,
+  ion-input::part(input) {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  ion-button.send-btn {
+    font-size: 16px;
+    padding: 12px 0;
+  }
 }
