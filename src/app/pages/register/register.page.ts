@@ -3,7 +3,7 @@ import { CommonModule, NgIf } from '@angular/common';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem,IonLabel, IonInput, IonCheckbox, IonButton, IonText, IonImg, IonSelect, IonSelectOption} from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
-import { ToastController, IonicModule } from '@ionic/angular';
+import { ToastController, IonicModule, NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -11,15 +11,17 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule, RouterModule
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule, RouterModule,
   ]
 })
 export class RegisterPage implements OnInit{
   registerForm!: FormGroup;
   maxDate!: string;
-
-  constructor(private authService: AuthService,
+  
+  constructor(
+    private authService: AuthService,
     private router: Router,
+    private navCtrl: NavController,
     private fb: FormBuilder,
     private toastCtrl: ToastController
   ) {}
@@ -79,72 +81,70 @@ export class RegisterPage implements OnInit{
     return isTooYoung ? { tooYoung: true } : null;
   }
 
-  // Soumission du formulaire d'inscription
-  async onRegister() {
-    if (this.registerForm.invalid) {
-      const toast = await this.toastCtrl.create({
-        message: 'Veuillez remplir tous les champs correctement.',
-        duration: 2000,
-        color: 'danger'
-      });
-      return await toast.present();
-    }
-
-    const formData = this.registerForm.value;
-
-    this.authService.register(formData).subscribe({
-      next: async () => {
-  // ✅ ÉTAPE 1: Confirmation stockage email
-  localStorage.setItem('email', formData.email);
-  
-  const storageToast = await this.toastCtrl.create({
-    message: '✅ Email stocké - Étape 1/3',
-    duration: 1000,
-    color: 'primary',
-    position: 'top'
-  });
-  await storageToast.present();
-
-  // ✅ ÉTAPE 2: Toast de succès
-  const successToast = await this.toastCtrl.create({
-    message: '✅ Inscription réussie! - Étape 2/3',
-    duration: 1500,
-    color: 'success', 
-    position: 'top'
-  });
-  await successToast.present();
-
-  // ✅ ÉTAPE 3: Tentative de navigation avec feedback
-  const navToast = await this.toastCtrl.create({
-    message: '🔄 Redirection... - Étape 3/3',
-    duration: 1000,
-    color: 'warning',
-    position: 'top'
-  });
-  await navToast.present();
-
-  // ✅ MULTIPLES TENTATIVES DE NAVIGATION
-  setTimeout(() => {
-    // Tentative 1
-    this.router.navigate(['/validationsms']).then(success => {
-      if (!success) {
-        // Tentative 2 après 1 seconde
-        setTimeout(() => {
-          this.router.navigateByUrl('/validationsms');
-        }, 1000);
-      }
-    });
-  }, 500);
-},
-      error: async (err) => {
+  // Soumission du formulaire d'inscription - VERSION MODIFIÉE
+    async onRegister() {
+      console.log('🔴 ÉTAPE 1: Début onRegister');
+      
+      if (this.registerForm.invalid) {
+        console.log('🔴 Formulaire invalide');
         const toast = await this.toastCtrl.create({
-          message: err.error?.message || 'Erreur lors de l’inscription.',
-          duration: 2500,
+          message: 'Veuillez remplir tous les champs correctement.',
+          duration: 2000,
           color: 'danger'
         });
-        await toast.present();
-        console.error(err);
+        return await toast.present();
       }
-    });
-  }
+
+      const formData = this.registerForm.value;
+      console.log('🔴 ÉTAPE 2: FormData prêt', formData.email);
+
+      // ✅ TEST SANS TOAST - Utiliser alert() natif
+      console.log('🟢 ÉTAPE 3: Avant alert');
+      alert('Début inscription...'); // ✅ Alerte native
+      console.log('🟢 ÉTAPE 4: Après alert');
+
+      // ✅ APPROCHE AVEC TIMEOUT DE SÉCURITÉ
+      try {
+        console.log('🔴 ÉTAPE 5: Appel authService.register');
+        
+        const registerPromise = this.authService.register(formData).toPromise();
+        
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Timeout après 10 secondes')), 10000);
+        });
+
+        console.log('🔴 ÉTAPE 6: En attente de réponse...');
+        
+        const response = await Promise.race([registerPromise, timeoutPromise]);
+        console.log('🟢 ÉTAPE 7: Réponse reçue:', response);
+        
+        // ✅ STOCKAGE EMAIL
+        localStorage.setItem('email', formData.email);
+        console.log('🟢 ÉTAPE 8: Email stocké');
+
+        // ✅ ALERTE SUCCÈS (native)
+        alert('Inscription réussie! Redirection...');
+        console.log('🟢 ÉTAPE 9: Alerte succès affichée');
+
+        // ✅ REDIRECTION
+        setTimeout(() => {
+          console.log('🟢 ÉTAPE 10: Redirection vers validationsms');
+          this.router.navigate(['/validationsms']);
+        }, 1000);
+
+      } catch (error: unknown) {
+        console.error('🔴 ERREUR CAPTURÉE:', error);
+        
+        let errorMessage = 'Erreur inconnue';
+        if (error instanceof Error) {
+          errorMessage = error.message;
+        } else if (typeof error === 'string') {
+          errorMessage = error;
+        }
+        
+        // ✅ ALERTE ERREUR (native)
+        alert('Erreur: ' + errorMessage);
+        console.log('🔴 ÉTAPE ERREUR: Alerte erreur affichée');
+      }
+    }
 }

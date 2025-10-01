@@ -14,6 +14,9 @@ import { UserAuthService } from 'src/app/services/user-auth.service';
   imports: [IonicModule, FormsModule, ReactiveFormsModule, RouterModule, CommonModule]
 })
 export class LoginPage {
+onGoogleLogin() {
+throw new Error('Method not implemented.');
+}
   loginForm: FormGroup;
 
   constructor(private fb: FormBuilder, private router: Router,

@@ -7,7 +7,6 @@ export const environment = {
   production: false,
   // Pour le développement web (navigateur) : localhost
   // Pour l'émulateur Android : 10.0.2.2
-  //apiBase: 'http:/10.0.2.2/:8081',
   apiBase: 'http://api.hysinternational.com:8080',
   // Pour l'appareil physique : 192.168.1.64 (votre IP locale)
   //apiBase: 'http://192.168.1.6:8081',
