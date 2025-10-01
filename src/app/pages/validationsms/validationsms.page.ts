@@ -5,7 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
 import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -13,7 +13,7 @@ import { ToastController } from '@ionic/angular';
   templateUrl: './validationsms.page.html',
   styleUrls: ['./validationsms.page.css'],
   standalone: true,
-  imports: [ IonicModule , CommonModule, FormsModule, ReactiveFormsModule]
+  imports: [ IonicModule , CommonModule, FormsModule, ReactiveFormsModule, RouterModule]
 })
 export class ValidationsmsPage implements OnInit {
   otpForm!: FormGroup; 

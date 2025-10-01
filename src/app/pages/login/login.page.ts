@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
 import { IonicModule, ToastController } from '@ionic/angular';
-import { CommonModule } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 
@@ -37,6 +35,8 @@ export class LoginPage {
   get password() {
     return this.loginForm.get('password')!;
   }
+  
+  onGoogleLogin(){}
 
   // Fonction pour afficher un toast (message temporaire à l'écran)
   async showToast(message: string, color: 'success' | 'danger' = 'success') {

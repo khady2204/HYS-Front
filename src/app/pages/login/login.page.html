@@ -1,19 +1,13 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="login-container" fullscreen>
+  <!-- Bouton retour -->
+  <ion-button class="back-btn" fill="clear" [routerLink]="['/home']">
+    <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+  </ion-button>
   <div class="login-wrapper">
     <div class="logo-container">
       <img src="assets/logo.png" class="logo-img">
     </div>
-
     <h2 class="login-title">Connexion</h2>
-
     <!-- Bouton Google -->
 <div class="google-login">
   <ion-button fill="outline" class="google-btn" (click)="onGoogleLogin()">
@@ -40,7 +34,7 @@
         <input type="password" formControlName="password" class="native-input" placeholder="Entrer mot de passe">
       </div>
       <ion-text color="danger" *ngIf="password.invalid && password.touched">
-        <small>Mot de passe requis (min 6 caractères)</small>
+        <small>Mot de passe requis (min 8 caractères)</small>
       </ion-text>
 
       <!-- Lien mot de passe oublié -->

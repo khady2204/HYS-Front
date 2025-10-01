@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem,IonLabel, IonInput, IonCheckbox, IonButton, IonText, IonImg, IonSelect, IonSelectOption} from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
@@ -54,15 +54,16 @@ export class RegisterPage implements OnInit{
   get password() { return this.registerForm.get('password');}
   get datenaissance() { return this.registerForm.get('datenaissance');}
   get phone() { return this.registerForm.get('phone'); }
-
+  get confirmPassword() { return this.registerForm.get('confirmPassword'); }
    
+  
   passwordMatchValidator(form: FormGroup) {
     const password = form.get('password')?.value;
     const confirm = form.get('confirmPassword')?.value;
     return password === confirm ? null : { passwordMismatch: true };
   }
 
-   //  Validateur : au moins 18 ans requis
+  //  Validateur : au moins 18 ans requis
   ageValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     if (!value) return null;
@@ -93,18 +94,48 @@ export class RegisterPage implements OnInit{
 
     this.authService.register(formData).subscribe({
       next: async () => {
-        // Stocker l'email pour vérification OTP plus tard
-        localStorage.setItem('email', formData.email);
+  // ✅ ÉTAPE 1: Confirmation stockage email
+  localStorage.setItem('email', formData.email);
+  
+  const storageToast = await this.toastCtrl.create({
+    message: '✅ Email stocké - Étape 1/3',
+    duration: 1000,
+    color: 'primary',
+    position: 'top'
+  });
+  await storageToast.present();
 
-        const toast = await this.toastCtrl.create({
-          message: 'Inscription réussie. Code OTP envoyé par email !',
-          duration: 2500,
-          color: 'success'
-        });
-        await toast.present();
+  // ✅ ÉTAPE 2: Toast de succès
+  const successToast = await this.toastCtrl.create({
+    message: '✅ Inscription réussie! - Étape 2/3',
+    duration: 1500,
+    color: 'success', 
+    position: 'top'
+  });
+  await successToast.present();
 
-        this.router.navigate(['/validationsms']);
-      },
+  // ✅ ÉTAPE 3: Tentative de navigation avec feedback
+  const navToast = await this.toastCtrl.create({
+    message: '🔄 Redirection... - Étape 3/3',
+    duration: 1000,
+    color: 'warning',
+    position: 'top'
+  });
+  await navToast.present();
+
+  // ✅ MULTIPLES TENTATIVES DE NAVIGATION
+  setTimeout(() => {
+    // Tentative 1
+    this.router.navigate(['/validationsms']).then(success => {
+      if (!success) {
+        // Tentative 2 après 1 seconde
+        setTimeout(() => {
+          this.router.navigateByUrl('/validationsms');
+        }, 1000);
+      }
+    });
+  }, 500);
+},
       error: async (err) => {
         const toast = await this.toastCtrl.create({
           message: err.error?.message || 'Erreur lors de l’inscription.',

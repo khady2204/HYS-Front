@@ -1,23 +1,8 @@
-/* ============================
-   Styles Login - Mode Clair
-   ============================ */
-
-ion-toolbar {
-  --border-width: 0;
-  box-shadow: none;
-  height: 100px;
-  --min-height: 56px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 0 16px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  background: transparent;
-}
-
-ion-back-button {
-  margin-left: -20px;
-  margin-top: 40px;
+.back-btn {
+  position: absolute;
+  top: 50px;   
+  left: 10px;  
+  z-index: 10; /* reste au-dessus du contenu */
   color: #0D3873;
 }
 

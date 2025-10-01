@@ -1,11 +1,3 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="register-container" fullscreen="">
   <div class="register-wrapper">
     <div class="logo-container">
@@ -95,6 +87,9 @@
       <div class="input-container">
         <label class="input-label">Confirmer Mot de passe</label>
         <input type="password" formControlName="confirmPassword" />
+        <div class="error" *ngIf="registerForm.hasError('passwordMismatch') && confirmPassword?.touched">
+          <small>Les mots de passe ne correspondent pas</small>
+        </div>
       </div>
 
       <!-- Conditions -->
