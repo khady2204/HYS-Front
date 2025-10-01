@@ -14,6 +14,10 @@ ion-back-button {
   margin-left: 5px;
 }
 
+.bio, .address {
+  font-style: italic;
+  color: rgb(182, 182, 182);
+}
 
 /* Boutons */
 .btn-pink {
@@ -69,6 +73,8 @@ ion-back-button {
   h5 {
     font-size: 1rem;
   }
+
+
 
   .photos {
     height: 100px;
