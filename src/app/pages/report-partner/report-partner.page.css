@@ -1,68 +1,138 @@
-h2 {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 30px;
-    padding-top: 20px;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-p {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: medium;
-    font-weight: 500;
-    margin-bottom: 20px;
-}
-
-
-
-
-.btn-pink {
-    --background: #ff008a !important;
-    margin-bottom: 50px;
-    border: none;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: 300;
-}
-
-textarea {
-    border-radius: 10px;
-    resize: none;;
-}
-
+/* ============================
+   Formulaire - Mode Clair
+   ============================ */
 #sectionForm {
-    background-color: white;
-    margin-top: -40px;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    padding: 15px;
+  background-color: #ffffff;
+  color: #000000;
+  margin-top: -40px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  padding: 20px;
+  box-shadow: 0 -4px 25px rgba(0,0,0,0.15);
 }
 
-ion-label {
-    color: #000000;
-    font-weight: bold;
+#sectionForm h2 {
+  color: #000000;
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-ion-radio::part(container) {
-  border: 1.5px solid #000;       /* Contour plus fin */
-  border-radius: 50%;             
-  width: 20px;                    
-  height: 20px;
-  box-sizing: border-box;         /* Assure que le border ne déborde pas */
+#sectionForm p {
+  color: #333333;
+  text-align: center;
+  font-size: 15px;
+  margin-bottom: 20px;
 }
 
-ion-radio::part(mark) {
-  width: 10px;
-  height: 10px;
+/* ===== Ionic items / list ===== */
+#sectionForm ion-list,
+#sectionForm ion-item {
+  --background: #ffffff;
+  --color: #000000;
+  --border-color: transparent;
+  --border-width: 0;
+  --ion-item-border-color: transparent;
+  --inner-border-width: 0;
+  border-bottom: none;
+  box-shadow: none;
+}
+
+/* Radios */
+#sectionForm ion-radio::part(container) {
+  border: 1.5px solid #000000;
   border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+}
+#sectionForm ion-radio::part(mark) {
+  background: #ffffff;
 }
 
-.custom-textarea {
-  border: 1px solid #000;    /* bordure noire */
+/* Textarea */
+#sectionForm .custom-textarea,
+#sectionForm ion-textarea {
+  background-color: #f1f1f1;
+  color: #000000;
+  border: 1px solid #ccc;
   border-radius: 10px;
-
 }
 
-ion-textarea {
-    --padding-start: 10px;
+/* Bouton */
+#sectionForm .btn-pink {
+  --background: #ff008a;
+  --color: #ffffff;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  border-radius: 8px;
 }
 
+/* ============================
+   Mode sombre
+   ============================ */
+@media (prefers-color-scheme: dark) {
+  #sectionForm {
+    background-color: #1e1e1e;
+    color: #ffffff;
+  }
+
+  #sectionForm h2 {
+    color: #ffffff;
+  }
+
+  #sectionForm p {
+    color: #dddddd;
+  }
+
+  #sectionForm ion-list,
+  #sectionForm ion-item {
+    --background: #1e1e1e;
+    --color: #ffffff;
+    --border-color: transparent;
+    --border-width: 0;
+    --ion-item-border-color: transparent;
+    --inner-border-width: 0;
+    border-bottom: none;
+    box-shadow: none;
+  }
+
+  #sectionForm ion-radio::part(container) {
+    border: 1.5px solid #ffffff;
+    background: #1e1e1e;
+  }
+
+  #sectionForm ion-radio::part(mark) {
+    background: #1e1e1e;
+  }
+
+  #sectionForm .custom-textarea,
+  #sectionForm ion-textarea {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: 1px solid #444;
+  }
+
+  #sectionForm .btn-pink {
+    --background: #ff008a;
+    --color: #ffffff;
+  }
+}
+
+/* ============================
+   Responsive
+   ============================ */
+@media (max-width: 480px) {
+  #sectionForm {
+    padding: 16px;
+  }
+
+  #sectionForm h2 {
+    font-size: 22px;
+  }
+
+  #sectionForm p {
+    font-size: 14px;
+  }
+}
