@@ -145,8 +145,14 @@ ion-toolbar {
     color: #f0f0f0;
   }
 
-  .msg-time {
-    color: #ffffff;
+  .status {
+    font-weight: 500;
+    color: green;
+    font-style: italic;
+  }
+
+  .msg-time{
+    color: #9b9b9b !important;
   }
 
   /* Chat input */

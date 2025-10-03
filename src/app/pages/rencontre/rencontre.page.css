@@ -11,16 +11,35 @@ body.dark-mode {
 
 /* ===== STORIES HORIZONTALES ===== */
 .story-container {
-  /*position: sticky; */
-  top: 120px; /* hauteur du header */
+  position: fixed;
+  top: 136px; /* ajuster selon hauteur header */
+  left: 05;
+  right: 05;
+  width: 100%;
+  min-width: 100%;
   z-index: 1000;
-  background-color: var(--bg-body);
+  background-color: transparent; /* transparent par défaut */
   padding: 0.5rem 0;
   overflow-x: auto;
   white-space: nowrap;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid transparent; /* invisible au départ */
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: background 0.3s, border-color 0.3s;
 }
 
+/* Fond léger au début du scroll */
+.story-container.scrolled {
+  background-color: rgba(255,255,255,0.95);
+  border-color: #ddd;
+}
+
+body.dark-mode .story-container.scrolled {
+  background-color: rgba(30,30,30,0.95);
+  border-color: #444;
+}
+
+/* Story ring */
 .story-ring {
   width: 56px;
   height: 56px;
@@ -44,6 +63,11 @@ body.dark-mode {
 .story-ring.read {
   border-color: #ddd;
   background: #f8f9fa;
+}
+
+body.dark-mode .story-ring.read {
+  background: #3a3a3a;
+  border-color: #555;
 }
 
 .story-avatar {
@@ -70,6 +94,10 @@ body.dark-mode {
   border: 2px solid white;
 }
 
+body.dark-mode .story-count {
+  border: 2px solid #2c2c2c;
+}
+
 @keyframes pulse {
   0% { box-shadow: 0 0 0 0 rgba(255,107,107,0.7); }
   70% { box-shadow: 0 0 0 10px rgba(255,107,107,0); }
@@ -78,6 +106,7 @@ body.dark-mode {
 
 /* ===== CARD PROFIL ===== */
 .card-profile {
+  margin-top: 50px;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -88,6 +117,12 @@ body.dark-mode {
 
 .card-profile:hover {
   transform: translateY(-5px);
+}
+
+body.dark-mode .card-profile {
+  background-color: #2c2c2c;
+  color: #f0f0f0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
 }
 
 /* ===== BUTTONS ACTION ===== */
@@ -120,23 +155,11 @@ ion-modal .btn {
 
 /* ===== MODE SOMBRE ===== */
 body.dark-mode .story-container {
-  background-color: var(--bg-body);
   border-color: #444;
 }
 
-body.dark-mode .card-profile {
-  background-color: #2c2c2c;
-  color: #f0f0f0;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-}
-
-body.dark-mode .story-ring.read {
-  background: #3a3a3a;
-  border-color: #555;
-}
-
-body.dark-mode .story-count {
-  border: 2px solid #2c2c2c;
+body.dark-mode .story-ring.unread {
+  filter: brightness(1.2);
 }
 
 body.dark-mode .btn-light {

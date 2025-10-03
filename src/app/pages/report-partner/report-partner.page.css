@@ -104,7 +104,7 @@
   }
 
   #sectionForm ion-radio::part(mark) {
-    background: #1e1e1e;
+    background: #ff008a;
   }
 
   #sectionForm .custom-textarea,

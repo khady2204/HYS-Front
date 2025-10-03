@@ -20,7 +20,7 @@
         <!-- Nom et statut -->
         <div class="ms-2 d-flex flex-column justify-content-center">
           <span class="fw-bold">{{ user?.prenom }} {{ user?.nom }}</span>
-          <small class="text-muted">{{ getUserStatus() }}</small>
+          <small class="status">{{ getUserStatus() }}</small>
         </div>
       </div>
 
@@ -70,7 +70,7 @@
         </ion-chip>
 
         <!-- Heure sous la bulle -->
-        <small class="text-muted mt-1" 
+        <small class="text-small mt-1"
               [ngClass]="{
                 'text-end': message.senderId === currentUserId,
                 'text-start': message.senderId !== currentUserId

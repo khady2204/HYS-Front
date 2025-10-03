@@ -12,13 +12,15 @@
   object-fit: cover; 
 }
 
+
+
 /* ===== Bouton options ===== */
 .options-btn {
   position: absolute;
   top: 12px;
   right: 12px;
   z-index: 30;
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(182, 182, 182, 0.05);
   border: none;
   border-radius: 50%;
   width: 40px;
@@ -28,16 +30,16 @@
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  font-size: 20px;
+  color: #fff;
 }
+
 
 .options-btn:hover {
   background-color: rgba(0,0,0,0.1);
 }
 
-.options-btn ion-icon {
-  font-size: 18px;
-  color: #000;
-}
+
 
 /* ===== Section Services ===== */
 .services-section {
@@ -82,8 +84,8 @@
   justify-content: flex-start;
   gap: 0.75rem;
   width: 100%;
-  max-width: 160px;
-  min-height: 60px;
+  max-width: 200px;
+  min-height: 90px;
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;

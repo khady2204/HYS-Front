@@ -7,6 +7,7 @@
   border-radius: 12px 0 0 12px; /* coins arrondis côté gauche */
   overflow-y: auto;
   transition: transform 0.3s ease;
+  z-index: 2000 !important;
   box-shadow: -4px 0 15px rgba(0,0,0,0.1);
 }
 
@@ -33,6 +34,7 @@ body.dark-mode .offcanvas-header {
 }
 
 .btn-close {
+  color: #ff008a;
   background: transparent;
   border: none;
   font-size: 1.5rem;
@@ -90,8 +92,54 @@ body.dark-mode .input-group-text {
   color: #f0f0f0;
   border-color: #444;
 }
+/* ===== OFFCANVAS DARK MODE AUTOMATIQUE ===== */
+@media (prefers-color-scheme: dark) {
 
-/* RESPONSIVE */
+  /* Offcanvas général */
+  .offcanvas {
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+    box-shadow: -4px 0 15px rgba(0,0,0,0.7);
+  }
+
+  /* Header */
+  .offcanvas-header {
+    border-color: #444;
+  }
+
+  body.dark-mode .offcanvas-title {
+    color: #ff008a !important;
+  }
+
+  .btn-close {
+    color: #ff008a !important;
+  }
+  .btn-close:hover {
+    color: #ff008a !important;
+  }
+
+  /* Liste des services */
+  .list-group-item {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+  }
+  .list-group-item:hover {
+    background-color: rgba(255,255,255,0.1);
+  }
+
+  .list-group-item .rounded-circle {
+    filter: brightness(1.2); /* légère mise en valeur des icônes */
+  }
+
+  /* Bouton ouvrir menu */
+  .input-group-text {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+    border-color: #444;
+  }
+}
+
+/* ===== RESPONSIVE OFFCANVAS ===== */
 @media (max-width: 768px) {
   .offcanvas {
     max-width: 100%;
