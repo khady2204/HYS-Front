@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { GoogleLoginRequest, AuthResponse } from '../models/auth.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -63,5 +64,14 @@ export class AuthService {
         localStorage.removeItem('jwtToken');
       })
     );
+  }
+
+  /**
+   * Authentification via Google OAuth
+   * @param data Objet contenant l'idToken Google
+   * @returns Observable avec le token JWT ou message d'erreur
+   */
+  googleLogin(data: GoogleLoginRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.ApiUrl}/api/auth/google-login`, data);
   }
 }

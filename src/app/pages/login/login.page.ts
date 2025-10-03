@@ -7,6 +7,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { GoogleSigninButtonComponent } from 'src/app/components/google-signin-button/google-signin-button.component';
+import { AuthResponse } from 'src/app/models/auth.dto';
 
 
 @Component({
@@ -14,7 +16,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.css'],
   standalone: true,
-  imports: [IonicModule, FormsModule, ReactiveFormsModule, RouterModule, CommonModule]
+  imports: [IonicModule, FormsModule, ReactiveFormsModule, RouterModule, CommonModule, GoogleSigninButtonComponent]
 })
 export class LoginPage {
 
@@ -102,6 +104,34 @@ export class LoginPage {
       error: (err) => {
         console.error('Erreur de connexion :', err);
         this.showToast('identifiant ou mot de passe incorrect', 'danger');
+      }
+    });
+  }
+
+  // Méthode appelée lors de la connexion Google réussie
+  onGoogleLogin(idToken: string) {
+    // Envoyer l'ID token au backend
+    this.authService.googleLogin({ idToken }).subscribe({
+      next: (res: AuthResponse) => {
+        if (res.token) {
+          // Succès : stocker le JWT et les infos utilisateur
+          this.userAuthService.setToken(res.token);
+          const payload = this.decodeToken(res.token);
+          this.userAuthService.setUser(payload);
+          console.log('Utilisateur connecté via Google:', payload);
+          if (payload?.id !== undefined) {
+            this.userAuthService.setId(String(payload.id));
+          }
+          this.showToast('Connexion Google réussie !');
+          this.router.navigate(['/accueil']);
+        } else if (res.error) {
+          // Erreur du backend
+          this.showToast(res.error, 'danger');
+        }
+      },
+      error: (err) => {
+        console.error('Erreur de connexion Google :', err);
+        this.showToast('Erreur réseau lors de la connexion Google', 'danger');
       }
     });
   }

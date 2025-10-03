@@ -9,12 +9,7 @@
     </div>
     <h2 class="login-title">Connexion</h2>
     <!-- Bouton Google -->
-<div class="google-login">
-  <ion-button fill="outline" class="google-btn">
-    <img src="assets/google-icon.png" class="google-icon" slot="start">
-    <ion-text class="text">Continuer avec Google</ion-text>
-  </ion-button>
-</div>
+    <app-google-signin-button (idToken)="onGoogleLogin($event)"></app-google-signin-button>
 
     <!-- Formulaire -->
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
