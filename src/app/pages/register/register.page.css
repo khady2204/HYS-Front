@@ -11,13 +11,14 @@
 /* Wrapper du formulaire */
 .register-wrapper {
   background: transparent; 
-  border-radius: 12px;
   padding: 24px;
   width: 100%;
-  max-width: 400px;
+  max-width: 350px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  align-items: stretch;
+  justify-content: center;
+  min-height: 100%;
   box-sizing: border-box;
 }
 
@@ -25,12 +26,11 @@
 .logo-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  
 }
 
 .logo {
-  width: 80px;
-  height: auto;
+  width: 120px;
 }
 
 /* Titre */

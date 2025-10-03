@@ -10,7 +10,7 @@ import { IonicModule } from "@ionic/angular";
   selector: 'app-header-search',
   templateUrl: './header-search.component.html',
   styleUrls: ['./header-search.component.css'],
-  imports: [IonContent, IonHeader, RouterLink, FiltreServiceComponent, IonicModule],
+  imports: [ RouterLink, FiltreServiceComponent, IonicModule],
   standalone: true
 })
 export class HeaderSearchComponent  implements OnInit {

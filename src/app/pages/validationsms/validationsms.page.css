@@ -12,13 +12,10 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 100%;
 }
 
 .sms-wrapper {
-  background: transparent;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  background: transparent; 
   padding: 24px;
   width: 100%;
   max-width: 350px;
@@ -26,7 +23,7 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
-  margin: auto;
+  min-height: 100%;
   box-sizing: border-box;
 }
 
@@ -199,5 +196,20 @@ ion-button.send-btn {
   ion-button.send-btn {
     font-size: 16px;
     padding: 12px 0;
-  }
+  }  
+
 }
+
+
+.resend-container {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.resend-container a {
+  color:#0D3873 ;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+}
+

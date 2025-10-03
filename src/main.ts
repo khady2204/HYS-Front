@@ -20,7 +20,8 @@ import {
   personCircleOutline,
   lockClosedOutline,
   pencilOutline,
-  sendOutline
+  sendOutline,
+  checkmarkOutline
 } from 'ionicons/icons';
 
 // Enregistrement des icônes Ionic utilisées dans ajouter-media
@@ -36,7 +37,8 @@ addIcons({
   'person-circle-outline': personCircleOutline,
   'lock-closed-outline': lockClosedOutline,
   'pencil-outline' : pencilOutline,
-  'send-outline' : sendOutline
+  'send-outline' : sendOutline,
+  'checkmark-outline' : checkmarkOutline
 });
 
 bootstrapApplication(AppComponent, {

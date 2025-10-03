@@ -1,23 +1,25 @@
-<ion-toolbar>
-  <ion-buttons slot="start">
-    <ion-back-button defaultHref="/validationsms" text=""></ion-back-button>
-  </ion-buttons>
-</ion-toolbar>
 <ion-content class="success-container" [fullscreen]="true">
+  <ion-button class="back-btn" fill="clear" [routerLink]="['/new-password']">
+    <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+  </ion-button>
   <div class="success-wrapper">
 
     <div class="logo-container">
       <img src="assets/logo.png" class="logo-img"><img>
     </div>
-
+     
     <div class="title-container">
       <h1>Confirmation</h1>
-    </div>
+    </div> 
+  
+    <ion-button fill="clear" class="success-btn" >
+      <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
+    </ion-button>
 
     <div class="p-container">
-      <p>Votre mot de passe a été réinitialisé avec succès. Veuillez vous connecter </p>
+      <p>Votre mot de passe a été réinitialisé avec succès. <br>Veuillez vous connecter </p>
     </div>
-      <ion-button expand="block" routerLink="/login" class="send-btn">Se connecter</ion-button>
+    <ion-button expand="block" routerLink="/login" class="send-btn">Se connecter</ion-button>
   </div>
 </ion-content>
  

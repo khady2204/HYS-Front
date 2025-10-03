@@ -39,21 +39,37 @@
 }
 .title-container {
   text-align: center;
-  margin-bottom: 50px; 
+  margin-bottom: 20px; 
   font-size: 0.5rem;
 }
 
 
 .p-container {
   text-align: center;
-  margin-bottom: 50px; 
+  margin-bottom: 40px; 
   font-size: 0.8rem;
 }
 
 
-.send-btn {
-  --background-color: #0D3873;
+ion-button.send-btn {
+  --background: #0D3873;
   --color: white;
   border-radius: 8px;
+  width: 300px;
+  margin: 0 auto ;
+}
+
+.success-btn{
+  background: green;     
+  color: white;        
+  border-radius: 6px;     
+  padding: 6px;          
+  font-size: 15px;       /* taille de l’icône */
+  display: inline-flex;  
+  justify-content: center;
+  align-items: center; 
+  width: 20px;           
+  height: 20px; 
+  margin: 0 auto 30px;
 }
 

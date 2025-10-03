@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-validationsms',
@@ -18,14 +18,17 @@ import { ToastController } from '@ionic/angular';
 export class ValidationsmsPage implements OnInit {
   otpForm!: FormGroup; 
   phoneNumber!: string;
- 
   addressEmail!: string;
+  resendDisabled = false;     // désactive le lien
+  countdown = 0;              // compteur en secondes
+  countdownInterval: any;
 
   
   constructor(private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -61,7 +64,57 @@ export class ValidationsmsPage implements OnInit {
       console.log('Formulaire invalide');
     }
   }
+  
+  
+async confirmResendOtp() {
+  const alert = await this.alertController.create({
+    header: 'Confirmation',
+    message: 'Voulez-vous renvoyer le code OTP ?',
+    buttons: [
+      {
+        text: 'Annuler',
+        role: 'cancel'
+      },
+      {
+        text: 'Oui',
+        handler: () => {
+          this.resendOtp();
+        }
+      }
+    ]
+  });
 
+  await alert.present();
+}
+
+// Fonction de renvoi OTP
+resendOtp() {
+  console.log('Nouveau OTP envoyé ');
+  // Ici on appelle le service pour renvoyer le code
+
+  // Désactiver le bouton pendant 10 minutes
+  this.resendDisabled = true;
+  this.countdown = 10 * 60; // 10 minutes en secondes
+  this.startCountdown();
+}
+
+
+  startCountdown() {
+    this.countdownInterval = setInterval(() => {
+      if (this.countdown > 0) {
+        this.countdown--;
+      } else {
+        this.resendDisabled = false;
+        clearInterval(this.countdownInterval);
+      }
+    }, 1000);
+  }
+
+  get countdownDisplay() {
+    const min = Math.floor(this.countdown / 60);
+    const sec = this.countdown % 60;
+    return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+  }
 }
 
   

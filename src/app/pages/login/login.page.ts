@@ -5,6 +5,9 @@ import { IonicModule, ToastController } from '@ionic/angular';
 import { CommonModule} from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserAuthService } from 'src/app/services/user-auth.service';
+import { firstValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-login',
@@ -20,7 +23,10 @@ export class LoginPage {
   constructor(private fb: FormBuilder, private router: Router,
     private authService: AuthService, 
     private toastController: ToastController,// Pour afficher des messages toast
-    private userAuthService: UserAuthService
+    private userAuthService: UserAuthService,
+    private http: HttpClient
+
+    
   ) {
     this.loginForm = this.fb.group({
       identifier: ['', [Validators.required,Validators.pattern( /^((\d{9,15})|([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}))$/)]],
@@ -36,8 +42,6 @@ export class LoginPage {
   get password() {
     return this.loginForm.get('password')!;
   }
-  
-  onGoogleLogin(){}
 
   // Fonction pour afficher un toast (message temporaire à l'écran)
   async showToast(message: string, color: 'success' | 'danger' = 'success') {

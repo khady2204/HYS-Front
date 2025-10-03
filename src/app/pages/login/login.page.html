@@ -10,7 +10,7 @@
     <h2 class="login-title">Connexion</h2>
     <!-- Bouton Google -->
 <div class="google-login">
-  <ion-button fill="outline" class="google-btn" (click)="onGoogleLogin()">
+  <ion-button fill="outline" class="google-btn">
     <img src="assets/google-icon.png" class="google-icon" slot="start">
     <ion-text class="text">Continuer avec Google</ion-text>
   </ion-button>
@@ -43,7 +43,7 @@
       </div>
 
       <!-- Bouton connexion -->
-      <ion-button class="login-button" expand="block" type="submit" [disabled]="loginForm.invalid">
+      <ion-button class="login-button" expand="block" type="submit">
         Se connecter
       </ion-button>
     </form>

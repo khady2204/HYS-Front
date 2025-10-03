@@ -1,6 +1,6 @@
 <ion-content class="sms-container" [fullscreen]="true">
   <!-- Bouton retour -->
-  <ion-button class="back-btn" fill="clear" [routerLink]="['/login']">
+  <ion-button class="back-btn" fill="clear" [routerLink]="['/register']">
     <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
   </ion-button>
   <div class="sms-wrapper">
@@ -17,6 +17,15 @@
       </div>
       <ion-button expand="block" class="send-btn" type="submit">Valider</ion-button>
     </form>
+    <!-- Lien pour renvoyer l’OTP -->
+    <div class="resend-container">
+      <p>
+        Vous n’avez pas reçu de code ?  
+        <a (click)="confirmResendOtp()">Renvoyer
+          <span *ngIf="resendDisabled">({{countdownDisplay}})</span>
+        </a>
+      </p>
+    </div>
   </div>
 </ion-content>
  
