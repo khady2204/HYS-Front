@@ -10,7 +10,8 @@ export const environment = {
   apiBase: 'http://api.hysinternational.com:8080',
   // Pour l'appareil physique : 192.168.1.64 (votre IP locale)
   //apiBase: 'http://192.168.1.6:8081',
-  withCredentials: true            // si tu utilises cookies/session
+  withCredentials: true,            // si tu utilises cookies/session
+  googleClientId: '440755805165-0lsmqghacaffjq393md8g6bpngn1d3a6.apps.googleusercontent.com'
 }
 
 
