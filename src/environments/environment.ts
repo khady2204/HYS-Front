@@ -3,7 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 
 // src/environments/environment.ts
-export const environment = {
+export interface Environment {
+  production: boolean;
+  apiBase: string;
+  withCredentials: boolean;
+  googleClientId: string;
+}
+
+export const environment: Environment = {
   production: false,
   // Pour le développement web (navigateur) : localhost
   // Pour l'émulateur Android : 10.0.2.2
