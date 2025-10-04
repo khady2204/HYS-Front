@@ -1,7 +1,7 @@
 /* MENU BOTTOM FIXE */
 .menu-bottom-fixed {
   position: fixed;
-  bottom: 30px; /* Descendu un peu */
+  bottom: 0; /* Descendu un peu */
   left: 0;
   right: 0;
   display: flex;
