@@ -94,8 +94,8 @@ resendOtp() {
 
   // Désactiver le bouton pendant 10 minutes
   this.resendDisabled = true;
-  this.countdown = 10 * 60; // 10 minutes en secondes
-  this.startCountdown();
+  this.countdown = 10 ; // 10 minutes en secondes
+  this.startCountdown();    // Lance le compte
 }
 
 
@@ -107,13 +107,12 @@ resendOtp() {
         this.resendDisabled = false;
         clearInterval(this.countdownInterval);
       }
-    }, 1000);
+    }, 60000);
   }
-
+  
+  // Getter pour afficher le compteur en minutes
   get countdownDisplay() {
-    const min = Math.floor(this.countdown / 60);
-    const sec = this.countdown % 60;
-    return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+    return this.countdown.toString();
   }
 }
 

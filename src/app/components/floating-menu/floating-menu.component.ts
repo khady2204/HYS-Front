@@ -6,7 +6,7 @@ import { IonIcon } from "@ionic/angular/standalone";
   selector: 'app-floating-menu',
   templateUrl: './floating-menu.component.html',
   styleUrls: ['./floating-menu.component.css'],
-  imports: [IonIcon]  // <-- AJOUT ICI
+  imports: []  // <-- AJOUT ICI
 })
 export class FloatingMenuComponent implements OnInit, OnDestroy {
 

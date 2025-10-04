@@ -21,7 +21,9 @@
     <div class="resend-container">
       <p>
         Vous n’avez pas reçu de code ?  
-        <a (click)="confirmResendOtp()">Renvoyer
+        <a [class.disabled]="resendDisabled" 
+          (click)="!resendDisabled && confirmResendOtp()">
+          Renvoyer
           <span *ngIf="resendDisabled">({{countdownDisplay}})</span>
         </a>
       </p>

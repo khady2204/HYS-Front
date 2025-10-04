@@ -213,3 +213,8 @@ ion-button.send-btn {
   text-decoration: none;
 }
 
+.resend-container a.disabled {
+  color: gray;
+  pointer-events: none; /* bloque le clic */
+  cursor: not-allowed;
+}
