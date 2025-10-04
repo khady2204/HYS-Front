@@ -35,7 +35,7 @@
   height: 100%;
   background: #fff;
   transition: right 0.3s ease;
-  z-index: 1010;
+  z-index: 1200;
   padding: 30px 20px;
   overflow-y: auto;
   box-shadow: -4px 0 15px rgba(0,0,0,0.1);
@@ -113,4 +113,72 @@
 
 .offcanvas-body .btn-pink:hover {
   background-color: #e600cc;
+}
+
+/* ====== DARK MODE AUTO ====== */
+@media (prefers-color-scheme: dark) {
+  /* Header */
+  .header-search-fixed {
+    background-color: #1e1e1e;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  }
+
+  /* Input recherche */
+  .header-search-fixed .form-control {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    color: #fff;
+  }
+  .header-search-fixed .form-control::placeholder {
+    color: #aaa;
+  }
+
+  /* Bouton filtre */
+  .header-search-fixed .btn-light {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    color: #fff;
+  }
+
+  /* Offcanvas */
+  .custom-offcanvas-full {
+    background: #121212;
+    color: #fff;
+    box-shadow: -4px 0 15px rgba(0,0,0,0.7);
+  }
+
+  .offcanvas-header h5 {
+    color: #ff66cc; /* rose plus lisible en dark */
+  }
+
+  .btn-close {
+    color: #bbb;
+  }
+  .btn-close:hover {
+    color: #ff66cc;
+  }
+
+  /* Corps du menu */
+  .offcanvas-body label {
+    color: #ddd;
+  }
+
+  .offcanvas-body input[type="number"],
+  .offcanvas-body select {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    color: #fff;
+  }
+
+  .offcanvas-body input[type="range"] {
+    accent-color: #ff66cc; /* couleur curseur range */
+  }
+}
+
+
+@media (max-width: 576px) {
+  .offcanvas-body .d-flex.gap-2 {
+    flex-direction: column !important;
+    gap: 10px; 
+  }
 }

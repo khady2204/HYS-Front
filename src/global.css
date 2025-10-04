@@ -49,7 +49,7 @@ ion-content {
 
 @media (prefers-color-scheme: dark) {
   ion-app, ion-content {
-    --background: #121212;
+    --background: #1e1e1e;
   }
 }
 

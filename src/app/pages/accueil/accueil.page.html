@@ -1,108 +1,75 @@
 <div class="image-wrapper position-relative">
 
-  <!-- Bouton "options" -->
+  <!-- Bouton options en haut à droite -->
   <div class="options-btn-wrapper">
     <button class="options-btn">
-      <i class="bi bi-three-dots-vertical text-secondary"></i>
+      <svg class="options-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+        <circle cx="12" cy="5" r="1.5"></circle>
+        <circle cx="12" cy="12" r="1.5"></circle>
+        <circle cx="12" cy="19" r="1.5"></circle>
+      </svg>
     </button>
   </div>
 
-  <!-- Image -->
+  <!-- Image principale -->
   <img src="assets/img/photo01accueil.png" class="img-fluid w-100" alt="Profil" />
 
-  <!-- Services -->
-  <div
-    class="services-section bg-white rounded-top-5 py-5 position-absolute start-0 w-100"
-    style="top: calc(100% - 40px); z-index: 10;">
+  
+  <div class="services-section rounded-top-5 py-5 position-absolute start-0 w-100">
 
+    
     <h2 class="text-center fw-bold">Nos services</h2>
 
-    <div class="row gx-3 gy-3 text-center justify-content-center px-2">
+    
+    <div class="services-row">
 
-      <!-- Service 1 : My love -->
-      <div class="col-6 d-flex justify-content-center">
-        <a
-          [routerLink]="myLoveLink"
-          class="btn text-white px-4 py-3 mb-3 d-flex align-items-center gap-2 rounded-3 fs-6 text-decoration-none"
-          style="width: 100%; max-width: 160px; background-color: #ff008A; white-space: normal; word-break: break-word;">
-          <div class="icon-wrapper d-flex align-items-center justify-content-center bg-white rounded-circle">
-            <img src="assets/icon/coeur.png" class="icon-img" alt="icon" />
-          </div>
-          My love
-        </a>
-        <ng-template #loading>
-          <div
-            class="btn text-white px-4 py-3 mb-3 d-flex align-items-center gap-2 rounded-3 fs-6 justify-content-center"
-            style="width: 100%; max-width: 160px; background-color: #ff008A;">
-            <ion-spinner name="dots" color="light"></ion-spinner>
-          </div>
-        </ng-template>
-      </div>
+      <!-- Service 1 : My Love -->
+      <a [routerLink]="myLoveLink" class="service-btn btn-myLove">
+        <div class="icon-wrapper">
+          <img src="assets/icon/coeur.png" class="icon-img" alt="icon" />
+        </div>
+        My love
+      </a>
 
       <!-- Service 2 : Santé -->
-      <div class="col-6 d-flex justify-content-center">
-        <a
-          [routerLink]="'/construction'"
-          class="btn text-white px-4 py-3 mb-3 d-flex align-items-center gap-2 rounded-3 fs-6 text-decoration-none"
-          style="width: 100%; max-width: 160px; background-color: #2E7D32; white-space: normal; word-break: break-word;">
-          <div class="icon-wrapper d-flex align-items-center justify-content-center bg-white rounded-circle">
-            <img src="assets/icon/sante.png" class="icon-img" alt="icon" />
-          </div>
-          Santé
-        </a>
-      </div>
+      <a [routerLink]="'/construction'" class="service-btn btn-sante">
+        <div class="icon-wrapper">
+          <img src="assets/icon/sante.png" class="icon-img" alt="icon" />
+        </div>
+        Santé
+      </a>
 
       <!-- Service 3 : Voyage -->
-      <div class="col-6 d-flex justify-content-center">
-        <a
-          [routerLink]="'/construction'"
-          class="btn text-white px-4 py- mb-3 d-flex align-items-center gap-2 rounded-3 fs-6 text-decoration-none"
-          style="width: 100%; max-width: 160px; background-color: #0288D1; white-space: normal; word-break: break-word;">
-          <div class="icon-wrapper d-flex align-items-center justify-content-center bg-white rounded-circle">
-            <img src="assets/icon/avion.png" class="icon-img" alt="icon" />
-          </div>
-          Voyage
-        </a>
-      </div>
+      <a [routerLink]="'/construction'" class="service-btn btn-voyage">
+        <div class="icon-wrapper">
+          <img src="assets/icon/avion.png" class="icon-img" alt="icon" />
+        </div>
+        Voyage
+      </a>
 
       <!-- Service 4 : Éducation -->
-      <div class="col-6 d-flex justify-content-center">
-        <a
-          [routerLink]="'/construction'"
-          class="btn text-white px-4 py-3 mb-3 d-flex align-items-center gap-2 rounded-3 text-decoration-none"
-          style="width: 100%; max-width: 160px; background-color: #303F9F; white-space: normal; word-break: break-word;">
-          <div class="icon-wrapper d-flex align-items-center justify-content-center bg-white rounded-circle">
-            <img src="assets/icon/education.png" class="icon-img" alt="icon" />
-          </div>
-          Éducation
-        </a>
-      </div>
+      <a [routerLink]="'/construction'" class="service-btn btn-education">
+        <div class="icon-wrapper">
+          <img src="assets/icon/education.png" class="icon-img" alt="icon" />
+        </div>
+        Éducation
+      </a>
 
       <!-- Service 5 : Religion -->
-      <div class="col-6 d-flex justify-content-center">
-        <a
-          [routerLink]="'/construction'"
-          class="btn text-white px-4 py-3 mb-3 d-flex align-items-center gap-2 rounded-3 fs-6 text-decoration-none"
-          style="width: 100%; max-width: 160px; background-color: #6A1B9A; white-space: normal; word-break: break-word;">
-          <div class="icon-wrapper d-flex align-items-center justify-content-center bg-white rounded-circle">
-            <img src="assets/icon/etoileetcroissant.png" class="icon-img" alt="icon" />
-          </div>
-          Religion
-        </a>
-      </div>
+      <a [routerLink]="'/construction'" class="service-btn btn-religion">
+        <div class="icon-wrapper">
+          <img src="assets/icon/etoileetcroissant.png" class="icon-img" alt="icon" />
+        </div>
+        Religion
+      </a>
 
       <!-- Service 6 : Bourse -->
-      <div class="col-6 d-flex justify-content-center">
-        <a
-          [routerLink]="'/construction'"
-          class="btn text-white px-4 py-3 mb-3 d-flex align-items-center gap-2 rounded-3 fs-6 text-decoration-none"
-          style="width: 100%; max-width: 160px; background-color: #F9A825; white-space: normal; word-break: break-word;">
-          <div class="icon-wrapper d-flex align-items-center justify-content-center bg-white rounded-circle">
-            <img src="assets/icon/portefeuille.png" class="icon-img" alt="icon" />
-          </div>
-          Bourse
-        </a>
-      </div>
+      <a [routerLink]="'/construction'" class="service-btn btn-bourse">
+        <div class="icon-wrapper">
+          <img src="assets/icon/portefeuille.png" class="icon-img" alt="icon" />
+        </div>
+        Bourse
+      </a>
 
     </div>
   </div>
