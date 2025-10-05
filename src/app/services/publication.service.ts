@@ -55,7 +55,7 @@ export interface CreatePublicationData {
 })
 export class PublicationService {
 
-  private apiUrl = `${environment.apiBase}/publications`;
+  private apiUrl = `${environment.apiBase}/gapi/publications`;
 
   constructor(private http: HttpClient) {}
 
