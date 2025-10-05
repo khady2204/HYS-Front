@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
-  IonContent, IonList, IonHeader, IonTitle, IonToolbar, IonAvatar,
+  IonContent, IonList, IonAvatar,
   IonItem, IonLabel, IonBadge, IonItemSliding, IonItemOptions,
   IonItemOption, IonIcon, IonButton, IonModal
 } from '@ionic/angular/standalone';
@@ -27,7 +27,7 @@ import { StoryDto, UserStories } from 'src/app/models/story.dto';
 
 @Component({
   selector: 'app-discussions',
-  templateUrl: './discussions.page.html',
+  templateUrl:'./discussions.page.html',
   styleUrls: ['./discussions.page.css'],
   standalone: true,
   imports: [ 
@@ -41,7 +41,6 @@ import { StoryDto, UserStories } from 'src/app/models/story.dto';
     IonItemOptions,
     IonAvatar,
     IonLabel,
-    IonIcon,
     IonButton,
     IonItemOption,
     IonBadge,

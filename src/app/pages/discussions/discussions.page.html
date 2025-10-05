@@ -131,7 +131,7 @@
               <!-- Dernier message avec distinction audio/image/video -->
               <p class="text-muted small mb-0" style="display: flex; align-items: center; gap: 4px;">
                 <ng-container *ngIf="discussion.messages.length > 0; else noMessage">
-                  <ng-container [ngSwitch]="discussion.messages[discussion.messages.length - 1]?.mediaType">
+                  <ng-container [ngSwitch]="discussion.messages[discussion.messages.length - 1].mediaType">
                     <span *ngSwitchCase="'image'">
                       <i class="bi bi-image"></i> Image
                     </span>
@@ -142,7 +142,7 @@
                       <i class="bi bi-mic"></i> Audio
                     </span>
                     <span *ngSwitchDefault>
-                      {{ discussion.messages[discussion.messages.length - 1]?.content }}
+                      {{ discussion.messages[discussion.messages.length - 1].content }}
                     </span>
                   </ng-container>
                 </ng-container>

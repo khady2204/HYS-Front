@@ -28,7 +28,6 @@ import { InteretService } from 'src/app/services/interet/interet.service';
   standalone: true,
   imports: [
     IonCol,
-    IonRow,
     IonText,
     IonButton,
     IonCheckbox,

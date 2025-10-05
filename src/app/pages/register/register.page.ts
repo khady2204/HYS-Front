@@ -97,12 +97,7 @@ export class RegisterPage implements OnInit{
 
       const formData = this.registerForm.value;
       console.log('🔴 ÉTAPE 2: FormData prêt', formData.email);
-
-      // ✅ TEST SANS TOAST - Utiliser alert() natif
-      console.log('🟢 ÉTAPE 3: Avant alert');
-      alert('Début inscription...'); // ✅ Alerte native
-      console.log('🟢 ÉTAPE 4: Après alert');
-
+      
       // ✅ APPROCHE AVEC TIMEOUT DE SÉCURITÉ
       try {
         console.log('🔴 ÉTAPE 5: Appel authService.register');
