@@ -3,8 +3,7 @@
 
     <!--Header-->
     <app-header-search></app-header-search>
-    <!--Header-->
-    <app-header-search></app-header-search>
+
     <!-- Stories -->
     <div class="overflow-auto px mb-3 story-container">
       <div class="d-flex gap-3 flex-nowrap">
@@ -57,8 +56,8 @@
     </div>
     <!-- Section Publications -->
     <div class="publications-section">
-      <div class="d-flex align-items-center justify-content-between mb-4">
-        <h6 class="mb-0 fw-bold text-primary">Publications</h6>
+      <div class="d-flex align-items-center justify-content-between mt-5 mb-4">
+        <h6 class="mb-0 mt-5 fw-bold text-primary">Publications</h6>
         <small class="text-muted">{{ publications.length }} publication(s)</small>
       </div>
 
@@ -107,7 +106,7 @@
         </div>
         <!-- Contenu textuel -->
         <div class="publication-content" *ngIf="pub.texte">
-          <p class="mb-3">{{ pub.texte }}</p>
+          <p class="mt-3 mb-3">{{ pub.texte }}</p>
         </div>
 
         <!-- Médias -->

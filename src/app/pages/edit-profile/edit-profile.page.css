@@ -1,48 +1,39 @@
-.toolbar-solid {
-  --background: #ffffff;
-  --color: #000000;
+:root {
+  color-scheme: light dark;
+}
 
+/* Toolbar */
+.toolbar-solid {
+  --background: light-dark(#ffffff, #1e1e1e);
+  --color: light-dark(#000000, #ffffff);
   padding-top: 30px;
 }
 
 ion-back-button {
-  color:#000000;
+  margin: 5px;
+  color: inherit;
+  --ripple-color: transparent;
 }
 
-/* Champ avec bordure uniquement */
+/* Champs avec bordure */
 .input-bordered {
-  border: 1px solid #000000;
+  border: 1px solid light-dark(#ced4da, #555);
   border-radius: 6px;
   padding: 10px;
-  background-color: #fff;
-  width: 100px;
+  background-color: light-dark(#ffffff, #1e1e1e);
+  color: light-dark(#000000, #f0f0f0);
+  width: 100%;
+  transition: all 0.3s ease;
 }
 
-/* Labels au-dessus */
-ion-label {
-  font-weight: 600;
-  margin-bottom: 4px;
-  display: block;
-}
 
-ion-input, ion-textarea {
-  --padding-start: 12px;
-  --padding-end: 12px;
-  --min-height: 45px;
-  font-size: 0.95rem;
-}
-
-ion-input:focus-within, ion-textarea:focus-within {
-  border: 1px solid #000000;
-
-}
-
+/* Profil */
 .profile-wrapper {
   display: inline-block;
   padding: 2px;
   border: 1px solid #ff008A;
   border-radius: 50%;
-  background-color: white;
+  background-color: light-dark(#ffffff, #242760);
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
@@ -51,43 +42,58 @@ ion-input:focus-within, ion-textarea:focus-within {
   height: 120px;
   border-radius: 50%;
   border: 1px solid #ff008A;
-  background-color: white;
+  background-color: light-dark(#ffffff, #1e1e1e);
+  object-fit: cover;
 }
 
+/* Boutons */
 .btn-pink {
   background-color: #ff008A;
   color: white;
   border-radius: 50%;
   padding: 6px;
+  --ripple-color: transparent;
 }
 
 .btnSave {
   --background: #ff008A;
   --color: white;
-  --background-activated: #ff008a;
-  --background-focused: #ff008a;
+  --background-activated: #cc006e;
+  --background-focused: #cc006e;
   --border-radius: 8px;
   font-weight: 600;
-
   width: 50%;
-  display: block;
-  margin: auto;
+  margin: 0 auto 50px;
   text-align: center;
-  margin-bottom: 50px;
+  --ripple-color: transparent;
 }
 
-
-.input-bordered {
-  border: 1px solid #ced4da;
-  border-radius: 6px;
-  padding: 10px;
-  background-color: #fff;
-  width: 100%;
-}
-
+/* Checkbox */
 ion-checkbox {
   --checkbox-background-checked: #ff008a;
   --checkmark-color: #fff;
   --border-color-checked: #ff008a;
-  --boder-color: #ccc;
+}
+
+/* Applique à tous les champs */
+ion-input, 
+ion-textarea {
+  --padding-start: 14px;
+  --padding-end: 14px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+
+  font-size: 0.95rem;
+  border-radius: 6px;
+  border: 1px solid light-dark(#ced4da, #555);
+  background-color: light-dark(#ffffff, #1e1e1e);
+  color: light-dark(#000000, #f0f0f0);
+  transition: all 0.2s ease;
+}
+
+/* Quand le champ est focus */
+ion-input:focus-within, 
+ion-textarea:focus-within {
+  border: 1px solid #ff008a;
+  box-shadow: 0 0 0 2px rgba(255,0,138,0.2);
 }

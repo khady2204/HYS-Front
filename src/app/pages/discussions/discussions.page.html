@@ -129,7 +129,7 @@
               
 
               <!-- Dernier message avec distinction audio/image/video -->
-              <p class="text-muted small mb-0" style="display: flex; align-items: center; gap: 4px;">
+              <p class="small mb-0" style="display: flex; align-items: center; gap: 4px;">
                 <ng-container *ngIf="discussion.messages.length > 0; else noMessage">
                   <ng-container [ngSwitch]="discussion.messages[discussion.messages.length - 1].mediaType">
                     <span *ngSwitchCase="'image'">

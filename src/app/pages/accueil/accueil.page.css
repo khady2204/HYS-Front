@@ -1,74 +1,176 @@
-h2 {
-  font-size: 30px;
-  margin-top: -25px;
-  margin-bottom: 60px;
+/* ===== Wrapper ===== */
+.image-wrapper {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Image de fond */
+.image-wrapper img {
+  width: 100%;
+  
+  object-fit: cover; 
+}
+
+
+
+/* ===== Bouton options ===== */
+.options-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 30;
+  background-color: rgba(182, 182, 182, 0.05);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 20px;
+  color: #fff;
+}
+
+
+.options-btn:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+
+
+
+/* ===== Section Services ===== */
+.services-section {
+  position: absolute;
+  top: 245px;      
+  bottom: 0;      
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  border-radius: 20px 20px 0 0;
+  padding: 40px 24px;
+  background-color: #ffffff;
+  color: #000;
+  box-shadow: 0 -4px 25px rgba(0,0,0,0.15);
+  overflow-y: auto; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===== Titres ===== */
+.services-section h2 {
+  font-size: 26px;
+  margin-bottom: 36px;
   font-family: 'Poppins', sans-serif;
+  text-align: center;
 }
 
-a {
-  font-family: 'Roboto', sans-serif;
+/* ===== Services container ===== */
+.services-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+}
+
+/* ===== BOUTONS SERVICES ===== */
+.service-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 200px;
+  min-height: 90px;
+  font-size: 14px;
   font-weight: 600;
-  font-size: 15px;
-  white-space: normal;       
-  word-break: break-word;    
-  text-align: left;
+  text-decoration: none;
+  border-radius: 14px;
+  color: #ffffff !important;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  padding: 0.875rem 1rem;
+  border: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
+.service-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  color: #ffffff !important;
+}
+
+/* ===== ICÔNES ===== */
 .icon-wrapper {
   width: 36px;
   height: 36px;
   padding: 6px;
-  flex-shrink: 0;              
+  background: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .icon-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: brightness(0);       
+  filter: brightness(0);
+  transition: filter 0.3s ease;
 }
 
-.options-btn-wrapper {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 20;
-  background-color: rgba(219, 219, 219, 0.5);
-  border: none;
-  border-radius: 50%;
-  margin: 10px 5px;
-  padding: 5px;
-}
+/* ===== Couleurs par service ===== */
+.btn-myLove    { background-color: #ff008a; }
+.btn-sante     { background-color: #2E7D32; }
+.btn-voyage    { background-color: #0288D1; }
+.btn-education { background-color: #303F9F; }
+.btn-religion  { background-color: #6A1B9A; }
+.btn-bourse    { background-color: #F9A825; }
 
-.btn {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 10px;
-  width: 100%;
-  max-width: 160px;
-  min-height: 60px;
-  white-space: normal;
-  word-break: break-word;
-  text-align: left;
-  padding: 12px 16px;
-  border: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-/**
-**
-**
-*/
-
-@media (max-width: 480px) {
-  .btn {
-    max-width: 140px;
-    font-size: 13px;
-    padding: 10px 12px;
+/* ===== Dark mode automatique ===== */
+@media (prefers-color-scheme: dark) {
+  .services-section {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    box-shadow: 0 -4px 25px rgba(0,0,0,0.25);
   }
 
-  h2 {
-    font-size: 24px;
+  .icon-wrapper {
+    background-color: #fff;
+  }
+
+  .icon-img {
+    filter: brightness(0);
+  }
+
+  .options-btn ion-icon {
+    color: #fff;
+  }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+  .service-btn {
+    max-width: 140px;
+    font-size: 12px;
+    padding: 12px;
+    min-height: 55px;
+  }
+
+  .services-section {
+    padding: 30px 16px;
+  }
+
+  .services-section h2 {
+    font-size: 22px;
+    margin-bottom: 28px;
   }
 }

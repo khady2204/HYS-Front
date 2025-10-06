@@ -8,7 +8,7 @@
     <!-- Icône retour -->
     <i class="bi bi-arrow-left fs-4 text-dark fw-bold" (click)="goBack()"></i>
 
-    <!-- Menu déroulant centré -->
+    <!-- Menu déroulant -->
     <app-dropdown-drawer></app-dropdown-drawer>
 
     <!-- Avatar -->
@@ -23,48 +23,47 @@
     </a>
   </div>
 
-  <!-- Form section -->
-<div id="sectionForm">
-  <h2>Bloquer ou signaler</h2>
-  <p>Pourquoi souhaitez-vous bloquer ou signaler votre partenaire ?</p>
+  <!-- Section formulaire -->
+  <div id="sectionForm">
+    <h2>Bloquer ou signaler</h2>
+    <p>Pourquoi souhaitez-vous bloquer ou signaler votre partenaire ?</p>
 
-  <form>
+    <form>
 
-    <!-- Radios Ionic -->
-    <ion-list lines="none">
-      <ion-radio-group name="reason">
+      <!-- Radios Ionic -->
+      <ion-list lines="none">
+        <ion-radio-group name="reason">
 
-        <ion-item class="mb-2">
-          <ion-radio slot="start" value="Comportement inapproprié"></ion-radio>
-          <ion-label>Comportement inapproprié</ion-label>
-        </ion-item>
+          <ion-item class="mb-2">
+            <ion-radio slot="start" value="Comportement inapproprié"></ion-radio>
+            <ion-label>Comportement inapproprié</ion-label>
+          </ion-item>
 
-        <ion-item class="mb-2">
-          <ion-radio slot="start" value="Faux profil"></ion-radio>
-          <ion-label>Faux profil</ion-label>
-        </ion-item>
+          <ion-item class="mb-2">
+            <ion-radio slot="start" value="Faux profil"></ion-radio>
+            <ion-label>Faux profil</ion-label>
+          </ion-item>
 
-        <ion-item class="mb-2">
-          <ion-radio slot="start" value="Autre"></ion-radio>
-          <ion-label>Autre</ion-label>
-        </ion-item>
+          <ion-item class="mb-2">
+            <ion-radio slot="start" value="Autre"></ion-radio>
+            <ion-label>Autre</ion-label>
+          </ion-item>
 
-      </ion-radio-group>
-    </ion-list>
+        </ion-radio-group>
+      </ion-list>
 
-    <!-- Commentaires -->
-    <div class="mb-4 mt-6">
-      <p class="fw-semibold">Commentaires supplémentaires</p>
-      <ion-textarea rows="4" placeholder="Écrivez ici..." class="custom-textarea"></ion-textarea>
-    </div>
+      <!-- Commentaires -->
+      <div class="mb-4 mt-4">
+        <p class="fw-semibold">Commentaires supplémentaires</p>
+        <ion-textarea rows="4" placeholder="Écrivez ici..." class="custom-textarea"></ion-textarea>
+      </div>
 
-    <!-- Bouton Envoyer -->
-    <ion-button expand="block" class="btn-pink text-white fw-bold">Envoyer</ion-button>
-
-  </form>
-</div>
+      <!-- Bouton -->
+      <ion-button expand="block" class="btn-pink fw-bold">Envoyer</ion-button>
+    </form>
+  </div>
 
   <!-- Menu flottant -->
   <app-floating-menu></app-floating-menu>
-  
+
 </ion-content>

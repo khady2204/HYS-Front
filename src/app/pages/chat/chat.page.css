@@ -1,5 +1,8 @@
+/* ===========================
+   BASE (THEME CLAIR)
+=========================== */
 .message-container-wrapper {
-  padding-bottom: 120px; 
+  padding-bottom: 120px;
 }
 
 /* Alignement bulles */
@@ -36,35 +39,20 @@ ion-chip.received {
   font-size: 0.7rem;
   color: gray;
   margin-top: 5px;
-  align-self: flex-end; 
+  align-self: flex-end;
 }
 
-
-/* Média (image, vidéo) */
+/* Média (image, vidéo, audio) */
 .media-msg {
   max-width: 200px;
   border-radius: 8px;
   margin-top: 5px;
 }
 
-/* Champ de saisie 
-.chat-input ion-input {
-  background: #f5f5f5;
-  border-radius: 50px;
-  padding-left: 15px;
-  flex: 1;
-} */
-
-.chat-input ion-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
+/* Ion Header / Toolbar */
 ion-header {
   background-color: #ffffff; 
-  padding-top:20px;
-
+  padding-top: 20px;
   --background: white; 
 }
 
@@ -77,6 +65,7 @@ ion-toolbar {
   background-color: white !important;
 }
 
+/* Chat input */
 .chat-input {
   position: fixed;
   bottom: 0;
@@ -91,6 +80,25 @@ ion-toolbar {
   gap: 0.5rem;
 }
 
+.chat-input ion-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-input input.form-control {
+  flex: 1;
+  border: none;
+  background-color: #f5f5f5;
+  border-radius: 50px;
+  padding: 10px 16px;
+  color: #000;
+}
+
+.chat-input input.form-control::placeholder {
+  color: gray;
+}
+
 .content-wrapper {
   padding-bottom: 80px;
 }
@@ -100,4 +108,83 @@ ion-toolbar {
   bottom: 60px;
   left: 10px;
   z-index: 1001;
+}
+
+/* ===========================
+   THEME SOMBRE
+=========================== */
+@media (prefers-color-scheme: dark) {
+  ion-content {
+    --background: #1e1e1e;
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+  }
+
+  ion-header, ion-toolbar {
+    --background: #1e1e1e !important;
+    background-color: #1e1e1e !important;
+    color: #f0f0f0;
+  }
+
+  ion-back-button {
+    --color: #f0f0f0;
+  }
+
+  /* Bulles */
+  ion-chip.sent {
+    --background: #242760;
+    color: #fff;
+  }
+
+  ion-chip.received {
+    --background: #333;
+    color: #f0f0f0;
+  }
+
+  .bubble-content div {
+    color: #f0f0f0;
+  }
+
+  .status {
+    font-weight: 500;
+    color: green;
+    font-style: italic;
+  }
+
+  .msg-time{
+    color: #9b9b9b !important;
+  }
+
+  /* Chat input */
+  .chat-input {
+    background-color: #2b2b2b !important;
+    border-top: 1px solid #444 !important;
+  }
+
+  .chat-input input.form-control {
+    background-color: #333 !important;
+    color: #f0f0f0 !important;
+  }
+
+  .chat-input input.form-control::placeholder {
+    color: #aaa !important;
+  }
+
+  /* Icônes */
+  .chat-input ion-button,
+  .chat-input button,
+  .chat-input i.bi {
+    color: #f0f0f0 !important;
+  }
+
+  /* Preview media */
+  .preview-container img,
+  .preview-container video {
+    filter: brightness(0.9) !important;
+  }
+
+  .preview-container button {
+    background-color: rgba(255,255,255,0.1) !important;
+    color: #f0f0f0 !important;
+  }
 }

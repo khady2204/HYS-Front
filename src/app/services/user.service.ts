@@ -23,7 +23,7 @@ export interface updateProfileRequest {
 })
 export class UserService {
 
-  private baseUrl = environment.apiBase ;
+  private baseUrl = environment.apiBase;
 
   constructor(private http: HttpClient) { }
 
