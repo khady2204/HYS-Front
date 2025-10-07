@@ -67,7 +67,7 @@ export class HeaderSearchComponent implements OnInit, OnDestroy {
     this.autoRefreshSub?.unsubscribe();
   }
 
-  // ✅ Basculer l'affichage du filtre
+  // Basculer l'affichage du filtre
   toggleFilter(): void {
     this.filterOpen = !this.filterOpen;
   }
