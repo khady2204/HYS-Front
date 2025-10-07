@@ -27,7 +27,6 @@ import { InteretService } from 'src/app/services/interet/interet.service';
   styleUrls: ['./interets.page.css'],
   standalone: true,
   imports: [
-    IonCol,
     IonText,
     IonButton,
     IonCheckbox,
@@ -41,12 +40,9 @@ import { InteretService } from 'src/app/services/interet/interet.service';
 })
 export class InteretsPage implements OnInit {
 
-  interets: any[] = [];
+  categories: any[] = [];  
   selectedInterets: number[] = [];
   userId: number | null = null;
-
-  leftColumn: any[] = [];
-  rightColumn: any[] = [];
 
   constructor(
     private userAuthService: UserAuthService,
@@ -57,7 +53,6 @@ export class InteretsPage implements OnInit {
 
   ngOnInit() {
     const token = localStorage.getItem('jwtToken');
-
     if (!token) {
       console.warn("Utilisateur non authentifié.");
       this.router.navigate(['/login']);
@@ -69,18 +64,32 @@ export class InteretsPage implements OnInit {
 
     this.interetService.getAllInterets().subscribe({
       next: (interets: any[]) => {
-        this.interets = interets.map((i: any) => ({ id: i.id, nom: i.nom }));
-        const middle = Math.ceil(this.interets.length / 2);
-        this.leftColumn = this.interets.slice(0, middle);
-        this.rightColumn = this.interets.slice(middle);
-        console.log(" Intérêts chargés :", this.interets);
+        console.log("Intérêts récupérés :", interets);
+
+        // Regrouper les intérêts par catégorie (en fonction du champ 'categorie' renvoyé par ton API)
+        this.categories = this.groupByCategorie(interets);
       },
       error: (err) => {
-        console.error(" Erreur lors du chargement des intérêts :", err);
+        console.error("Erreur lors du chargement des intérêts :", err);
       }
     });
   }
-  
+
+  // Regroupe les intérêts par catégorie
+  groupByCategorie(interets: any[]) {
+    const grouped: any = {};
+    interets.forEach((i) => {
+      const cat = i.categorie ;
+      if (!grouped[cat]) grouped[cat] = [];
+      grouped[cat].push(i);
+    });
+
+    // Convertit l’objet en tableau [{nom, interets: []}]
+    return Object.keys(grouped).map(cat => ({
+      nom: cat,
+      interets: grouped[cat]
+    }));
+  }
 
   toggleSelection(interetId: number) {
     if (this.selectedInterets.includes(interetId)) {
@@ -106,15 +115,15 @@ export class InteretsPage implements OnInit {
       interetIds: this.selectedInterets
     };
 
-    console.log(" Payload envoyé :", payload);
+    console.log("Payload envoyé :", payload);
 
     this.interetService.createUserInteret(payload).subscribe({
       next: () => {
         this.showToast("Choix enregistré avec succès !", 'success');
-        this.router.navigate(['/suggestion']);
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
-        console.error(" Erreur lors de l'envoi des intérêts :", err);
+        console.error("Erreur lors de l'envoi des intérêts :", err);
         this.showToast("Erreur lors de l'envoi des centres d'intérêt. Veuillez réessayer.", 'danger');
       }
     });
@@ -128,4 +137,5 @@ export class InteretsPage implements OnInit {
     });
     toast.present();
   }
+
 }

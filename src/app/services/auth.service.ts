@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { GoogleLoginRequest, AuthResponse } from '../models/auth.dto';
+import { UserAuthService } from './user-auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +13,22 @@ export class AuthService {
 
   public ApiUrl = environment.apiBase ;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userAuth: UserAuthService) {}
 
   register(data: any): Observable<any>{
     return this.http.post(`${this.ApiUrl}/api/auth/register`, data);
   }
 
   login(credentials: { email: string; phone: string; password: string }): Observable<any> {
-    return this.http.post<any>(`${this.ApiUrl}/api/auth/login`, credentials);
+    return this.http.post<any>(`${this.ApiUrl}/api/auth/login`, credentials).pipe(
+      tap((res: any) => {
+        if (res?.token) this.userAuth.setToken(res.token);
+        if (res?.user) {
+          this.userAuth.setUser(res.user);
+          this.userAuth.setId(res.user.id?.toString() ?? '');
+        }
+      })
+    );
   }
 
   /**
@@ -60,8 +69,7 @@ export class AuthService {
   logout(): Observable<any> {
     return this.http.post(`${this.ApiUrl}/api/auth/logout`, {}).pipe(
       tap(() => {
-        // Supprimer le token localement
-        localStorage.removeItem('jwtToken');
+        this.userAuth.clear();
       })
     );
   }

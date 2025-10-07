@@ -26,7 +26,14 @@
       <!-- Mot de passe -->
       <div class="input-container">
         <label class="input-label">Mot de passe</label>
-        <input type="password" formControlName="password" class="native-input" placeholder="Entrer mot de passe">
+        <input [type]="showPassword ? 'text' : 'password'"  
+          formControlName="password" class="native-input"
+          placeholder="Entrer mot de passe">
+        <ion-icon 
+          slot="end" 
+          [name]="showPassword ? 'eye-off-outline' : 'eye-outline'" class="toggle-password"
+          (click)="togglePasswordVisibility()">
+        </ion-icon>
       </div>
       <ion-text color="danger" *ngIf="password.invalid && password.touched">
         <small>Mot de passe requis (min 8 caractères)</small>

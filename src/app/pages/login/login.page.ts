@@ -45,6 +45,13 @@ export class LoginPage {
     return this.loginForm.get('password')!;
   }
 
+  showPassword = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+  
+
   // Fonction pour afficher un toast (message temporaire à l'écran)
   async showToast(message: string, color: 'success' | 'danger' = 'success') {
     const toast = await this.toastController.create({

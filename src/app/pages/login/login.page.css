@@ -119,6 +119,20 @@ ion-input::part(input):focus {
   border: 1px solid #0D3873;
 }
 
+.password-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #888;
+  cursor: pointer;
+}
+
 ion-button.login-button {
   --background: #0D3873;
   --color: white;

@@ -21,7 +21,9 @@ import {
   lockClosedOutline,
   pencilOutline,
   sendOutline,
-  checkmarkOutline
+  checkmarkOutline,
+  eyeOffOutline,
+  eyeOutline
 } from 'ionicons/icons';
 
 // Enregistrement des icônes Ionic utilisées dans ajouter-media
@@ -38,7 +40,9 @@ addIcons({
   'lock-closed-outline': lockClosedOutline,
   'pencil-outline' : pencilOutline,
   'send-outline' : sendOutline,
-  'checkmark-outline' : checkmarkOutline
+  'checkmark-outline' : checkmarkOutline,
+  'eye-off-outline' : eyeOffOutline ,
+  'eye-outline' : eyeOutline
 });
 
 bootstrapApplication(AppComponent, {

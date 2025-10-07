@@ -55,7 +55,7 @@ export class UserAuthService {
   }
 
   isAuthenticated(): boolean {
-    return this.getToken() !== null && this.getId() !== null;
+    return !!this.getToken();
   }
 
   
