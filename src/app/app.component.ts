@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
         this.router.navigateByUrl('/dashboard', { replaceUrl: true });
       } else {
         // Sinon, il est connecté mais doit encore choisir ses intérêts
-        this.router.navigateByUrl('/interets', { replaceUrl: true });
+        this.router.navigateByUrl('/accueil', { replaceUrl: true });
       }
     } else {
       // Première fois ou utilisateur déconnecté : on reste sur Home
