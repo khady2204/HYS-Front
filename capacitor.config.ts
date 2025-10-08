@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.helpingyourself.hysfront',  // Identifiant unique pour votre app
-  appName: 'HYS-Front',
+  appName: 'Helping Yourself',
   webDir: 'www',
   server: {
     cleartext: true,
@@ -10,7 +10,7 @@ const config: CapacitorConfig = {
   },
   plugins: {
     Keyboard: {
-      resize: "body", // options: "body", "native", "none"
+      resize: "none", // options: "body", "native", "none"
       style: "light",
       scrollAssist: true,
       resizeOnFullScreen: true
