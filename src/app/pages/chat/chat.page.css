@@ -1,21 +1,69 @@
 /* ===========================
-   BASE (THEME CLAIR)
+   HEADER CUSTOM
 =========================== */
-.message-container-wrapper {
-  padding-bottom: 120px;
+.custom-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;        
+  justify-content: flex-start; 
+  gap: 12px;
+  padding-top: calc(env(safe-area-inset-top) + 30px); 
+  padding-right: 16px;
+  padding-bottom: 12px;
+  padding-left: 16px;
+  background-color: light-dark(#ffffff, #1e1e1e);
+  color: light-dark(#000000, #ffffff);
+  z-index: 9999;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  backdrop-filter: blur(6px);
 }
 
-/* Alignement bulles */
-.message-container.sent {
-  justify-content: flex-end;
+.back-btn {
+  border: none;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: light-dark(#000000, #ffffff);
+  font-size: 1.3rem;
+  /* plus de margin excessive ici */
 }
-.message-container.received {
-  justify-content: flex-start;
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* espace entre avatar et texte */
+}
+
+.header-user ion-avatar {
+  width: 50px;
+  height: 50px;
+}
+
+.header-user .ms-2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0; /* pas besoin de margin excessive */
+}
+
+/* ===========================
+   ZONE MESSAGES
+=========================== */
+.message-container-wrapper {
+  padding-top: 60px; /* pour header */
+  padding-bottom: 140px; /* pour chat input */
+  overflow-y: auto;
 }
 
 /* Bulles */
 ion-chip.sent {
-  --background: #000;
+  background: #000;
   color: #fff;
   border-radius: 20px 20px 0 20px;
   padding: 10px 14px;
@@ -23,7 +71,7 @@ ion-chip.sent {
 }
 
 ion-chip.received {
-  --background: #f0f0f0;
+  background: #f0f0f0;
   color: #000;
   border-radius: 20px 20px 20px 0;
   padding: 10px 14px;
@@ -42,30 +90,49 @@ ion-chip.received {
   align-self: flex-end;
 }
 
-/* Média (image, vidéo, audio) */
+/* Alignement bulles */
+.align-items-end {
+  align-items: flex-end;
+}
+
+.align-items-start {
+  align-items: flex-start;
+}
+
+/* Média */
 .media-msg {
   max-width: 200px;
   border-radius: 8px;
   margin-top: 5px;
 }
 
-/* Ion Header / Toolbar */
-ion-header {
-  background-color: #ffffff; 
-  padding-top: 20px;
-  --background: white; 
+/* Preview media */
+.preview-container {
+  display: inline-block;
+  position: relative;
+  margin: 10px 0;
 }
 
-ion-back-button {
-  --color: #000000;
+.preview-container img,
+.preview-container video {
+  max-width: 200px;
+  border-radius: 8px;
+  margin-bottom: 70px;
 }
 
-ion-toolbar {
-  --background: white !important;
-  background-color: white !important;
+.preview-container button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border-radius: 50%;
+  background-color: rgba(255,255,255,0.8);
+  border: none;
+  cursor: pointer;
 }
 
-/* Chat input */
+/* ===========================
+   CHAT INPUT
+=========================== */
 .chat-input {
   position: fixed;
   bottom: 0;
@@ -78,12 +145,6 @@ ion-toolbar {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-
-.chat-input ion-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .chat-input input.form-control {
@@ -99,15 +160,34 @@ ion-toolbar {
   color: gray;
 }
 
-.content-wrapper {
-  padding-bottom: 80px;
+.chat-input ion-button,
+.chat-input button,
+.chat-input i.bi {
+  color: #000;
 }
 
+/* Sous-options (+, image, photo) */
 .chat-input .flex {
   position: absolute;
   bottom: 60px;
   left: 10px;
   z-index: 1001;
+  display: flex;
+  gap: 10px;
+}
+
+/* ===========================
+   BASE THEME CLAIR
+=========================== */
+body {
+  background-color: #ffffff;
+  color: #000;
+}
+
+.status {
+  font-weight: 500;
+  font-style: italic;
+  color: green;
 }
 
 /* ===========================
@@ -120,24 +200,22 @@ ion-toolbar {
     color: #f0f0f0;
   }
 
-  ion-header, ion-toolbar {
-    --background: #1e1e1e !important;
-    background-color: #1e1e1e !important;
+  .custom-header {
+    background-color: #1e1e1e;
     color: #f0f0f0;
   }
 
-  ion-back-button {
-    --color: #f0f0f0;
+  .back-btn {
+    color: #f0f0f0;
   }
 
   /* Bulles */
   ion-chip.sent {
-    --background: #242760;
+    background: #242760;
     color: #fff;
   }
-
   ion-chip.received {
-    --background: #333;
+    background: #333;
     color: #f0f0f0;
   }
 
@@ -146,12 +224,10 @@ ion-toolbar {
   }
 
   .status {
-    font-weight: 500;
     color: green;
-    font-style: italic;
   }
 
-  .msg-time{
+  .msg-time {
     color: #9b9b9b !important;
   }
 
@@ -170,7 +246,6 @@ ion-toolbar {
     color: #aaa !important;
   }
 
-  /* Icônes */
   .chat-input ion-button,
   .chat-input button,
   .chat-input i.bi {
