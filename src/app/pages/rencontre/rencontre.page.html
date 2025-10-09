@@ -1,56 +1,59 @@
 <ion-content class="" fullscreen>
-  <div class="container py-3">
+  <div class="container py-3 content-offset">
 
     <!--Header-->
     <app-header-search></app-header-search>
 
     <!-- Stories -->
-    <div class="overflow-auto px mb-3 story-container">
-      <div class="d-flex gap-3 flex-nowrap">
-        <div class="text-center">
-          <div class="story-ring me-1 d-flex justify-content-center align-items-center"
-            style="width: 56px; height: 56px;" (click)="openMyStories()">
-            <i class="bi bi-person text-grey fs-2"></i>
-          </div>
-          <small class="d-block mt-1">Moi</small>
-        </div>
-
-        <div class="text-center">
-          <div class="story-ring me-1 d-flex justify-content-center align-items-center"
-            style="width: 56px; height: 56px;" (click)="openAddStory()">
-            <i class="bi bi-plus text-grey fs-2"></i>
-          </div>
-          <small class="d-block mt-1">Ajouter</small>
-        </div>
-
-        <!-- Loading state -->
-        <div *ngIf="isLoading" class="text-center">
-          <div class="story-ring me-1 d-flex justify-content-center align-items-center"
-            style="width: 56px; height: 56px;">
-            <i class="bi bi-arrow-clockwise text-grey fs-2"></i>
-          </div>
-          <small class="d-block mt-1">Chargement...</small>
-        </div>
-
-        <!-- Error state -->
-        <div *ngIf="error" class="text-center">
-          <div class="story-ring me-1 d-flex justify-content-center align-items-center"
-            style="width: 56px; height: 56px;">
-            <i class="bi bi-exclamation-triangle text-danger fs-2"></i>
-          </div>
-          <small class="d-block mt-1 text-danger">{{ error }}</small>
-        </div>
-
-        <!-- Stories groupées par utilisateur -->
-        <div class="text-center" *ngFor="let userStory of userStories" (click)="openStory(userStory)">
-          <div [ngClass]="userStory.hasUnreadStories ? 'story-ring unread' : 'story-ring read'">
-            <img [src]="userStory.userProfileImage || 'assets/img/myLOve/account.png'" alt="" class="story-avatar">
-            <!-- Indicateur de nombre de stories -->
-            <div *ngIf="userStory.totalStories > 1" class="story-count">
-              {{ userStory.totalStories }}
+ <!-- Stories -->
+    <div class="mb-3 story-container">
+      <div class="overflow-auto">
+        <div class="d-flex gap-3 flex-nowrap">
+          <div class="text-center">
+            <div class="story-ring me-1 d-flex justify-content-center align-items-center"
+              style="width: 56px; height: 56px;" (click)="openMyStories()">
+              <i class="bi bi-person text-grey fs-2"></i>
             </div>
+            <small class="d-block mt-8">Moi</small>
           </div>
-          <small class="d-block mt-1 text-truncate" style="width: 56px;">{{ userStory.userFullName }}</small>
+
+          <div class="text-center">
+            <div class="story-ring me-1 d-flex justify-content-center align-items-center"
+              style="width: 56px; height: 56px;" (click)="openAddStory()">
+              <i class="bi bi-plus text-grey fs-2"></i>
+            </div>
+            <small class="d-block mt-1">Ajouter</small>
+          </div>
+
+          <!-- Loading state -->
+          <div *ngIf="isLoading" class="text-center">
+            <div class="story-ring me-1 d-flex justify-content-center align-items-center"
+              style="width: 56px; height: 56px;">
+              <i class="bi bi-arrow-clockwise text-grey fs-2"></i>
+            </div>
+            <small class="d-block mt-1">Chargement...</small>
+          </div>
+
+          <!-- Error state -->
+          <div *ngIf="error" class="text-center">
+            <div class="story-ring me-1 d-flex justify-content-center align-items-center"
+              style="width: 56px; height: 56px;">
+              <i class="bi bi-exclamation-triangle text-danger fs-2"></i>
+            </div>
+            <small class="d-block mt-1 text-danger">{{ error }}</small>
+          </div>
+
+          <!-- Stories groupées par utilisateur -->
+          <div class="text-center" *ngFor="let userStory of userStories" (click)="openStory(userStory)">
+            <div [ngClass]="userStory.hasUnreadStories ? 'story-ring unread' : 'story-ring read'">
+              <img [src]="userStory.userProfileImage || 'assets/img/myLOve/account.png'" alt="" class="story-avatar">
+              <!-- Indicateur de nombre de stories -->
+              <div *ngIf="userStory.totalStories > 1" class="story-count">
+                {{ userStory.totalStories }}
+              </div>
+            </div>
+            <small class="d-block mt-1 text-truncate" style="width: 56px;">{{ userStory.userFullName }}</small>
+          </div>
         </div>
       </div>
     </div>
@@ -88,7 +91,7 @@
             </div>
             <div class="ms-3 flex-grow-1">
               <h6 class="mb-0 fw-semibold">{{ pub.auteurNom }}</h6>
-              <small class="text-muted">{{ getRelativeTime(pub.dateCreation) }}</small>
+              <small class="text-muted">{{ getRelativeTime(pub.createdAt) }}</small>
             </div>
             <div class="dropdown" *ngIf="canDeletePublication(pub)">
               <button class="btn btn-link text-muted p-1" type="button" data-bs-toggle="dropdown">

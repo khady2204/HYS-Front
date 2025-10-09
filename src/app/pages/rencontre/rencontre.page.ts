@@ -254,7 +254,7 @@ export class RencontrePage implements OnInit {
         publication.nombrePartages += 1;
 
         // Partage natif si disponible
-        const url = `${environment.apiBase}/publications/${publication.id}`;
+        const url = `${environment.apiBase}/publications/${publication.id}/partager`;
         if (navigator.share) {
           navigator.share({
             title: 'Voir cette publication',

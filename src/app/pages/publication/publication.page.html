@@ -1,12 +1,10 @@
 <ion-header class="modern-header">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button fill="clear" (click)="goBack()">
-        <ion-icon name="close-outline"></ion-icon>
-      </ion-button>
+      <ion-back-button defaultHref="/" text=""></ion-back-button>
     </ion-buttons>
 
-    <ion-title>Créer une publication</ion-title>
+    <ion-title class="responsive-title">Créer une publication</ion-title>
 
     <ion-buttons slot="end">
       <ion-button
@@ -14,7 +12,7 @@
         (click)="publier()"
         class="publish-btn"
         [class.publishing]="isPublishing">
-        <span *ngIf="!isPublishing">Publier</span>
+        <span *ngIf="!isPublishing" class="publish-text">Publier</span>
         <ion-spinner *ngIf="isPublishing" name="crescent"></ion-spinner>
       </ion-button>
     </ion-buttons>
@@ -82,3 +80,4 @@
   hidden
   multiple
 />
+

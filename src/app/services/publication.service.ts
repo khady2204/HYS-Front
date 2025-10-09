@@ -55,7 +55,7 @@ export interface CreatePublicationData {
 })
 export class PublicationService {
 
-  private apiUrl = `${environment.apiBase}/gapi/publications`;
+  private apiUrl = `${environment.apiBase}/publications`;
 
   constructor(private http: HttpClient) {}
 
@@ -125,7 +125,7 @@ export class PublicationService {
   /**
    * Récupère une publication par ID
    */
-  getPublicationById(id: number): Observable<Publication> {
+  getPublicationById(id: number): Observable<Publication> { 
     return this.http.get<Publication>(`${this.apiUrl}/${id}`, this.getHttpOptions());
   }
 

@@ -14,7 +14,7 @@ export interface Commentaire {
   contenu: string;
   auteurNom: string;
   likesCount: number;
-  dateCreation: string;
+  createdAt: string;
   auteurAvatar?: string;
 }
 
@@ -26,7 +26,7 @@ export interface Publication {
   nombreLikes: number;
   nombrePartages: number;
   medias: MediaItem[];
-  dateCreation: string;
+  createdAt: string;
   auteurAvatar?: string;
   userId: number;
   liked?: boolean;
@@ -86,7 +86,7 @@ export class RencontreService {
    * Partage une publication
    */
   partagerPublication(publicationId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${publicationId}/partage`, {}, this.getHttpOptions());
+    return this.http.post(`${this.apiUrl}/${publicationId}/partager`, {}, this.getHttpOptions());
   }
 
   /**

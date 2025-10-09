@@ -1,8 +1,64 @@
+/* Header responsive */
+.modern-header {
+  ion-toolbar {
+    --padding-start: 4px;
+    --padding-end: 4px;
+
+    ion-back-button {
+      --color: var(--ion-color-dark);
+      --icon-font-size: 24px;
+      min-width: 40px;
+    }
+
+    ion-buttons[slot="start"] {
+      margin-inline-start: 0;
+    }
+
+    ion-buttons[slot="end"] {
+      margin-inline-end: 0;
+    }
+  }
+
+  .responsive-title {
+    font-size: clamp(14px, 4vw, 18px);
+    font-weight: 600;
+    padding: 0 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .publish-btn {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    font-weight: 600;
+    min-width: 60px;
+    height: 32px;
+
+    .publish-text {
+      font-size: clamp(12px, 3.5vw, 16px);
+      white-space: nowrap;
+    }
+
+    &[disabled] {
+      opacity: 0.4;
+    }
+
+    &.publishing {
+      ion-spinner {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
+
 /* Contenu principal */
 .modern-content {
   --background: #fff;
   padding: 12px;
 }
+
 /* Zone texte */
 .user-input {
   position: relative;
@@ -15,6 +71,8 @@
   font-size: 15px;
   border: 1px solid #ddd;
   background: #f9f9f9;
+  width: 100%;
+  min-height: 100px;
 }
 
 .char-counter {
@@ -22,14 +80,17 @@
   font-size: 12px;
   margin-top: 4px;
   color: #666;
+  font-weight: 500;
 }
 
 .char-counter.warning {
   color: #e6b800;
+  font-weight: 600;
 }
 
 .char-counter.danger {
   color: #e63946;
+  font-weight: 700;
 }
 
 /* Aperçu médias */
@@ -37,6 +98,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-bottom: 12px;
 }
 
 .media-item {
@@ -51,8 +113,8 @@
 .media-element {
   width: 100%;
   height: auto;
-  max-height: 400px; /* limite pro pour pas trop étirer */
-  object-fit: contain; /* conserve les proportions */
+  max-height: 400px;
+  object-fit: contain;
   display: block;
   border-radius: 12px;
 }
@@ -63,6 +125,195 @@
   top: 8px;
   right: 8px;
   --color: white;
-  --background: rgba(0, 0, 0, 0.4);
+  --background: rgba(0, 0, 0, 0.6);
   border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  z-index: 10;
+
+  ion-icon {
+    font-size: 24px;
+  }
+}
+
+/* Footer avec actions */
+.action-footer {
+  ion-toolbar {
+    --padding-start: 8px;
+    --padding-end: 8px;
+    --min-height: 56px;
+
+    ion-button {
+      --color: var(--ion-color-primary);
+      margin: 0 4px;
+
+      ion-icon {
+        font-size: 24px;
+      }
+
+      &[disabled] {
+        opacity: 0.3;
+      }
+    }
+  }
+}
+
+/* Media Queries pour très petits écrans (< 360px) */
+@media (max-width: 360px) {
+  .modern-header {
+    .responsive-title {
+      font-size: 13px;
+      padding: 0 4px;
+    }
+
+    .publish-btn {
+      --padding-start: 8px;
+      --padding-end: 8px;
+      min-width: 50px;
+
+      .publish-text {
+        font-size: 11px;
+      }
+    }
+
+    ion-back-button {
+      --icon-font-size: 20px;
+      min-width: 36px;
+    }
+  }
+
+  .modern-content {
+    padding: 8px;
+  }
+
+  .text-area {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .media-element {
+    max-height: 300px;
+  }
+
+  .action-footer {
+    ion-toolbar {
+      --min-height: 50px;
+
+      ion-button {
+        margin: 0 2px;
+
+        ion-icon {
+          font-size: 22px;
+        }
+      }
+    }
+  }
+}
+
+/* Media Queries pour petits écrans (360px - 480px) */
+@media (min-width: 361px) and (max-width: 480px) {
+  .modern-header {
+    .responsive-title {
+      font-size: 15px;
+    }
+
+    .publish-btn {
+      .publish-text {
+        font-size: 13px;
+      }
+    }
+  }
+
+  .media-element {
+    max-height: 350px;
+  }
+}
+
+/* Media Queries pour tablettes et grands écrans (> 768px) */
+@media (min-width: 768px) {
+  .modern-content {
+    padding: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .modern-header {
+    .responsive-title {
+      font-size: 18px;
+    }
+
+    .publish-btn {
+      min-width: 80px;
+      height: 36px;
+
+      .publish-text {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .text-area {
+    font-size: 16px;
+    padding: 14px;
+    min-height: 120px;
+  }
+
+  .media-preview {
+    gap: 16px;
+  }
+
+  .media-element {
+    max-height: 500px;
+  }
+
+  .action-footer {
+    ion-toolbar {
+      --min-height: 60px;
+      max-width: 800px;
+      margin: 0 auto;
+
+      ion-button {
+        margin: 0 8px;
+
+        ion-icon {
+          font-size: 26px;
+        }
+      }
+    }
+  }
+}
+
+/* Media Queries pour très grands écrans (> 1024px) */
+@media (min-width: 1024px) {
+  .modern-content {
+    padding: 32px;
+    max-width: 900px;
+  }
+
+  .media-element {
+    max-height: 600px;
+  }
+
+  .action-footer {
+    ion-toolbar {
+      max-width: 900px;
+    }
+  }
+}
+
+/* Styles pour mode paysage sur mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .text-area {
+    min-height: 80px;
+  }
+
+  .media-element {
+    max-height: 250px;
+  }
+
+  .action-footer {
+    ion-toolbar {
+      --min-height: 48px;
+    }
+  }
 }
