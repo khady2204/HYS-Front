@@ -1,0 +1,151 @@
+/* ==========================
+   Toolbar
+   ========================== */
+.toolbarProfile {
+  --background: #ff008a;
+  --color: #ffffff;
+  --border-width: 0 !important;
+  --box-shadow: none !important;
+  padding-top: 10px;
+}
+
+ion-back-button {
+  color: #000000;
+  margin: 5px;
+}
+
+
+.btn-pink {
+  --background: #ff008a;
+  --color: white;
+  border-radius: 5px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  min-width: 140px;
+  --background-activated: #cc006e;  
+  --ripple-color: transparent;      
+}
+
+/* ==========================
+   Infos utilisateur
+   ========================== */
+.bio,
+.address {
+  font-style: italic;
+  color: rgb(61, 59, 59);
+}
+
+/* Boutons personnalisés */
+.btn-pink {
+  --background: #ff008a;
+  --color: white;
+  border-radius: 5px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  min-width: 140px;
+}
+
+/* ==========================
+   Image profil
+   ========================== */
+.profile-picture {
+  width: 105px;
+  height: 105px;
+  object-fit: cover;
+  margin-top: -60px !important;
+  border-radius: 50%;
+  border: 2px solid #242760;
+}
+
+/* ==========================
+   Photos
+   ========================== */
+.photos {
+  border-radius: 15px;
+  overflow: hidden;
+  width: 100%;
+  height: 120%;
+}
+
+ion-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================
+   Dark Mode
+   ========================== */
+@media (prefers-color-scheme: dark) {
+  .toolbarProfile {
+    --background: #1e1e1e;
+    --color: #ffffff;
+  }
+
+  ion-back-button {
+    color: #ffffff;
+  }
+
+  ion-content {
+    --background: #121212 !important;
+    color: #ffffff;
+  }
+
+  h5, .bio, .address {
+    color: #e0e0e0;
+  }
+
+  .btn-pink {
+    --background: #ff008a; /* garde le rose flashy */
+    --color: white;
+  }
+
+  .profile-picture {
+    border: 2px solid #ff008a;
+  }
+
+  .photos {
+    background: #2a2a2a;
+  }
+}
+
+/* ==========================
+   Responsive
+   ========================== */
+@media (max-width: 576px) {
+  .profile-picture {
+    width: 80px;
+    height: 80px;
+    margin-top: -25px;
+  }
+
+  .btn-pink {
+    font-size: 0.85rem;
+    padding: 4px 12px;
+  }
+
+  ion-col[size="4"] {
+    max-width: 90px;
+  }
+
+  h5 {
+    font-size: 1rem;
+  }
+
+  .photos {
+    height: 100px;
+  }
+
+  .photo-list {
+    gap: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .photo-list ion-col {
+    margin-bottom: 0.25rem;
+  }
+
+  .text-center.mt-5 {
+    margin-top: 2rem !important;
+  }
+}

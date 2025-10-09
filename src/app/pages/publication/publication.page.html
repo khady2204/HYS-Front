@@ -1,0 +1,83 @@
+<ion-header class="modern-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="responsive-title">Créer une publication</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button
+        [disabled]="!canPublish"
+        (click)="publier()"
+        class="publish-btn"
+        [class.publishing]="isPublishing">
+        <span *ngIf="!isPublishing" class="publish-text">Publier</span>
+        <ion-spinner *ngIf="isPublishing" name="crescent"></ion-spinner>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="modern-content">
+
+  <!-- Zone texte -->
+  <div class="user-input">
+    <ion-textarea
+      [(ngModel)]="texte"
+      placeholder="Partagez votre avis..."
+      autoGrow="true"
+      rows="3"
+      [attr.maxlength]="MAX_TEXT_LENGTH"
+      class="text-area">
+    </ion-textarea>
+
+    <div class="char-counter"
+         [class.warning]="remainingChars < 100"
+         [class.danger]="remainingChars < 0">
+      {{ remainingChars }}
+    </div>
+  </div>
+
+  <!-- Prévisualisation des médias -->
+  <div *ngIf="medias.length > 0" class="media-preview">
+    <div *ngFor="let media of medias" class="media-item">
+      <img *ngIf="media.type === 'image'" [src]="media.url" class="media-element" (click)="previewMedia(media)">
+      <video *ngIf="media.type === 'video'" [src]="media.url" class="media-element" controls></video>
+
+      <ion-button fill="clear" size="small" class="remove-btn"
+                  (click)="removeMedia(media.id)">
+        <ion-icon name="close-circle"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+</ion-content>
+
+<ion-footer class="action-footer">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="takePhoto()" [disabled]="medias.length >= MAX_MEDIA_COUNT">
+        <ion-icon name="camera-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" (click)="recordVideo()" [disabled]="medias.length >= MAX_MEDIA_COUNT">
+        <ion-icon name="videocam-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" (click)="openGallery()" [disabled]="medias.length >= MAX_MEDIA_COUNT">
+        <ion-icon name="images-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
+
+<input
+  type="file"
+  id="fileInput"
+  accept="image/*,video/*"
+  (change)="handleFileInput($event)"
+  hidden
+  multiple
+/>
+

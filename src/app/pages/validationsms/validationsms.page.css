@@ -1,0 +1,220 @@
+.back-btn {
+  position: absolute;
+  top: 50px;   
+  left: 10px;  
+  z-index: 10; /* reste au-dessus du contenu */
+  color: #0D3873;
+}
+
+.sms-container {
+  --background: #f6f6fb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.sms-wrapper {
+  background: transparent; 
+  padding: 24px;
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.logo-img {
+  width: 120px;
+  height: auto;
+}
+
+.title-container {
+  text-align: center;
+  margin-bottom: 30px; 
+  font-size: 20px;
+  font-weight: bold;
+  color: #0D3873;
+}
+
+/* Inputs */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+input,
+ion-input::part(input) {
+  background: #f1f1f1;
+  padding: 12px 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+  color: #000;
+  box-sizing: border-box;
+}
+
+input::placeholder,
+ion-input::part(input)::placeholder {
+  color: #999;
+}
+
+input:focus,
+ion-input::part(input):focus {
+  border: 1px solid #0D3873;
+  background: #eaeaea;
+  color: #000; 
+  outline: none;
+}
+
+.half-input {
+  flex: 1;
+  background: #f1f1f1;
+  padding-left: 10px;
+  border-radius: 10px;
+}
+
+/* Ion item */
+ion-item {
+  width: 100%;
+  margin-bottom: 20px;
+  --background: #f5f5f5;
+  border-radius: 8px;
+  align-items: center; 
+}
+
+/* Bouton */
+ion-button.send-btn {
+  --background: #0D3873;
+  --color: white;
+  border-radius: 8px;
+  width: 100%;
+}
+
+/* ============================
+   Dark Mode
+   ============================ */
+@media (prefers-color-scheme: dark) {
+
+  ion-toolbar {
+    --background: #1e1e1e;
+    color: #ffffff;
+  }
+
+  ion-back-button {
+    color: #ffffff;
+  }
+
+  .sms-container {
+    --background: #121212;
+  }
+
+  .sms-wrapper {
+    background: transparent;
+  }
+
+  .title-container {
+    color: #ffffff;
+  }
+
+  input,
+  ion-input::part(input) {
+    background: #2c2c2c;
+    color: #ffffff;
+  }
+
+  input::placeholder,
+  ion-input::part(input)::placeholder {
+    color: #aaaaaa;
+  }
+
+  input:focus,
+  ion-input::part(input):focus {
+    background: #2c2c2c;
+    color: #ffffff;
+  }
+
+  ion-button.send-btn {
+    --background: #0D3873;
+    --color: #ffffff;
+  }
+}
+
+/* ============================
+   Responsive
+   ============================ */
+@media (max-width: 480px) {
+  .sms-wrapper {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .title-container {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  input,
+  ion-input::part(input) {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  ion-button.send-btn {
+    font-size: 14px;
+    padding: 10px 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .sms-wrapper {
+    max-width: 450px;
+    padding: 32px;
+  }
+
+  .title-container {
+    font-size: 22px;
+  }
+
+  input,
+  ion-input::part(input) {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  ion-button.send-btn {
+    font-size: 16px;
+    padding: 12px 0;
+  }  
+
+}
+
+
+.resend-container {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.resend-container a {
+  color:#0D3873 ;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.resend-container a.disabled {
+  color: gray;
+  pointer-events: none; /* bloque le clic */
+  cursor: not-allowed;
+}

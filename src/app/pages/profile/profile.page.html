@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar class="toolbarProfile">
+    <ion-buttons slot="start">
+      <ion-back-button fill="clear" text="" defaultHref="" (click)="goBack()" />        
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="">
+
+  <!-- HEADER IMAGE + PROFILE IMAGE -->
+  <div class="position-relative text-center w-100">
+    <ion-img
+      src="assets/img/myLOve/profile/backgroundPink.png"
+      alt="background"
+      class="img-fluid w-100">
+    </ion-img>
+
+    <!-- Profile utilisateur -->
+    <div class="position-absolute start-50 translate-middle-x">
+      <img
+        [src]="profileImageUrl || 'assets/assets/profileParDefaut.jpg'"
+        alt="Profile"
+        class="profile-picture">
+    </div>
+  </div>
+
+  <!-- Infos utilisateur -->
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" class="text-center  pt-3">
+        <h5 class="fw-bold mb-3">{{ prenom }} {{ nom }}</h5>
+        <div class="bio">{{ bio }}</div>
+        <div class="address d-flex justify-content-center align-items-center">
+          <i class="bi bi-geo-alt-fill me-1"></i> {{ adresse }}
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Boutons -->
+  <ion-grid>
+    <ion-row class="ion-justify-content-center mt-4">
+      <ion-col size="auto">
+        <ion-button class="btn-pink" fill="solid" [routerLink]="['/edit-profile', userId]">
+          Modifier
+        </ion-button>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-button class="btn-pink" fill="solid">
+          Ajouter
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Section Photos -->
+  <ion-grid class="mt-5 px-3">
+    <ion-row>
+      <ion-col size="12" class="text-center">
+        <h5 class="fw-bold mb-2">Photos</h5>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center border-top pt-3 photo-list">
+      <ion-col size="3" size-sm="4" size-md="4" *ngFor="let photo of photos">
+        <ion-card class="photos">
+          <ion-img [src]="photo" alt="Photo"></ion-img>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Menu flottant -->
+  <app-floating-menu></app-floating-menu>
+
+</ion-content>

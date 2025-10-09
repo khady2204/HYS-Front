@@ -1,0 +1,116 @@
+<ion-content class="register-container" fullscreen="">
+  <div class="register-wrapper">
+    <div class="logo-container">
+      <img src="assets/logo.png" class="logo" />
+    </div>
+
+    <h2 class="form-title">Inscription</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <!-- Nom et Prénom -->
+      <div class="row">
+        <div class="input-container">
+          <label class="input-label">Nom</label>
+          <input type="text" formControlName="nom" />
+          <div class="error" *ngIf="nom?.invalid && nom?.touched">
+            <small>Veuillez remplir votre nom</small>
+          </div>
+        </div>
+
+        <div class="input-container">
+          <label class="input-label">Prénom(s)</label>
+          <input type="text" formControlName="prenom" />
+          <div class="error" *ngIf="prenom?.invalid && prenom?.touched">
+            <small>Veuillez remplir votre prénom</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Téléphone et Adresse -->
+      <div class="row">
+        <div class="input-container">
+          <label class="input-label">Téléphone</label>
+          <input type="tel" formControlName="phone" />
+          <div class="error" *ngIf="phone?.invalid && phone?.touched">
+            <small>Téléphone invalide</small>
+          </div>
+        </div>
+
+        <div class="input-container">
+          <label class="input-label">Adresse</label>
+          <input type="text" formControlName="address" />
+          <div class="error" *ngIf="address?.invalid && address?.touched">
+            <small>Veuillez remplir votre adresse</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Date de Naissance et Genre -->
+      <div class="row">
+        <div class="input-container">
+          <label class="input-label">Date de Naissance</label>
+          <input type="date" formControlName="datenaissance" [max]="maxDate" />
+          <div class="error" *ngIf="datenaissance?.errors?.['tooYoung'] && datenaissance?.touched">
+            <small>18 ans minimum requis</small>
+          </div>
+        </div>
+
+        <div class="input-container">
+          <label class="input-label">Genre</label>
+          <select formControlName="sexe">
+            <option value="">-- Choisir --</option>
+            <option value="Homme">Homme</option>
+            <option value="Femme">Femme</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="input-container">
+        <label class="input-label">Email</label>
+        <input type="email" formControlName="email" />
+        <div class="error" *ngIf="email?.invalid && email?.touched">
+          <small>Email invalide</small>
+        </div>
+      </div>
+
+      <!-- Mot de passe -->
+      <div class="input-container">
+        <label class="input-label">Mot de passe</label>
+        <input type="password" formControlName="password" />
+        <div class="error" *ngIf="password?.invalid && password?.touched">
+          <small>Au moins 8 caractères avec lettres, chiffres et symbole</small>
+        </div>
+      </div>
+
+      <!-- Confirmation mot de passe -->
+      <div class="input-container">
+        <label class="input-label">Confirmer Mot de passe</label>
+        <input type="password" formControlName="confirmPassword" />
+        <div class="error" *ngIf="registerForm.hasError('passwordMismatch') && confirmPassword?.touched">
+          <small>Les mots de passe ne correspondent pas</small>
+        </div>
+      </div>
+
+      <!-- Conditions -->
+      <div class="bp-container">
+        <label class="checkbox-item">
+          <input type="checkbox" formControlName="acceptTerms" />
+          J’accepte
+        </label>
+        <a routerLink="/" class="a">Lire nos T & C</a>
+      </div>
+
+      <!-- Bouton -->
+      <button class="login-button" type="submit">
+        S’inscrire
+      </button>
+    </form>
+
+    <div class="bottom-text">
+      <p>Vous avez un compte ?
+        <a routerLink="/login" class="login-link">Se connecter</a>
+      </p>
+    </div>
+  </div>
+</ion-content>

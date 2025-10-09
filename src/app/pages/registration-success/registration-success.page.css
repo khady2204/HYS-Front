@@ -1,0 +1,75 @@
+.back-btn {
+  position: absolute;
+  top: 50px;   
+  left: 10px;  
+  z-index: 10; /* reste au-dessus du contenu */
+  color: #0D3873;
+}
+.success-container {
+  --background: #f6f6fb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.success-wrapper {
+  background: #fff;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding: 24px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  margin: auto;
+  height: 100%;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.logo-img {
+  width: 150px;
+  height: auto;
+}
+.title-container {
+  text-align: center;
+  margin-bottom: 20px; 
+  font-size: 0.5rem;
+}
+
+
+.p-container {
+  text-align: center;
+  margin-bottom: 40px; 
+  font-size: 0.8rem;
+}
+
+
+ion-button.send-btn {
+  --background: #0D3873;
+  --color: white;
+  border-radius: 8px;
+  width: 300px;
+  margin: 0 auto ;
+}
+
+.success-btn{
+  background: green;     
+  color: white;        
+  border-radius: 6px;     
+  padding: 6px;          
+  font-size: 15px;       /* taille de l’icône */
+  display: inline-flex;  
+  justify-content: center;
+  align-items: center; 
+  width: 20px;           
+  height: 20px; 
+  margin: 0 auto 30px;
+}
+

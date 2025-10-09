@@ -1,0 +1,76 @@
+<div class="image-wrapper position-relative">
+
+  <!-- Bouton options en haut à droite -->
+  <div class="options-btn-wrapper">
+    <button class="options-btn">
+      <svg class="options-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+        <circle cx="12" cy="5" r="1.5"></circle>
+        <circle cx="12" cy="12" r="1.5"></circle>
+        <circle cx="12" cy="19" r="1.5"></circle>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Image principale -->
+  <img src="assets/img/photo01accueil.png" class="img-fluid w-100" alt="Profil" />
+
+  
+  <div class="services-section rounded-top-5 py-5 position-absolute start-0 w-100">
+
+    
+    <h2 class="text-center fw-bold">Nos services</h2>
+
+    
+    <div class="services-row">
+
+      <!-- Service 1 : My Love -->
+      <a [routerLink]="myLoveLink" class="service-btn btn-myLove">
+        <div class="icon-wrapper">
+          <img src="assets/icon/coeur.png" class="icon-img" alt="icon" />
+        </div>
+        My love
+      </a>
+
+      <!-- Service 2 : Santé -->
+      <a [routerLink]="'/construction'" class="service-btn btn-sante">
+        <div class="icon-wrapper">
+          <img src="assets/icon/sante.png" class="icon-img" alt="icon" />
+        </div>
+        Santé
+      </a>
+
+      <!-- Service 3 : Voyage -->
+      <a [routerLink]="'/construction'" class="service-btn btn-voyage">
+        <div class="icon-wrapper">
+          <img src="assets/icon/avion.png" class="icon-img" alt="icon" />
+        </div>
+        Voyage
+      </a>
+
+      <!-- Service 4 : Éducation -->
+      <a [routerLink]="'/construction'" class="service-btn btn-education">
+        <div class="icon-wrapper">
+          <img src="assets/icon/education.png" class="icon-img" alt="icon" />
+        </div>
+        Éducation
+      </a>
+
+      <!-- Service 5 : Religion -->
+      <a [routerLink]="'/construction'" class="service-btn btn-religion">
+        <div class="icon-wrapper">
+          <img src="assets/icon/etoileetcroissant.png" class="icon-img" alt="icon" />
+        </div>
+        Religion
+      </a>
+
+      <!-- Service 6 : Bourse -->
+      <a [routerLink]="'/construction'" class="service-btn btn-bourse">
+        <div class="icon-wrapper">
+          <img src="assets/icon/portefeuille.png" class="icon-img" alt="icon" />
+        </div>
+        Bourse
+      </a>
+
+    </div>
+  </div>
+</div>

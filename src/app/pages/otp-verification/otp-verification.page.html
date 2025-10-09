@@ -1,0 +1,22 @@
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="/f-password" text=""></ion-back-button>
+  </ion-buttons>
+</ion-toolbar>
+<ion-content class="sms-container" [fullscreen]="true">
+  <div class="sms-wrapper">
+    <div class="logo-container">
+      <img src="assets/logo.png" class="logo-img">
+    </div>
+    <div class="title-container">
+    <h1>Validation SMS</h1>
+    </div>
+    <form [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+      <div class="input-container">
+        <label class="input-label">Code</label>
+        <input type="tel" placeholder="xxxxxxx" formControlName="otp">
+      </div>
+      <ion-button expand="block" class="send-btn" type="submit">Valider</ion-button>
+    </form>
+  </div>
+</ion-content>

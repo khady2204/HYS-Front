@@ -1,0 +1,7 @@
+/* Styles pour le bouton Google Sign-In */
+#google-signin-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
