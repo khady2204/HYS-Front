@@ -66,6 +66,46 @@
   --background-activated: #cc006e;
 }
 
+/* Animation douce du menu déroulant */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  padding: 0.5rem 0;
+  min-width: 180px;
+  animation: fadeIn 0.25s ease-in-out;
+  z-index: 20;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  font-size: 15px;
+}
+
+.dropdown-item:hover {
+  background-color: #ffe6f3;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+
 /* ==========================
    Infos utilisateur
    ========================== */

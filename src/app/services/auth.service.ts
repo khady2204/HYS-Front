@@ -58,7 +58,7 @@ export class AuthService {
 
   // logout
   logout(): Observable<any> {
-    return this.http.post(`${this.ApiUrl}/api/auth/logout`, {}).pipe(
+    return this.http.post(`${this.ApiUrl}/api/auth/logout`, {}, { responseType: 'text' }).pipe(
       tap(() => {
         // Supprimer le token localement
         localStorage.removeItem('jwtToken');

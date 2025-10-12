@@ -10,6 +10,7 @@ import { UserAuthService } from 'src/app/services/user-auth.service';
 import { InteretService } from 'src/app/services/interet/interet.service';
 
 import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
+import { UrlUtilsService } from 'src/app/services/url-utils.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -33,7 +34,8 @@ export class EditProfilePage implements OnInit {
     private userService: UserService,
     private authUserService: UserAuthService,
     private toastController: ToastController,
-    private interetService: InteretService
+    private interetService: InteretService,
+    private urlUtils: UrlUtilsService
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +57,7 @@ export class EditProfilePage implements OnInit {
     console.log('Utilisateur connecté :', user);
 
     if (user && user.profileImage) {
-      this.profileImageUrl = user.profileImage;
+      this.profileImageUrl = this.urlUtils.buildProfileImageUrl(user.profileImage);
     }
 
     if (user && user.id) {

@@ -13,6 +13,7 @@ import { DropdownDrawerComponent } from 'src/app/components/dropdown-drawer/drop
 import { SuggestionService } from 'src/app/services/suggestion/suggestion.service';
 import { Router, RouterLink } from '@angular/router';
 import { UserAuthService } from 'src/app/services/user-auth.service';
+import { UrlUtilsService } from 'src/app/services/url-utils.service';
 
 @Component({
   selector: 'app-suggestion',
@@ -38,7 +39,8 @@ export class SuggestionPage implements OnInit {
     private location: Location,
     private suggestionService: SuggestionService,
     private userAuthService: UserAuthService,
-    private router: Router
+    private router: Router,
+    private urlUtils: UrlUtilsService
   ) {}
 
   ngOnInit() {
@@ -50,7 +52,8 @@ export class SuggestionPage implements OnInit {
 
     // Récupère l'utilisateur connecté
     const user = this.userAuthService.getUser();
-    this.profileImageUrl = user?.profileImage ?? null;
+    this.profileImageUrl = this.urlUtils.buildProfileImageUrl(user.profileImage);
+
     // Normalise l'identifiant utilisateur
     this.userId = user?.id ?? user?.userId ?? null;
 
@@ -91,7 +94,7 @@ export class SuggestionPage implements OnInit {
         id: person.userId,               
         prenom: person.prenom,
         nom: person.nom,
-        photoUrl: person.photoUrl,
+        photoUrl : this.urlUtils.buildProfileImageUrl(person.photoUrl),
         phone: person.phone
       }
     };

@@ -6,6 +6,8 @@ import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating
 import { UserService } from 'src/app/services/user.service';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 import { IonicModule } from '@ionic/angular';
+import { UrlUtilsService } from 'src/app/services/url-utils.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -24,21 +26,17 @@ export class ProfilePage implements OnInit {
   bio: string ='';
   userId: number = 0;
 
-  photos = [
-    'assets/img/myLOve/profile/profile1.png',
-    'assets/img/myLOve/profile/profile2.png',
-    'assets/img/myLOve/profile/profile3.png',
-    'assets/img/myLOve/profile/profile1.png',
-    'assets/img/myLOve/profile/profile2.png',
-    'assets/img/myLOve/profile/profile3.png',   
-  ];
+  showMenu = false;
+  showLogoutModal = false; // controle la visibilité du bouton
 
   constructor(
     private location: Location,
     private route: ActivatedRoute,
     private userService: UserService,
     private router: Router,
-    private userAuthService: UserAuthService
+    private userAuthService: UserAuthService,
+    private urlUtils: UrlUtilsService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -55,7 +53,7 @@ export class ProfilePage implements OnInit {
       this.userId = user.id;
       this.prenom = user.prenom;
       this.nom = user.nom;
-      this.profileImageUrl = user.profileImage ?? null;
+      this.profileImageUrl = this.urlUtils.buildProfileImageUrl(user.profileImage);
       this.adresse = user.adresse ?? 'Non renseignée';
       this.bio = user.bio;
       console.log("Profil chargé :", user);
@@ -69,4 +67,32 @@ export class ProfilePage implements OnInit {
     this.location.back();
   }
 
+  toggleMenu() {
+    this.showMenu = !this.showMenu;
+  }
+
+  // Ouvrir le modal
+  openLogoutModal() {
+    this.showLogoutModal = true;
+    this.showMenu = false;
+  }
+
+  // Fermer le modal
+  closeLogoutModal() {
+    this.showLogoutModal = false;
+  }
+
+  // Méthode de déconnexion
+  logout() {
+    this.authService.logout().subscribe({
+      next: () => {
+        localStorage.removeItem('jwtToken');
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error('Erreur lors de la déconnexion', err);
+        this.showLogoutModal = false;
+      }
+    })
+  }
 }

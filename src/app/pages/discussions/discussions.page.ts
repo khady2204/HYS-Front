@@ -24,6 +24,7 @@ import { StoryService } from 'src/app/services/story/story.service';
 
 // Models
 import { StoryDto, UserStories } from 'src/app/models/story.dto';
+import { UrlUtilsService } from 'src/app/services/url-utils.service';
 
 @Component({
   selector: 'app-discussions',
@@ -94,7 +95,8 @@ export class DiscussionsPage implements OnInit {
     private messageService: MessageService,
     private userAuthService: UserAuthService,
     private userService: UserService,
-    private storyService: StoryService
+    private storyService: StoryService,
+    private urlUtils: UrlUtilsService
   ) {}
 
   /**
@@ -110,7 +112,8 @@ export class DiscussionsPage implements OnInit {
     const user = this.userAuthService.getUser();
     this.userId = user?.id ?? null;
     this.currentUserId = this.userAuthService.getUserId() ?? 0;
-    this.profileImageUrl = user?.profileImage ?? null;
+    this.profileImageUrl = this.urlUtils.buildProfileImageUrl(user.profileImage);
+
 
     // Chargement des données
     this.loadDiscussions();

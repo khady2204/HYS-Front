@@ -15,7 +15,6 @@
       alt="background"
       class="img-fluid w-100">
 
-    <!-- Profile utilisateur -->
     <div class="position-absolute start-50 translate-middle-x profile-img-container">
       <img
         [src]="profileImageUrl || 'assets/profileParDefaut.jpg'"
@@ -38,31 +37,45 @@
   </ion-grid>
 
   <!-- Boutons centrés -->
-  <div class="d-flex justify-content-center mt-4 gap-3">
-    <ion-button class="btn-pink" fill="solid" [routerLink]="['/edit-profile', userId]">
-      Modifier
-    </ion-button>
-    <ion-button class="btn-pink" fill="solid">
-      Paramètres
-    </ion-button>
+  <div class="d-flex flex-column align-items-center mt-4 gap-2">
+    <div class="d-flex gap-3">
+      <ion-button class="btn-pink" fill="solid" [routerLink]="['/edit-profile', userId]">
+        Modifier
+      </ion-button>
+
+      <!-- Bouton Paramètres -->
+      <ion-button class="btn-pink" fill="solid" (click)="toggleMenu()">
+        Paramètres
+      </ion-button>
+    </div>
+
+    <!-- Sous-menu affiché dynamiquement -->
+    <div *ngIf="showMenu" class="submenu mt-2 animate__animated animate__fadeIn">
+      <ion-button color="danger" fill="outline" (click)="openLogoutModal()">
+        Déconnexion
+      </ion-button>
+    </div>
   </div>
 
-  <!-- Section Photos 
-  <ion-grid class="mt-5 px-3">
-    <ion-row>
-      <ion-col size="12" class="text-center">
-        <h5 class="fw-bold mb-2">Photos</h5>
-      </ion-col>
-    </ion-row>
+  <!-- Modal de confirmation -->
+  <ion-modal [isOpen]="showLogoutModal" (didDismiss)="closeLogoutModal()">
+    <ng-template>
+      <div class="text-center p-3">
+        <h2 class="text-lg font-bold mb-3">Confirmer la déconnexion</h2>
+        <p>Souhaitez-vous vraiment vous déconnecter ?</p>
 
-    <ion-row class="ion-justify-content-center border-top pt-3 photo-list">
-      <ion-col size="3" size-sm="4" size-md="4" *ngFor="let photo of photos">
-        <ion-card class="photos">
-          <img [src]="photo" alt="Photo">
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid> -->
+        <div class="d-flex justify-content-around mt-4">
+          <ion-button color="medium" (click)="closeLogoutModal()">
+            Annuler
+          </ion-button>
+
+          <ion-button color="danger" (click)="logout()">
+            Oui, déconnecter
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
 
   <!-- Menu flottant -->
   <app-floating-menu></app-floating-menu>

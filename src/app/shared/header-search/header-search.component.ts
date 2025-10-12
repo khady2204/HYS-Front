@@ -5,6 +5,7 @@ import { UserAuthService } from 'src/app/services/user-auth.service';
 import { NotificationService, NotificationDTO } from 'src/app/services/notification.service';
 import { Subscription, interval } from 'rxjs';
 import { IonicModule } from '@ionic/angular';
+import { UrlUtilsService } from 'src/app/services/url-utils.service';
 
 @Component({
   selector: 'app-header-search',
@@ -27,11 +28,12 @@ export class HeaderSearchComponent implements OnInit, OnDestroy {
   constructor(
     private userAuthService: UserAuthService,
     private router: Router,
-    private notifService: NotificationService
+    private notifService: NotificationService,
+    private urlUtils: UrlUtilsService
   ) {}
 
   ngOnInit(): void {
-    // ✅ Vérification d'authentification
+    // Vérification d'authentification
     if (!this.userAuthService.isAuthenticated()) {
       this.router.navigate(['/login']);
       return;
@@ -40,7 +42,8 @@ export class HeaderSearchComponent implements OnInit, OnDestroy {
     // Chargement des infos utilisateur
     const user = this.userAuthService.getUser();
     this.userId = user?.id ?? null;
-    this.profileImageUrl = user?.profileImage ?? null;
+    this.profileImageUrl = this.urlUtils.buildProfileImageUrl(user.profileImage);
+
 
     // Abonnement en temps réel aux notifications
     this.notifSub = this.notifService.notifications$.subscribe({
