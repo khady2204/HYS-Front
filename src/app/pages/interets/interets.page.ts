@@ -26,7 +26,7 @@ import { InteretService } from 'src/app/services/interet/interet.service';
   templateUrl: './interets.page.html',
   styleUrls: ['./interets.page.css'],
   standalone: true,
-  imports: [
+  imports: [IonCol,
     IonText,
     IonButton,
     IonCheckbox,
@@ -40,9 +40,12 @@ import { InteretService } from 'src/app/services/interet/interet.service';
 })
 export class InteretsPage implements OnInit {
 
-  categories: any[] = [];  
+  interets: any[] = [];  
   selectedInterets: number[] = [];
   userId: number | null = null;
+
+  leftColumn: any[] = []; 
+  rightColumn: any[] = [];
 
   constructor(
     private userAuthService: UserAuthService,
@@ -65,9 +68,12 @@ export class InteretsPage implements OnInit {
     this.interetService.getAllInterets().subscribe({
       next: (interets: any[]) => {
         console.log("Intérêts récupérés :", interets);
-
-        // Regrouper les intérêts par catégorie (en fonction du champ 'categorie' renvoyé par ton API)
-        this.categories = this.groupByCategorie(interets);
+        this.interets = interets.map((i: any) => ({ id: i.id, nom: i.nom }));
+        const middle = Math.ceil(this.interets.length / 2);
+        this.leftColumn = this.interets.slice(0, middle);
+        this.rightColumn = this.interets.slice(middle); 
+        console.log(" Intérêts chargés :", this.interets);
+        
       },
       error: (err) => {
         console.error("Erreur lors du chargement des intérêts :", err);
@@ -75,28 +81,10 @@ export class InteretsPage implements OnInit {
     });
   }
 
-  // Regroupe les intérêts par catégorie
-  groupByCategorie(interets: any[]) {
-    const grouped: any = {};
-    interets.forEach((i) => {
-      const cat = i.categorie ;
-      if (!grouped[cat]) grouped[cat] = [];
-      grouped[cat].push(i);
-    });
-
-    // Convertit l’objet en tableau [{nom, interets: []}]
-    return Object.keys(grouped).map(cat => ({
-      nom: cat,
-      interets: grouped[cat]
-    }));
-  }
-
-  toggleSelection(interetId: number) {
-    if (this.selectedInterets.includes(interetId)) {
+  toggleSelection(interetId: number) { 
+    if (this.selectedInterets.includes(interetId)) { 
       this.selectedInterets = this.selectedInterets.filter(id => id !== interetId);
-    } else {
-      this.selectedInterets.push(interetId);
-    }
+     } else { this.selectedInterets.push(interetId); } 
   }
 
   envoyerChoix() {

@@ -4,19 +4,18 @@
       <h2 class="fs-5">Veuillez choisir vos centres d'intérêt</h2>
     </ion-text>
   </div>
-
-  <div *ngFor="let categorie of categories" class="categorie-section">
-    <h3 class="categorie-titre">{{ categorie.nom }}</h3>
-
+  
+  <ion-col size="6">
     <ion-list>
-      <ion-item *ngFor="let interet of categorie.interets">
+      <ion-item *ngFor="let interet of leftColumn">
         <ion-label class="nameInteret">{{ interet.nom }}</ion-label>
         <ion-checkbox slot="end" (ionChange)="toggleSelection(interet.id)"
-        [checked]="selectedInterets.includes(interet.id)"> 
-        </ion-checkbox>
+        class="custom-checkbox"
+        ></ion-checkbox>
       </ion-item>
     </ion-list>
-  </div>
+  </ion-col>
+  
   
   <div class="bouton-container">
     <ion-button class="btn-suivant" (click)="envoyerChoix()">Suivant</ion-button>

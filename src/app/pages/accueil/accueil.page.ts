@@ -11,7 +11,7 @@ import { IonicModule } from '@ionic/angular';
   templateUrl: './accueil.page.html',
   styleUrls: ['./accueil.page.css'],
   standalone: true,
-  imports: [IonSpinner, RouterLink,CommonModule, FormsModule, IonicModule]
+  imports: [RouterLink,CommonModule, FormsModule, IonicModule]
 })
 export class AccueilPage implements OnInit {
 

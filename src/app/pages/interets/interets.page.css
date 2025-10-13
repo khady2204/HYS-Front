@@ -27,3 +27,10 @@ ion-item {
   --background: #f4f4f4;
   --color: #000000;
 }
+
+
+.custom-checkbox {
+  --checkbox-background-checked: #fff; 
+  --checkmark-color: #ff0084;                
+
+}
