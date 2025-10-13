@@ -1,16 +1,16 @@
 /* MENU BOTTOM FIXE */
 .menu-bottom-fixed {
   position: fixed;
-  bottom: 0; /* Descendu un peu */
+  bottom: 0; 
   left: 0;
   right: 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: linear-gradient(135deg, #ff6b9d, #c44ac0);  padding: 15px 20px;
+  background: linear-gradient(135deg, #D90479, #A6035D);  padding: 15px 20px;
   box-shadow: 0 -8px 20px rgba(196, 74, 192, 0.3);
   z-index: 1000;
-  width: 100%; /* Prend toute la largeur */
+  width: 100%; 
   margin: 0;
 }
 
@@ -21,7 +21,6 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
   text-decoration: none;
@@ -33,9 +32,7 @@
 }
 
 .menu-item.add {
-  background: rgba(255, 255, 255, 0.9);
   transform: scale(1.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .menu-item.add:hover {
@@ -46,76 +43,63 @@
 .menu-item img {
   width: 26px;
   height: 26px;
-  object-fit: contain; /* Préserve les proportions */
-  filter: brightness(0) invert(1); /* Icons blancs */
+  object-fit: contain; 
+  filter: brightness(0) invert(1); 
 }
 
 .menu-item.add img {
   width: 28px;
   height: 28px;
-  object-fit: contain; /* Préserve les proportions */
-  filter: none; /* L'icône Add garde sa couleur originale (rose) */
+  object-fit: contain; 
 }
 
-/* Adaptation pour petits écrans */
+/* =========================
+   📱 RESPONSIVITÉ
+   ========================= */
+
+/* Petits écrans (téléphones < 480px) */
 @media (max-width: 480px) {
-  .menu-bottom-fixed {
-    bottom: 25px;
-    padding: 12px 15px;
-  }
-
   .menu-item {
-    width: 50px;
-    height: 50px;
-  }
-
-  .menu-item img {
-    width: 22px;
-    height: 22px;
-    object-fit: contain;
-  }
-
-  .menu-item.add img {
-    width: 22px;
-    height: 22px;
-    object-fit: contain;
-  }
-}
-
-/* Adaptation pour très petits écrans */
-@media (max-width: 360px) {
-  .menu-bottom-fixed {
-    bottom: 20px;
-    padding: 10px 12px;
-  }
-
-  .menu-item {
-    width: 45px;
-    height: 45px;
+    width: 48px;
+    height: 48px;
   }
 
   .menu-item img {
     width: 20px;
     height: 20px;
-    object-fit: contain;
   }
 
-  .menu-item.add img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-  }
-}
-
-/* Adaptation pour écrans avec notch (iPhone X et plus récents) */
-@media (max-height: 812px) and (orientation: portrait) {
   .menu-bottom-fixed {
-    bottom: 35px; /* Ajusté pour la nouvelle position */
+    padding: 10px 12px;
   }
 }
 
-/* Pour éviter que le menu soit caché par le clavier virtuel */
-.menu-bottom-fixed.keyboard-open {
-  bottom: 10px;
-  transform: scale(0.9);
+/* Tablettes (481px à 768px) */
+@media (max-width: 768px) {
+  .menu-item {
+    width: 52px;
+    height: 52px;
+  }
+
+  .menu-item img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .menu-bottom-fixed {
+    padding: 12px 16px;
+  }
+}
+
+/* Grands écrans (desktop) */
+@media (min-width: 1024px) {
+  .menu-item {
+    width: 65px;
+    height: 65px;
+  }
+
+  .menu-item img {
+    width: 28px;
+    height: 28px;
+  }
 }

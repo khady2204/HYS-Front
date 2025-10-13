@@ -7,7 +7,7 @@
   border-radius: 12px 0 0 12px; /* coins arrondis côté gauche */
   overflow-y: auto;
   transition: transform 0.3s ease;
-  z-index: 2000 !important;
+  z-index: 3000 !important;
   box-shadow: -4px 0 15px rgba(0,0,0,0.1);
 }
 

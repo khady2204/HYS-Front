@@ -6,6 +6,7 @@ import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating
 import { IonicModule } from '@ionic/angular';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 import { Router } from '@angular/router';
+import { UrlUtilsService } from 'src/app/services/url-utils.service';
 
 @Component({
   selector: 'app-report-partner',
@@ -22,7 +23,8 @@ export class ReportPartnerPage implements OnInit {
   constructor(
     private location: Location,
     private userAuthService: UserAuthService,
-    private router: Router
+    private router: Router,
+    private urlUtils: UrlUtilsService
   ) {}
 
   ngOnInit() {
@@ -34,7 +36,7 @@ export class ReportPartnerPage implements OnInit {
 
     // Récupère l'utilisateur connecté
     const user = this.userAuthService.getUser();
-    this.profileImageUrl = user?.profileImage ?? null;
+    this.profileImageUrl = this.urlUtils.buildProfileImageUrl(user.profileImage);
     // Normalise l'identifiant utilisateur
     this.userId = user?.id ?? user?.userId ?? null;
 

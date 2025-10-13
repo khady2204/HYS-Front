@@ -44,6 +44,7 @@
             "scripts": [
             ],
             "browser": "src/main.ts",
+            "baseHref": "./",  
             "allowedCommonJsDependencies": [
               "get-blob-duration"
             ]

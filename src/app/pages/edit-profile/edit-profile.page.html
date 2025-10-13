@@ -1,99 +1,99 @@
-<!-- Header -->
-<ion-header>
-  <ion-toolbar class="toolbar-solid">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="" text="" (click)="goBack()"></ion-back-button>
-    </ion-buttons>
-    <ion-title class="text-center fw-bold">Edit Profil</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content fullscreen>
-
-  <!-- Photo de profil -->
-  <div class="d-flex justify-content-center align-items-center mt-4 mb-3 position-relative">
-    <div class="profile-wrapper">
-      <ion-img
-        [src]="profileImageUrl || 'assets/profileParDefaut.jpg'"
-        class="profile-picture"
-      ></ion-img>
-    </div>
-
-    <input
-      type="file"
-      id="profileImageInput"
-      accept="image/*"
-      hidden
-      (change)="onFileSelected($event)"
-    />
-
-    <label
-      for="profileImageInput"
-      class="btn btn-pink p-1 rounded-circle position-absolute"
-      style="bottom: 0; right: calc(50% - 60px); transform: translateX(50%); cursor: pointer;"
-    >
-      <i class="bi bi-camera fs-5 p-2"></i>
-    </label>
+  <!-- Header "fixe" -->
+  <div class="app-fixed-header">
+    <button type="button" class="back-btn" (click)="goBack()" aria-label="Retour">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+    <div class="header-title">Edit Profil</div>
   </div>
 
-  <!-- Formulaire -->
-  <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()" class="px-3">
-
-    <div class="mb-3">
-      <ion-label>Nom</ion-label>
-      <ion-input type="text" formControlName="nom" placeholder="Sow" class="input-bordered"></ion-input>
-    </div>
-
-    <div class="mb-3">
-      <ion-label>Prénom</ion-label>
-      <ion-input type="text" formControlName="prenom" placeholder="Ahmadou Bamba" class="input-bordered"></ion-input>
-    </div>
-
-    <div class="mb-3">
-      <ion-label>Email</ion-label>
-      <ion-input type="email" formControlName="email" placeholder="ahmadou@example.com" class="input-bordered"></ion-input>
-    </div>
-
-    <div class="mb-3">
-      <ion-label>Téléphone</ion-label>
-      <ion-input type="text" formControlName="phone" placeholder="+221 77 000 00 00" class="input-bordered"></ion-input>
-    </div>
-
-    <div class="mb-3">
-      <ion-label>Adresse</ion-label>
-      <ion-input type="text" formControlName="adresse" placeholder="123, Rue du Développement" class="input-bordered"></ion-input>
-    </div>
-
-    <div class="mb-3">
-      <ion-label>Bio</ion-label>
-      <ion-textarea formControlName="bio" placeholder="Parlez-nous de vous..." rows="3" class="input-bordered"></ion-textarea>
-    </div>
-
-    <div class="mb-3">
-      <ion-label>Date de naissance</ion-label>
-      <input type="date" formControlName="dob" class="input-bordered w-100" placeholder="JJ/MM/AAAA" />
-    </div>
-
-    <!-- Intérêts -->
-    <div class="row mb-3">
-      <div class="col-6" *ngFor="let interet of interets">
-        <ion-checkbox
-          slot="start"
-          [value]="interet.id"
-          (ionChange)="onCheckboxChange($event)"
-          [checked]="editProfileForm.get('interets')?.value.includes(interet.id)"
-        ></ion-checkbox>
-        <ion-label>{{ interet.nom }}</ion-label>
+  <!-- Contenu principal (profil + formulaire) -->
+  <div class="content-wrapper">
+    <!-- Photo de profil -->
+    <div class="d-flex justify-content-center align-items-center mt-4 mb-3 position-relative">
+      <div class="profile-wrapper">
+        <img
+          [src]="profileImagePreview || profileImageUrl || 'assets/profileParDefaut.jpg'"
+          class="profile-picture"
+        >
       </div>
+
+      <input
+        type="file"
+        id="profileImageInput"
+        accept="image/*"
+        hidden
+        (change)="onFileSelected($event)"
+      />
+
+      <label
+        for="profileImageInput"
+        class="btn btn-pink p-1 rounded-circle position-absolute camera-btn"
+        title="Changer la photo"
+      >
+        <i class="bi bi-camera fs-5 p-2"></i>
+      </label>
     </div>
 
-    <div class="mb-3 text-center">
-      <ion-button expand="block" class="btnSave" type="submit">Enregistrer</ion-button>
-    </div>
+    <!-- Formulaire -->
+    <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()" class="px-3">
 
-  </form>
+      <div class="mb-3">
+        <label for="nom" class="form-label">Nom</label>
+        <input type="text" id="nom" formControlName="nom" placeholder="Sow" class="form-control input-bordered">
+      </div>
+
+      <div class="mb-3">
+        <label for="prenom" class="form-label">Prénom</label>
+        <input type="text" id="prenom" formControlName="prenom" placeholder="Joe Doe" class="form-control input-bordered">
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" formControlName="email" placeholder="user@example.com" class="form-control input-bordered">
+      </div>
+
+      <div class="mb-3">
+        <label for="phone" class="form-label">Téléphone</label>
+        <input type="text" id="phone" formControlName="phone" placeholder="+221 77 000 00 00" class="form-control input-bordered">
+      </div>
+
+      <div class="mb-3">
+        <label for="adresse" class="form-label">Adresse</label>
+        <input type="text" id="adresse" formControlName="adresse" placeholder="123, Rue du Développement" class="form-control input-bordered">
+      </div>
+
+      <div class="mb-3">
+        <label for="bio" class="form-label">Bio</label>
+        <textarea id="bio" formControlName="bio" placeholder="Parlez-nous de vous..." rows="3" class="form-control input-bordered"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="dob" class="form-label">Date de naissance</label>
+        <input type="date" id="dob" formControlName="dob" class="form-control input-bordered">
+      </div>
+
+      <!-- Intérêts -->
+      <div class="row mb-3">
+        <div class="col-6" *ngFor="let interet of interets">
+          <input
+            type="checkbox"
+            [value]="interet.id"
+            (change)="onCheckboxChange($event)"
+            [checked]="editProfileForm.get('interets')?.value.includes(interet.id)"
+            id="interet{{interet.id}}"
+          />
+          <label for="interet{{interet.id}}">{{ interet.nom }}</label>
+        </div>
+      </div>
+
+      <div class="mb-3 text-center">
+        <button type="submit" class="btn btnSave">Enregistrer</button>
+      </div>
+
+    </form>
+  </div>
 
   <!-- Menu flottant -->
   <app-floating-menu></app-floating-menu>
-
 </ion-content>

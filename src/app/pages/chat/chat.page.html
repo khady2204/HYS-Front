@@ -1,33 +1,26 @@
+<ion-content fullscreen class="bg-white">
 
+  <!-- HEADER CUSTOM DANS ION-CONTENT -->
+  <div class="custom-header d-flex align-items-center px-3">
 
-  <ion-header class="ion-no-border">
-    <ion-toolbar class="d-flex align-items-center px-3 pt-4 pb-2">
+    <!-- Bouton retour -->
+    <button class="back-btn" (click)="goBack()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
 
-      <!-- Bouton retour -->
-      <ion-buttons slot="start">
-        <ion-back-button fill="clear" defaultHref="/discussion" text="" (click)="goBack()">
-          <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
-        </ion-back-button>
-      </ion-buttons>
-
-      <!-- Avatar et infos utilisateur -->
-      <div class="d-flex align-items-center" style="margin-left:8px;">
-        <!-- Avatar -->
-        <ion-avatar>
-          <img [src]="user?.profileImage || 'assets/profileParDefaut.jpg'" />
-        </ion-avatar>
-
-        <!-- Nom et statut -->
-        <div class="ms-2 d-flex flex-column justify-content-center">
-          <span class="fw-bold">{{ user?.prenom }} {{ user?.nom }}</span>
-          <small class="status">{{ getUserStatus() }}</small>
-        </div>
+    <!-- Avatar et infos utilisateur -->
+    <div class="header-user d-flex align-items-center ms-2">
+      <ion-avatar>
+        <img [src]="user?.profileImage || 'assets/profileParDefaut.jpg'" />
+      </ion-avatar>
+      <div class="ms-2 d-flex flex-column justify-content-center">
+        <span class="fw-bold">{{ user?.prenom }} {{ user?.nom }}</span>
+        <small class="status">{{ getUserStatus() }}</small>
       </div>
+    </div>
 
-    </ion-toolbar>
-  </ion-header>
+  </div>
 
-<ion-content class="bg-white" fullscreen>
   <!-- Zone messages -->
   <div class="flex-grow-1 px-3 message-container-wrapper" #messageContainer>
 
@@ -57,7 +50,7 @@
             <div *ngIf="message.content">{{ message.content }}</div>
 
             <!-- Image -->
-            <ion-img *ngIf="message.mediaType==='image' && message.mediaUrl" [src]="message.mediaUrl" class="media-msg"></ion-img>
+            <img *ngIf="message.mediaType==='image' && message.mediaUrl" [src]="message.mediaUrl" class="media-msg">
 
             <!-- Vidéo -->
             <video *ngIf="message.mediaType==='video' && message.mediaUrl" [src]="message.mediaUrl" controls class="media-msg"></video>
@@ -82,84 +75,59 @@
     </div>
   </div>
 
-
   <div #bottom></div> <!-- Ancre pour scroll auto -->
 
   <!-- Preview fichier -->
-  <div *ngIf="previewUrl" class="ion-padding" style="display:inline-block; position:relative;">
+  <div *ngIf="previewUrl" class="ion-padding preview-container" style="display:inline-block; position:relative;">
     <ion-button fill="clear" size="small" style="position:absolute; top:5px; right:5px; border-radius:50%;" (click)="removeSelectedFile()">✖</ion-button>
 
-    <ion-img *ngIf="selectedFile?.type?.startsWith('image')" [src]="previewUrl" class="media-msg"></ion-img>
+    <img *ngIf="selectedFile?.type?.startsWith('image')" [src]="previewUrl" class="media-msg">
     <video *ngIf="selectedFile?.type?.startsWith('video')" [src]="previewUrl" controls class="media-msg"></video>
   </div>
 
-  <!-- Aperçu du fichier sélectionné -->
-    <div *ngIf="previewUrl" class="p-2 position-relative" style="display:inline-block;">
-      <button (click)="removeSelectedFile()" class="btn btn-light btn-sm position-absolute" style="top:5px; right:5px; border-radius:50%;">
-        ✖
-      </button>
+  <!-- Zone de saisie -->
+  <div class="chat-input d-flex align-items-center p-3 border-top gap-3 bg-white">
 
-      <div *ngIf="selectedFile?.type?.startsWith('image')">
-        <img [src]="previewUrl" alt="Aperçu" style="max-width: 200px; border-radius: 8px;" />
-      </div>
+    <ion-button fill="clear" (click)="toggleOptions()">
+      <i class="bi bi-plus-circle fs-5" style="cursor:pointer;"></i>
+    </ion-button>
 
-      <div *ngIf="selectedFile?.type?.startsWith('video')">
-        <video [src]="previewUrl" controls style="max-width: 200px; border-radius: 8px;"></video>
-      </div>
+    <div *ngIf="showOptions" class="flex gap-2 mt-2">
+      <ion-button fill="clear" (click)="takePhoto()">
+        <i class="bi bi-camera fs-5" style="cursor:pointer;"></i>
+      </ion-button>
+
+      <ion-button fill="clear" (click)="pickFromGallery()">
+        <i class="bi bi-image fs-5" style="cursor:pointer;"></i>
+      </ion-button>
     </div>
 
-    <!-- Zone de saisie -->
-    
-<div class="chat-input d-flex align-items-center p-3 border-top gap-3 bg-white">
+    <input
+      type="text"
+      class="form-control rounded-pill"
+      [(ngModel)]="newMessage"
+      (keydown.enter)="sendMessage()"
+      placeholder="Message"
+      style="background:#f5f5f5; border:none;"
+    />
 
-  <!-- Bouton principal -->
-  <ion-button fill="clear" (click)="toggleOptions()">
-    <i class="bi bi-plus-circle fs-5" style="cursor:pointer;"></i>
-  </ion-button>
-
-  <!-- Sous-boutons -->
-  <div *ngIf="showOptions" class="flex gap-2 mt-2">
-    <ion-button fill="clear" (click)="takePhoto()">
-      <i class="bi bi-camera fs-5" style="cursor:pointer;"></i>
-    </ion-button>
-
-    <ion-button fill="clear" (click)="pickFromGallery()">
-      <i class="bi bi-image fs-5" style="cursor:pointer;"></i>
-    </ion-button>
-  </div>
-
-  <!-- Champ de saisie -->
-  <input
-    type="text"
-    class="form-control rounded-pill"
-    [(ngModel)]="newMessage"
-    (keydown.enter)="sendMessage()"
-    placeholder="Message"
-    style="background:#f5f5f5; border:none;"
-  />
-
-  <!-- Bouton d'envoi -->
-  <button type="button" class="btn btn-sm" (click)="sendMessage()">
-    <i class="bi bi-send fs-5"></i>
-  </button>
-
-  <!-- Bouton d'enregistrement audio -->
-  <div class="d-flex align-items-center gap-2">
-    <button type="button" class="btn p-0" *ngIf="!isRecording" (click)="startRecording()">
-      <i class="bi bi-mic fs-5 text-dark"></i>
-    </button>
-    
-    <button type="button" class="btn p-0" *ngIf="isRecording" (click)="stopRecording()">
-      <i class="bi bi-stop-circle fs-5 text-danger"></i>
+    <button type="button" class="btn btn-sm" (click)="sendMessage()">
+      <i class="bi bi-send fs-5"></i>
     </button>
 
-    <span *ngIf="isRecording" class="text-muted">{{ recordingTime }}s</span>
+    <div class="d-flex align-items-center gap-2">
+      <button type="button" class="btn p-0" *ngIf="!isRecording" (click)="startRecording()">
+        <i class="bi bi-mic fs-5 text-dark"></i>
+      </button>
+      
+      <button type="button" class="btn p-0" *ngIf="isRecording" (click)="stopRecording()">
+        <i class="bi bi-stop-circle fs-5 text-danger"></i>
+      </button>
+
+      <span *ngIf="isRecording" class="text-muted">{{ recordingTime }}s</span>
+    </div>
+
+    <i class="bi bi-gear fs-5" style="cursor:pointer;"></i>
   </div>
-
-  <!-- Bouton de paramètres -->
-  <i class="bi bi-gear fs-5" style="cursor:pointer;"></i>
-</div>
-
-
 
 </ion-content>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IonContent } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-filtre-service',

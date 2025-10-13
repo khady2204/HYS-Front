@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { notifications } from 'ionicons/icons';
 
 export interface NotificationDTO {
   id: number;
@@ -23,7 +24,19 @@ export class NotificationService {
 
   private readonly apiUrl = `${environment.apiBase}/api/notifications`;
 
+  // Pour mise à jour en direct
+  private notificationsSubject = new BehaviorSubject<NotificationDTO[]>([]);
+  notifications$ = this.notificationsSubject.asObservable();
+
   constructor(private http: HttpClient) {}
+
+  // Rafraichir la liste des notifications
+  refreshNotifications(): void {
+    this.getNotifications().subscribe({
+      next: (data) => this.notificationsSubject.next(data),
+      error: (err) => console.error('Erreur de chargement des notifications', err)
+    });
+  }
 
   // Récupérer toutes les notifications
   getNotifications(): Observable<NotificationDTO[]> {

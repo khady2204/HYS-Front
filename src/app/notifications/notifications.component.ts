@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, NotificationDTO } from '../services/notification.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
-  styleUrls: ['./notifications.component.css']
+  styleUrls: ['./notifications.component.css'],
+  standalone: true,
+  imports: [ CommonModule]
 })
 export class NotificationsComponent implements OnInit {
   notifications: NotificationDTO[] = [];
@@ -18,6 +21,7 @@ export class NotificationsComponent implements OnInit {
   chargerNotifications() {
     this.notifService.getNotifications().subscribe(data => {
       this.notifications = data;
+      console.log("notification chargées :", this.notifications)
     });
   }
 

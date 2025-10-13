@@ -110,8 +110,8 @@
     color: #fff;
   }
 
-  .infos-person {
-    color: #bbb;
+ .infos-person {
+    color: #dbdbdb;
   }
 
   .btn-pink {
@@ -121,6 +121,9 @@
 
   .btn-pink:hover {
     background-color: #e00078;
+  }
+  h6 {
+    color: #fff;
   }
 }
 
