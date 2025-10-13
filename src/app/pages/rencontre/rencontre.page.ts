@@ -14,6 +14,7 @@ import { CommentsPage } from '../comments/comments.page';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { RencontreService, Publication } from 'src/app/services/rencontre/rencontre.service';
+
 @Component({
   selector: 'app-rencontre',
   templateUrl: './rencontre.page.html',
@@ -56,6 +57,19 @@ export class RencontrePage implements OnInit {
     this.loadMyStories();
     this.loadPublications();
   }
+
+  // Empécher la classe .story-container de s'afficher au dessus du filter-servce
+  ngAfterViewInit() {
+    const storyContainer = document.querySelector('.story-container') as HTMLElement;
+
+    document.addEventListener('ionModalDidPresent', () => {
+      if(storyContainer) storyContainer.style.zIndex = '500';
+    });
+
+    document.addEventListener('ionModalDidDismiss', () => {
+      if(storyContainer) storyContainer.style.zIndex = '999';
+    });
+}
 
   // === MÉTHODES STORIES (inchangées) ===
   loadStories(): void {

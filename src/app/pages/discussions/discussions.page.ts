@@ -242,7 +242,7 @@ export class DiscussionsPage implements OnInit {
 
       // Appel backend pour persister le statut lu
       this.messageService.markMessageAsRead(msg.id).subscribe({
-        next: () => console.log(`✅ Message ${msg.id} marqué comme lu côté serveur`),
+        next: () => console.log(`Message ${msg.id} marqué comme lu côté serveur`),
         error: (err) => {
           console.error(`Erreur lors du marquage du message ${msg.id}`, err);
           msg.read = false; // rollback si erreur
