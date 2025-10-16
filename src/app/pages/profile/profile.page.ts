@@ -8,7 +8,7 @@ import { UserAuthService } from 'src/app/services/user-auth.service';
 import { IonicModule } from '@ionic/angular';
 import { UrlUtilsService } from 'src/app/services/url-utils.service';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile',
@@ -36,7 +36,8 @@ export class ProfilePage implements OnInit {
     private router: Router,
     private userAuthService: UserAuthService,
     private urlUtils: UrlUtilsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -82,17 +83,47 @@ export class ProfilePage implements OnInit {
     this.showLogoutModal = false;
   }
 
-  // Méthode de déconnexion
-  logout() {
-    this.authService.logout().subscribe({
-      next: () => {
-        localStorage.removeItem('jwtToken');
-        this.router.navigate(['/login']);
-      },
-      error: (err) => {
-        console.error('Erreur lors de la déconnexion', err);
-        this.showLogoutModal = false;
-      }
-    })
-  }
+ // Méthode de déconnexion
+logout() {
+  console.log('Déconnexion initiée');
+  this.authService.logout().subscribe({
+    next: () => {
+      console.log('Réponse du serveur reçue');
+
+      // Suppression du token
+      localStorage.removeItem('jwtToken');
+      console.log('Token supprimé');
+
+      // Fermer le modal
+      this.showLogoutModal = false;
+      console.log('Modal fermé');
+
+      // Afficher le toast
+      this.presentLogoutToast();
+      console.log('Toast affiché (non await)');
+
+      // Navigation après un petit délai
+      setTimeout(() => {
+        console.log('Navigation vers /home');
+        this.router.navigate(['/home']);
+      }, 500);
+    },
+    error: (err) => {
+      console.error('Erreur lors de la déconnexion', err);
+      this.showLogoutModal = false;
+    }
+  });
+}
+
+async presentLogoutToast() {
+  const toast = await this.toastController.create({
+    message: 'Vous êtes déconnecté(e)',
+    duration: 2000,
+    color: 'success',
+    position: 'top'
+  });
+  toast.present();
+}
+
+
 }
