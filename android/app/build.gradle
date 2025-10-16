@@ -54,7 +54,16 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
-    implementation project(':capacitor-cordova-android-plugins')
+    
+    // EXCLURE LES DOUBLONS KOTLIN
+    implementation(project(':capacitor-cordova-android-plugins')) {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
+    }
+    
+    // Ajouter une version unique de Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
 }
 
 apply from: 'capacitor.build.gradle'
