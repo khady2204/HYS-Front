@@ -58,7 +58,7 @@ email: any;
       // rediriger vers la page de saisie de code OTP
       this.router.navigate(['/otp-verification'], {
          queryParams: { 
-          phone: data.email,
+          email: data.email,
         } 
       });
     },

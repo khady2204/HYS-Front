@@ -56,7 +56,7 @@ export class AuthService {
   }
 
   // Étape 2 : Vérification OTP
-  verifyOtpForReset(data:{ phone: string; otp: string } ): Observable<any> {
+  verifyOtpForReset(data:{ email: string; otp: string } ): Observable<any> {
     return this.http.post(`${this.ApiUrl}/api/auth/reset/verify-otp`, data, { responseType: 'text' });
   }
 

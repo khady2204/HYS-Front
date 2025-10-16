@@ -16,7 +16,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class NewPasswordPage implements OnInit {
   passwordForm!: FormGroup;
-  phone!: string;
+  email!: string;
 
   constructor(
     private fb: FormBuilder,
@@ -34,7 +34,7 @@ export class NewPasswordPage implements OnInit {
 
     // Récupérer les paramètres d’URL
     this.route.queryParams.subscribe(params => {
-      this.phone = params['phone'];
+      this.email = params['email'];
   });
 
   }
@@ -61,13 +61,13 @@ export class NewPasswordPage implements OnInit {
     return;
   }
 
-  if (!this.phone) {
-    this.showToast('Numéro de téléphone manquant', 'danger');
+  if (!this.email) {
+    this.showToast('Email manquant', 'danger');
     return;
   }
 
   const data = {
-    phone: this.phone,
+    email: this.email,
     newPassword,
     confirmPassword
   };

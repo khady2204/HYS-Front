@@ -50,13 +50,13 @@
             <div *ngIf="message.content">{{ message.content }}</div>
 
             <!-- Image -->
-            <img *ngIf="message.mediaType==='image' && message.mediaUrl" [src]="message.mediaUrl" class="media-msg">
+            <img *ngIf="message.mediaType==='image' && message.mediaUrl" [src]="getMediaUrl(message.mediaUrl)" class="media-msg">
 
             <!-- Vidéo -->
-            <video *ngIf="message.mediaType==='video' && message.mediaUrl" [src]="message.mediaUrl" controls class="media-msg"></video>
+            <video *ngIf="message.mediaType==='video' && message.mediaUrl" [src]="getMediaUrl(message.mediaUrl)" controls class="media-msg"></video>
 
             <!-- Audio -->
-            <audio *ngIf="message.mediaType==='audio' && message.mediaUrl" [src]="message.mediaUrl" controls class="media-msg"></audio>
+            <audio *ngIf="message.mediaType==='audio' && message.mediaUrl" [src]="getMediaUrl(message.mediaUrl)" controls class="media-msg"></audio>
             <small *ngIf="message.mediaType==='audio'" class="text-muted">{{ message.audioDuration }}s</small>
 
           </div>

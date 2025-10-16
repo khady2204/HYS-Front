@@ -9,6 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 import { VoiceRecorder } from 'capacitor-voice-recorder';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { PopoverController } from '@ionic/angular';
+import { UrlUtilsService } from 'src/app/services/url-utils.service';
 
 @Component({
   selector: 'app-chat',
@@ -46,8 +47,14 @@ export class ChatPage implements OnInit, AfterViewInit {
     private authService: UserAuthService,
     private messageService: MessageService,
     private userService: UserService,
-    private popoverCtrl: PopoverController
+    private popoverCtrl: PopoverController,
+    private urlUtils: UrlUtilsService
   ) {}
+
+   getMediaUrl(mediaUrl: string | null | undefined): string | null {
+    if (!mediaUrl) return null;
+    return this.urlUtils.buildProfileImageUrl(mediaUrl);
+  }
 
   ngAfterViewInit() {
     this.scrollToBottom();

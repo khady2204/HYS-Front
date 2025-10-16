@@ -17,7 +17,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class OtpVerificationPage implements OnInit{
 otpForm!: FormGroup; 
-phone!: string;
+email!: string;
   
   constructor(private fb: FormBuilder,
     private authService: AuthService,
@@ -30,11 +30,11 @@ phone!: string;
       otp: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(6)]],
     });
 
-    // Récupérer le phone depuis queryParams (envoyé depuis f-password)
+    // Récupérer le emal depuis queryParams (envoyé depuis f-password)
     this.route.queryParams.subscribe((params) => {
-      this.phone = params['phone'];
-      if (!this.phone) {
-        alert('Numéro de téléphone manquant');
+      this.email = params['email'];
+      if (!this.email) {
+        alert('Email manquant');
         this.router.navigate(['/forgot-password']);
       }
     });
@@ -46,7 +46,7 @@ phone!: string;
     }
 
     const otp = this.otpForm.value.otp;
-    const payload = { phone: this.phone, otp };
+    const payload = { email: this.email, otp };
 
     console.log('Données envoyées au backend :', payload);
 
@@ -56,7 +56,7 @@ phone!: string;
 
       // Si la vérification est réussie
       this.router.navigate(['/new-password'], {
-        queryParams: { phone: this.phone } // pour le récupérer dans new-password
+        queryParams: { email: this.email } // pour le récupérer dans new-password
       });
     },
     error: (err) => {
