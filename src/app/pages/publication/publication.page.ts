@@ -6,6 +6,8 @@ import { IonicModule } from '@ionic/angular';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Router, RouterModule } from '@angular/router';
 import { CreatePublicationData, PublicationService } from '../../services/publication.service';
+import { addIcons } from 'ionicons';
+import { closeCircle, cameraOutline, videocamOutline, imagesOutline, closeOutline } from 'ionicons/icons';
 
 interface MediaPreview {
   id: string;
@@ -44,7 +46,15 @@ export class PublicationPage implements OnInit {
     private toastController: ToastController,
     private alertController: AlertController,
     private loadingController: LoadingController
-  ) {}
+  ) {
+      addIcons({
+      'close-circle': closeCircle,
+      'camera-outline': cameraOutline, 
+      'videocam-outline': videocamOutline,
+      'images-outline': imagesOutline,
+      'close-outline': closeOutline
+    });
+  }
 
   ngOnInit() {
     this.handleNavigationState();
@@ -239,51 +249,77 @@ async handleFileInput(event: any) {
     ) && this.remainingChars >= 0;
   }
 
-  /**
-   * Publier la publication
-   */
-  async publier() {
-    if (!this.canPublish) return;
-
-    const loading = await this.loadingController.create({
-      message: 'Publication en cours...',
-      spinner: 'crescent'
-    });
-    await loading.present();
-
-    this.isPublishing = true;
-
-    try {
-      const publicationData: CreatePublicationData = {};
-
-      if (this.texte.trim()) {
-        publicationData.texte = this.texte.trim();
-      }
-
-      if (this.medias.length > 0) {
-        publicationData.fichiers = this.medias.map(media => media.file!);
-        publicationData.descriptions = this.medias.map(media => media.description || '');
-      }
-
-      if (publicationData.fichiers?.length) {
-        const validation = this.publicationService.validateFiles(publicationData.fichiers);
-        if (!validation.valid) throw new Error(validation.errors.join('\n'));
-      }
-
-      await this.publicationService.creerPublication(publicationData).toPromise();
-
-      await this.showToast('Publication créée avec succès !', 'success');
-      this.resetForm();
-      this.goBack();
-
-    } catch (error: any) {
-      console.error('Erreur publication:', error);
-      await this.showToast(error.message || 'Erreur lors de la publication', 'danger');
-    } finally {
-      this.isPublishing = false;
-      await loading.dismiss();
-    }
+/**
+ * Publier la publication - VERSION CORRIGÉE
+ */
+async publier() {
+  console.log('🟢 BOUTON PUBLIER CLIQUE !');
+  
+  if (!this.canPublish) {
+    console.log('❌ Cannot publish - conditions not met');
+    return;
   }
+
+  console.log('🚀 Début de la publication...');
+  this.isPublishing = true;
+
+  try {
+    console.log('1. 📤 Préparation des données...');
+    const publicationData: CreatePublicationData = {};
+
+    if (this.texte.trim()) {
+      publicationData.texte = this.texte.trim();
+    }
+
+    if (this.medias.length > 0) {
+      publicationData.fichiers = this.medias.map(media => media.file!);
+      publicationData.descriptions = this.medias.map(media => media.description || '');
+    }
+
+    console.log('2. 📦 Envoi API...');
+    const result = await this.publicationService.creerPublication(publicationData).toPromise();
+    console.log('3. ✅ Publication réussie, ID:', result?.id);
+
+    console.log('4. 🗑️ Reset formulaire...');
+    this.resetForm();
+    console.log('5. ✅ Formulaire reset');
+
+    console.log('6. 🍞 Affichage toast...');
+    // Toast RAPIDE sans attendre
+    this.showToast('Publication créée !', 'success').then(() => {
+      console.log('7. ✅ Toast affiché');
+    }).catch(toastError => {
+      console.error('❌ Erreur toast:', toastError);
+    });
+
+    console.log('8. 🚪 Lancement redirection...');
+    
+    // REDIRECTION IMMÉDIATE sans attendre le toast
+    setTimeout(() => {
+      console.log('9. 🔄 Dans setTimeout - Début redirection');
+      
+      this.router.navigate(['/dashboard'], { replaceUrl: true }).then(
+        (success) => {
+          console.log('🎉 Redirection vers /dashboard RÉUSSI');
+        },
+        (error) => {
+          console.error('💥 ❌ Redirection échouée:', error);
+          console.log('🔄 Fallback vers /');
+          this.router.navigate(['/'], { replaceUrl: true });
+        }
+      );
+    }, 100);
+
+    console.log('10. 📝 Après setTimeout - en attente...');
+
+  } catch (error: any) {
+    console.error('💥 ERREUR CAPTURÉE:', error);
+    this.showToast('Erreur publication', 'danger');
+  } finally {
+    this.isPublishing = false;
+    console.log('11. 🏁 FINALLY - Publication terminée, isPublishing = false');
+  }
+}
 
   private resetForm() {
     this.texte = '';
