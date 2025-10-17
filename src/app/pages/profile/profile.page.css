@@ -10,12 +10,10 @@
   background-color: #ff008a;
   color: #fff;
   z-index: 100;
-  padding-top: var(--ion-safe-area-top, 15px); 
   display: flex;
   align-items: center;
-  justify-content: space-between; 
-  padding-left: 1rem;
-  padding-right: 1rem;
+  justify-content: flex-start; 
+  padding: var(--ion-safe-area-top, 10px) 16px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
@@ -23,7 +21,7 @@
 .back-btn {
   border: none;
   background: transparent;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 40px;
@@ -32,17 +30,16 @@
   cursor: pointer;
   color: inherit;
   font-size: 1.3rem;
-  margin-top: 10px; 
+  margin-right: 10px;
+  margin-top: 28px;
 }
 
-/* Titre centré */
-.custom-header {
-  margin: 0 auto;
-  font-weight: 600;
-  font-size: 1.2rem;
-  transform: translateY(10px); 
-  text-align: center;
+.header-title {
+  font-weight: 700px;
+  font-size: 1.05em;
+  margin-top: 35px;
 }
+
 
 .name {
   text-align: center;
@@ -50,11 +47,11 @@
 }
 
 .mt-header {
-  margin-top: 50px; /* espace pour header fixe + image profil */
+  margin-top: 50px; 
 }
 
 .profile-img-container {
-  margin-top: -50px; /* remonte la photo pour coller au header */
+  margin-top: -50px; 
 }
 
 /* ==========================
@@ -98,6 +95,11 @@
   background-color: #ffe6f3;
 }
 
+.d-flex.flex-column.align-items-center {
+  margin-bottom: 80px; 
+}
+
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -140,6 +142,8 @@
   height: 120%;
 }
 
+
+
 ion-img {
   width: 100%;
   height: 100%;
@@ -159,7 +163,7 @@ ion-img {
     color: #ffffff;
   }
 
-  h5, .bio, .address {
+  .header-title, .bio, .address {
     color: #e0e0e0;
   }
 
@@ -191,7 +195,7 @@ ion-img {
     padding: 4px 12px;
   }
 
-  h5 {
+  .header-title {
     font-size: 1rem;
   }
 

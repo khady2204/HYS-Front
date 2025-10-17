@@ -11,6 +11,7 @@ import { InteretService } from 'src/app/services/interet/interet.service';
 
 import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
 import { UrlUtilsService } from 'src/app/services/url-utils.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-profile',
@@ -35,7 +36,8 @@ export class EditProfilePage implements OnInit {
     private authUserService: UserAuthService,
     private toastController: ToastController,
     private interetService: InteretService,
-    private urlUtils: UrlUtilsService
+    private urlUtils: UrlUtilsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -125,6 +127,7 @@ export class EditProfilePage implements OnInit {
     this.userService.updateProfile(formData).subscribe({
       next: (res) => {
         this.presentSuccessToast('Profil mis à jour avec succès');
+        this.router.navigate(['/profil']);
       },
       error: (err) => {
         console.error("Erreur lors de la mise à jour du profil", err);
