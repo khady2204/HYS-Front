@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.helpingyourself.hysfront;
 
 import com.getcapacitor.BridgeActivity;
 
