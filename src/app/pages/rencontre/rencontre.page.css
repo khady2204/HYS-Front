@@ -32,22 +32,31 @@
 }
 
 /* ===== STORIES ALIGNÉES AVEC HEADER ===== */
-.story-container {
-  position: fixed;
-  top: 136px; /* Ajusté pour s'aligner sous le header */
-  left: 0;
-  right: 0;
-  width: 100%;
-  z-index: 999;
-  background-color: rgba(255,255,255,0.98);
-  padding: 0.5rem 1rem;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  border-bottom: 1px solid #e0e0e0;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  transition: background 0.3s, border-color 0.3s;
+
+/* Version MAXIMUM COMPACT */
+.content-offset {
+  margin-top: 0 !important; /* Très réduit */
+  padding-top: 0 !important;
+}
+
+.publications-section {
+  max-width: 600px;
+  margin: -80px auto 0 auto; /* Margin négatif plus grand */
+  padding-top: 0;
+}
+.publications-section h6 {
+  margin-top: 0 !important;
+  margin-bottom: 0.75rem !important;
+  padding-top: 0 !important;
+}
+
+.publication-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 16px; /* Espace entre les cards */
 }
 
 .story-container .overflow-auto {
@@ -115,11 +124,6 @@
   0% { box-shadow: 0 0 0 0 rgba(255,107,107,0.7); }
   70% { box-shadow: 0 0 0 10px rgba(255,107,107,0); }
   100% { box-shadow: 0 0 0 0 rgba(255,107,107,0); }
-}
-
-/* Espace pour compenser header + stories */
-.content-offset {
-  margin-top: 220px !important; /* Header (136px) + Stories (~84px) */
 }
 
 /* ===== CARD PROFIL ===== */
@@ -406,7 +410,7 @@ ion-modal .btn {
     border: 1px solid #444;
     color: #fff;
   }
-  
+
   .header-search-fixed .form-control::placeholder {
     color: #aaa;
   }
@@ -432,8 +436,8 @@ ion-modal .btn {
     filter: brightness(1.2);
   }
 
-  .story-count { 
-    border: 2px solid #2c2c2c; 
+  .story-count {
+    border: 2px solid #2c2c2c;
   }
 
   .card-profile {
@@ -448,12 +452,12 @@ ion-modal .btn {
     border: none;
   }
 
-  .btn-light:hover { 
-    background-color: #4a4a4a; 
+  .btn-light:hover {
+    background-color: #4a4a4a;
   }
 
-  .text-muted { 
-    color: #b0b0b0 !important; 
+  .text-muted {
+    color: #b0b0b0 !important;
   }
 
   .alert-danger {
@@ -462,46 +466,46 @@ ion-modal .btn {
     border: none;
   }
 
-  .publication-feed { 
-    background: #1e1e1e; 
+  .publication-feed {
+    background: #1e1e1e;
   }
-  
-  .publication-card { 
-    background: #2c2c2c; 
-    color: #f0f0f0; 
-    box-shadow:0 2px 12px rgba(0,0,0,0.6); 
+
+  .publication-card {
+    background: #2c2c2c;
+    color: #f0f0f0;
+    box-shadow:0 2px 12px rgba(0,0,0,0.6);
   }
-  
-  .publication-header { 
-    border-bottom:1px solid #444; 
+
+  .publication-header {
+    border-bottom:1px solid #444;
   }
-  
-  .publication-content { 
-    color: #ccc; 
+
+  .publication-content {
+    color: #ccc;
   }
-  
-  .publication-actions { 
-    border-top:1px solid #444; 
+
+  .publication-actions {
+    border-top:1px solid #444;
   }
-  
-  .action-btn:hover { 
-    background: #3a3a3a; 
+
+  .action-btn:hover {
+    background: #3a3a3a;
   }
-  
-  .like-btn i { 
-    color: #aaa; 
+
+  .like-btn i {
+    color: #aaa;
   }
-  
-  .like-btn.active i { 
-    color: #e91e63; 
+
+  .like-btn.active i {
+    color: #e91e63;
   }
-  
-  .comment-btn i:hover { 
-    color: #2196f3; 
+
+  .comment-btn i:hover {
+    color: #2196f3;
   }
-  
-  .share-btn i:hover { 
-    color: #4caf50; 
+
+  .share-btn i:hover {
+    color: #4caf50;
   }
 
   /* Offcanvas */
@@ -518,7 +522,7 @@ ion-modal .btn {
   .btn-close {
     color: #bbb;
   }
-  
+
   .btn-close:hover {
     color: #ff66cc;
   }
@@ -548,62 +552,58 @@ ion-modal .btn {
     padding: 0.5rem 0.75rem;
   }
 
-  .story-ring { 
-    width: 48px !important; 
-    height: 48px !important; 
-  }
-  
-  .story-count { 
-    width: 18px; 
-    height: 18px; 
-    font-size: 9px; 
+  .story-ring {
+    width: 48px !important;
+    height: 48px !important;
   }
 
-  .content-offset {
-    margin-top: 200px !important;
+  .story-count {
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
   }
-  
-  .publication-card { 
-    border-radius:0; 
-    margin-bottom:8px; 
+
+  .publication-card {
+    border-radius:0;
+    margin-bottom:8px;
   }
-  
-  .publications-section { 
-    max-width:100%; 
-    margin:0; 
+
+  .publications-section {
+    max-width:100%;
+    margin:0;
   }
-  
-  .publication-header { 
-    padding:12px 16px 8px; 
+
+  .publication-header {
+    padding:12px 16px 8px;
   }
-  
-  .publication-content { 
-    padding:0 16px 12px; 
+
+  .publication-content {
+    padding:0 16px 12px;
   }
-  
-  .publication-actions { 
-    padding:8px 16px 12px; 
+
+  .publication-actions {
+    padding:8px 16px 12px;
   }
-  
-  .author-avatar { 
-    width:40px; 
-    height:40px; 
+
+  .author-avatar {
+    width:40px;
+    height:40px;
   }
-  
-  .action-btn { 
-    width:36px; 
-    height:36px; 
+
+  .action-btn {
+    width:36px;
+    height:36px;
   }
-  
-  .grid-2, .grid-3, .grid-4 { 
-    max-height:300px; 
+
+  .grid-2, .grid-3, .grid-4 {
+    max-height:300px;
   }
 }
 
 @media (max-width: 576px) {
   .offcanvas-body .d-flex.gap-2 {
     flex-direction: column !important;
-    gap: 10px; 
+    gap: 10px;
   }
 }
 
@@ -613,52 +613,48 @@ ion-modal .btn {
     padding: 0.5rem;
   }
 
-  .story-ring { 
-    width:44px !important; 
-    height:44px !important; 
-  }
-  
-  .story-count { 
-    width:16px; 
-    height:16px; 
-    font-size:8px; 
+  .story-ring {
+    width:44px !important;
+    height:44px !important;
   }
 
-  .content-offset {
-    margin-top: 190px !important;
+  .story-count {
+    width:16px;
+    height:16px;
+    font-size:8px;
   }
-  
-  .publication-header { 
-    padding:10px 12px 6px; 
+
+  .publication-header {
+    padding:10px 12px 6px;
   }
-  
-  .publication-content { 
-    padding:0 12px 10px; 
-    font-size:14px; 
+
+  .publication-content {
+    padding:0 12px 10px;
+    font-size:14px;
   }
-  
-  .publication-actions { 
-    padding:6px 12px 10px; 
+
+  .publication-actions {
+    padding:6px 12px 10px;
   }
-  
-  .action-buttons { 
-    gap:12px; 
+
+  .action-buttons {
+    gap:12px;
   }
-  
-  .action-btn { 
-    width:32px; 
-    height:32px; 
+
+  .action-btn {
+    width:32px;
+    height:32px;
   }
-  
-  .like-btn i { 
-    font-size:18px; 
+
+  .like-btn i {
+    font-size:18px;
   }
-  
-  .comment-btn i, .share-btn i { 
-    font-size:16px; 
+
+  .comment-btn i, .share-btn i {
+    font-size:16px;
   }
-  
-  .grid-2, .grid-3, .grid-4 { 
-    max-height:250px; 
+
+  .grid-2, .grid-3, .grid-4 {
+    max-height:250px;
   }
 }

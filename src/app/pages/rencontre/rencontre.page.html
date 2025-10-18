@@ -35,13 +35,13 @@
           </div>
 
           <!-- Error state -->
-          <div *ngIf="error" class="text-center">
+          <!-- <div *ngIf="error" class="text-center">
             <div class="story-ring me-1 d-flex justify-content-center align-items-center"
               style="width: 56px; height: 56px;">
               <i class="bi bi-exclamation-triangle text-danger fs-2"></i>
             </div>
             <small class="d-block mt-1 text-danger">{{ error }}</small>
-          </div>
+          </div> -->
 
           <!-- Stories groupées par utilisateur -->
           <div class="text-center" *ngFor="let userStory of userStories" (click)="openStory(userStory)">
@@ -59,8 +59,8 @@
     </div>
     <!-- Section Publications -->
     <div class="publications-section">
-      <div class="d-flex align-items-center justify-content-between mt-5 mb-4">
-        <h6 class="mb-0 mt-5 fw-bold text-primary">Publications</h6>
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h6 class="mb-0  fw-bold text-primary">Publications</h6>
         <small class="text-muted">{{ publications.length }} publication(s)</small>
       </div>
 
