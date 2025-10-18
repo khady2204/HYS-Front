@@ -1,0 +1,246 @@
+.back-btn {
+  position: absolute;
+  top: 50px;   
+  left: 10px;  
+  z-index: 10; /* reste au-dessus du contenu */
+  color: #0D3873;
+}
+
+/* Fond unique global */
+ion-content.login-container {
+  --background: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/* Wrapper du formulaire */
+.login-wrapper {
+  background: transparent; 
+  padding: 24px;
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3px;
+}
+
+.logo-img {
+  width: 150px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  color: #0D3873;
+}
+
+.google-login {
+  margin-top: 2px;
+  text-align: center;
+  display: flex;
+}
+
+.text {
+  color: #f1f1f1;
+  text-transform: none;
+}
+
+.google-btn {
+  --border-color: #0D3873;
+  --background: #0D3873;
+  --color: #ffffff;
+  border-radius: 8px;
+  height: 40px;
+  width: 100%;
+  margin: 15px 0;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.input-label {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #000;
+  display: block;
+  padding-left: 4px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+input,
+ion-input::part(input) {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 12px 10px;
+  border-radius: 10px;
+  background: #f1f1f1;
+  color: #000;
+  box-sizing: border-box;
+}
+
+input::placeholder,
+ion-input::part(input)::placeholder {
+  color: #888;
+}
+
+input:focus,
+ion-input::part(input):focus {
+  border: 1px solid #0D3873;
+}
+
+.password-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 60%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #888;
+  cursor: pointer;
+}
+
+ion-button.login-button {
+  --background: #0D3873;
+  --color: white;
+  text-transform: none;
+  margin-bottom: 15px;
+}
+
+.login-link {
+  color: #0D3873;
+}
+
+.secondary-actions {
+  text-align: center;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+.bp-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+.forgot-link {
+  color: #0D3873;
+  font-size: 0.85rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* ============================
+   Styles Dark Mode
+   ============================ */
+@media (prefers-color-scheme: dark) {
+  ion-content.login-container {
+    --background: #121212;
+  }
+
+  .login-title,
+  .input-label,
+  .login-link,
+  .forgot-link,
+  .secondary-actions {
+    color: #ffffff;
+  }
+
+  input,
+  ion-input::part(input) {
+    background: #2c2c2c;
+    color: #ffffff;
+  }
+
+  input::placeholder,
+  ion-input::part(input)::placeholder {
+    color: #bbbbbb;
+  }
+
+  ion-button.login-button,
+  .google-btn {
+    --background: #0D3873;
+    --color: #ffffff;
+  }
+
+  ion-back-button {
+    color: #ffffff;
+  }
+}
+
+/* ============================
+   Responsive
+   ============================ */
+@media (max-width: 480px) {
+  .login-wrapper {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .login-title {
+    font-size: 1.2rem;
+  }
+
+  input,
+  ion-input::part(input) {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .google-btn {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  .login-wrapper {
+    max-width: 450px;
+    padding: 32px;
+  }
+
+  .login-title {
+    font-size: 1.6rem;
+  }
+
+  input,
+  ion-input::part(input) {
+    font-size: 16px;
+    padding: 14px;
+  }
+}

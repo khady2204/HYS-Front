@@ -1,0 +1,36 @@
+
+.nameInteret {
+    background-color: #ff0084;
+    color: white;
+    padding: 8px 10px;
+    margin: 5px 0;
+    border-radius: 10px;
+}
+ion-item {
+  max-width: 320px; /* largeur max */
+  margin: auto;     /* centre le champ */
+}
+
+.bouton-container {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-suivant {
+    margin-top: 30px;
+  font-size: 1.1em;
+  font-weight: 300;
+  min-width: 170px;
+  border-radius: 6px;
+  color: #000000;
+  background: #f4f4f4;
+  --background: #f4f4f4;
+  --color: #000000;
+}
+
+
+.custom-checkbox {
+  --checkbox-background-checked: #fff; 
+  --checkmark-color: #ff0084;                
+
+}

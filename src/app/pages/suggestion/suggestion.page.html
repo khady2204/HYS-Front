@@ -1,0 +1,54 @@
+<ion-content class="bg-pink">
+
+  <!-- En-tête -->
+  <div
+    class="header px-3 pt-5 pb-5 d-flex align-items-center justify-content-between"
+    style="background-color: #FF008A; margin-bottom: 25px;"
+  >
+    <!-- Icône retour -->
+    <i class="bi bi-arrow-left fs-4 fw-bold" (click)="goBack()"></i>
+
+    <!-- Menu déroulant centré -->
+    <app-dropdown-drawer></app-dropdown-drawer>
+
+    <!-- Avatar -->
+    <a [routerLink] = "['/profile', userId]">
+      <img
+        [src]="profileImageUrl || 'assets/profileParDefaut.jpg'"
+        alt="Profile"
+        class="rounded-circle border border-white"
+        width="40"
+        height="40"
+      />
+    </a>
+  </div>
+
+<!-- Onglets -->
+<div class="d-flex w-100 position-relative" style="margin-top: -30px;">
+  <a class="tab-button active text-decoration-none" href="/discussions">Discussions</a>
+  <div class="tab-button inactive">Suggestions</div>
+</div>
+
+<!-- Cartes Suggestions -->
+  <div class="px-3 mt-5">
+    <div class="card mb-5 p-3 border-0 rounded-4 shadow-sm" *ngFor="let person of suggestions">
+      <div class="d-flex align-items-center">
+        <img [src]="person.photoUrl" class="rounded-circle me-3" width="60" height="60" alt="Photo de {{ person.prenom }} {{ person.nom }}" />
+        <div>
+          <h6 class="fw-bold mb-1">{{ person.prenom }} {{ person.nom }}</h6>
+          <div class=" small infos-person" style="font-family: 'Inter'">
+            Compatibilité : {{ person.compatibilite }} %<br />
+            {{ person.interetsCommuns }}
+          </div>
+          <button class="btn btn-pink mb-2 text-white w-100 mt-3"   [routerLink]="['/chat', person.userId]" [state]="getUserState(person)">
+            Commencer une discussion
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu flottant -->
+  <app-floating-menu></app-floating-menu>
+
+</ion-content>

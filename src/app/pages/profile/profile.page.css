@@ -1,0 +1,210 @@
+/* ==========================
+   Header fixe dans le content
+   ========================== */
+.custom-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background-color: #ff008a;
+  color: #fff;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  padding: var(--ion-safe-area-top, 10px) 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Bouton back */
+.back-btn {
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: inherit;
+  font-size: 1.3rem;
+  margin-right: 10px;
+  margin-top: 28px;
+}
+
+.header-title {
+  font-weight: 700px;
+  font-size: 1.05em;
+  margin-top: 35px;
+}
+
+
+.name {
+  text-align: center;
+  margin-top: 70px;
+}
+
+.mt-header {
+  margin-top: 50px; 
+}
+
+.profile-img-container {
+  margin-top: -50px; 
+}
+
+/* ==========================
+   Boutons centrés
+   ========================== */
+.btn-pink {
+  --background: #ff008a;
+  --color: white;
+  border-radius: 5px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  min-width: 140px;
+  --background-activated: #cc006e;
+}
+
+/* Animation douce du menu déroulant */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  padding: 0.5rem 0;
+  min-width: 180px;
+  animation: fadeIn 0.25s ease-in-out;
+  z-index: 20;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  font-size: 15px;
+}
+
+.dropdown-item:hover {
+  background-color: #ffe6f3;
+}
+
+.d-flex.flex-column.align-items-center {
+  margin-bottom: 80px; 
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+
+/* ==========================
+   Infos utilisateur
+   ========================== */
+.bio,
+.address {
+  font-style: italic;
+  color: rgb(61, 59, 59);
+}
+
+/* ==========================
+   Image profil
+   ========================== */
+.profile-picture {
+  width: 105px;
+  height: 105px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #242760;
+}
+
+/* ==========================
+   Photos
+   ========================== */
+.photos {
+  border-radius: 15px;
+  overflow: hidden;
+  width: 100%;
+  height: 120%;
+}
+
+
+
+ion-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================
+   Dark Mode
+   ========================== */
+@media (prefers-color-scheme: dark) {
+  .custom-header {
+    background-color: #1e1e1e;
+  }
+
+  ion-content {
+    --background: #121212 !important;
+    color: #ffffff;
+  }
+
+  .header-title, .bio, .address {
+    color: #e0e0e0;
+  }
+
+  .btn-pink {
+    --background: #ff008a;
+    --color: white;
+  }
+
+  .profile-picture {
+    border: 2px solid #ff008a;
+  }
+
+  .photos {
+    background: #2a2a2a;
+  }
+}
+
+/* ==========================
+   Responsive
+   ========================== */
+@media (max-width: 576px) {
+  .profile-picture {
+    width: 80px;
+    height: 80px;
+  }
+
+  .btn-pink {
+    font-size: 0.85rem;
+    padding: 4px 12px;
+  }
+
+  .header-title {
+    font-size: 1rem;
+  }
+
+  .photos {
+    height: 100px;
+  }
+
+  .photo-list {
+    gap: 0.5rem;
+    margin-bottom: 0;
+  }
+}

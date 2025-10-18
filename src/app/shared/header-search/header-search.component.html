@@ -1,0 +1,62 @@
+<!-- HEADER + RECHERCHE FIXE -->
+<div class="header-search-fixed d-flex flex-column px-3 py-2">
+
+  <!-- logo + actions -->
+  <div class="d-flex justify-content-between align-items-center mt-2 mb-2">
+    <!-- Logo -->
+    <img src="assets/img/myLOve/logoHYS.png" alt="Logo HYS" style="height: 60px;">
+
+    <!-- Zone droite : notifications + profil + filtre -->
+    <div class="d-flex gap-3 align-items-center">
+      <div (click)="goToNotifications()">
+              <img src="assets/img/myLOve/Frame.png" alt="Notifications" style="width: 20px; height: 20px;">
+<span *ngIf="unreadCount > 0" class="notif-badge">{{ unreadCount }}</span>
+      </div>
+      <a [routerLink]="['/profile', userId]">
+        <img [src]="profileImageUrl || 'assets/profileParDefaut.jpg'" alt="Profil" class="rounded-circle" style="width: 24px; height: 24px;">
+      </a>
+      <app-filtre-service></app-filtre-service>
+    </div>
+  </div>
+
+  <!-- Barre de recherche -->
+  <div class="d-flex gap-2">
+    <input type="text" class="form-control" placeholder="Search here">
+    <button class="btn btn-light" (click)="toggleFilter()"> 
+      <i class="bi bi-sliders"></i> 
+    </button>
+  </div>
+</div>
+
+<!-- ESPACE POUR COMPENSER HEADER FIXE -->
+<div style="height: 150px;"></div>
+
+<!-- Offcanvas plein écran -->
+<div class="custom-offcanvas-full" [class.show]="filterOpen">
+  <div class="offcanvas-header">
+    <h5>Filtres</h5>
+    <button class="btn-close" (click)="toggleFilter()">&times;</button>
+  </div>
+  <div class="offcanvas-body">
+    <!-- Exemple de filtres -->
+    <label>Distance maximale (km)</label>
+    <input type="range" min="1" max="100">
+    
+    <label>Tranche d’âge</label>
+    <div class="d-flex gap-2">
+      <input type="number" placeholder="Min">
+      <input type="number" placeholder="Max">
+    </div>
+    
+    <label>Centre d’intérêt</label>
+    <select>
+      <option>Tous</option>
+      <option>Sport</option>
+      <option>Lecture</option>
+      <option>Voyage</option>
+      <option>Musique</option>
+    </select>
+    
+    <button class="btn btn-pink mt-3" (click)="toggleFilter()">Appliquer les filtres</button>
+  </div>
+</div>

@@ -1,0 +1,116 @@
+<ion-content class="login-container" fullscreen>
+  <!-- Bouton retour -->
+  <ion-button class="back-btn" fill="clear" [routerLink]="['/home']">
+    <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+  </ion-button>
+  <div class="login-wrapper">
+    <div class="logo-container">
+      <img src="assets/logo.png" class="logo-img">
+    </div>
+    <h2 class="login-title">Connexion</h2>
+    <!-- Bouton Google -->
+    <app-google-signin-button (idToken)="onGoogleLogin($event)"></app-google-signin-button>
+
+    <!-- Formulaire -->
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+      <!-- Email -->
+      <div class="input-container">
+        <label class="input-label">Email ou Téléphone</label>
+        <input type="text" formControlName="identifier" class="native-input" placeholder="Entrer email ou téléphone">
+      </div>
+      <ion-text color="danger" *ngIf="identifier.invalid && identifier.touched">
+        <small>Entrez un email ou un numéro de téléphone</small>
+      </ion-text>
+
+      <!-- Mot de passe -->
+      <div class="input-container password-container">
+        <label class="input-label">Mot de passe</label>
+        <input [type]="showPassword ? 'text' : 'password'"  
+          formControlName="password" class="native-input"
+          placeholder="Entrer mot de passe">
+        <ion-icon 
+          slot="end" 
+          [name]="showPassword ? 'eye-outline' : 'eye-off-outline'" class="toggle-password"
+          (click)="togglePasswordVisibility()">
+        </ion-icon>
+      </div>
+      <ion-text color="danger" *ngIf="password.invalid && password.touched">
+        <small>Mot de passe requis (min 8 caractères)</small>
+      </ion-text>
+
+      <!-- Lien mot de passe oublié -->
+      <div class="bp-container">
+        <a routerLink="/f-password" class="forgot-link">Mot de passe oublié ?</a>
+      </div>
+
+      <!-- Bouton connexion -->
+      <ion-button class="login-button" expand="block" type="submit">
+        Se connecter
+      </ion-button>
+    </form>
+
+    <!-- Redirection inscription -->
+    <div class="secondary-actions">
+      <ion-text>
+        <p>Vous n'avez pas de compte ?
+          <a routerLink="/register" class="login-link">S'inscrire</a>
+        </p>
+      </ion-text>
+    </div>
+  </div>
+</ion-content>
+
+
+
+<!-- tEST DU LOGIN PAGE
+<ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" text="retour"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+<ion-content class=" login-container" fullscreen>
+  <div class="login-wrapper">
+    <div class="logo-container">
+      <ion-img src="assets/logo.png" class="logo-img"></ion-img>
+    </div>
+    <h2 class="login-title">Connexion</h2>
+    <div class="google-login">
+      <ion-button expand="block" fill="outline" class="google-btn">
+      <ion-img src="assets/google-icon.png" class="google-icon" slot="start"></ion-img>
+      <ion-text class="text">Se connecter avec google</ion-text>
+      </ion-button>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+       <div class="input-container">
+        <label class="input-label">Email ou Téléphone</label>
+        <ion-input type="text" formControlName="identifier"> </ion-input>
+      </div>
+      <ion-text color="danger" *ngIf="identifier.invalid && identifier.touched">
+        <small>Entrez un email ou un numéro de téléphone</small>
+      </ion-text>
+      <div class="input-container">
+        <label class="input-label">Mot de passe</label>
+        <ion-input type="password" formControlName="password"> </ion-input>
+      </div>
+        <ion-text color="danger" *ngIf="password.invalid && password.touched">
+          <small>Mot de passe requis (min 6 caractères)</small>
+        </ion-text>
+      <div class="bp-container">
+
+      <a routerLink="/f-password" class="forgot-link" > mot de passe oublié ?</a>
+      </div>
+      <ion-button class="login-button" expand="block" type="submit" [disabled]="loginForm.invalid">
+        Se connecter
+      </ion-button>
+
+    </form>
+    <div class="secondary-actions">
+      <ion-text>
+        <p>Vous n'avez pas de compte?  <a routerLink="/register" class="login-link">S'inscrire</a></p>
+      </ion-text>
+    </div>
+  </div>
+</ion-content>
+
+FIN -->

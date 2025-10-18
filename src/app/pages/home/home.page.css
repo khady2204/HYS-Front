@@ -1,0 +1,144 @@
+/* ============================
+   Styles Home - Mode Clair
+   ============================ */
+.home-container {
+  --background: #f6f6fb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+ion-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.home-wrapper {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px 16px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  height: 100%;
+}
+
+.illustration-circle {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background-color: #eee;
+  border: 6px solid #0D3873;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: 60px;
+}
+
+.illustration-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.2); /* effet zoom */
+  
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.logo-img {
+  width: 180px; 
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Points de progression */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 30px;
+}
+
+.dot {
+  width: 13px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #bbb;
+}
+
+.dot.active {
+  background-color: #0D3873;
+}
+
+.welcome-text {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.welcome-text p {
+  margin: 4px 0;
+  font-size: 0.8rem;
+  color: #090909;
+}
+
+.start-button {
+  --background: #20399c;
+  --color: #fff;
+  font-weight: 600;
+  border-radius: 10px;
+  margin-top: 10px;
+  width: 300px;
+  text-transform: none;
+}
+
+/* ============================
+   Styles Home - Mode Sombre
+   ============================ */
+@media (prefers-color-scheme: dark) {
+
+  .home-container {
+    --background: #121212;
+  }
+
+  .home-wrapper {
+    background: #1e1e1e;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.7);
+  }
+
+  .illustration-circle {
+    background-color: #2c2c2c;
+  }
+
+  .dot {
+    background-color: #555;
+  }
+
+  .dot.active {
+    background-color: #0D3873;
+  }
+
+  .welcome-text p,
+  .subtitle {
+    color: #ffffff;
+  }
+
+  .start-button {
+    --background: #0D3873;
+    --color: #ffffff;
+  }
+
+  
+}

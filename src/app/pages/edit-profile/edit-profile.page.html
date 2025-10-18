@@ -1,0 +1,99 @@
+<ion-content fullscreen>
+  <!-- Header "fixe" -->
+  <div class="app-fixed-header">
+    <button type="button" class="back-btn" (click)="goBack()" aria-label="Retour">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+    <div class="header-title">Edit Profil</div>
+  </div>
+
+  <!-- Contenu principal (profil + formulaire) -->
+  <div class="content-wrapper">
+    <!-- Photo de profil -->
+    <div class="d-flex justify-content-center align-items-center mt-4 mb-3 position-relative">
+      <div class="profile-wrapper">
+        <img
+          [src]="profileImagePreview || profileImageUrl || 'assets/profileParDefaut.jpg'"
+          class="profile-picture"
+        >
+      </div>
+
+      <input
+        type="file"
+        id="profileImageInput"
+        accept="image/*"
+        hidden
+        (change)="onFileSelected($event)"
+      />
+
+      <label
+        for="profileImageInput"
+        class="btn btn-pink p-1 rounded-circle position-absolute camera-btn"
+        title="Changer la photo"
+      >
+        <i class="bi bi-camera fs-5 p-2"></i>
+      </label>
+    </div>
+
+    <!-- Formulaire -->
+    <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()" class="px-3">
+
+      <div class="mb-3">
+        <label for="nom" class="form-label">Nom</label>
+        <input type="text" id="nom" formControlName="nom" placeholder="Sow" class="form-control input-bordered">
+      </div>
+
+      <div class="mb-3">
+        <label for="prenom" class="form-label">Prénom</label>
+        <input type="text" id="prenom" formControlName="prenom" placeholder="Joe Doe" class="form-control input-bordered">
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" formControlName="email" placeholder="user@example.com" class="form-control input-bordered">
+      </div>
+
+      <div class="mb-3">
+        <label for="phone" class="form-label">Téléphone</label>
+        <input type="text" id="phone" formControlName="phone" placeholder="+221 77 000 00 00" class="form-control input-bordered">
+      </div>
+
+      <div class="mb-3">
+        <label for="adresse" class="form-label">Adresse</label>
+        <input type="text" id="adresse" formControlName="adresse" placeholder="123, Rue du Développement" class="form-control input-bordered">
+      </div>
+
+      <div class="mb-3">
+        <label for="bio" class="form-label">Bio</label>
+        <textarea id="bio" formControlName="bio" placeholder="Parlez-nous de vous..." rows="3" class="form-control input-bordered"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="dob" class="form-label">Date de naissance</label>
+        <input type="date" id="dob" formControlName="dob" class="form-control input-bordered">
+      </div>
+
+      <!-- Intérêts -->
+      <div class="row mb-3">
+        <div class="col-6" *ngFor="let interet of interets">
+          <input
+            type="checkbox"
+            [value]="interet.id"
+            (change)="onCheckboxChange($event)"
+            [checked]="editProfileForm.get('interets')?.value.includes(interet.id)"
+            id="interet{{interet.id}}"
+          />
+          <label for="interet{{interet.id}}">{{ interet.nom }}</label>
+        </div>
+      </div>
+
+      <div class="mb-3 text-center">
+        <button type="submit" class="btn btnSave">Enregistrer</button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Menu flottant -->
+  <app-floating-menu></app-floating-menu>
+</ion-content>

@@ -1,0 +1,83 @@
+<ion-content fullscreen>
+
+  <!-- HEADER FIXE DANS LE CONTENT -->
+  <div class="custom-header ">
+    <button type="button" class="back-btn" (click)="goBack()" aria-label="Retour">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+    <h5 class="header-title">Profil</h5>
+  </div>
+
+  <!-- HEADER IMAGE + PROFILE IMAGE -->
+  <div class="position-relative text-center w-100 mt-header">
+    <img
+      src="assets/img/myLOve/profile/backgroundPink.png"
+      alt="background"
+      class="img-fluid w-100">
+
+    <div class="position-absolute start-50 translate-middle-x profile-img-container">
+      <img
+        [src]="profileImageUrl || 'assets/profileParDefaut.jpg'"
+        alt="Profile"
+        class="profile-picture">
+    </div>
+  </div>
+
+  <!-- Infos utilisateur -->
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" class="text-center pt-3">
+        <h5 class="fw-bold mb-3 name">{{ prenom }} {{ nom }}</h5>
+        <div class="bio">{{ bio }}</div>
+        <div class="address d-flex justify-content-center align-items-center">
+          <i class="bi bi-geo-alt-fill me-1"></i> {{ adresse }}
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Boutons centrés -->
+  <div class="d-flex flex-column align-items-center mt-4 gap-2">
+    <div class="d-flex gap-3">
+      <ion-button class="btn-pink" fill="solid" [routerLink]="['/edit-profile', userId]">
+        Modifier
+      </ion-button>
+
+      <!-- Bouton Paramètres -->
+      <ion-button class="btn-pink" fill="solid" (click)="toggleMenu()">
+        Paramètres
+      </ion-button>
+    </div>
+
+    <!-- Sous-menu affiché dynamiquement -->
+    <div *ngIf="showMenu" class="submenu mt-2 mb-3 animate__animated animate__fadeIn">
+      <ion-button color="danger" fill="outline" (click)="openLogoutModal()">
+        Déconnexion
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Modal de confirmation -->
+  <ion-modal [isOpen]="showLogoutModal" (didDismiss)="closeLogoutModal()">
+    <ng-template>
+      <div class="text-center p-3">
+        <h2 class="text-lg font-bold mb-3">Confirmer la déconnexion</h2>
+        <p>Souhaitez-vous vraiment vous déconnecter ?</p>
+
+        <div class="d-flex justify-content-around mt-4">
+          <ion-button color="medium" (click)="closeLogoutModal()">
+            Annuler
+          </ion-button>
+
+          <ion-button color="danger" (click)="logout()">
+            Oui, déconnecter
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Menu flottant -->
+  <app-floating-menu></app-floating-menu>
+
+</ion-content>

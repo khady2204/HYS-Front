@@ -1,0 +1,101 @@
+
+:root { color-scheme: light dark; }
+
+/* --- header fixe dans le content --- */
+.app-fixed-header{
+  position: sticky;           
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 70px;
+  padding: 0 16px;
+  background-color: light-dark(#ffffff, #1e1e1e);
+  color: light-dark(#000000, #ffffff);
+  z-index: 9999;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  backdrop-filter: blur(6px);
+}
+
+/* bouton retour simple  */
+.back-btn {         
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: inherit;
+  font-size: 1.2rem;
+  margin-top: 25px;
+  margin-right: 10px; 
+}
+
+
+.header-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-top: 25px;
+}
+
+
+.content-wrapper {
+  padding-top: 90px;
+}
+
+
+.camera-btn {
+  bottom: 0;
+  right: calc(50% - 60px);
+  transform: translateX(50%);
+  z-index: 2;
+}
+
+/* inputs / textarea */
+.input-bordered {
+  border: 1px solid light-dark(#ced4da, #555);
+  border-radius: 6px;
+  padding: 10px;
+  background-color: light-dark(#ffffff, #1e1e1e);
+  color: light-dark(#000000, #f0f0f0);
+  width: 100%;
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+.input-bordered:focus {
+  outline: none;
+  border: 1px solid #ff008a;
+  box-shadow: 0 0 0 3px rgba(255,0,138,0.12);
+}
+
+input[type="checkbox"] {
+  accent-color: #ff008a; 
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* profile */
+.profile-wrapper { display:inline-block; padding:2px; border:1px solid #ff008A; border-radius:50%; background-color: light-dark(#ffffff, #242760); box-shadow: 0 4px 8px rgba(0,0,0,0.08); position: relative; z-index: 1; }
+.profile-picture { width:120px; height:120px; border-radius:50%; object-fit:cover; border: 1px solid #ff008a; }
+
+/* boutons */
+.btn-pink { background-color:#ff008A; color:#fff; border-radius:50%; padding:6px; cursor:pointer; }
+.btnSave { background:#ff008A; color:#fff; border-radius:8px; width:50%; padding: 10px 0; margin: 0 auto 70px; border:none; cursor:pointer; }
+
+/* dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .app-fixed-header { background-color: rgba(30,30,30,0.9); color: #fff; }
+  .input-bordered { background-color:#1e1e1e; color:#f0f0f0; border:1px solid #444; }
+  .profile-wrapper { background-color:#242760; }
+  .profile-picture { background-color:#1e1e1e; border:1px solid #ff008a; }
+  .btnSave, .btn-pink { background:#ff008a; color:#fff; }
+
+  input[type="checkbox"] {
+    accent-color: #ff008a;
+  }
+}

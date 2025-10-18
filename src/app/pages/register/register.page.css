@@ -1,0 +1,257 @@
+/* Conteneur principal */
+.register-container {
+  --background: #f9f9f9; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  height: 100%;
+}
+
+/* Wrapper du formulaire */
+.register-wrapper {
+  background: transparent; 
+  padding: 24px;
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+/* Logo */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  
+}
+
+.logo {
+  width: 120px;
+}
+
+/* Titre */
+.form-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #003366;
+}
+
+/* Ligne de deux champs */
+.row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.row .input-container {
+  flex: 1;
+}
+
+/* Labels */
+.input-label {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #000;
+  display: block;
+  padding-left: 4px;
+}
+
+/* Inputs & select */
+input,
+select {
+  background: #f1f1f1;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  width: 100%;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+  color: #000;
+}
+
+input:focus,
+select:focus {
+  background: #eaeaea;
+  border: 1px solid #3b82f6;
+}
+
+/* Placeholder */
+input::placeholder,
+select::placeholder {
+  color: #999;
+}
+
+/* Erreurs */
+.error small {
+  color: #e63946;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Checkbox & conditions */
+.bp-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+  color: #003366;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.a {
+  font-size: 13px;
+  color: #003366;
+  text-decoration: none;
+}
+
+.a:hover {
+  text-decoration: underline;
+}
+
+/* Bouton principal */
+.login-button {
+  background: #003366;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.login-button:hover:not(:disabled) {
+  background: #003366;
+}
+
+/* Texte bas */
+.bottom-text {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 16px;
+}
+
+.login-link {
+  color: #003366;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+/* ============================
+   Styles Inscription - Mode Sombre
+   ============================ */
+@media (prefers-color-scheme: dark) {
+  .register-container {
+    --background: #121212;
+  }
+
+  .register-wrapper {
+    background: transparent;
+  }
+
+  .form-title,
+  .input-label,
+  .login-link,
+  .bottom-text,
+  .a {
+    color: #ffffff;
+  }
+
+  input,
+  select {
+    background: #2c2c2c !important;
+    color: #ffffff !important;
+  }
+
+  input::placeholder,
+  select::placeholder {
+    color: #bbbbbb !important;
+  }
+
+  input:focus,
+  select:focus {
+    border: 1px solid #0D3873;
+    background: #2c2c2c !important;
+  }
+
+  .login-button {
+    background: #0D3873;
+    color: #ffffff;
+  }
+
+  .login-button:disabled {
+    background: #555555;
+  }
+
+  ion-back-button {
+    color: #ffffff !important;
+  }
+
+  ion-toolbar {
+    --background: #1e1e1e;
+    color: #ffffff;
+  }
+}
+
+/* ============================
+   Responsive
+   ============================ */
+@media (max-width: 480px) {
+  .register-wrapper {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .form-title {
+    font-size: 1.2rem;
+  }
+
+  input,
+  select {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  .register-wrapper {
+    max-width: 500px;
+    padding: 32px;
+  }
+
+  .form-title {
+    font-size: 1.6rem;
+  }
+
+  input,
+  select {
+    font-size: 16px;
+    padding: 14px;
+  }
+}

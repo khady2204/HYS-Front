@@ -1,0 +1,157 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { IonicModule, ToastController } from '@ionic/angular';
+import { CommonModule} from '@angular/common';
+import { AuthService } from 'src/app/services/auth.service';
+import { UserAuthService } from 'src/app/services/user-auth.service';
+import { firstValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { GoogleSigninButtonComponent } from 'src/app/components/google-signin-button/google-signin-button.component';
+import { AuthResponse } from 'src/app/models/auth.dto';
+
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.page.html',
+  styleUrls: ['./login.page.css'],
+  standalone: true,
+  imports: [IonicModule, FormsModule, ReactiveFormsModule, RouterModule, CommonModule, GoogleSigninButtonComponent]
+})
+export class LoginPage {
+
+  loginForm: FormGroup;
+
+  constructor(private fb: FormBuilder, private router: Router,
+    private authService: AuthService, 
+    private toastController: ToastController,// Pour afficher des messages toast
+    private userAuthService: UserAuthService,
+    private http: HttpClient
+
+    
+  ) {
+    this.loginForm = this.fb.group({
+      identifier: ['', [Validators.required,Validators.pattern( /^((\d{9,15})|([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}))$/)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
+
+  // Getters pour accéder facilement aux champs du formulaire dans le HTML
+  get identifier() {
+    return this.loginForm.get('identifier')!;
+  }
+
+  get password() {
+    return this.loginForm.get('password')!;
+  }
+
+  showPassword = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+  
+
+  // Fonction pour afficher un toast (message temporaire à l'écran)
+  async showToast(message: string, color: 'success' | 'danger' = 'success') {
+    const toast = await this.toastController.create({
+      message, // Message à afficher
+      duration: 3000, // Durée en millisecondes
+      color, // Couleur (success ou danger)
+    });
+    toast.present(); // Affiche le toast
+  }
+
+  // Méthode exécutée quand l'utilisateur clique sur "Se connecter"
+  onLogin() {
+    // Si le formulaire est invalide, afficher un message d'erreur
+    if (this.loginForm.invalid) {
+      this.showToast('Veuillez corriger les erreurs', 'danger');
+      return;
+    }
+    
+    // Récupération des valeurs du formulaire
+    const identifierValue = this.loginForm.value.identifier;
+    const password = this.loginForm.value.password;
+
+    // Vérifie si c’est un email ou un téléphone
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifierValue);
+    const isPhone = /^\d{9,15}$/.test(identifierValue);
+    
+    let loginPayload: any = { password };
+
+    if (isEmail) {
+      loginPayload.email = identifierValue;
+    } else if (isPhone) {
+      loginPayload.phone = identifierValue;
+    } else {
+      this.showToast('Identifiant invalide', 'danger');
+      return;
+    }
+
+    // Appel au service d'authentification
+    this.authService.login(loginPayload).subscribe({
+      // Si la connexion réussit
+      next: (res) => {
+        this.showToast('Connexion réussie !');
+        // Stocker le token (si fourni)
+        if (res.token) {
+          this.userAuthService.setToken(res.token);
+          const payload = this.decodeToken(res.token);
+          this.userAuthService.setUser(payload);
+          console.log('Utilisateur connecté:', payload);
+          if (payload?.id !== undefined) {
+            this.userAuthService.setId(String(payload.id));
+          }
+
+        }
+        this.router.navigate(['/accueil']); // Redirection vers la page d’accueil
+      },
+      // Si la connexion échoue (email ou mot de passe incorrect par exemple)
+      error: (err) => {
+        console.error('Erreur de connexion :', err);
+        this.showToast('identifiant ou mot de passe incorrect', 'danger');
+      }
+    });
+  }
+
+  // Méthode appelée lors de la connexion Google réussie
+  onGoogleLogin(idToken: string) {
+    // Envoyer l'ID token au backend
+    this.authService.googleLogin({ idToken }).subscribe({
+      next: (res: AuthResponse) => {
+        if (res.token) {
+          // Succès : stocker le JWT et les infos utilisateur
+          this.userAuthService.setToken(res.token);
+          const payload = this.decodeToken(res.token);
+          this.userAuthService.setUser(payload);
+          console.log('Utilisateur connecté via Google:', payload);
+          if (payload?.id !== undefined) {
+            this.userAuthService.setId(String(payload.id));
+          }
+          this.showToast('Connexion Google réussie !');
+          this.router.navigate(['/accueil']);
+        } else if (res.error) {
+          // Erreur du backend
+          this.showToast(res.error, 'danger');
+        }
+      },
+      error: (err) => {
+        console.error('Erreur de connexion Google :', err);
+        this.showToast('Erreur réseau lors de la connexion Google', 'danger');
+      }
+    });
+  }
+
+  decodeToken(token: string): any {
+    try {
+      const playload = token.split('.')[1];
+      const decodePayload = JSON.parse(atob(playload));
+      return decodePayload;
+    } catch (error) {
+      console.error('Erreur de décodage du token:', error);
+      return null;
+    }
+  }
+}
+

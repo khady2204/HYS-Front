@@ -1,0 +1,108 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard" text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Créer une publication</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button
+        [disabled]="!canPublish"
+        (click)="publier()"
+        [class.publishing]="isPublishing"
+        strong>
+        <span *ngIf="!isPublishing">PUBLIER</span>
+        <ion-spinner *ngIf="isPublishing" name="crescent"></ion-spinner>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollY]="true" class="ion-padding">
+  
+  <!-- Zone de texte avec item pour meilleur contrôle -->
+  <ion-item lines="none" class="text-item">
+    <ion-label position="stacked" class="ion-hide"></ion-label>
+    <ion-textarea
+      [(ngModel)]="texte"
+      placeholder="Partagez votre avis..."
+      [autoGrow]="true"
+      rows="8"
+      [maxlength]="MAX_TEXT_LENGTH"
+      (ionInput)="onTextInput($event)"
+      class="publication-textarea">
+    </ion-textarea>
+  </ion-item>
+
+  <!-- Compteur de caractères -->
+  <div class="char-counter" 
+       [class.warning]="remainingChars < 100"
+       [class.danger]="remainingChars < 0">
+    {{ remainingChars }}
+  </div>
+
+  <!-- Prévisualisation des médias -->
+  <div *ngIf="medias.length > 0" class="media-section">
+    <div class="media-grid" [ngClass]="{'single': medias.length === 1}">
+      <div *ngFor="let media of medias" class="media-item">
+        
+        <img *ngIf="media.type === 'image'" 
+             [src]="media.url" 
+             class="media-preview" 
+             (click)="previewMedia(media)"
+             alt="Preview">
+        
+        <video *ngIf="media.type === 'video'" 
+               [src]="media.url" 
+               class="media-preview"
+               controls>
+        </video>
+
+        <ion-button 
+          fill="clear" 
+          class="remove-btn"
+          (click)="removeMedia(media.id)">
+          <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start" class="media-actions">
+      <ion-button 
+        fill="clear" 
+        (click)="takePhoto()" 
+        [disabled]="medias.length >= MAX_MEDIA_COUNT">
+        <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button 
+        fill="clear" 
+        (click)="recordVideo()" 
+        [disabled]="medias.length >= MAX_MEDIA_COUNT">
+        <ion-icon slot="icon-only" name="videocam-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button 
+        fill="clear" 
+        (click)="openGallery()" 
+        [disabled]="medias.length >= MAX_MEDIA_COUNT">
+        <ion-icon slot="icon-only" name="images-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
+
+<input
+  type="file"
+  id="fileInput"
+  accept="image/*,video/*"
+  (change)="handleFileInput($event)"
+  style="display: none;"
+  multiple
+/>
