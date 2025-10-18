@@ -12,6 +12,7 @@ import { InteretService } from 'src/app/services/interet/interet.service';
 import { FloatingMenuComponent } from 'src/app/components/floating-menu/floating-menu.component';
 import { UrlUtilsService } from 'src/app/services/url-utils.service';
 import { Router } from '@angular/router';
+import { CustomToastService } from 'src/app/services/toast/custom-toast.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -37,7 +38,8 @@ export class EditProfilePage implements OnInit {
     private toastController: ToastController,
     private interetService: InteretService,
     private urlUtils: UrlUtilsService,
-    private router: Router
+    private router: Router,
+    private customToast: CustomToastService
   ) {}
 
   ngOnInit(): void {
@@ -126,8 +128,12 @@ export class EditProfilePage implements OnInit {
 
     this.userService.updateProfile(formData).subscribe({
       next: (res) => {
-        this.presentSuccessToast('Profil mis à jour avec succès');
-        this.router.navigate(['/profil']);
+        this.customToast.show('Mise à jour', 'success');
+
+        setTimeout(() => {
+          this.router.navigate(['/profile', this.userId]);
+        })
+
       },
       error: (err) => {
         console.error("Erreur lors de la mise à jour du profil", err);
@@ -145,19 +151,7 @@ export class EditProfilePage implements OnInit {
   goBack() {
     this.location.back();
   }
-
-  /**
-   * Affiche un toast de succès
-   */
-  async presentSuccessToast(message: string) {
-    const toast = await this.toastController.create({
-      message,
-      duration: 3000,
-      color: 'success',
-      position: 'bottom'
-    });
-    await toast.present();
-  }
+   
 
   /**
    * Gère la sélection d’une image pour le profil (en base64)

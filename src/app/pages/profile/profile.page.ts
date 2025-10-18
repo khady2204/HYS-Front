@@ -9,6 +9,7 @@ import { IonicModule } from '@ionic/angular';
 import { UrlUtilsService } from 'src/app/services/url-utils.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastController } from '@ionic/angular';
+import { CustomToastService } from 'src/app/services/toast/custom-toast.service';
 
 @Component({
   selector: 'app-profile',
@@ -37,7 +38,8 @@ export class ProfilePage implements OnInit {
     private userAuthService: UserAuthService,
     private urlUtils: UrlUtilsService,
     private authService: AuthService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private customToast: CustomToastService
   ) { }
 
   ngOnInit() {
@@ -84,46 +86,31 @@ export class ProfilePage implements OnInit {
   }
 
  // Méthode de déconnexion
-logout() {
-  console.log('Déconnexion initiée');
-  this.authService.logout().subscribe({
-    next: () => {
-      console.log('Réponse du serveur reçue');
+  logout() {
+    this.authService.logout().subscribe({
+      next: () => {
 
-      // Suppression du token
-      localStorage.removeItem('jwtToken');
-      console.log('Token supprimé');
+        // Suppression du token
+        localStorage.removeItem('jwtToken');
 
-      // Fermer le modal
-      this.showLogoutModal = false;
-      console.log('Modal fermé');
+        // Fermer le modal
+        this.showLogoutModal = false;
 
-      // Afficher le toast
-      this.presentLogoutToast();
-      console.log('Toast affiché (non await)');
+        // Afficher le toast
+        this.customToast.show('Vous etes deconnecté', 'success');
 
-      // Navigation après un petit délai
-      setTimeout(() => {
-        console.log('Navigation vers /home');
-        this.router.navigate(['/home']);
-      }, 500);
-    },
-    error: (err) => {
-      console.error('Erreur lors de la déconnexion', err);
-      this.showLogoutModal = false;
-    }
-  });
-}
-
-async presentLogoutToast() {
-  const toast = await this.toastController.create({
-    message: 'Vous êtes déconnecté(e)',
-    duration: 2000,
-    color: 'success',
-    position: 'top'
-  });
-  toast.present();
-}
+        // Navigation après un petit délai
+        setTimeout(() => {
+          console.log('Navigation vers /home');
+          this.router.navigate(['/home']);
+        }, 500);
+      },
+      error: (err) => {
+        console.error('Erreur lors de la déconnexion', err);
+        this.showLogoutModal = false;
+      }
+    });
+  }
 
 
 }
