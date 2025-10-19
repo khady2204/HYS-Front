@@ -102,10 +102,9 @@ export class EditProfilePage implements OnInit {
   /**
    * Soumission du formulaire
    */
-  onSubmit(): void {
+onSubmit(): void {
   if (this.editProfileForm.valid) {
     const formValue = this.editProfileForm.value;
-
     const formData = new FormData();
 
     formData.append('nom', formValue.nom);
@@ -116,24 +115,28 @@ export class EditProfilePage implements OnInit {
     formData.append('phone', formValue.phone);
     formData.append('dob', new Date(formValue.dob).getTime().toString());
 
-    // Ajout des intérêts (en tableau)
     formValue.interets.forEach((id: number) => {
       formData.append('interetIds', id.toString());
     });
 
-    // Ajout de la photo si elle existe
     if (formValue.profileImage) {
       formData.append('profileImage', formValue.profileImage);
     }
 
     this.userService.updateProfile(formData).subscribe({
-      next: (res) => {
-        this.customToast.show('Mise à jour', 'success');
+      next: (res: any) => {
 
+        // Si la réponse contient le user mis à jour
+        if (res.user) {
+          this.authUserService.setUser(res.user);
+        }
+
+        this.customToast.show('Profil mis à jour avec succès', 'success');
+
+        // pause avant navigation pour laisser Angular détecter le changement
         setTimeout(() => {
           this.router.navigate(['/profile', this.userId]);
-        })
-
+        }, 300);
       },
       error: (err) => {
         console.error("Erreur lors de la mise à jour du profil", err);
@@ -143,6 +146,7 @@ export class EditProfilePage implements OnInit {
     console.warn('Le formulaire est invalide');
   }
 }
+
 
 
   /**

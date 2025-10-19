@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -10,6 +10,7 @@ import { UrlUtilsService } from 'src/app/services/url-utils.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastController } from '@ionic/angular';
 import { CustomToastService } from 'src/app/services/toast/custom-toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -18,8 +19,9 @@ import { CustomToastService } from 'src/app/services/toast/custom-toast.service'
   standalone: true,
   imports: [IonicModule, RouterLink, CommonModule, FormsModule, RouterLink, FloatingMenuComponent, ReactiveFormsModule]
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage implements OnInit, OnDestroy {
 
+  private userSub!: Subscription
   prenom: string = '';
   nom: string = '';
   profileImageUrl: any;
@@ -43,27 +45,30 @@ export class ProfilePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    
     if (!this.userAuthService.isAuthenticated()) {
       this.router.navigate(['/login']);
       return;
     }
 
     const userId = Number(this.route.snapshot.paramMap.get('id'));
-    const user = this.userAuthService.getUser();
 
-    if (user && user.id === userId) {
-      this.userId = user.id;
-      this.prenom = user.prenom;
-      this.nom = user.nom;
-      this.profileImageUrl = this.urlUtils.buildProfileImageUrl(user.profileImage);
-      this.adresse = user.adresse ?? 'Non renseignée';
-      this.bio = user.bio;
-      console.log("Profil chargé :", user);
-    } else {
-      console.warn("L'utilisateur dans l'url ne corresponde pas à l'utilisateur actuel.");
-    }
+    // 🔥 S'abonner aux changements de l'utilisateur
+    this.userSub = this.userAuthService.user$.subscribe((user) => {
+      if (user && user.id === userId) {
+        this.userId = user.id;
+        this.prenom = user.prenom;
+        this.nom = user.nom;
+        this.profileImageUrl =
+          this.urlUtils.buildProfileImageUrl(user.profileImage) + '?v=' + Date.now(); // évite le cache
+        this.adresse = user.adresse ?? 'Non renseignée';
+        this.bio = user.bio;
+        console.log('Profil à jour :', user);
+      }
+    });
+  }
 
+  ngOnDestroy(): void {
+      if (this.userSub) this.userSub.unsubscribe();
   }
  
   goBack() {

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,10 @@ export class UserAuthService {
   private readonly IdKey = 'ID';
   private readonly tokenKey = 'jwtToken';
   private readonly userKey = 'userInfo';
+
+  // Observable pour suivre le user en temps réel
+  private userSubject = new BehaviorSubject<any>(this.getUser());
+  user$ = this.userSubject.asObservable();
 
   setToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
@@ -19,6 +24,7 @@ export class UserAuthService {
 
   setUser(payload: any): void {
     localStorage.setItem(this.userKey, JSON.stringify(payload));
+    this.userSubject.next(payload); // Notifie les abonnés (profil, navbar, etc.)
   }
 
   getUser(): any {
@@ -41,7 +47,6 @@ export class UserAuthService {
     return user ? `${user.prenom} ${user.nom}` : null;
   }
 
-
   setId(ID: string): void {
     localStorage.setItem(this.IdKey, ID);
   }
@@ -52,11 +57,10 @@ export class UserAuthService {
 
   clear(): void {
     localStorage.clear();
+    this.userSubject.next(null);
   }
 
   isAuthenticated(): boolean {
     return !!this.getToken();
   }
-
-  
 }

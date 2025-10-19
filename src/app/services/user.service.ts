@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 
 
 export interface updateProfileRequest {
+  data: any;
   id: number;
   prenom: string;
   nom: string,
