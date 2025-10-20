@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -9,6 +9,8 @@ import { IonicModule } from '@ionic/angular';
 import { UrlUtilsService } from 'src/app/services/url-utils.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastController } from '@ionic/angular';
+import { CustomToastService } from 'src/app/services/toast/custom-toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -17,8 +19,9 @@ import { ToastController } from '@ionic/angular';
   standalone: true,
   imports: [IonicModule, RouterLink, CommonModule, FormsModule, RouterLink, FloatingMenuComponent, ReactiveFormsModule]
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage implements OnInit, OnDestroy {
 
+  private userSub!: Subscription
   prenom: string = '';
   nom: string = '';
   profileImageUrl: any;
@@ -37,31 +40,35 @@ export class ProfilePage implements OnInit {
     private userAuthService: UserAuthService,
     private urlUtils: UrlUtilsService,
     private authService: AuthService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private customToast: CustomToastService
   ) { }
 
   ngOnInit() {
-    
     if (!this.userAuthService.isAuthenticated()) {
       this.router.navigate(['/login']);
       return;
     }
 
     const userId = Number(this.route.snapshot.paramMap.get('id'));
-    const user = this.userAuthService.getUser();
 
-    if (user && user.id === userId) {
-      this.userId = user.id;
-      this.prenom = user.prenom;
-      this.nom = user.nom;
-      this.profileImageUrl = this.urlUtils.buildProfileImageUrl(user.profileImage);
-      this.adresse = user.adresse ?? 'Non renseignée';
-      this.bio = user.bio;
-      console.log("Profil chargé :", user);
-    } else {
-      console.warn("L'utilisateur dans l'url ne corresponde pas à l'utilisateur actuel.");
-    }
+    // 🔥 S'abonner aux changements de l'utilisateur
+    this.userSub = this.userAuthService.user$.subscribe((user) => {
+      if (user && user.id === userId) {
+        this.userId = user.id;
+        this.prenom = user.prenom;
+        this.nom = user.nom;
+        this.profileImageUrl =
+          this.urlUtils.buildProfileImageUrl(user.profileImage) + '?v=' + Date.now(); // évite le cache
+        this.adresse = user.adresse ?? 'Non renseignée';
+        this.bio = user.bio;
+        console.log('Profil à jour :', user);
+      }
+    });
+  }
 
+  ngOnDestroy(): void {
+      if (this.userSub) this.userSub.unsubscribe();
   }
  
   goBack() {
@@ -84,46 +91,31 @@ export class ProfilePage implements OnInit {
   }
 
  // Méthode de déconnexion
-logout() {
-  console.log('Déconnexion initiée');
-  this.authService.logout().subscribe({
-    next: () => {
-      console.log('Réponse du serveur reçue');
+  logout() {
+    this.authService.logout().subscribe({
+      next: () => {
 
-      // Suppression du token
-      localStorage.removeItem('jwtToken');
-      console.log('Token supprimé');
+        // Suppression du token
+        localStorage.removeItem('jwtToken');
 
-      // Fermer le modal
-      this.showLogoutModal = false;
-      console.log('Modal fermé');
+        // Fermer le modal
+        this.showLogoutModal = false;
 
-      // Afficher le toast
-      this.presentLogoutToast();
-      console.log('Toast affiché (non await)');
+        // Afficher le toast
+        this.customToast.show('Vous etes deconnecté', 'success');
 
-      // Navigation après un petit délai
-      setTimeout(() => {
-        console.log('Navigation vers /home');
-        this.router.navigate(['/home']);
-      }, 500);
-    },
-    error: (err) => {
-      console.error('Erreur lors de la déconnexion', err);
-      this.showLogoutModal = false;
-    }
-  });
-}
-
-async presentLogoutToast() {
-  const toast = await this.toastController.create({
-    message: 'Vous êtes déconnecté(e)',
-    duration: 2000,
-    color: 'success',
-    position: 'top'
-  });
-  toast.present();
-}
+        // Navigation après un petit délai
+        setTimeout(() => {
+          console.log('Navigation vers /home');
+          this.router.navigate(['/home']);
+        }, 500);
+      },
+      error: (err) => {
+        console.error('Erreur lors de la déconnexion', err);
+        this.showLogoutModal = false;
+      }
+    });
+  }
 
 
 }

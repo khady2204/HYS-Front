@@ -10,7 +10,7 @@
     <div class="d-flex gap-3 align-items-center">
       <div (click)="goToNotifications()">
               <img src="assets/img/myLOve/Frame.png" alt="Notifications" style="width: 20px; height: 20px;">
-<span *ngIf="unreadCount > 0" class="notif-badge">{{ unreadCount }}</span>
+        <span *ngIf="unreadCount > 0" class="notif-badge">{{ unreadCount }}</span>
       </div>
       <a [routerLink]="['/profile', userId]">
         <img [src]="profileImageUrl || 'assets/profileParDefaut.jpg'" alt="Profil" class="rounded-circle" style="width: 24px; height: 24px;">
