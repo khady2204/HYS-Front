@@ -4,8 +4,8 @@ import { FormBuilder, FormsModule,FormGroup, Validators, ReactiveFormsModule  } 
 import { IonicModule } from '@ionic/angular';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -13,16 +13,20 @@ import { ToastController } from '@ionic/angular';
   templateUrl: './otp-verification.page.html',
   styleUrls: ['./otp-verification.page.css'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule, RouterModule]
 })
 export class OtpVerificationPage implements OnInit{
 otpForm!: FormGroup; 
 email!: string;
+resendDisabled = false;     // désactive le lien
+countdown = 0;              // compteur en secondes
+countdownInterval: any;
   
   constructor(private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private alertController : AlertController
   ) { }
 
   ngOnInit(): void {
@@ -64,6 +68,50 @@ email!: string;
       alert('OTP invalide ou erreur serveur');
     }
     });
+  }
+   
+async confirmResendOtp() {
+    if (confirm('Voulez-vous renvoyer le code OTP ?')) {
+      this.resendOtp();
+    }
+}
+
+// Fonction de renvoi OTP
+resendOtp() {
+  const payload = { email: this.email }; // email récupéré depuis la page précédente
+
+  this.authService.renvoiOtpReset(payload).subscribe({
+    next: (res) => {
+      console.log('Réponse backend :', res);
+      alert('Un nouveau code OTP a été envoyé à votre adresse email.');
+
+    // Désactiver le bouton pendant 10 minutes
+    this.resendDisabled = true;
+    this.countdown = 10 ; // 10 minutes en secondes
+    this.startCountdown();    // Lance le compte
+
+    },
+    error: (err) => {
+      console.error('Erreur backend :', err);
+      alert('Échec de l’envoi du code OTP. Veuillez réessayer.');
+    }
+  });
+}
+
+startCountdown() {
+    this.countdownInterval = setInterval(() => {
+      if (this.countdown > 0) {
+        this.countdown--;
+      } else {
+        this.resendDisabled = false;
+        clearInterval(this.countdownInterval);
+      }
+    }, 60000);
+  }
+  
+  // Getter pour afficher le compteur en minutes
+  get countdownDisplay() {
+    return this.countdown.toString();
   }
 }
 

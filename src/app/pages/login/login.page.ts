@@ -21,6 +21,7 @@ import { AuthResponse } from 'src/app/models/auth.dto';
 export class LoginPage {
 
   loginForm: FormGroup;
+  error: string | null = null; 
 
   constructor(private fb: FormBuilder, private router: Router,
     private authService: AuthService, 
@@ -49,24 +50,15 @@ export class LoginPage {
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
-  }
-  
-
-  // Fonction pour afficher un toast (message temporaire à l'écran)
-  async showToast(message: string, color: 'success' | 'danger' = 'success') {
-    const toast = await this.toastController.create({
-      message, // Message à afficher
-      duration: 3000, // Durée en millisecondes
-      color, // Couleur (success ou danger)
-    });
-    toast.present(); // Affiche le toast
-  }
+  } 
 
   // Méthode exécutée quand l'utilisateur clique sur "Se connecter"
   onLogin() {
+    // Réinitialiser l'erreur à chaque tentative
+    this.error = null;
     // Si le formulaire est invalide, afficher un message d'erreur
     if (this.loginForm.invalid) {
-      this.showToast('Veuillez corriger les erreurs', 'danger');
+      this.error='Veuillez corriger les erreurs';
       return;
     }
     
@@ -85,7 +77,7 @@ export class LoginPage {
     } else if (isPhone) {
       loginPayload.phone = identifierValue;
     } else {
-      this.showToast('Identifiant invalide', 'danger');
+      this.error='Identifiant invalide';
       return;
     }
 
@@ -93,7 +85,7 @@ export class LoginPage {
     this.authService.login(loginPayload).subscribe({
       // Si la connexion réussit
       next: (res) => {
-        this.showToast('Connexion réussie !');
+        this.error='Connexion réussie !';
         // Stocker le token (si fourni)
         if (res.token) {
           this.userAuthService.setToken(res.token);
@@ -110,7 +102,7 @@ export class LoginPage {
       // Si la connexion échoue (email ou mot de passe incorrect par exemple)
       error: (err) => {
         console.error('Erreur de connexion :', err);
-        this.showToast('identifiant ou mot de passe incorrect', 'danger');
+        this.error='identifiant ou mot de passe incorrect';
       }
     });
   }
@@ -129,16 +121,16 @@ export class LoginPage {
           if (payload?.id !== undefined) {
             this.userAuthService.setId(String(payload.id));
           }
-          this.showToast('Connexion Google réussie !');
+          this.error='Connexion Google réussie !';
           this.router.navigate(['/accueil']);
         } else if (res.error) {
           // Erreur du backend
-          this.showToast(res.error, 'danger');
+          this.error='res.error';
         }
       },
       error: (err) => {
         console.error('Erreur de connexion Google :', err);
-        this.showToast('Erreur réseau lors de la connexion Google', 'danger');
+        this.error='Erreur réseau lors de la connexion Google';
       }
     });
   }

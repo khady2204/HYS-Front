@@ -58,6 +58,10 @@
         </p>
       </ion-text>
     </div>
+    <!-- Afficher l'erreur du formulaire -->
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
   </div>
 </ion-content>
 

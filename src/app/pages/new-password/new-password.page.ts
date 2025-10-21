@@ -17,6 +17,7 @@ import { ToastController } from '@ionic/angular';
 export class NewPasswordPage implements OnInit {
   passwordForm!: FormGroup;
   email!: string;
+  error: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -39,30 +40,26 @@ export class NewPasswordPage implements OnInit {
 
   }
 
-  async showToast(message: string, color: 'success' | 'danger' = 'success') {
-    const toast = await this.toastController.create({
-      message,
-      duration: 3000,
-      color,
-    });
-    toast.present();
-  }
-
   onSubmit() {
+    
+    // Réinitialiser l'erreur à chaque tentative
+    this.error = null;
+
+    // Si le formulaire est invalide, afficher un message d'erreur
     if (this.passwordForm.invalid) {
-    this.showToast('Formulaire invalide', 'danger');
+    this.error='Formulaire invalide';
     return;
   }
 
   const { newPassword, confirmPassword } = this.passwordForm.value;
 
   if (newPassword !== confirmPassword) {
-    this.showToast('Les mots de passe ne correspondent pas', 'danger');
+    this.error='Les mots de passe ne correspondent pas';
     return;
   }
 
   if (!this.email) {
-    this.showToast('Email manquant', 'danger');
+    this.error='Email manquant';
     return;
   }
 
@@ -76,12 +73,12 @@ export class NewPasswordPage implements OnInit {
 
   this.authService.confirmReset(data).subscribe({
     next: (res) => {
-      this.showToast('Mot de passe réinitialisé');
+      alert('Mot de passe réinitialisé');
       this.router.navigate(['/confirmation']);
     },
     error: (err) => {
       console.error('Erreur :', err);
-      this.showToast('Erreur lors de la réinitialisation', 'danger');
+      this.error='Erreur lors de la réinitialisation';
     }
   });
  }

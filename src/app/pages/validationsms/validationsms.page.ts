@@ -67,35 +67,31 @@ export class ValidationsmsPage implements OnInit {
   
   
 async confirmResendOtp() {
-  const alert = await this.alertController.create({
-    header: 'Confirmation',
-    message: 'Voulez-vous renvoyer le code OTP ?',
-    buttons: [
-      {
-        text: 'Annuler',
-        role: 'cancel'
-      },
-      {
-        text: 'Oui',
-        handler: () => {
-          this.resendOtp();
-        }
-      }
-    ]
-  });
-
-  await alert.present();
+  if (confirm('Voulez-vous renvoyer le code OTP ?')) {
+      this.resendOtp();
+  }
 }
 
 // Fonction de renvoi OTP
 resendOtp() {
-  console.log('Nouveau OTP envoyé ');
-  // Ici on appelle le service pour renvoyer le code
+  const payload = { email: this.addressEmail }; // email récupéré depuis la page précédente
 
-  // Désactiver le bouton pendant 10 minutes
-  this.resendDisabled = true;
-  this.countdown = 10 ; // 10 minutes en secondes
-  this.startCountdown();    // Lance le compte
+  this.authService.renvoiOtpRegister(payload).subscribe({
+    next: (res) => {
+      console.log('Réponse backend :', res);
+      alert('Un nouveau code OTP a été envoyé à votre adresse email.');
+
+    // Désactiver le bouton pendant 10 minutes
+    this.resendDisabled = true;
+    this.countdown = 10 ; // 10 minutes en secondes
+    this.startCountdown();    // Lance le compte
+
+    },
+    error: (err) => {
+      console.error('Erreur backend :', err);
+      alert('Échec de l’envoi du code OTP. Veuillez réessayer.');
+    }
+  });
 }
 
 

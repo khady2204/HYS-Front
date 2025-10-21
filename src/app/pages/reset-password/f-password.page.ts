@@ -17,7 +17,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class FPasswordPage implements OnInit {
 
   resetForm!: FormGroup;
-email: any;
+  email: any;
+  error: string | null = null;
 
   constructor(private router: Router,
     private authService:AuthService,
@@ -35,17 +36,12 @@ email: any;
     this.email = '';
   }
 
-  async showToast(message: string, color: 'success' | 'danger' = 'success') {
-    const toast = await this.toastController.create({
-      message,
-      duration: 3000,
-      color,
-    });
-    toast.present();
-  }
   onSendOtp() {
+  // Réinitialiser l'erreur à chaque tentative
+    this.error = null;
+  // Si le formulaire est invalide, afficher un message d'erreur
   if (this.resetForm.invalid) {
-    this.showToast('Veuillez entrer un email valide', 'danger');
+    this.error='Veuillez entrer un email valide';
     return;
   }
 
@@ -53,7 +49,7 @@ email: any;
 
   this.authService.requestReset(data).subscribe({
     next: (res) => {
-      this.showToast('OTP envoyé avec succès');
+      alert('OTP envoyé avec succès');
 
       // rediriger vers la page de saisie de code OTP
       this.router.navigate(['/otp-verification'], {
@@ -64,7 +60,7 @@ email: any;
     },
     error: (err) => {
       console.error('Erreur OTP :', err);
-      this.showToast('Échec de l’envoi du code', 'danger');
+      this.error='Échec de l’envoi du code', 'danger';
     }
   });
   }

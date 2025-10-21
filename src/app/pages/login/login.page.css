@@ -244,3 +244,25 @@ ion-button.login-button {
     padding: 14px;
   }
 }
+
+.error-message {
+  width: 100%;
+  max-width: 350px; /* même largeur que .login-wrapper */
+  margin: 0 auto 15px auto; /* centrée + espace en bas */
+  background: #ffeaea; /* léger fond rouge clair */
+  color: #d32f2f; /* texte rouge vif */
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  box-sizing: border-box;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animation d’apparition */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

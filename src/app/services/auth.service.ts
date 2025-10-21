@@ -64,7 +64,16 @@ export class AuthService {
   confirmReset(data: any): Observable<any> {
     return this.http.post(`${this.ApiUrl}/api/auth/reset/password`, data,{ responseType: 'text' } );
   }
-
+  
+  // Renvoi OTP pour inscription
+  renvoiOtpRegister(data: any): Observable<any> {
+    return this.http.post(`${this.ApiUrl}/api/auth/resend-registration-otp/`, data,{ responseType: 'text' } );
+  }
+  
+ // Renvoi Otp pour réinitialiasion mot de passe
+  renvoiOtpReset(data: any): Observable<any> {
+    return this.http.post(`${this.ApiUrl}/api/auth/resend-reset-otp/`, data,{ responseType: 'text' } );
+  }
   // logout
   logout(): Observable<any> {
     return this.http.post(`${this.ApiUrl}/api/auth/logout`, {}, { responseType: 'text' }).pipe(

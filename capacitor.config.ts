@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.helpingyourself.hysfront',  // Identifiant unique pour votre app
+  appId: 'com.helpingyourself.hysfront', // Identifiant unique pour votre app
   appName: 'Helping Yourself',
   webDir: 'www',
   server: {
