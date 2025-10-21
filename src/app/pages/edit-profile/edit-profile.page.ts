@@ -75,9 +75,10 @@ export class EditProfilePage implements OnInit {
         phone: user.phone ?? '',
         adresse: user.adresse ?? '',
         bio: user.bio ?? '',
-        dob: this.convertToDateInputFormat(user.dateNaissance),
+        dob: this.convertToDateInputFormat(user.dateNaissance ?? ''),
         profileImage: user.profileImage ?? '',
-      });
+      }); console.log('Type dadresse:', typeof user.adresse, user.adresse);
+
     } else {
       console.error('Utilisateur non trouvé dans le localStorage');
     }
@@ -90,14 +91,21 @@ export class EditProfilePage implements OnInit {
   /**
    * Convertit un timestamp en string compatible avec un input date (yyyy-MM-dd)
    */
-  convertToDateInputFormat(timestamp: number): string {
-    if (!timestamp) return '';
-    const date = new Date(timestamp);
+  convertToDateInputFormat(timestamp: any): string {
+    if (timestamp === null || timestamp === undefined || timestamp === '') return '';
+    
+    
+    const num = typeof timestamp === 'string' ? parseInt(timestamp, 10) : timestamp;
+    
+    if (isNaN(num)) return ''; 
+
+    const date = new Date(num);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
+
 
   /**
    * Soumission du formulaire

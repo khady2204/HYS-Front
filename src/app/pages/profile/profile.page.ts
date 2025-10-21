@@ -27,7 +27,9 @@ export class ProfilePage implements OnInit, OnDestroy {
   profileImageUrl: any;
   adresse: string = '';
   bio: string ='';
+  dob: string = '';
   userId: number = 0;
+  
 
   showMenu = false;
   showLogoutModal = false; // controle la visibilité du bouton
@@ -52,16 +54,16 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     const userId = Number(this.route.snapshot.paramMap.get('id'));
 
-    // 🔥 S'abonner aux changements de l'utilisateur
+    //  S'abonner aux changements de l'utilisateur
     this.userSub = this.userAuthService.user$.subscribe((user) => {
       if (user && user.id === userId) {
         this.userId = user.id;
         this.prenom = user.prenom;
         this.nom = user.nom;
-        this.profileImageUrl =
-          this.urlUtils.buildProfileImageUrl(user.profileImage) + '?v=' + Date.now(); // évite le cache
+        this.profileImageUrl = this.urlUtils.buildProfileImageUrl(user.profileImage) + '?v=' + Date.now(); // évite le cache
         this.adresse = user.adresse ?? 'Non renseignée';
         this.bio = user.bio;
+        this.dob = user.dateNaissance;
         console.log('Profil à jour :', user);
       }
     });
