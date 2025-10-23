@@ -1,0 +1,278 @@
+<ion-content class="bg-pink">
+
+  <!-- HEADER -->
+  <div class="header px-3 pt-5 pb-3">
+    <div class="d-flex align-items-center justify-content-between mt-5 pb-3">
+      <i class="bi bi-search fs-4 text-white rounded-circle d-flex align-items-center justify-content-center"></i>
+      <app-dropdown-drawer></app-dropdown-drawer>
+      <a [routerLink]="['/profile', userId]">
+        <img
+          [src]="profileImageUrl || 'assets/profileParDefaut.jpg'"
+          alt="Profile"
+          class="rounded-circle border border-white"
+          width="40"
+          height="40"
+        />
+      </a>
+    </div>
+
+    <!-- Stories Section -->
+    <div class="d-flex overflow-auto gap-3 pt-2 pb-1 px-3">
+      <!-- Mon statut -->
+      <div class="d-flex flex-column pb-3 align-items-center text-white text-center" style="font-size: 0.7rem;">
+        <div class="position-relative" (click)="openMyStories()">
+          <img src="assets/profileParDefaut.jpg" class="rounded-circle border border-white" width="55" height="55" />
+          <div class="position-absolute bottom-0 end-0 bg-white text-pink rounded-circle"
+              style="width: 18px; height: 18px; font-size: 1rem; display: flex; align-items: center; justify-content: center;"
+              (click)="openAddStory(); $event.stopPropagation()">
+            <i class="bi bi-plus text-black"></i>
+          </div>
+        </div>
+        <span class="mt-1">mon statut</span>
+      </div>
+
+      <!-- Ajouter une story -->
+      <div class="d-flex flex-column pb-3 align-items-center text-white text-center" style="font-size: 0.7rem;" (click)="openAddStory()">
+        <div class="story-add-ring d-flex justify-content-center align-items-center">
+          <i class="bi bi-plus text-white fs-2"></i>
+        </div>
+        <span class="mt-1">Ajouter</span>
+      </div>
+
+      <!-- Loading state -->
+      <div *ngIf="isStoriesLoading" class="d-flex flex-column pb-3 align-items-center text-white text-center" style="font-size: 0.7rem;">
+        <div class="rounded-circle border border-white d-flex justify-content-center align-items-center" style="width: 55px; height: 55px;">
+          <i class="bi bi-arrow-clockwise text-white"></i>
+        </div>
+        <span class="mt-1">Chargement...</span>
+      </div>
+
+      <!-- Error state -->
+      <div *ngIf="storiesError" class="d-flex flex-column pb-3 align-items-center text-white text-center" style="font-size: 0.7rem;">
+        <div class="rounded-circle border border-white d-flex justify-content-center align-items-center" style="width: 55px; height: 55px;">
+          <i class="bi bi-exclamation-triangle text-warning"></i>
+        </div>
+        <span class="mt-1">Erreur</span>
+      </div>
+
+      <!-- Stories des autres utilisateurs -->
+      <div class="d-flex flex-column pb-3 align-items-center text-white text-center"
+           style="font-size: 0.7rem;"
+           *ngFor="let userStory of userStories"
+           (click)="openStory(userStory)">
+        <div [ngClass]="userStory.hasUnreadStories ? 'story-ring-unread' : 'story-ring-read'" class="position-relative">
+          <img [src]="userStory.userProfileImage || 'assets/img/myLOve/account.png'"
+               class="rounded-circle border border-white story-image"
+               width="55"
+               height="55" />
+          <!-- Indicateur de nombre de stories -->
+          <div *ngIf="userStory.totalStories > 1" class="story-count-badge">
+            {{ userStory.totalStories }}
+          </div>
+        </div>
+        <span class="mt-1 text-truncate" style="max-width: 60px;">{{ userStory.userFullName.split(' ')[0] }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ONGLET -->
+  <div class="d-flex w-100 position-relative" style="margin-top: -27px;">
+    <a class="tab-button active disabled" tabindex="-1" aria-disabled="true">Discussions</a>
+    <a href="suggestion" class="tab-button inactive">Suggestions</a>
+  </div>
+
+  <!-- DISCUSSIONS -->
+  <div class="px-3 mt-3">
+    <ion-list class="discussion-item">
+
+      <!-- Message si aucune discussion -->
+      <div *ngIf="discussions?.length === 0" class="text-center text-muted mt-5">
+        Aucune discussion pour le moment.
+      </div>
+
+      <!-- Liste des discussions -->
+      <ion-item-sliding #slidingItem *ngFor="let discussion of discussions">
+        <ng-container *ngIf="discussion.ami.id !== currentUserId">
+
+          <!-- Options à droite -->
+          <ion-item-options side="end">
+            <ion-item-option class="btn-delete" (click)="supprimer(discussion)">
+              <i class="bi bi-trash-fill text-white fs-5 d-flex align-items-center justify-content-center w-100 h-100"></i>
+            </ion-item-option>
+            <ion-item-option class="btn-signalement" [routerLink]="['/report-partner']">
+              <i class="bi bi-flag-fill text-white fs-5 d-flex align-items-center justify-content-center w-100 h-100"></i>
+            </ion-item-option>
+          </ion-item-options>
+
+          <!-- Contenu de la discussion -->
+          <ion-item button (click)="navigateToChat(discussion.ami.id)">
+            <ion-avatar slot="start" style="position: relative;">
+              <img [src]="discussion.ami.profileImage || 'assets/profileParDefaut.jpg'">
+              <!-- Bouton de statut -->
+              <span
+                [ngStyle]="{
+                  'background-color': discussion.ami.online ? 'green' : 'gray',
+                  'width.px': 12,
+                  'height.px': 12,
+                  'border-radius': '50%',
+                  'border': '2px solid white',
+                  'position': 'absolute',
+                  'bottom.px': 0,
+                  'right.px': 0
+                }">
+              </span>
+            </ion-avatar>
+            <ion-label class="ion-text-wrap">
+              <h6 class="fw-bold mb-1">
+                {{ discussion.ami.prenom }} {{ discussion.ami.nom }}
+              </h6>
+              
+
+              <!-- Dernier message avec distinction audio/image/video -->
+              <p class="small mb-0" style="display: flex; align-items: center; gap: 4px;">
+                <ng-container *ngIf="discussion.messages.length > 0; else noMessage">
+                  <ng-container [ngSwitch]="discussion.messages[discussion.messages.length - 1].mediaType">
+                    <span *ngSwitchCase="'image'">
+                      <i class="bi bi-image"></i> Image
+                    </span>
+                    <span *ngSwitchCase="'video'">
+                      <i class="bi bi-camera-video"></i> Vidéo
+                    </span>
+                    <span *ngSwitchCase="'audio'">
+                      <i class="bi bi-mic"></i> Audio
+                    </span>
+                    <span *ngSwitchDefault>
+                      {{ discussion.messages[discussion.messages.length - 1].content }}
+                    </span>
+                  </ng-container>
+                </ng-container>
+                <ng-template #noMessage>Aucun message</ng-template>
+              </p>
+            </ion-label>
+
+            <!-- Badge message non lu -->
+            <ion-badge *ngIf="discussion.unreadCount && discussion.unreadCount > 0" color="danger">
+              {{ discussion.unreadCount }}
+            </ion-badge>
+
+            <!-- Chevron Bootstrap placé à droite -->
+            <ion-button 
+              fill="clear" 
+              slot="end" 
+              (click)="openOptions($event, slidingItem)">
+              <i class="bi bi-chevron-right"></i>
+            </ion-button>
+
+
+          </ion-item>
+        </ng-container>
+      </ion-item-sliding>
+    </ion-list>
+
+  </div>
+
+  <!-- MENU FLOTTANT -->
+  <app-floating-menu></app-floating-menu>
+
+  <!-- Add Story Modal -->
+  <ion-modal [isOpen]="isAddStoryOpen" (didDismiss)="closeAddStory()">
+    <ng-template>
+      <div class="p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5>Ajouter une story</h5>
+          <button class="btn btn-light" (click)="closeAddStory()">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Texte (optionnel)</label>
+          <textarea
+            class="form-control"
+            rows="3"
+            placeholder="Racontez votre histoire..."
+            [(ngModel)]="newStoryText">
+          </textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Média (image/vidéo) - Optionnel</label>
+          <input
+            type="file"
+            class="form-control"
+            accept="image/*,video/*"
+            multiple
+            (change)="onFileSelected($event)">
+          <small class="text-muted">Vous pouvez sélectionner plusieurs fichiers ou aucun pour du texte seul</small>
+        </div>
+
+        <div class="d-grid">
+          <button
+            class="btn btn-primary"
+            (click)="postStory()"
+            [disabled]="isPosting">
+            {{ isPosting ? 'Publication...' : 'Publier' }}
+          </button>
+        </div>
+
+        <div *ngIf="storyError" class="alert alert-danger mt-3">
+          <i class="bi bi-exclamation-triangle me-2"></i>
+          {{ storyError }}
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- My Stories Modal -->
+  <ion-modal [isOpen]="isMyStoriesOpen" (didDismiss)="closeMyStories()">
+    <ng-template>
+      <div class="p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5>Mes Stories</h5>
+          <button class="btn btn-light" (click)="closeMyStories()">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+
+        <div *ngIf="myStories.length === 0" class="text-center py-4">
+          <i class="bi bi-inbox text-muted" style="font-size: 3rem;"></i>
+          <p class="text-muted mt-2">Aucune story publiée</p>
+          <button class="btn btn-primary" (click)="openAddStory(); closeMyStories()">
+            Créer ma première story
+          </button>
+        </div>
+
+        <div *ngFor="let story of myStories" class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <div class="flex-grow-1">
+                <div *ngIf="story.text" class="mb-2">{{ story.text }}</div>
+                <div *ngIf="story.mediaUrls && story.mediaUrls.length > 0" class="mb-2">
+                  <img *ngFor="let url of story.mediaUrls" [src]="url" alt="Média" class="img-thumbnail me-2" style="width: 60px; height: 60px; object-fit: cover;">
+                </div>
+                <small class="text-muted">
+                  Publié le {{ story.createdAt | date:'dd/MM/yyyy à HH:mm' }}
+                </small>
+              </div>
+              <button
+                class="btn btn-outline-danger btn-sm ms-2"
+                (click)="deleteStory(story.id)"
+                title="Supprimer cette story">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Story Viewer Modal -->
+  <app-story-viewer
+    *ngIf="isViewerOpen && selectedUserStories"
+    [userStories]="selectedUserStories"
+    [initialStoryIndex]="0"
+    (close)="closeViewer()">
+  </app-story-viewer>
+
+</ion-content>  

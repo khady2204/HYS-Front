@@ -1,0 +1,10 @@
+<div *ngFor="let notif of notifications" class="notif" [class.lue]="notif.lue" (click)="ouvrirNotification(notif)">
+  <img *ngIf="notif.photoProfilEmetteur" [src]="notif.photoProfilEmetteur" class="avatar" alt="profil">
+  <div class="text">
+    <div class="top">
+      <strong>{{ notif.emetteurNomComplet }}</strong>
+      <small>{{ notif.dateEnvoi | date:'short' }}</small>
+    </div>
+    <p>{{ notif.message }}</p>
+  </div>
+</div>

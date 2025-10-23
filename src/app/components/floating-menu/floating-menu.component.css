@@ -1,0 +1,105 @@
+/* MENU BOTTOM FIXE */
+.menu-bottom-fixed {
+  position: fixed;
+  bottom: 0; 
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: linear-gradient(135deg, #D90479, #A6035D);  padding: 15px 20px;
+  box-shadow: 0 -8px 20px rgba(196, 74, 192, 0.3);
+  z-index: 1000;
+  width: 100%; 
+  margin: 0;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.menu-item.add {
+  transform: scale(1.1);
+}
+
+.menu-item.add:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.2);
+}
+
+.menu-item img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain; 
+  filter: brightness(0) invert(1); 
+}
+
+.menu-item.add img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain; 
+}
+
+/* =========================
+   📱 RESPONSIVITÉ
+   ========================= */
+
+/* Petits écrans (téléphones < 480px) */
+@media (max-width: 480px) {
+  .menu-item {
+    width: 48px;
+    height: 48px;
+  }
+
+  .menu-item img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .menu-bottom-fixed {
+    padding: 10px 12px;
+  }
+}
+
+/* Tablettes (481px à 768px) */
+@media (max-width: 768px) {
+  .menu-item {
+    width: 52px;
+    height: 52px;
+  }
+
+  .menu-item img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .menu-bottom-fixed {
+    padding: 12px 16px;
+  }
+}
+
+/* Grands écrans (desktop) */
+@media (min-width: 1024px) {
+  .menu-item {
+    width: 65px;
+    height: 65px;
+  }
+
+  .menu-item img {
+    width: 28px;
+    height: 28px;
+  }
+}

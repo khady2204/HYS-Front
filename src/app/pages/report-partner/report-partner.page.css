@@ -1,0 +1,138 @@
+/* ============================
+   Formulaire - Mode Clair
+   ============================ */
+#sectionForm {
+  background-color: #ffffff;
+  color: #000000;
+  margin-top: -40px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  padding: 20px;
+  box-shadow: 0 -4px 25px rgba(0,0,0,0.15);
+}
+
+#sectionForm h2 {
+  color: #000000;
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#sectionForm p {
+  color: #333333;
+  text-align: center;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+/* ===== Ionic items / list ===== */
+#sectionForm ion-list,
+#sectionForm ion-item {
+  --background: #ffffff;
+  --color: #000000;
+  --border-color: transparent;
+  --border-width: 0;
+  --ion-item-border-color: transparent;
+  --inner-border-width: 0;
+  border-bottom: none;
+  box-shadow: none;
+}
+
+/* Radios */
+#sectionForm ion-radio::part(container) {
+  border: 1.5px solid #000000;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+}
+#sectionForm ion-radio::part(mark) {
+  background: #ffffff;
+}
+
+/* Textarea */
+#sectionForm .custom-textarea,
+#sectionForm ion-textarea {
+  background-color: #f1f1f1;
+  color: #000000;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+/* Bouton */
+#sectionForm .btn-pink {
+  --background: #ff008a;
+  --color: #ffffff;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  border-radius: 8px;
+}
+
+/* ============================
+   Mode sombre
+   ============================ */
+@media (prefers-color-scheme: dark) {
+  #sectionForm {
+    background-color: #1e1e1e;
+    color: #ffffff;
+  }
+
+  #sectionForm h2 {
+    color: #ffffff;
+  }
+
+  #sectionForm p {
+    color: #dddddd;
+  }
+
+  #sectionForm ion-list,
+  #sectionForm ion-item {
+    --background: #1e1e1e;
+    --color: #ffffff;
+    --border-color: transparent;
+    --border-width: 0;
+    --ion-item-border-color: transparent;
+    --inner-border-width: 0;
+    border-bottom: none;
+    box-shadow: none;
+  }
+
+  #sectionForm ion-radio::part(container) {
+    border: 1.5px solid #ffffff;
+    background: #1e1e1e;
+  }
+
+  #sectionForm ion-radio::part(mark) {
+    background: #ff008a;
+  }
+
+  #sectionForm .custom-textarea,
+  #sectionForm ion-textarea {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: 1px solid #444;
+  }
+
+  #sectionForm .btn-pink {
+    --background: #ff008a;
+    --color: #ffffff;
+  }
+}
+
+/* ============================
+   Responsive
+   ============================ */
+@media (max-width: 480px) {
+  #sectionForm {
+    padding: 16px;
+  }
+
+  #sectionForm h2 {
+    font-size: 22px;
+  }
+
+  #sectionForm p {
+    font-size: 14px;
+  }
+}

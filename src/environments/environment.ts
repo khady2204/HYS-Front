@@ -2,9 +2,25 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
-  production: false
-};
+export interface Environment {
+  production: boolean;
+  apiBase: string;
+  withCredentials: boolean;
+  googleClientId: string;
+}
+
+export const environment: Environment = {
+  production: false,
+  // Pour le développement web (navigateur) : localhost
+  // Pour l'émulateur Android : 10.0.2.2
+  apiBase: 'http://api.hysinternational.com:8080',
+  //apiBase: 'http://localhost:8081',
+  // Pour l'appareil physique : 192.168.1.64 (votre IP locale)
+  //apiBase: 'http://192.168.54.47:8081',
+  withCredentials: true,            // si tu utilises cookies/session
+  googleClientId: '440755805165-0lsmqghacaffjq393md8g6bpngn1d3a6.apps.googleusercontent.com'
+}
+
 
 /*
  * For easier debugging in development mode, you can import the following file

@@ -1,0 +1,33 @@
+<ion-content class="sms-container" [fullscreen]="true">
+  <!-- Bouton retour -->
+  <ion-button class="back-btn" fill="clear" [routerLink]="['/register']">
+    <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+  </ion-button>
+  <div class="sms-wrapper">
+    <div class="logo-container">
+      <img src="assets/logo.png" class="logo-img">
+    </div>
+    <div class="title-container">
+    <h1>Validation OTP</h1>
+    </div>
+    <form [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+      <div class="input-container">
+        <label class="input-label">Code</label>
+        <input type="tel"  placeholder="xxxxxxx" formControlName="otp"> 
+      </div>
+      <ion-button expand="block" class="send-btn" type="submit">Valider</ion-button>
+    </form>
+    <!-- Lien pour renvoyer l’OTP -->
+    <div class="resend-container">
+      <p>
+        Vous n’avez pas reçu de code ?  
+        <a [class.disabled]="resendDisabled" 
+          (click)="!resendDisabled && confirmResendOtp()">
+          Renvoyer
+          <span *ngIf="resendDisabled">({{countdownDisplay}})</span>
+        </a>
+      </p>
+    </div>
+  </div>
+</ion-content>
+ 
