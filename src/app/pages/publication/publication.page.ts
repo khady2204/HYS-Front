@@ -7,7 +7,7 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Router, RouterModule } from '@angular/router';
 import { CreatePublicationData, PublicationService } from '../../services/publication.service';
 import { addIcons } from 'ionicons';
-import { closeCircle, cameraOutline, videocamOutline, imagesOutline, closeOutline } from 'ionicons/icons';
+import { closeCircle, cameraOutline, videocamOutline, imagesOutline, closeOutline, arrowBack } from 'ionicons/icons';
 
 interface MediaPreview {
   id: string;
@@ -49,10 +49,11 @@ export class PublicationPage implements OnInit {
   ) {
       addIcons({
       'close-circle': closeCircle,
-      'camera-outline': cameraOutline, 
+      'camera-outline': cameraOutline,
       'videocam-outline': videocamOutline,
       'images-outline': imagesOutline,
-      'close-outline': closeOutline
+      'close-outline': closeOutline,
+      'arrow-back': arrowBack
     });
   }
 
@@ -254,7 +255,7 @@ async handleFileInput(event: any) {
  */
 async publier() {
   console.log('🟢 BOUTON PUBLIER CLIQUE !');
-  
+
   if (!this.canPublish) {
     console.log('❌ Cannot publish - conditions not met');
     return;
@@ -293,11 +294,11 @@ async publier() {
     });
 
     console.log('8. 🚪 Lancement redirection...');
-    
+
     // REDIRECTION IMMÉDIATE sans attendre le toast
     setTimeout(() => {
       console.log('9. 🔄 Dans setTimeout - Début redirection');
-      
+
       this.router.navigate(['/dashboard'], { replaceUrl: true }).then(
         (success) => {
           console.log('🎉 Redirection vers /dashboard RÉUSSI');
